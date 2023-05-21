@@ -48,6 +48,7 @@ const App = () => {
 
       </Stack.Navigator>
     </NavigationContainer>
+    // yeu cau phai co 1 the view bao ngoai cung
     
   )
 }
