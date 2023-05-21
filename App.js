@@ -13,18 +13,15 @@ import Home from './screens/MainTabs/Home'
 
 import Setting from './screens/MainTabs/Setting'
 import Profile from './screens/MainTabs/Profile'
-import Test from './screens/TestTab/PieChartScreen'
+import Test from './screens/TestTab/TopTab'
 import ItemTransaction from './component/ItemTransaction'
 import ItemCollect from './component/ItemCollect'
-
-
 
 
 const Stack = createNativeStackNavigator();
 const StackBegin = () => {
   return (
     <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
-
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
 
@@ -42,9 +39,6 @@ const App = () => {
         <Stack.Screen name="ItemCollect" component={ItemCollect} />
         <Stack.Screen name="AddNew" component={AddNew} />
         <Stack.Screen name="Test" component={Test} />
-
-
-        
 
       </Stack.Navigator>
     </NavigationContainer>

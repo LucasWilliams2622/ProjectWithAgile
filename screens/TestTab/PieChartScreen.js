@@ -7,7 +7,7 @@ import {
   processColor,
 } from 'react-native';
 
-import {PieChart} from 'react-native-charts-wrapper';
+import { PieChart } from 'react-native-charts-wrapper';
 
 class PieChartScreen extends React.Component {
 
@@ -27,11 +27,11 @@ class PieChartScreen extends React.Component {
       },
       data: {
         dataSets: [{
-          values: [{value: 45, label: 'Sandwiches'},
-            {value: 21, label: 'Salads'},
-            {value: 15, label: 'Soup'},
-            {value: 9, label: 'Beverages'},
-            {value: 15, label: 'Desserts'}],
+          values: [{ value: 45, label: 'Sandwiches' },
+          { value: 21, label: 'Salads' },
+          { value: 15, label: 'Soup' },
+          { value: 9, label: 'Beverages' },
+          { value: 15, label: 'Desserts' }],
           label: 'Pie dataset',
           config: {
             colors: [processColor('#C0FF8C'), processColor('#FFF78C'), processColor('#FFD08C'), processColor('#8CEAFF'), processColor('#FF8C9D')],
@@ -47,7 +47,7 @@ class PieChartScreen extends React.Component {
           }
         }],
       },
-      highlights: [{x:2}],
+      highlights: [{ x: 2 }],
       description: {
         text: 'This is Pie chart description',
         textSize: 15,
@@ -60,9 +60,9 @@ class PieChartScreen extends React.Component {
   handleSelect(event) {
     let entry = event.nativeEvent
     if (entry == null) {
-      this.setState({...this.state, selectedEntry: null})
+      this.setState({ ...this.state, selectedEntry: null })
     } else {
-      this.setState({...this.state, selectedEntry: JSON.stringify(entry)})
+      this.setState({ ...this.state, selectedEntry: JSON.stringify(entry) })
     }
 
     console.log(event.nativeEvent)
@@ -70,7 +70,7 @@ class PieChartScreen extends React.Component {
 
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <View>
           <Text>selected:</Text>
           <Text> {this.state.selectedEntry}</Text>
@@ -86,7 +86,7 @@ class PieChartScreen extends React.Component {
             legend={this.state.legend}
             highlights={this.state.highlights}
 
-            extraOffsets={{left: 5, top: 5, right: 5, bottom: 5}}
+            extraOffsets={{ left: 5, top: 5, right: 5, bottom: 5 }}
 
             entryLabelColor={processColor('green')}
             entryLabelTextSize={20}
@@ -96,7 +96,7 @@ class PieChartScreen extends React.Component {
             rotationEnabled={true}
             rotationAngle={45}
             usePercentValues={true}
-            styledCenterText={{text:'Pie center text!', color: processColor('pink'), fontFamily: 'HelveticaNeue-Medium', size: 20}}
+            styledCenterText={{ text: 'Pie center text!', color: processColor('pink'), fontFamily: 'HelveticaNeue-Medium', size: 20 }}
             centerTextRadiusPercent={100}
             holeRadius={40}
             holeColor={processColor('#f0f0f0')}
