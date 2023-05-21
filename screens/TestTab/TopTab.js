@@ -12,10 +12,7 @@ const windowHeight = Dimensions.get('window').height;
 const Tab = createMaterialTopTabNavigator();
 const TopTab = () => {
     return (
-
-
         <Tab.Navigator
-        
             tabBarShowLabel
             // tabBarPressColor='white'
             tabBarActiveTintColor='red'
@@ -27,17 +24,14 @@ const TopTab = () => {
                 tabBarItemStyle: { width: windowWidth / 2 },
                tabBarStyle: { backgroundColor: COLOR.primary },
                 swipeEnabled:true,
-              
-
+            
             }}
            
             tabBarOptions={{
                 activeTintColor: 'white',
                 inactiveTintColor: 'gray',
-                
                 indicatorStyle: {
                     backgroundColor: 'white',
-                    
                 },
               }}
             initialRouteName="TestPicker">
