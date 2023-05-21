@@ -5,6 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import Login from './screens/BeginTabs/Login'
 import Register from './screens/BeginTabs/Register'
+import Intro from './screens/BeginTabs/Intro'
+
 import AddNew from './screens/MainTabs/AddNew'
 import BottomTabs from './screens/MainTabs/BottomTabs'
 import Chart from './screens/MainTabs/Chart'
@@ -31,7 +33,7 @@ const StackBegin = () => {
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Test" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="Intro" screenOptions={{ headerShown: false }}>
 
         <Stack.Screen name="StackBegin" component={StackBegin} />
         <Stack.Screen name="Profile" component={Profile} />
@@ -39,10 +41,14 @@ const App = () => {
         <Stack.Screen name="ItemCollect" component={ItemCollect} />
         <Stack.Screen name="AddNew" component={AddNew} />
         <Stack.Screen name="Test" component={Test} />
+        <Stack.Screen name="Home" component={Home} />
+
+        <Stack.Screen name="Intro" component={Intro} />
+
 
       </Stack.Navigator>
     </NavigationContainer>
-     // son yeu milo
+    // son yeu milo
   )
 }
 
