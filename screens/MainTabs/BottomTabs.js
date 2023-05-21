@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image,Dimensions, TouchableOpacity } from 'react-native'
 import React, { useEffect, useRef } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -11,7 +11,8 @@ import Profile from './Profile'
 import Setting from './Setting'
 import Chart from './Chart'
 import History from './History';
-
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
