@@ -13,7 +13,7 @@ import Home from './screens/MainTabs/Home'
 
 import Setting from './screens/MainTabs/Setting'
 import Profile from './screens/MainTabs/Profile'
-import Test from './screens/TestTab/TestPicker'
+import Test from './screens/TestTab/PieChartScreen'
 import ItemTransaction from './component/ItemTransaction'
 import ItemCollect from './component/ItemCollect'
 
