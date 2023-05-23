@@ -12,6 +12,7 @@ import BottomTabs from './screens/MainTabs/BottomTabs'
 import Chart from './screens/MainTabs/Chart'
 import History from './screens/MainTabs/History'
 import Home from './screens/MainTabs/Home'
+import Item from './screens/MainTabs/Item'
 
 import Setting from './screens/MainTabs/Setting'
 import Profile from './screens/MainTabs/Profile'
@@ -24,31 +25,27 @@ const Stack = createNativeStackNavigator();
 const StackBegin = () => {
   return (
     <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
 
-    </Stack.Navigator>
-  )
-}
+//     </Stack.Navigator>
+//   )
+// }
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Intro" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="BottomTabs" screenOptions={{ headerShown: false }}>
 
         <Stack.Screen name="StackBegin" component={StackBegin} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="BottomTabs" component={BottomTabs} />
-        <Stack.Screen name="ItemCollect" component={ItemCollect} />
         <Stack.Screen name="AddNew" component={AddNew} />
-        <Stack.Screen name="Test" component={Test} />
-        <Stack.Screen name="Home" component={Home} />
-
-        <Stack.Screen name="Intro" component={Intro} />
 
 
       </Stack.Navigator>
     </NavigationContainer>
-    // son yeu milo
+    
   )
 }
 
