@@ -35,7 +35,7 @@ const StackBegin = () => {
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Setting" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="BottomTabs" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="StackBegin" component={StackBegin} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="BottomTabs" component={BottomTabs} />
