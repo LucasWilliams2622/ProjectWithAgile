@@ -53,7 +53,7 @@ const StackChart = () => {
 }
 const StackSetting = () => {
   return (
-    <Stack.Navigator initialRouteName="Profile" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="Setting" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="Setting" component={Setting} />
 
