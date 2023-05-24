@@ -41,8 +41,7 @@ const Setting = (props) => {
           <View style={styles.line}></View>
           <View style={styles.allignview1}>
             <Text style={styles.text4}>Đơn vị tiền tệ</Text>
-            <Image source={require('../../Resource/sort.png')}
-              style={styles.ImageStyle}></Image>
+             <Image style={styles.ImageStyle}></Image> {/* source={require('../../Resource/sort.png')} */}
           </View>
         </View>
       </View>

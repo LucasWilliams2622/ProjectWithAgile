@@ -9,7 +9,72 @@ const Home = () => {
 
   return (
     <View>
-      <Text>Home</Text>
+      <View style={styles.background}></View>
+
+      <TouchableOpacity>
+        <View style={styles.viewAvatarAndText}>
+          <Image source={require('../../asset/icon/icon_editprofile.png')} style={styles.imageProfile}></Image>
+          <Text style={styles.textHello}>Hello Bro</Text>
+        </View>
+      </TouchableOpacity>
+
+      <View style={styles.viewMenu}>
+        <View style={styles.viewIn4Menu}>
+
+          <View style={styles.viewIn4Menu1}>
+            <View style={[styles.flex, { alignItems: 'center' }]}>
+              <Image style={styles.image} source={require('../../asset/icon/icon_calender.png')}></Image>
+              <Text style={styles.textDate}>23-05-2023</Text>
+            </View>
+            <TouchableOpacity onPress={() => setisShow(!isShow)}>
+              {
+                isShow ? <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_closed_eye.png')}></Image> : <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_eye.png')}></Image>
+              }
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.viewIn4Menu2}>
+            <Text style={styles.textPrice}>Tổng: </Text>
+            {
+              isShow ? <Text style={styles.textPrice}>********</Text> : <Text style={styles.textPrice}>0 VND</Text>
+            }
+
+          </View>
+
+          <View style={styles.viewIn4Menu3}>
+            <View style={[styles.flex, { alignItems: 'center' }]}>
+              <Text style={styles.textGiveAndPay}>Thu Nhập:</Text>
+              {
+                isShow ? <Text style={styles.textGiveAndPay}>********</Text> : <Text style={styles.textGiveAndPay}>1.000.000 VND</Text>
+              }
+            </View>
+            <View style={[styles.flex, { alignItems: 'center' }]}>
+              <Text style={styles.textGiveAndPay}>Chi Tiêu:</Text>
+              {
+                isShow ? <Text style={styles.textGiveAndPay}>********</Text> : <Text style={styles.textGiveAndPay}>1.000.000 VND</Text>
+              }
+            </View>
+          </View>
+
+        </View>
+      </View>
+
+      <Text style={styles.textToday}>Hôm nay:</Text>
+
+      <ScrollView>
+        <View style={styles.viewListGiveAndPay}>
+          <View>
+            <TouchableOpacity>
+              <Image style={{ height: 100, width: 100 }} source={require('../../asset/image/bedroom.png')}></Image>
+            </TouchableOpacity>
+          </View>
+          <View style={{ marginTop: 30 }}>
+            <TouchableOpacity>
+              <Text style={styles.textGif}>Hãy thêm chi tiêu hôm nay. Chạm vào đây dể thêm.</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
     </View>
   )
 }
