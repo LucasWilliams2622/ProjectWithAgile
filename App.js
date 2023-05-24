@@ -19,6 +19,8 @@ import Profile from './screens/MainTabs/Profile'
 import Test from './screens/TestTab/AddGif'
 import ItemTransaction from './component/ItemTransaction'
 import ItemCollect from './component/ItemCollect'
+import TestPicker from './screens/TestTab/TestPicker'
+import PieChartScreen from './screens/TestTab/PieChartScreen'
 
 
 
@@ -30,9 +32,9 @@ const Stack = createNativeStackNavigator();
 //       <Stack.Screen name="Login" component={Login} />
 //       <Stack.Screen name="Register" component={Register} />
 
-     </Stack.Navigator>
-  )
-}
+//     </Stack.Navigator>
+//   )
+// }
 const App = () => {
   return (
     // <NavigationContainer>
@@ -46,7 +48,7 @@ const App = () => {
 
       </Stack.Navigator>
     </NavigationContainer>
-
+    
   )
 }
 
