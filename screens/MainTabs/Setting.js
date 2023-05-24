@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, Switch } from 'react-native'
+import { StyleSheet, Text, View, Image, Switch, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import ToggleSwitch from 'toggle-switch-react-native'
@@ -15,7 +15,7 @@ const Setting = (props) => {
 
     );
   }
-  const showNotification =()=>{
+  const showNotification = () => {
     return ToastAndroid.showWithGravity(
       'Chức năng sẽ được cập nhật trong các phiên bản tiếp theo!',
       ToastAndroid.SHORT,
@@ -43,7 +43,7 @@ const Setting = (props) => {
               <Text style={styles.text5}>10:00</Text>
             </View>
             <Switch
-              style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] ,marginRight:10,}}
+              style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }], marginRight: 10, }}
 
               thumbColor={isEnabled ? '#FFFFFF' : '#FFFFFF'}
               ios_backgroundColor="#3e3e3e"
@@ -53,10 +53,12 @@ const Setting = (props) => {
             />
           </View>
           <View style={styles.line}></View>
-          <View style={styles.allignview1}> 
+          <View style={styles.allignview1}>
             <Text style={styles.text4}>Đơn vị tiền tệ</Text>
-            <Image source={require('../../asset/icon/icon_sort.png')}
-              style={styles.ImageStyle}></Image>
+            <TouchableOpacity onPress={showNotification}>
+              <Image source={require('../../asset/icon/icon_sort.png')} style={styles.ImageStyle} />
+            </TouchableOpacity>
+
           </View>
         </View>
       </View>
@@ -78,7 +80,9 @@ const Setting = (props) => {
       </View>
 
 
-    </View>
+    </ScrollView>
+
+
   )
 }
 
@@ -88,7 +92,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: COLOR.grey,
     width: '100%',
-    height:'100%'
+    height: '100%'
   },
   text: {
     fontSize: 22,
@@ -152,7 +156,7 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 20,
     borderWidth: 1,
-    marginBottom:20
+    marginBottom: 20
   },
   line: {
     backgroundColor: COLOR.gray,
@@ -174,8 +178,8 @@ const styles = StyleSheet.create({
   ImageStyle: {
     height: 20,
     width: 20,
-    alignSelf:'center',
-    marginRight:10
+    alignSelf: 'center',
+    marginRight: 10
   },
   allignview1: {
     flexDirection: 'row', justifyContent: 'space-between'
