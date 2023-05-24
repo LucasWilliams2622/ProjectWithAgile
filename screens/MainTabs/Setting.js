@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, Image, Switch, TouchableOpacity } from 'react-native'
-import React,{useState} from 'react'
+import { StyleSheet, Text, View, Image, Switch, TouchableOpacity, Alert, ToastAndroid } from 'react-native'
+import React, { useState } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import ToggleSwitch from 'toggle-switch-react-native'
 
@@ -7,8 +7,21 @@ const Setting = (props) => {
   const { navigation } = props;
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const version = '1.0.0.0';
+  const showVersion = () => {
+    return Alert.alert(
+      "Phiên Bản",
+      "Version :" + version,
 
-
+    );
+  }
+  const showNotification =()=>{
+    return ToastAndroid.showWithGravity(
+      'Chức năng sẽ được cập nhật trong các phiên bản tiếp theo!',
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER,
+    );
+  }
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -29,21 +42,21 @@ const Setting = (props) => {
               <Text style={styles.text5}>10:00</Text>
             </View>
             <Switch
-             style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
-         
-             thumbColor={isEnabled ? '#FFFFFF' : '#FFFFFF'}
-             ios_backgroundColor="#3e3e3e"
-             onValueChange={toggleSwitch}
-             value={isEnabled}
+              style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] ,marginRight:10,}}
+
+              thumbColor={isEnabled ? '#FFFFFF' : '#FFFFFF'}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleSwitch}
+              value={isEnabled}
               trackColor={{ false: '#767577', true: '#81b0ff' }}
-              />
+            />
           </View>
           <View style={styles.line}></View>
-          <View style={styles.allignview1}>
+          <TouchableOpacity style={styles.allignview1} onPress={showNotification}>
             <Text style={styles.text4}>Đơn vị tiền tệ</Text>
             <Image source={require('../../Resource/sort.png')}
               style={styles.ImageStyle}></Image>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -52,11 +65,14 @@ const Setting = (props) => {
         <View style={styles.view3}>
           <Text style={styles.text4}>Điều khoản</Text>
           <View style={styles.line}></View>
-          <Text style={styles.text4}>Phiên bản</Text>
+          <TouchableOpacity onPress={showVersion}>
+            <Text style={styles.text4}>Phiên bản</Text>
+
+          </TouchableOpacity>
           <View style={styles.line}></View>
           <Text style={styles.text4}>Chính sách bảo mật</Text>
           <View style={styles.line}></View>
-          <Text style={styles.text4}>Người phát triển: Đặng Văn Thùy</Text>
+          <Text style={styles.text4}>Người phát triển: Nhóm 4</Text>
         </View>
       </View>
     </View>
@@ -150,7 +166,7 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
     alignSelf: 'center',
-    marginRight: 10
+    marginRight: 20,
   },
   allignview1: {
     flexDirection: 'row', justifyContent: 'space-between'
