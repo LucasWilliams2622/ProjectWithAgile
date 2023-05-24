@@ -21,6 +21,13 @@ const TopTabThuChi = () => {
                 tabBarShowIcon={true}
                 keyboardDismissMode='interactive'
                 backBehavior='initialRoute'
+                tabBarOptions={{
+                    activeTintColor: 'white',
+                    inactiveTintColor: 'gray',
+                    indicatorStyle: {
+                        backgroundColor: 'white',
+                    },
+                }}
                 screenOptions={{
                     tabBarLabelStyle: { fontSize: 14 },
                     tabBarItemStyle: { width: windowWidth / 2 },
@@ -29,13 +36,6 @@ const TopTabThuChi = () => {
 
                 }}
 
-                tabBarOptions={{
-                    activeTintColor: 'white',
-                    inactiveTintColor: 'gray',
-                    indicatorStyle: {
-                        backgroundColor: 'white',
-                    },
-                }}
                 initialRouteName="TabThuChi">
                 <Tab.Screen name="CHI TIÊU" component={TabChi} />
                 <Tab.Screen name="THU NHẬP" component={TabThu} />

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image,Dimensions, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity } from 'react-native'
 import React, { useEffect, useRef } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -11,25 +11,40 @@ import Profile from './Profile'
 import Setting from './Setting'
 import Chart from './Chart'
 import History from './History';
+import TopTabThuChi from '../MainTabs/TopTabThuChi'
+
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-import TopTabThuChi from '../MainTabs/TopTabThuChi'
 const StackHome = () => {
   return (
     <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Setting" component={Setting} />
+      <Stack.Screen name="Chart" component={Chart} />
+      <Stack.Screen name="AddNew" component={AddNew} />
 
+      <Stack.Screen name="History" component={History} />
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="TopTabThuChi" component={TopTabThuChi} />
     </Stack.Navigator>
   )
 }
 const StackHistory = () => {
   return (
     <Stack.Navigator initialRouteName="History" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Setting" component={Setting} />
+      <Stack.Screen name="Chart" component={Chart} />
+      <Stack.Screen name="AddNew" component={AddNew} />
+
       <Stack.Screen name="History" component={History} />
       <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="TopTabThuChi" component={TopTabThuChi} />
+
 
     </Stack.Navigator>
   )
@@ -38,7 +53,15 @@ const StackHistory = () => {
 const StackAddNew = () => {
   return (
     <Stack.Navigator initialRouteName="AddNew" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Setting" component={Setting} />
+      <Stack.Screen name="Chart" component={Chart} />
       <Stack.Screen name="AddNew" component={AddNew} />
+
+      <Stack.Screen name="History" component={History} />
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="TopTabThuChi" component={TopTabThuChi} />
+
 
     </Stack.Navigator>
   )
@@ -47,10 +70,15 @@ const StackAddNew = () => {
 const StackChart = () => {
   return (
     <Stack.Navigator initialRouteName="Chart" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Setting" component={Setting} />
       <Stack.Screen name="Chart" component={Chart} />
       <Stack.Screen name="AddNew" component={AddNew} />
+
       <Stack.Screen name="History" component={History} />
       <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="TopTabThuChi" component={TopTabThuChi} />
+
     </Stack.Navigator>
   )
 }
@@ -59,11 +87,13 @@ const StackSetting = () => {
     <Stack.Navigator initialRouteName="Setting" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="Setting" component={Setting} />
-
       <Stack.Screen name="Chart" component={Chart} />
       <Stack.Screen name="AddNew" component={AddNew} />
+
       <Stack.Screen name="History" component={History} />
       <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="TopTabThuChi" component={TopTabThuChi} />
+
     </Stack.Navigator>
   )
 }
@@ -133,8 +163,6 @@ const BottomTabs = () => {
 
           },
         })}
-
-
     >
       <Tab.Screen name="StackHome" component={StackHome} />
       <Tab.Screen name="StackHistory" component={StackHistory} />

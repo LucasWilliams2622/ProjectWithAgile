@@ -6,42 +6,42 @@ const data = [
   {
       id: 1,
       name: 'Chứng khoán',
-      img: require('../../Resource/chungkhoan.png')
+      img: require('../../asset/image/chungkhoan.png')
   },
   {
       id: 2,
       name: 'Quà tặng',
-      img: require('../../Resource/quatang.png')
+      img: require('../../asset/image/quatang.png')
   },
   {
       id: 3,
       name: 'Thưởng',
-      img: require('../../Resource/thuong.png')
+      img: require('../../asset/image/quatang.png')
   },
   {
       id: 4,
       name: 'Kinh doanh',
-      img: require('../../Resource/kinhdoanh.png')
+      img: require('../../asset/image/kinhdoanh.png')
   },
   {
       id: 5,
       name: 'Lì xì',
-      img: require('../../Resource/lixi.png')
+      img: require('../../asset/image/lixi.png')
   },
   {
       id: 6,
       name: 'Luong',
-      img: require('../../Resource/luong.png')
+      img: require('../../asset/image/luong.png')
   },
   {
       id: 7,
       name: 'Trúng thưởng',
-      img: require('../../Resource/trungthuong.png')
+      img: require('../../asset/image/trungthuong.png')
   },
   {
       id: 8,
       name: 'Khác',
-      img: require('../../Resource/khac.png')
+      img: require('../../asset/image/khac.png')
   }
   
 

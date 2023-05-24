@@ -54,7 +54,7 @@ const Setting = (props) => {
           <View style={styles.line}></View>
           <TouchableOpacity style={styles.allignview1} onPress={showNotification}>
             <Text style={styles.text4}>Đơn vị tiền tệ</Text>
-            <Image source={require('../../Resource/sort.png')}
+            <Image source={require('../../asset/icon/icon_sort.png')}
               style={styles.ImageStyle}></Image>
           </TouchableOpacity>
         </View>

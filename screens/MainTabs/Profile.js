@@ -103,7 +103,7 @@ const Profile = (props) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => { navigation.goBack() }}>
-          <Image style={[styles.ImageStyle, { tintColor: COLOR.white }]} source={require('../../Resource/back.png')}></Image>
+          <Image style={[styles.ImageStyle, { tintColor: COLOR.white }]} source={require('../../asset/image/profile.png')}></Image>
 
         </TouchableOpacity>
         <Text style={styles.text}>Người dùng</Text>
@@ -123,7 +123,7 @@ const Profile = (props) => {
         <Text style={styles.text1}>Name</Text>
         <View style={styles.SectionStyle}>
           <Image
-            source={require('../../Resource/editprofile.png')}
+            source={require('../../asset/image/profile.png')}
             style={styles.ImageStyle} />
 
           <TextInput
@@ -136,7 +136,7 @@ const Profile = (props) => {
         <Text style={styles.text1}>Description</Text>
         <View style={styles.SectionStyle}>
           <Image
-            source={require('../../Resource/pen.png')}
+            source={require('../../asset/image/profile.png')}
             style={[styles.ImageStyle, { tintColor: COLOR.black }]} />
 
           <TextInput

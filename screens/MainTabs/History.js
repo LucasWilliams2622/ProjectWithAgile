@@ -12,7 +12,7 @@ const History = () => {
 
       <View style={styles.viewSearch}>
         <TextInput placeholder='Tìm kiếm' style={styles.input}></TextInput>
-        <Image style={styles.imageSearch} source={require('../../Resource/search.png')}></Image>
+        <Image style={styles.imageSearch} source={require('../../asset/icon/icon_search.png')}></Image>
       </View>
 
       <Text style={styles.textToday}>23-05-2023</Text>
@@ -25,7 +25,7 @@ const History = () => {
         <View style={styles.viewListGiveAndPay}>
           <View>
             <TouchableOpacity>
-              <Image style={{ height: 100, width: 100 }} source={require('../../Resource/edit.png')}></Image>
+              <Image style={{ height: 100, width: 100 }} source={require('../../asset/icon/icon_edit.png')}></Image>
             </TouchableOpacity>
           </View>
           <View style={{ marginTop: 30 }}>

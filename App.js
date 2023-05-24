@@ -32,9 +32,9 @@ const StackBegin = () => {
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
 
-//     </Stack.Navigator>
-//   )
-// }
+     </Stack.Navigator>
+  )
+}
 const App = () => {
   return (
     <NavigationContainer>
