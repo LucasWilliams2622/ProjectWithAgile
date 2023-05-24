@@ -3,8 +3,8 @@ import React from 'react'
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { ICON, COLOR } from '../../constants/Themes'
-import TabThu from '../TestTab/TabThu';
-import TabChi from '../TestTab/TabChi';
+import TabThu from './TabThu';
+import TabChi from './TabChi';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const windowWidth = Dimensions.get('window').width;
@@ -21,6 +21,13 @@ const TopTabThuChi = () => {
                 tabBarShowIcon={true}
                 keyboardDismissMode='interactive'
                 backBehavior='initialRoute'
+                tabBarOptions={{
+                    activeTintColor: 'white',
+                    inactiveTintColor: 'gray',
+                    indicatorStyle: {
+                        backgroundColor: 'white',
+                    },
+                }}
                 screenOptions={{
                     tabBarLabelStyle: { fontSize: 14 },
                     tabBarItemStyle: { width: windowWidth / 2 },
@@ -29,13 +36,6 @@ const TopTabThuChi = () => {
 
                 }}
 
-                tabBarOptions={{
-                    activeTintColor: 'white',
-                    inactiveTintColor: 'gray',
-                    indicatorStyle: {
-                        backgroundColor: 'white',
-                    },
-                }}
                 initialRouteName="TabThuChi">
                 <Tab.Screen name="CHI TIÊU" component={TabChi} />
                 <Tab.Screen name="THU NHẬP" component={TabThu} />
