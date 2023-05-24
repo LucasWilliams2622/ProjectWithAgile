@@ -19,6 +19,9 @@ import Profile from './screens/MainTabs/Profile'
 import Test from './screens/TestTab/AddGif'
 import ItemTransaction from './component/ItemTransaction'
 import ItemCollect from './component/ItemCollect'
+import TopTabThuChi from './screens/MainTabs/TopTabThuChi';
+import TabChi from './screens/TestTab/TabChi';
+import TabThu from './screens/TestTab/TabThu';
 
 
 const Stack = createNativeStackNavigator();
@@ -29,9 +32,9 @@ const StackBegin = () => {
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
 
-    </Stack.Navigator>
-  )
-}
+//     </Stack.Navigator>
+//   )
+// }
 const App = () => {
   return (
     <NavigationContainer>
@@ -42,10 +45,12 @@ const App = () => {
         <Stack.Screen name="AddNew" component={AddNew} />
         <Stack.Screen name="Setting" component={Setting} />
 
+      
+      </Stack.Navigator> 
+     
 
-      </Stack.Navigator>
     </NavigationContainer>
-
+    
   )
 }
 
