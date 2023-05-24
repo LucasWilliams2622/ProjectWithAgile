@@ -6,10 +6,75 @@ import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolic
 const Home = () => {
 
   const [isShow, setisShow] = useState(true);
-
   return (
     <View>
       <Text>Home</Text>
+
+      <View style={styles.background}></View>
+
+      <TouchableOpacity>
+        <View style={styles.viewAvatarAndText}>
+          <Image source={require('../../asset/image/profile.png')} style={styles.imageProfile}></Image>
+          <Text style={styles.textHello}>Hello Bro</Text>
+        </View>
+      </TouchableOpacity>
+
+      <View style={styles.viewMenu}>
+        <View style={styles.viewIn4Menu}>
+
+          <View style={styles.viewIn4Menu1}>
+            <View style={[styles.flex, { alignItems: 'center' }]}>
+              <Image style={styles.image} source={require('../../asset/image/profile.png')}></Image>
+              <Text style={styles.textDate}>23-05-2023</Text>
+            </View>
+            <TouchableOpacity onPress={() => setisShow(!isShow)}>
+              <Image style={styles.imageInvisible} source={require('../../asset/image/profile.png')}></Image>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.viewIn4Menu2}>
+            <Text style={styles.textPrice}>Tổng: </Text>
+            {
+              isShow ? <Text style={styles.textPrice}>********</Text> : <Text style={styles.textPrice}>0 VND</Text>
+            }
+
+          </View>
+
+          <View style={styles.viewIn4Menu3}>
+            <View style={[styles.flex, { alignItems: 'center' }]}>
+              <Text style={styles.textGiveAndPay}>Thu Nhập:</Text>
+              {
+                isShow ? <Text style={styles.textGiveAndPay}>********</Text> : <Text style={styles.textGiveAndPay}>1.000.000 VND</Text>
+              }
+            </View>
+            <View style={[styles.flex, { alignItems: 'center' }]}>
+              <Text style={styles.textGiveAndPay}>Chi Tiêu:</Text>
+              {
+                isShow ? <Text style={styles.textGiveAndPay}>********</Text> : <Text style={styles.textGiveAndPay}>1.000.000 VND</Text>
+              }
+            </View>
+          </View>
+
+        </View>
+      </View>
+
+      <Text style={styles.textToday}>Hôm nay:</Text>
+
+      <ScrollView>
+        <View style={styles.viewListGiveAndPay}>
+          <View>
+            <TouchableOpacity>
+              <Image style={{ height: 250, width: 250 }} source={require('../../asset/gif/statistica.gif')}></Image>
+            </TouchableOpacity>
+          </View>
+          <View style={{ marginTop: 30 }}>
+            <TouchableOpacity>
+              <Text style={styles.textGif}>Hãy thêm chi tiêu hôm nay. Chạm vào đây dể thêm.</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
+
     </View>
   )
 }
@@ -28,8 +93,8 @@ const styles = StyleSheet.create({
   },
   background: {
     backgroundColor: COLOR.title,
-    height: 200,
-    borderRadius: 30,
+    height: 180,
+    borderRadius: 20,
     marginTop: -40
   },
   viewAvatarAndText: {
@@ -111,7 +176,7 @@ const styles = StyleSheet.create({
   },
   textGiveAndPay: {
     //fontFamily:
-    fontSize: 14,
+    fontSize: 12,
     // fontFamily:,
     fontStyle: 'normal',
     fontWeight: '400',
@@ -121,7 +186,7 @@ const styles = StyleSheet.create({
     //fontFamily:
     fontSize: 14,
     // fontFamily:,
-    fontStyle: 'normal',
+    fontStyle: 'italic',
     fontWeight: '400',
     color: COLOR.black,
     marginTop: 20,

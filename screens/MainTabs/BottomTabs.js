@@ -169,7 +169,6 @@ const BottomTabs = () => {
       <Tab.Screen name="StackAddNew" component={StackAddNew} />
       <Tab.Screen name="StackChart" component={StackChart} />
       <Tab.Screen name="StackSetting" component={StackSetting} />
-
     </Tab.Navigator>
   )
 }
