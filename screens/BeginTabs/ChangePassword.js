@@ -1,5 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+
 import { Pressable, StyleSheet, Text, TextInput, View, Image, ToastAndroid } from 'react-native'
 import React, { useState } from 'react'
 

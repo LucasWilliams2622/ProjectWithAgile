@@ -5,6 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import Login from './screens/BeginTabs/Login'
 import Register from './screens/BeginTabs/Register'
+import ChangePassword from './screens/BeginTabs/ChangePassword'
+
 import Intro from './screens/BeginTabs/Intro'
 
 import AddNew from './screens/MainTabs/AddNew'
@@ -27,11 +29,13 @@ import PieChartScreen from './screens/TestTab/PieChartScreen'
 const Stack = createNativeStackNavigator();
 const StackBegin = () => {
   return (
-    <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="ChangePassword" screenOptions={{ headerShown: false }}>
 
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen name="ChangePassword" component={ChangePassword} />
 
+      
     </Stack.Navigator>
   )
 }
