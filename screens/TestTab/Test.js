@@ -1,33 +1,14 @@
-// import React, { useState } from 'react';
-// import { View, Text } from 'react-native';
-// import WheelPicker from 'react-native-wheel-picker-android';
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
 
-// const Test = () => {
-//   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+const Test = () => {
+  return (
+    <View>
+      <Text>Test</Text>
+    </View>
+  )
+}
 
-//   const years = Array.from({ length: 100 }, (_, i) => new Date().getFullYear() - i);
+export default Test
 
-//   const onYearValueChange = (index) => {
-//     setSelectedYear(years[index]);
-//   };
-
-//   return (
-//     <View>
-//       <Text>Year Picker Example</Text>
-//       <WheelPicker
-//         data={years}
-//         selectedItem={years.indexOf(selectedYear)}
-//         onItemSelected={onYearValueChange}
-//         isCyclic
-//         selectedItemTextColor="#000000"
-//         itemTextColor="#B0B0B0"
-//         selectedItemTextSize={24}
-//         itemTextSize={16}
-//         style={{ width: 200, height: 150 }}
-//       />
-//       <Text>Selected Year: {selectedYear}</Text>
-//     </View>
-//   );
-// };
-
-// export default Test;
+const styles = StyleSheet.create({})

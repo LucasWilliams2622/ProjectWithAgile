@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image,Dimensions, TouchableOpacity } from 'react-native'
 import React, { useEffect, useRef } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -11,7 +11,8 @@ import Profile from './Profile'
 import Setting from './Setting'
 import Chart from './Chart'
 import History from './History';
-
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -65,28 +66,6 @@ const BottomTabs = () => {
   return (
     <Tab.Navigator
       initialRouteName="StackHome"
-      // tabBarOptions={{
-      //   tabBarShowLabel: false,
-      //   style: {
-      //     borderTopLeftRadius: 20,
-      //     borderTopRightRadius: 20,
-      //     backgroundColor: '#FFFFFF',
-      //     shadowColor: '#000000',
-      //     shadowOffset: {
-      //       width: 0,
-      //       height: 2,
-      //     },
-      //     shadowOpacity: 0.25,
-      //     shadowRadius: 3.84,
-      //     elevation: 5,
-      //   },
-      //   labelStyle: {
-      //     fontSize: 14,
-      //     fontWeight: 'bold',
-      //   },
-      //   activeTintColor: '#FF6347',
-      //   inactiveTintColor: '#A9A9A9',
-      // }}
       screenOptions={
         ({ route }) => ({
           tabBarIcon: ({ focused, label, size }) => {
@@ -144,7 +123,6 @@ const BottomTabs = () => {
           tabBarStyle: {
             height: 70,
             position: 'absolute',
-           
             backgroundColor: COLOR.background,
 
           },
@@ -163,5 +141,3 @@ const BottomTabs = () => {
 }
 
 export default BottomTabs
-
-const styles = StyleSheet.create({})
