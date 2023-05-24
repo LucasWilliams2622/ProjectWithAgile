@@ -1,23 +1,119 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native'
+import React,{useState} from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import { TextInput } from 'react-native-paper'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 
 
-const Profile = () => {
+const Profile = (props) => {
+  const { route, navigation } = props;
+
+  const [avatar, setAvatar] = useState(null)
+  const [name, setName] = useState('')
+  const [description, setDescription] = useState('')
+  const dialogImageChoose = () => {
+    return Alert.alert(
+      "Thông báo",
+      "Chọn phương thức lấy ảnh",
+      [
+        {
+          text: "Chụp ảnh ",
+          onPress: () => {
+            capture()
+          },
+        },
+
+        {
+          text: "Tải ảnh lên",
+          onPress: () => {
+            getImageLibrary()
+          },
+        },
+        {
+          text: "Hủy",
+        },
+      ]
+    );
+  };
+  const capture = async () => {
+    const result = await launchCamera();
+    console.log(result.assets[0].uri);
+    // const formdata = new FormData();
+    // formdata.append('image', {
+    //   uri: result.assets[0].uri,
+    //   type: 'image/jpeg',
+    //   name: 'image.jpg',
+    // });
+
+    // const response = await AxiosInstance("multipart/form-data").post('user/api/upload-avatar', formdata);
+    // console.log(response.link);
+    // if (response.result == true) {
+    //   setAvatar(response.link);
+    //   ToastAndroid.show("Upload Image Success", ToastAndroid.SHORT);
+    // }
+    // else {
+    //   ToastAndroid.show("Upload Image Failed", ToastAndroid.SHORT);
+    // }
+  }
   const getImageLibrary = async () => {
     const result = await launchImageLibrary();
+    console.log(result.assets[0].uri);
+    // const formdata = new FormData();
+    // formdata.append('image', {
+    //   uri: result.assets[0].uri,
+    //   type: 'image/jpeg',
+    //   name: 'image.jpg',
+    // });
+    // const response = await AxiosInstance("multipart/form-data").post('user/api/upload-avatar', formdata);
+    // console.log(response.link);
+    // if (response.result == true) {
+    //   setAvatar(response.link);
+    //   ToastAndroid.show("Upload ảnh thành công", ToastAndroid.SHORT);
+    // }
+    // else {
+    //   ToastAndroid.show("Upload ảnh thất bại", ToastAndroid.SHORT);
+    // }
+  }
+  const updateProfile = async () => {
+    let rawNumber = phoneNumber.substring(3)
+    console.log("----------------->", avatar, dob, name, phoneNumber, email, address)
+    console.log(rawNumber)
+    try {
+      const response = await AxiosInstance().put('user/api/update',
+        {
+          phoneNumber: rawNumber, password: password, name: name,
+          email: email, address: address, gender: gender, dob: dob, avatar: avatar, role: role
+        })
+      console.log(response)
+      if (response.result) {
+        ToastAndroid.show("Update Success", ToastAndroid.SHORT, ToastAndroid.CENTER);
+      } else {
+        ToastAndroid.show("Update Failed", ToastAndroid.SHORT, ToastAndroid.CENTER);
+      }
+    } catch (error) {
+      ToastAndroid.show("Update ERROR SYS", ToastAndroid.SHORT, ToastAndroid.CENTER);
+
+    }
 
   }
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Image style={[styles.ImageStyle, { tintColor: COLOR.white }]} source={require('../../Resource/back.png')}></Image>
+        <TouchableOpacity onPress={() => { navigation.goBack() }}>
+          <Image style={[styles.ImageStyle, { tintColor: COLOR.white }]} source={require('../../Resource/back.png')}></Image>
+
+        </TouchableOpacity>
         <Text style={styles.text}>Người dùng</Text>
       </View>
-      <TouchableOpacity onPress={getImageLibrary}>
-        <Image style={styles.imageProfile} source={require('../../asset/image/profile.png')}></Image>
+
+      <TouchableOpacity onPress={dialogImageChoose}>
+        {
+          !avatar
+            ?
+            (<Image style={styles.imageProfile} source={require('../../asset/image/profile.png')} />)
+            :
+            (<Image style={styles.imageProfile} source={{ uri: avatar }} />)
+        }
       </TouchableOpacity>
 
       <View style={styles.content}>

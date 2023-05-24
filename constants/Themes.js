@@ -7,6 +7,7 @@ export const COLOR = {
     background2: '#2ea3d6',
 
 
+    
     title: '#4daad2',
     black: '#000',
     white: '#ffffff',

@@ -29,6 +29,7 @@ const StackHistory = () => {
   return (
     <Stack.Navigator initialRouteName="History" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="History" component={History} />
+      <Stack.Screen name="Home" component={Home} />
 
     </Stack.Navigator>
   )
@@ -38,6 +39,8 @@ const StackAddNew = () => {
   return (
     <Stack.Navigator initialRouteName="AddNew" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="AddNew" component={AddNew} />
+      <Stack.Screen name="History" component={History} />
+      <Stack.Screen name="Home" component={Home} />
 
     </Stack.Navigator>
   )
@@ -47,7 +50,9 @@ const StackChart = () => {
   return (
     <Stack.Navigator initialRouteName="Chart" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Chart" component={Chart} />
-
+      <Stack.Screen name="AddNew" component={AddNew} />
+      <Stack.Screen name="History" component={History} />
+      <Stack.Screen name="Home" component={Home} />
     </Stack.Navigator>
   )
 }
@@ -57,7 +62,10 @@ const StackSetting = () => {
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="Setting" component={Setting} />
 
-
+      <Stack.Screen name="Chart" component={Chart} />
+      <Stack.Screen name="AddNew" component={AddNew} />
+      <Stack.Screen name="History" component={History} />
+      <Stack.Screen name="Home" component={Home} />
     </Stack.Navigator>
   )
 }

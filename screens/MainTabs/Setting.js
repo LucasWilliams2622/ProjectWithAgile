@@ -1,13 +1,22 @@
-import { StyleSheet, Text, View, Image, Switch } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Image, Switch, TouchableOpacity } from 'react-native'
+import React,{useState} from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
-const Setting = () => {
+import ToggleSwitch from 'toggle-switch-react-native'
+
+const Setting = (props) => {
+  const { navigation } = props;
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.text}>Cài đặt</Text>
         <View style={styles.view1}>
-          <Image style={styles.imageProfile} source={require('../../asset/image/profile.png')}></Image>
+          <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+            <Image style={styles.imageProfile} source={require('../../asset/image/profile.png')}></Image>
+          </TouchableOpacity>
           <Text style={styles.text1}>User</Text>
         </View>
       </View>
@@ -20,18 +29,21 @@ const Setting = () => {
               <Text style={styles.text5}>10:00</Text>
             </View>
             <Switch
+             style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
+         
+             thumbColor={isEnabled ? '#FFFFFF' : '#FFFFFF'}
+             ios_backgroundColor="#3e3e3e"
+             onValueChange={toggleSwitch}
+             value={isEnabled}
               trackColor={{ false: '#767577', true: '#81b0ff' }}
-              ios_backgroundColor="#3e3e3e"
-            />
+              />
           </View>
           <View style={styles.line}></View>
-          <View style={styles.allignview1}> 
+          <View style={styles.allignview1}>
             <Text style={styles.text4}>Đơn vị tiền tệ</Text>
             <Image source={require('../../Resource/sort.png')}
               style={styles.ImageStyle}></Image>
-
           </View>
-
         </View>
       </View>
 
@@ -47,8 +59,6 @@ const Setting = () => {
           <Text style={styles.text4}>Người phát triển: Đặng Văn Thùy</Text>
         </View>
       </View>
-
-
     </View>
   )
 }
@@ -98,7 +108,9 @@ const styles = StyleSheet.create({
   text2: {
     fontSize: 22,
     color: COLOR.black,
-    margin: 20
+    marginHorizontal: 20,
+    marginBottom: 10,
+    marginTop: 30
   },
   view2: {
     backgroundColor: COLOR.white,
@@ -137,10 +149,10 @@ const styles = StyleSheet.create({
   ImageStyle: {
     height: 20,
     width: 20,
-    alignSelf:'center',
-    marginRight:10
+    alignSelf: 'center',
+    marginRight: 10
   },
-  allignview1:{
+  allignview1: {
     flexDirection: 'row', justifyContent: 'space-between'
   }
 })
