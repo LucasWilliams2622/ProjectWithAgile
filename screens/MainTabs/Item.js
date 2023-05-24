@@ -11,8 +11,8 @@ const Item = () => {
                     <View style={styles.viewMenu1}>
                         <Text style={styles.textCategory}>Quần Áo</Text>
                         <View style={{flexDirection:'row'}}>
-                            <Image style={styles.imageEditAndDelete} source={require('../../Resource/pen.png')}></Image>
-                            <Image style={styles.imageEditAndDelete} source={require('../../Resource/recyclebin.png')}></Image>
+                            <Image style={styles.imageEditAndDelete} source={require('../../asset/image/pen.png')}></Image>
+                            <Image style={styles.imageEditAndDelete} source={require('../../asset/image/recyclebin.png')}></Image>
                         </View>
                     </View>
                     <View>
@@ -24,7 +24,8 @@ const Item = () => {
                     </View>
                 </View>
             </View>
-            <Image style={styles.imageItem} source={require('../../Resource/cafe.png')}></Image>
+            <Image style={styles.imageItem} source={require('../../asset/image/cafe.png')}></Image>
+            
 
         </View>
     )

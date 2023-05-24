@@ -3,8 +3,8 @@ import React from 'react'
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { ICON, COLOR } from '../../constants/Themes'
-import TabThu from '../TestTab/TabThu';
-import TabChi from '../TestTab/TabChi';
+import TabThu from './TabThu';
+import TabChi from './TabChi';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const windowWidth = Dimensions.get('window').width;
