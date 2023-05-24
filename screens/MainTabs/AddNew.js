@@ -14,6 +14,7 @@ const AddNew = (props) => {
       <View style={styles.bgTop}>
         <TouchableOpacity>
           <Image style={styles.imgColorTop} source={require('../../asset/image/back.png')}></Image>
+          <Image style={styles.imgColorTop} source={require('../../asset/icon/icon_edit.png')}></Image>
         </TouchableOpacity>
         <Text style={styles.textTitle}>Thêm chi tiêu cho hôm nay</Text>
       </View>
@@ -21,7 +22,7 @@ const AddNew = (props) => {
 
       <View style={styles.bgMain}>
         <View style={styles.bgTop}>
-          <Image style={styles.imgColor} source={require('../../asset/image/edit.png')}></Image>
+          <Image style={styles.imgColor} source={require('../../asset/icon/icon_edit.png')}></Image>
           <TouchableOpacity >
             <TextInput placeholderTextColor='white' underlineColor='transparent' style={styles.textMoney} placeholder='Nhập số tiền'></TextInput>
           </TouchableOpacity>
@@ -32,7 +33,7 @@ const AddNew = (props) => {
       <View>
         <View style={styles.input}>
           <TouchableOpacity >
-            <Image style={styles.imgInput} source={require('../../asset/image/calender.png')} />
+            <Image style={styles.imgInput} source={require('../../asset/icon/icon_calender.png')} />
           </TouchableOpacity>
           <TextInput style={styles.txtInput}></TextInput>
         </View>
@@ -43,8 +44,8 @@ const AddNew = (props) => {
 
       <View style={{ top: 10 }}>
         <View style={styles.input}>
-          <TouchableOpacity onPress={() => { navigation.navigate('TopTabThuChi') }}>
-            <Image style={styles.imgInput} source={require('../../asset/image/type.png')} />
+          <TouchableOpacity onPress={()=>{navigation.navigate('TopTabThuChi')}}>
+            <Image style={styles.imgInput} source={require('../../asset/icon/icon_type.png')} />
           </TouchableOpacity>
           <TextInput placeholder='Chọn loại' style={styles.txtInput}></TextInput>
         </View>
@@ -53,7 +54,7 @@ const AddNew = (props) => {
 
       <View style={{ top: 10 }}>
         <View style={styles.input}>
-          <Image style={styles.imgNote} source={require('../../asset/image/note.png')} />
+          <Image style={styles.imgNote} source={require('../../asset/icon/icon_note.png')} />
           <TextInput placeholder='Ghi chú' style={styles.txtInput}></TextInput>
         </View>
       </View>

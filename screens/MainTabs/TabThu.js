@@ -17,6 +17,7 @@ const data = [
       id: 3,
       name: 'Thưởng',
       img: require('../../asset/image/thuong.png')
+      
   },
   {
       id: 4,
