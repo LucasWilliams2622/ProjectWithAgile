@@ -1,5 +1,6 @@
 
-import { Pressable, StyleSheet, Text, TextInput, View, Image, ToastAndroid } from 'react-native'
+import { Pressable, StyleSheet, Text, TextInput, View,
+   Image, ToastAndroid } from 'react-native'
 import React, { useState } from 'react'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 
@@ -38,7 +39,6 @@ const Register = (props) => {
   
     return (
       <View>
-        <Text>Register</Text>
         <View style={styles.container}>
           <Text style={[styles.text, { color: '#1877F2' }]}>Hello!</Text>
           <Text style={styles.welcomeText}>Signup to get Started</Text>
@@ -72,8 +72,6 @@ const Register = (props) => {
 
   const styles = StyleSheet.create({
     container: {
-      flex: 1,
-
       marginStart: 10,
       marginEnd: 10,
       flexDirection: 'column'
