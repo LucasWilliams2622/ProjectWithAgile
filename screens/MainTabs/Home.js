@@ -45,13 +45,13 @@ const Home = () => {
             <View style={[styles.flex, { alignItems: 'center' }]}>
               <Text style={styles.textGiveAndPay}>Thu Nhập:</Text>
               {
-                isShow ? <Text style={styles.textGiveAndPay}>********</Text> : <Text style={styles.textGiveAndPay}>1.000.000 VND</Text>
+                isShow ? <Text style={styles.textGiveAndPay}>********</Text> : <Text style={styles.textGiveAndPay}>1.000 VND</Text>
               }
             </View>
             <View style={[styles.flex, { alignItems: 'center' }]}>
               <Text style={styles.textGiveAndPay}>Chi Tiêu:</Text>
               {
-                isShow ? <Text style={styles.textGiveAndPay}>********</Text> : <Text style={styles.textGiveAndPay}>1.000.000 VND</Text>
+                isShow ? <Text style={styles.textGiveAndPay}>********</Text> : <Text style={styles.textGiveAndPay}>-1.000 VND</Text>
               }
             </View>
           </View>
