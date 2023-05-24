@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View, Image, Switch } from 'react-native'
+import { StyleSheet, Text, View, Image, Switch, ScrollView } from 'react-native'
 import React from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 const Setting = () => {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.text}>Cài đặt</Text>
         <View style={styles.view1}>
@@ -11,6 +11,7 @@ const Setting = () => {
           <Text style={styles.text1}>User</Text>
         </View>
       </View>
+
       <View >
         <Text style={styles.text2}>Cài đặt chung</Text>
         <View style={styles.view2}>
@@ -25,7 +26,7 @@ const Setting = () => {
             />
           </View>
           <View style={styles.line}></View>
-          <View style={styles.allignview1}> 
+          <View style={styles.allignview1}>
             <Text style={styles.text4}>Đơn vị tiền tệ</Text>
             <Image source={require('../../Resource/sort.png')}
               style={styles.ImageStyle}></Image>
@@ -49,7 +50,18 @@ const Setting = () => {
       </View>
 
 
-    </View>
+      <View >
+        <Text style={styles.text2}>Hỗ trợ chúng tôi</Text>
+        <View style={styles.view4}>
+          <Text style={styles.text4}>Đánh giá</Text>
+          <View style={styles.line}></View>
+          <Text style={styles.text4}>Phản hồi</Text>
+          <View style={styles.line}></View>
+          <Text style={styles.text4}>Chia sẽ ứng dụng</Text>
+        </View>
+      </View>
+
+    </ScrollView>
   )
 }
 
@@ -58,7 +70,8 @@ export default Setting
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLOR.grey,
-    width: '100%'
+    width: '100%',
+    height:'100%'
   },
   text: {
     fontSize: 22,
@@ -111,11 +124,16 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.white,
     width: '100%',
     height: 200,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    borderTopWidth: 1,
-    borderRightWidth: 1,
-    borderLeftWidth: 1
+    borderRadius: 20,
+    borderWidth: 1
+  },
+  view4: {
+    backgroundColor: COLOR.white,
+    width: '100%',
+    height: 200,
+    borderRadius: 20,
+    borderWidth: 1,
+    marginBottom:20
   },
   line: {
     backgroundColor: COLOR.gray,
@@ -137,10 +155,10 @@ const styles = StyleSheet.create({
   ImageStyle: {
     height: 20,
     width: 20,
-    alignSelf:'center',
-    marginRight:10
+    alignSelf: 'center',
+    marginRight: 10
   },
-  allignview1:{
+  allignview1: {
     flexDirection: 'row', justifyContent: 'space-between'
   }
 })
