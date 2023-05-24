@@ -16,7 +16,7 @@ const windowHeight = Dimensions.get('window').height;
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-
+import TopTabThuChi from '../MainTabs/TopTabThuChi'
 const StackHome = () => {
   return (
     <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
@@ -39,8 +39,6 @@ const StackAddNew = () => {
   return (
     <Stack.Navigator initialRouteName="AddNew" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="AddNew" component={AddNew} />
-      <Stack.Screen name="History" component={History} />
-      <Stack.Screen name="Home" component={Home} />
 
     </Stack.Navigator>
   )

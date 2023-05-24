@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, KeyboardAvoidingView } from 'react-native'
 import React,{useState} from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import { TextInput } from 'react-native-paper'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
 const Profile = (props) => {
@@ -97,6 +98,8 @@ const Profile = (props) => {
 
   }
   return (
+  <KeyboardAwareScrollView >
+
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => { navigation.goBack() }}>
@@ -135,18 +138,15 @@ const Profile = (props) => {
           <TextInput
             style={styles.textInput}
             placeholder="Xin chào bạn cho vài lời"
-
           />
         </View>
-
         <TouchableOpacity style={styles.buttonSave}>
           <Text style={styles.text2}>Lưu thay đổi</Text>
         </TouchableOpacity>
       </View>
-
-
-
     </View >
+  </KeyboardAwareScrollView>
+
   )
 }
 
