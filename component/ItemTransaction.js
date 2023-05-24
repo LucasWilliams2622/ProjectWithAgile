@@ -8,7 +8,7 @@ const ItemTransaction = () => {
     <View style={{ marginTop: 150, }}>
       <View style={styles.boxItem}>
         <View style={styles.boxContent}>
-          <Image style={styles.image} resizeMode='cover' source={require('../asset/image/bedroom.png')} />
+          <Image style={styles.image} resizeMode='cover' source={require('../asset/icon/item/water.png')} />
           <View style={styles.boxText} >
             <Text style={styles.title}>Thuc An</Text>
             <Text style={styles.money}>-100.000 VND</Text>
@@ -18,7 +18,7 @@ const ItemTransaction = () => {
           <View style={styles.boxDetail}>
             <View style={styles.boxIcon}>
               <Image style={[styles.icon, { tintColor: COLOR.primary, width: 30, height: 27 }]} source={require('../asset/icon/icon_edit.png')} />
-              <Image style={[styles.icon, { tintColor: COLOR.darkRed }]} source={require('../asset/icon/icon_trash_bin.png')} />
+              <Image style={[styles.icon, { tintColor: COLOR.darkRed }]} source={require('../asset/icon/icon_delete.png')} />
             </View>
             <Text style={styles.date}>11-11-2222</Text>
           </View>

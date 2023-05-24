@@ -13,7 +13,7 @@ const AddNew = (props) => {
     <View style={styles.container} >
       <View style={styles.bgTop}>
         <TouchableOpacity>
-          <Image style={styles.imgColorTop} source={require('../../asset/image/back.png')}></Image>
+          <Image style={styles.imgColorTop} source={require('../../asset/icon/icon_back.png')}></Image>
           <Image style={styles.imgColorTop} source={require('../../asset/icon/icon_edit.png')}></Image>
         </TouchableOpacity>
         <Text style={styles.textTitle}>Thêm chi tiêu cho hôm nay</Text>

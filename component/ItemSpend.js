@@ -7,7 +7,7 @@ const ItemSpend = () => {
   return (
     <View style={styles.ItemSpend}>
       <Image style={styles.icon} 
-      source={require('../asset/image/bedroom.png')} />
+      source={require('../asset/icon/item/plane.png')} />
       <Text style={styles.text}>ItemSpend</Text>
     </View>
   )

@@ -6,43 +6,43 @@ const data = [
   {
       id: 1,
       name: 'Chứng khoán',
-      img: require('../../asset/image/chungkhoan.png')
+      img: require('../../asset/icon/item/business.png')
   },
   {
       id: 2,
       name: 'Quà tặng',
-      img: require('../../asset/image/quatang.png')
+      img: require('../../asset/icon/item/business.png')
   },
   {
       id: 3,
       name: 'Thưởng',
-      img: require('../../asset/image/thuong.png')
+      img: require('../../asset/icon/item/business.png')
       
   },
   {
       id: 4,
       name: 'Kinh doanh',
-      img: require('../../asset/image/kinhdoanh.png')
+      img: require('../../asset/icon/item/business.png')
   },
   {
       id: 5,
       name: 'Lì xì',
-      img: require('../../asset/image/lixi.png')
+      img: require('../../asset/icon/item/business.png')
   },
   {
       id: 6,
       name: 'Luong',
-      img: require('../../asset/image/luong.png')
+      img: require('../../asset/icon/item/business.png')
   },
   {
       id: 7,
       name: 'Trúng thưởng',
-      img: require('../../asset/image/trungthuong.png')
+      img: require('../../asset/icon/item/business.png')
   },
   {
       id: 8,
       name: 'Khác',
-      img: require('../../asset/image/khac.png')
+      img: require('../../asset/icon/item/business.png')
   }
   
 

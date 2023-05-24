@@ -6,102 +6,102 @@ const data = [
     {
         id: 1,
         name: 'Quần Áo',
-        img: require('../../asset/image/clothes.png')
+        img: require('../../asset/icon/item/clothes.png')
     },
     {
         id: 2,
         name: 'Bus',
-        img: require('../../asset/image/bus.png')
+        img: require('../../asset/icon/item/bus.png')
     },
     {
         id: 3,
         name: 'Tiền nhà',
-        img: require('../../asset/image/buyhome.png')
+        img: require('../../asset/icon/item/business.png')
     },
     {
         id: 4,
         name: 'Điện',
-        img: require('../../asset/image/electric.png')
+        img: require('../../asset/icon/item/electric.png')
     },
     {
         id: 5,
         name: 'Cafe',
-        img: require('../../asset/image/cafe.png')
+        img: require('../../asset/icon/item/cafe.png')
     },
     {
         id: 6,
         name: 'Ăn uống',
-        img: require('../../asset/image/eat.png')
+        img: require('../../asset/icon/item/eat.png')
     },
     {
         id: 7,
         name: 'Giải trí',
-        img: require('../../asset/image/entertainment.png')
+        img: require('../../asset/icon/item/entertainment.png')
     },
     {
         id: 8,
         name: 'Xăng',
-        img: require('../../asset/image/gas.png')
+        img: require('../../asset/icon/item/gas.png')
     },
     {
         id: 9,
         name: 'Kinh doanh',
-        img: require('../../asset/image/kinhdoanh.png')
+        img: require('../../asset/icon/item/business.png')
     },
     {
         id: 10,
         name: 'Sửa chữa',
-        img: require('../../asset/image/machine.png')
+        img: require('../../asset/icon/item/machine.png')
     },
     {
         id: 11,
         name: 'Xem phim',
-        img: require('../../asset/image/movie.png')
+        img: require('../../asset/icon/item/movie.png')
     },
     {
         id: 12,
         name: 'Vé máy bay',
-        img: require('../../asset/image/plane.png')
+        img: require('../../asset/icon/item/plane.png')
     },
     {
         id: 13,
         name: 'Quà tặng',
-        img: require('../../asset/image/quatang.png')
+        img: require('../../asset/icon/item/business.png')
     },
     {
         id: 14,
         name: 'Thuê mượn',
-        img: require('../../asset/image/rent.png')
+        img: require('../../asset/icon/item/rent.png')
     },
     {
         id: 15,
         name: 'Mua sắm',
-        img: require('../../asset/image/shopping.png')
+        img: require('../../asset/icon/item/shopping.png')
     },
     {
         id: 16,
         name: 'Giày dép',
-        img: require('../../asset/image/shoe.png')
+        img: require('../../asset/icon/item/shoe.png')
     },
     {
         id: 17,
         name: 'Taxi',
-        img: require('../../asset/image/taxi.png')
+        img: require('../../asset/icon/item/taxi.png')
     },
     {
         id: 18,
         name: 'Du lịch',
-        img: require('../../asset/image/travel.png')
+        img: require('../../asset/icon/item/travel.png')
     },
     {
         id: 19,
         name: 'Tiền nước',
-        img: require('../../asset/image/water.png')
+        img: require('../../asset/icon/item/water.png')
     },
     {
         id: 20,
         name: 'Đồ gia dụng',
-        img: require('../../asset/image/cooking.png')
+        img: require('../../asset/icon/item/cooking.png')
     },
    
 

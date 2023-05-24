@@ -21,7 +21,7 @@ const History = () => {
         <View style={styles.viewListGiveAndPay}>
           <View>
             <TouchableOpacity>
-              <Image style={{ height: 100, width: 100 }} source={require('../../Resource/edit.png')}></Image>
+              <Image style={{ height: 300, width: 300 }} source={require('../../asset/gif/home.gif')}></Image>
             </TouchableOpacity>
           </View>
           <View style={{ marginTop: 30 }}>

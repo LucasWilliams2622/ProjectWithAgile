@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, Image, Switch, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Image, Switch, TouchableOpacity, ScrollView, Alert, ToastAndroid } from 'react-native'
+import React, { useState } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import ToggleSwitch from 'toggle-switch-react-native'
 
@@ -28,7 +28,7 @@ const Setting = (props) => {
         <Text style={styles.text}>Cài đặt</Text>
         <View style={styles.view1}>
           <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-            <Image style={styles.imageProfile} source={require('../../asset/image/profile.png')}></Image>
+            <Image style={styles.imageProfile} source={require('../../asset/icon/icon_profile.png')}></Image>
           </TouchableOpacity>
           <Text style={styles.text1}>User</Text>
         </View>
@@ -53,13 +53,10 @@ const Setting = (props) => {
             />
           </View>
           <View style={styles.line}></View>
-          <View style={styles.allignview1}>
+          <TouchableOpacity style={styles.allignview1} onPress={showNotification}>
             <Text style={styles.text4}>Đơn vị tiền tệ</Text>
-            <TouchableOpacity onPress={showNotification}>
-              <Image source={require('../../asset/icon/icon_sort.png')} style={styles.ImageStyle} />
-            </TouchableOpacity>
-
-          </View>
+            <Image source={require('../../asset/icon/icon_sort.png')} style={styles.ImageStyle} />
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -78,7 +75,16 @@ const Setting = (props) => {
           <Text style={styles.text4}>Người phát triển: Nhóm 4</Text>
         </View>
       </View>
-
+      <View style={styles.bottomItem} >
+        <Text style={styles.text2}>Hỗ trợ chúng tôi</Text>
+        <View style={styles.view4}>
+          <Text style={styles.text4}>Đánh giá</Text>
+          <View style={styles.line}></View>
+          <Text style={styles.text4}>Phản hồi</Text>
+          <View style={styles.line}></View>
+          <Text style={styles.text4}>Chia sẽ ứng dụng</Text>
+        </View>
+      </View>
 
     </ScrollView>
 
@@ -179,9 +185,15 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
     alignSelf: 'center',
-    marginRight: 10
+    marginRight: 10,
+    marginRight: 20,
   },
   allignview1: {
-    flexDirection: 'row', justifyContent: 'space-between'
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  bottomItem:{
+    marginBottom:70,
   }
 })

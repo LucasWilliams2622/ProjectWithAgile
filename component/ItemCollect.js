@@ -7,7 +7,7 @@ const ItemCollect = () => {
   return (
     <View style={styles.ItemCollect}>
       <Image style={styles.icon} 
-      source={require('../asset/image/bedroom.png')} />
+      source={require('../asset/icon/item/bonus.png')} />
       <Text style={styles.text}>ItemCollect</Text>
     </View>
   )

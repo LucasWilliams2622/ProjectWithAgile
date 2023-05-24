@@ -14,7 +14,7 @@ const Home = () => {
 
       <TouchableOpacity>
         <View style={styles.viewAvatarAndText}>
-          <Image source={require('../../asset/image/profile.png')} style={styles.imageProfile}></Image>
+          <Image source={require('../../asset/icon/icon_profile.png')} style={styles.imageProfile}></Image>
           <Text style={styles.textHello}>Hello Bro</Text>
         </View>
       </TouchableOpacity>
@@ -24,11 +24,11 @@ const Home = () => {
 
           <View style={styles.viewIn4Menu1}>
             <View style={[styles.flex, { alignItems: 'center' }]}>
-              <Image style={styles.image} source={require('../../asset/image/profile.png')}></Image>
+              <Image style={styles.image} source={require('../../asset/icon/icon_profile.png')}></Image>
               <Text style={styles.textDate}>23-05-2023</Text>
             </View>
             <TouchableOpacity onPress={() => setisShow(!isShow)}>
-              <Image style={styles.imageInvisible} source={require('../../asset/image/profile.png')}></Image>
+              <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_profile.png')}></Image>
             </TouchableOpacity>
           </View>
 
@@ -64,7 +64,7 @@ const Home = () => {
         <View style={styles.viewListGiveAndPay}>
           <View>
             <TouchableOpacity>
-              <Image style={{ height: 250, width: 250 }} source={require('../../asset/gif/statistica.gif')}></Image>
+              <Image style={{ height: 250, width: 250 }} source={require('../../asset/gif/statistic.gif')}></Image>
             </TouchableOpacity>
           </View>
           <View style={{ marginTop: 30 }}>
