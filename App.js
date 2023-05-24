@@ -23,32 +23,30 @@ import ItemCollect from './component/ItemCollect'
 
 
 const Stack = createNativeStackNavigator();
-const StackBegin = () => {
-  return (
-    <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+// const StackBegin = () => {
+//   return (
+//     <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
 
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Register" component={Register} />
+//       <Stack.Screen name="Login" component={Login} />
+//       <Stack.Screen name="Register" component={Register} />
 
      </Stack.Navigator>
   )
 }
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="BottomTabs" screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="StackBegin" component={StackBegin} />
-        <Stack.Screen name="Profile" component={Profile} />
-        <Stack.Screen name="BottomTabs" component={BottomTabs} />
-        <Stack.Screen name="AddNew" component={AddNew} />
-        <Stack.Screen name="Setting" component={Setting} />
+    // <NavigationContainer>
+    //   <Stack.Navigator initialRouteName="BottomTabs" screenOptions={{ headerShown: false }}>
+    //     <Stack.Screen name="StackBegin" component={StackBegin} />
+    //     <Stack.Screen name="Profile" component={Profile} />
+    //     <Stack.Screen name="BottomTabs" component={BottomTabs} />
+    //     <Stack.Screen name="AddNew" component={AddNew} />
+    //     <Stack.Screen name="Setting" component={Setting} />
 
-      
-      </Stack.Navigator> 
-     
 
+      </Stack.Navigator>
     </NavigationContainer>
-    
+
   )
 }
 

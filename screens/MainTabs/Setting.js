@@ -56,7 +56,7 @@ const Setting = (props) => {
             <Text style={styles.text4}>Đơn vị tiền tệ</Text>
             <Image source={require('../../asset/icon/icon_sort.png')}
               style={styles.ImageStyle}></Image>
-          </TouchableOpacity>
+          </View>
         </View>
       </View>
 

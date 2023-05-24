@@ -24,8 +24,7 @@ const Item = () => {
                     </View>
                 </View>
             </View>
-            <Image style={styles.imageItem} source={require('../../asset/image/cafe.png')}></Image>
-            
+            <Image style={styles.imageItem} source={require('../../Resource/cafe.png')}></Image>
 
         </View>
     )

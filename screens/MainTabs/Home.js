@@ -69,7 +69,7 @@ const Home = () => {
           </View>
           <View style={{ marginTop: 30 }}>
             <TouchableOpacity>
-              {/* <Text style={styles.textGif}>Hãy thêm chi tiêu hôm nay. Chạm vào đây dể thêm.</Text> */}
+              <Text style={styles.textGif}>Hãy thêm chi tiêu hôm nay. Chạm vào đây dể thêm.</Text>
             </TouchableOpacity>
           </View>
         </View>
