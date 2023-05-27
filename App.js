@@ -6,6 +6,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import Login from './screens/BeginTabs/Login'
 import Register from './screens/BeginTabs/Register'
 import ChangePassword from './screens/BeginTabs/ChangePassword'
+import SignPassword from './screens/BeginTabs/SignPassword'
+import WelcomeSign from './screens/BeginTabs/WelcomeSign'
+import SignCode from './screens/BeginTabs/SignCode'
 
 import Intro from './screens/BeginTabs/Intro'
 
@@ -41,17 +44,18 @@ const StackBegin = () => {
 }
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="StackBegin" screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="StackBegin" component={StackBegin} />
-        <Stack.Screen name="Profile" component={Profile} />
-        <Stack.Screen name="BottomTabs" component={BottomTabs} />
-        <Stack.Screen name="AddNew" component={AddNew} />
-        <Stack.Screen name="Setting" component={Setting} />
+    // <NavigationContainer>
+    //   <Stack.Navigator initialRouteName="StackBegin" screenOptions={{ headerShown: false }}>
+    //     <Stack.Screen name="StackBegin" component={StackBegin} />
+    //     <Stack.Screen name="Profile" component={Profile} />
+    //     <Stack.Screen name="BottomTabs" component={BottomTabs} />
+    //     <Stack.Screen name="AddNew" component={AddNew} />
+    //     <Stack.Screen name="Setting" component={Setting} />
 
 
-      </Stack.Navigator>
-    </NavigationContainer>
+    //   </Stack.Navigator>
+    // </NavigationContainer>
+    <SignCode/>
     
   )
 }
