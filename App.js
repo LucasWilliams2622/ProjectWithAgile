@@ -21,6 +21,8 @@ import Profile from './screens/MainTabs/Profile'
 import Test from './screens/TestTab/AddGif'
 import ItemTransaction from './component/ItemTransaction'
 import ItemCollect from './component/ItemCollect'
+import ItemYear from './component/ItemYear'
+
 import TestPicker from './screens/TestTab/TestPicker'
 import PieChartScreen from './screens/TestTab/PieChartScreen'
 
@@ -42,12 +44,16 @@ const StackBegin = () => {
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="StackBegin" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="BottomTabs" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="StackBegin" component={StackBegin} />
-        <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="BottomTabs" component={BottomTabs} />
+
+
+        <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="AddNew" component={AddNew} />
         <Stack.Screen name="Setting" component={Setting} />
+        <Stack.Screen name="ItemYear" component={ItemYear} />
+
 
 
       </Stack.Navigator>
