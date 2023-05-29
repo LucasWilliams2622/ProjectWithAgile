@@ -26,8 +26,9 @@ export const COLOR = {
     pink: '#ff4c98',
     gold: 'gold',
     line: '#282C35',
-    gray: '#CCCCCC',
+    lightGray: '#F3F3F3',
     darkGray: '#999999',
+    brown:'#6D3805',
 
     darkOverlayColor: 'rgba(0, 0, 0, 0.4)',
     darkOverlayColor2: 'rgba(0, 0, 0, 0.8)',

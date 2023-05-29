@@ -4,6 +4,7 @@ import {
 } from 'react-native'
 import React, { useState } from 'react'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
+import { ICON, COLOR } from '../../constants/Themes'
 
 
 
@@ -66,51 +67,43 @@ const Login = (props) => {
 
 
   return (
-    <View>
-      <View style={styles.container}>
-        <Text style={[styles.text, { color: '#1877F2' }]}>Hello!</Text>
-        <Text style={styles.welcomeText}>Login to get Started</Text>
+    <View style={styles.container}>
 
-        <TextInput onChangeText={text => {
-          setEmail(text)
-          //setValidatePass1(text);
-
-        }} placeholder='Email' style={styles.textInputPass}></TextInput>
-        <View style={styles.txtPass}>
-          <TextInput onChangeText={text => {
-            setPass(text)
-            //setValidatePass1(text);
-
-          }} placeholder='Password' style={styles.textInputPass}
-            secureTextEntry={getPasswordVisible ? false : true} />
-          <TouchableOpacity style={styles.visible}
-            onPress={() => {
-              setPasswordVisible(!getPasswordVisible)
-            }}>
-            {
-              getPasswordVisible ?
-                <Image resizeMode='contain' source={require('../../asset/icon/icon_eye.png')}></Image>
-                :
-                <Image resizeMode='contain' source={require('../../asset/icon/icon_closed_eye.png')}></Image>
-            }
-          </TouchableOpacity>
-        </View>
-
-        <View style={[styles.viewRemember, { justifyContent: 'space-between' }]}>
-          <View style={styles.viewRemember}>
-            <BouncyCheckbox fillColor="blue" />
-            <Text style={styles.textRemember}>Remember me</Text>
-          </View>
-        </View>
-        <Pressable style={styles.buttonLogin} >
-          <Text style={styles.textLogin} onPress={handleEmailSubmit}>Login</Text>
-        </Pressable>
-        <View style={styles.viewDonthave}>
-          <Text style={{ textAlign: 'center' }}>Don't have an account ?</Text>
-          <Text style={{ color: 'blue' }} onPress={dangKy}> Sign up</Text>
-        </View>
-
+      <View style={styles.center}>
+        <Text style={styles.textSignIn}>Sign In</Text>
       </View>
+
+      <View style={styles.center}>
+        <Image style={styles.imageLogin} source={require('../../asset/image/LoginAndRegister/login.png')}></Image>
+      </View>
+
+      <View style={{ marginTop: 5 }}>
+        <Text style={styles.textInstruct}>Enter your phone number and</Text>
+        <Text style={styles.textInstruct}>password to access your account</Text>
+      </View>
+
+      <TextInput placeholder='Email' style={styles.inputEmailAndPass}></TextInput>
+
+      <View style={styles.viewInputPass}>
+        <TextInput placeholder='Password' style={styles.inputEmailAndPass}></TextInput>
+        <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIcon}></Image>
+      </View>
+
+      <View style={{ marginLeft: 220, marginTop: 5 }}>
+        <Text style={styles.textForgote}>Forgote Password</Text>
+      </View>
+
+      <View style={{ alignItems: 'center' }}>
+        <Pressable style={styles.viewPressable}>
+          <Text style={styles.textPressable}>Sign in</Text>
+        </Pressable>
+      </View>
+
+      <View style={styles.center}>
+        <Text style={styles.textNoneAcc}>Don’t have an account?</Text>
+        <Text style={[styles.textNoneAcc, { color: COLOR.primary, marginLeft: 5 }]}>Sign Up</Text>
+      </View>
+
     </View>
   )
 }
@@ -119,96 +112,87 @@ export default Login
 
 const styles = StyleSheet.create({
   container: {
-    marginStart: 10,
-    marginEnd: 10,
-    flexDirection: 'column'
-  },
-  text: {
-    fontFamily: 'Popins',
-    fontSize: 50,
-    fontWeight: 'bold',
-    color: '#050505'
-  },
-  welcomeText: {
-    fontFamily: 'Popins',
-    fontSize: 20,
-    marginTop: 4,
-    color: '#4E4B66',
-    marginBottom: 20
-  },
-  textUser: {
-    color: '#050505'
-  },
-  textInput: {
-    height: 48,
-    borderRadius: 10,
-    borderWidth: 1,
-    marginTop: 5
-  },
-  visible: {
-    position: 'absolute',
-    right: 10,
-    bottom: 2,
-  },
-  textInputPass: {
-    marginTop: 4,
-    width: windowWIdth - 10 * 2,
-    height: 48,
-    borderColor: '#4E4B66',
-    borderWidth: 2,
-    borderRadius: 6,
-    padding: 10,
-    flexDirection: 'row',
-    textAlign: 'left',
-    paddingRight: 50,
-
-  },
-  viewRemember: {
-    flexDirection: 'row',
-    marginTop: 5
-  },
-  textRemember: {
-    color: '#050505'
-  },
-  buttonLogin: {
-    height: 48,
-    backgroundColor: '#1877F2',
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginStart: 16,
+    marginEnd: 16,
     marginTop: 10
   },
-  textLogin: {
-    color: '#FFFFFF',
-    fontSize: 20,
-    fontWeight: 'bold'
-
-  },
-  textWith: {
-    color: '#4E4B66',
-    textAlign: 'center'
-
-  },
-  imageSocial: {
-    width: 21,
-    height: 21,
-    marginEnd: 10
-  },
-  buttonSocial: {
-    flexDirection: 'row',
-    width: 174,
-    height: 48,
-    backgroundColor: '#EEF1F4',
-    marginTop: 5,
-    borderRadius: 10,
+  center: {
     justifyContent: 'center',
     alignItems: 'center',
-
+    flexDirection: 'row'
   },
-  viewDonthave: {
-    margin: 4,
+  textSignIn: {
+    fontFamily: 'Klarna Text',
+    fontSize: 28,
+    fontStyle: 'normal',
+    fontWeight: '700',
+    color: COLOR.primary
+  },
+  imageLogin: {
+    width: 347.28,
+    height: 331.24,
+    marginTop: -5
+  },
+  textInstruct: {
+    fontFamily: 'Klarna Text',
+    fontSize: 18,
+    fontStyle: 'normal',
+    fontWeight: '400',
+    color: COLOR.brown,
+  },
+  inputEmailAndPass: {
+    width: 343,
+    height: 48,
+    backgroundColor: COLOR.lightGray,
+    borderRadius: 5,
+    marginTop: 15,
+    fontFamily: 'Klarna Text',
+    fontSize: 16,
+    fontStyle: 'normal',
+    fontWeight: '400',
+    color: COLOR.black,
+    paddingLeft: 10
+  },
+  viewInputPass: {
     flexDirection: 'row',
+    alignItems: 'center',
+  },
+  imageIcon: {
+    width: 24,
+    height: 24,
+    marginLeft: -33,
+    marginTop: 15
+  },
+  textForgote: {
+    fontFamily: 'Klarna Text',
+    fontSize: 14,
+    fontStyle: 'normal',
+    fontWeight: '400',
+    color: COLOR.background2
+  },
+  viewPressable: {
+    width: 343,
+    height: 50,
+    borderRadius: 30,
+    backgroundColor: COLOR.primary,
     justifyContent: 'center',
-    marginTop: 5
+    alignItems: 'center',
+    marginTop: 40,
+    marginBottom: 10
+  },
+  textPressable: {
+    fontFamily: 'Klarna Text',
+    fontSize: 20,
+    fontStyle: 'normal',
+    fontWeight: '700',
+    color: COLOR.white
+  },
+  textNoneAcc: {
+    fontFamily: 'Klarna Text',
+    fontSize: 16,
+    fontStyle: 'normal',
+    fontWeight: '400',
+    color: COLOR.black
   }
+
 })
