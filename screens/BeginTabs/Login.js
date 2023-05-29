@@ -42,30 +42,71 @@ const Login = (props) => {
     }
   }
 
-  //validate email
-  const handleEmailSubmit = () => {
-    if (!email) {
-      Alert.alert('Error', 'Please enter an email address');
-    } else if (!validateEmail(email)) {
-      Alert.alert('Error', 'Please enter a valid email address');
-    } else if (!pass) {
-      Alert.alert('Error', 'Please enter a password');
-    } else if (!validatePass(pass)) {
-      Alert.alert('Error', 'Please enter a valid password');
+  // //validate email
+  // const handleEmailSubmit = () => {
+  //   if (!email) {
+  //     Alert.alert('Error', 'Please enter an email address');
+  //   } else if (!validateEmail(email)) {
+  //     Alert.alert('Error', 'Please enter a valid email address');
+  //   } else if (!pass) {
+  //     Alert.alert('Error', 'Please enter a password');
+  //   } else if (!validatePass(pass)) {
+  //     Alert.alert('Error', 'Please enter a valid password');
+  //   }
+  // };
+  // const validateEmail = (email) => {
+  //   const emailRegex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  //   return emailRegex.test(email);
+  // };
+
+  // //validate password
+  // const validatePass = (pass) => {
+  //   const passRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  //   return passRegex.test(pass);
+  // };
+
+  const kiemtra=(text)=>{
+    let reg =/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if(reg.test(text)===true)
+    {
+      setVerifiedEmail({ email: text });
+      console.log("ban da nhap dung");
+      setVerifiedEmail(true);
+      return true;
     }
-  };
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
+    else
+    {
+      setVerifiedEmail({ email: text });
+      console.log("ban da nhap sai");
+    }
+  }
+  const kiemtrapassword=(text1)=>{
+    let passreg=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    if(passreg.test(text1)===true)
+    {
+      setVerifiedPass({passreg:text1});
+      console.log("password không hợp lệ");
+      setVerifiedPass(true);
+      return true;
+    }
+    else
+    {
+      setVerifiedPass({passreg:text1});
+      console.log("pass ko hợp lệ");
+    }
+  }
 
-  //validate password
-  const validatePass = (pass) => {
-    const passRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    return passRegex.test(pass);
-  };
-
-
+  const chuyen=()=>{
+    if(verifiedEmail==true && verifiedPass==true)
+    {
+     ToastAndroid.show("Nhập đúng",ToastAndroid.SHORT);
+    //  navigation.navigate('Resigter');
+    }
+    else
+    {
+      Alert.alert('Error', 'Email hoặc Password của bạn đã sai! vui lòng kiểm tra lại.');
+    }
+ }
   return (
     <View style={styles.container}>
 
@@ -82,10 +123,10 @@ const Login = (props) => {
         <Text style={styles.textInstruct}>password to access your account</Text>
       </View>
 
-      <TextInput placeholder='Email' style={styles.inputEmailAndPass}></TextInput>
+      <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(text)=>kiemtra(text)}  ></TextInput>
 
       <View style={styles.viewInputPass}>
-        <TextInput placeholder='Password' style={styles.inputEmailAndPass}></TextInput>
+        <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(text1)=>kiemtrapassword(text1)}></TextInput>
         <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIcon}></Image>
       </View>
 
@@ -94,7 +135,7 @@ const Login = (props) => {
       </View>
 
       <View style={{ alignItems: 'center' }}>
-        <Pressable style={styles.viewPressable}>
+        <Pressable style={styles.viewPressable} onPress={chuyen} >
           <Text style={styles.textPressable}>Sign in</Text>
         </Pressable>
       </View>

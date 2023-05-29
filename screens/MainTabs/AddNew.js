@@ -1,11 +1,19 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native'
+import React,{useState} from 'react'
 import { TextInput } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
 const AddNew = (props) => {
   const { navigation } = props;
+  const [name, setname] = useState('');
+  const handleCheckInput = () => {
+    if (name.trim() === '') {
+      Alert.alert('Vui lòng nhập tiêu đề');
+    } else {
+     
+    }
+  };
 
   return (
 
@@ -35,7 +43,8 @@ const AddNew = (props) => {
           <TouchableOpacity >
             <Image style={styles.imgInput} source={require('../../asset/icon/icon_calender.png')} />
           </TouchableOpacity>
-          <TextInput style={styles.txtInput}></TextInput>
+          <TextInput style={styles.txtInput}  value={name}
+        onChangeText={setname}></TextInput>
         </View>
 
 
@@ -59,7 +68,7 @@ const AddNew = (props) => {
         </View>
       </View>
 
-      <TouchableOpacity style={styles.btnSave} >
+      <TouchableOpacity style={styles.btnSave} onPress={handleCheckInput} >
         <Text style={styles.btnTxt}>Lưu chi tiêu</Text>
       </TouchableOpacity>
     </View>

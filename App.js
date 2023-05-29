@@ -9,7 +9,7 @@ import ChangePassword from './screens/BeginTabs/ChangePassword'
 import SignPassword from './screens/BeginTabs/SignPassword'
 import Welcome from './screens/BeginTabs/Welcome'
 import SignCode from './screens/BeginTabs/SignCode'
-
+import TabThu from './screens/MainTabs/TabThu';
 
 import Intro from './screens/BeginTabs/Intro'
 
@@ -54,11 +54,8 @@ const App = () => {
     //     <Stack.Screen name="BottomTabs" component={BottomTabs} />
     //     <Stack.Screen name="AddNew" component={AddNew} />
     //     <Stack.Screen name="Setting" component={Setting} />
-
-
     //    </Stack.Navigator>
     //  </NavigationContainer>
-   
     <Welcome/>
   )
 }

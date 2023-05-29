@@ -1,8 +1,71 @@
 
-import { Pressable, StyleSheet, Text, TextInput, View, Image, ToastAndroid } from 'react-native'
+import { Pressable, StyleSheet, Text, TextInput, View, Image, ToastAndroid, Alert } from 'react-native'
 import React, { useState } from 'react'
 
 const ChangePassword = () => {
+  const [verifiedPass, setVerifiedPass] = useState(false);
+  const [verifiedPassNew, setVerifiedPassNew] = useState(false);
+  const [verifiedCfPass, setVerifiedCfPass] = useState(false);
+  const [password, setpassword] = useState('');
+  const [confirmPass, setconfirmPass] = useState('')
+  const kiemtrapassword=(text1)=>{
+    let passreg=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    if(passreg.test(text1)===true)
+    {
+      setVerifiedPass({passreg:text1});
+      console.log("password không hợp lệ");
+      setVerifiedPass(true);
+      return true;
+    }
+    else
+    {
+      setVerifiedPass({passreg:text1});
+      console.log("pass ko hợp lệ");
+    }
+  }
+  const kiemtrapasswordnew=(text1)=>{
+    let passreg=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    if(passreg.test(text1)===true)
+    {
+      setVerifiedPassNew({passreg:text1});
+      setVerifiedPassNew(true);
+      setpassword(text1);
+      console.log("password hợp lệ");
+      return true;
+    }
+    else
+    {
+      setVerifiedPassNew({passreg:text1});
+      console.log("pass ko hợp lệ");
+    }
+  }
+  const kiemtraConFirmPass=(text1)=>{
+    let passreg=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    if(passreg.test(text1)===true)
+    {
+      setVerifiedCfPass({passreg:text1});
+      setVerifiedCfPass(true);
+      setconfirmPass(text1);
+      console.log("password hợp lệ");
+      return true;
+    }
+    else
+    {
+      setVerifiedCfPass({passreg:text1});
+      console.log("pass ko hợp lệ");
+    }
+  }
+  const chuyen=()=>{
+    if(verifiedPass==true&&verifiedCfPass==true&&verifiedPassNew==true&& password===confirmPass  )
+    {
+     ToastAndroid.show("Nhập đúng",ToastAndroid.SHORT);
+    //  navigation.navigate('Resigter');
+    }
+    else
+    {
+      Alert.alert('Error', 'Password của bạn đã sai! vui lòng kiểm tra lại.');
+    }
+ }
   return (
     <View>
       <Text>ChangePassword</Text>
@@ -10,12 +73,12 @@ const ChangePassword = () => {
       <Text style={[styles.text, { color: '#1877F2' }]}>Hello!</Text>
       <Text style={styles.welcomeText}>Reset your password</Text>
      
-      <TextInput placeholder='Your pasword' style={styles.textInput} ></TextInput>
-      <TextInput placeholder='Your new pasword' style={styles.textInput} ></TextInput>
-      <TextInput placeholder='Confirm your new password' style={styles.textInput} ></TextInput>
+      <TextInput placeholder='Your pasword' style={styles.textInput} onChangeText={(text1)=>kiemtrapassword(text1)} ></TextInput>
+      <TextInput placeholder='Your new pasword' style={styles.textInput}onChangeText={(text1)=>kiemtrapasswordnew(text1)}></TextInput>
+      <TextInput placeholder='Confirm your new password' style={styles.textInput} onChangeText={(text1)=>kiemtraConFirmPass(text1)}></TextInput>
 
       
-      <Pressable style={styles.buttonLogin}>
+      <Pressable style={styles.buttonLogin} onPress={chuyen}>
         <Text style={styles.textLogin}>Submit</Text>
       </Pressable>
       

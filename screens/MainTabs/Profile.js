@@ -8,10 +8,42 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 const Profile = (props) => {
   const { route, navigation } = props;
-
+  const [verifiedname, setVerifiedname] = useState(false);
   const [avatar, setAvatar] = useState(null)
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
+
+
+  const kiemten=(text2)=>{
+    let reg =/^[a-z0-9_-]{3,15}$/;
+    if(reg.test(text2)===true)
+    {
+      //(1) Tên được phép chứa các ký tự, các số, gạch dưới, gạch nối.
+      //(2) Tên phải có độ dài trong khoảng cho phép từ 3 đến 15 ký tự.
+      setVerifiedname({ name: text2 });
+      console.log("ban da nhap dung");
+      setVerifiedname(true);
+      return true;
+    }
+    else
+    {
+      setVerifiedname({ name: text2 });
+      console.log("ban da nhap sai");
+    }
+  }
+  
+  const chuyen=()=>{
+    if(verifiedname==true)
+    {
+     ToastAndroid.show("Nhập đúng",ToastAndroid.SHORT);
+    //  navigation.navigate('Resigter');
+    }
+    else
+    {
+      Alert.alert('Error', 'Bạn kiểm tra lại tên!');
+    }
+ }
+
   const dialogImageChoose = () => {
     return Alert.alert(
       "Thông báo",
@@ -128,6 +160,7 @@ const Profile = (props) => {
           <TextInput
             style={styles.textInput}
             placeholder="User"
+            onChangeText={(text2)=>kiemten(text2)}
 
           />
         </View>
@@ -143,7 +176,7 @@ const Profile = (props) => {
             placeholder="Xin chào bạn cho vài lời"
           />
         </View>
-        <TouchableOpacity style={styles.buttonSave}>
+        <TouchableOpacity style={styles.buttonSave} onPress={chuyen}>
           <Text style={styles.text2}>Lưu thay đổi</Text>
         </TouchableOpacity>
       </View>
