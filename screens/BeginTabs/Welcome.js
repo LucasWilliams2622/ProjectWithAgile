@@ -5,7 +5,7 @@ import {
 import React from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 
-const WelcomeSign = () => {
+const Welcome = () => {
     return (
         <View style={styles.container}>
 
@@ -34,7 +34,7 @@ const WelcomeSign = () => {
     )
 }
 
-export default WelcomeSign
+export default Welcome
 
 const styles = StyleSheet.create({
     container: {
