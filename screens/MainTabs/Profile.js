@@ -14,25 +14,25 @@ const Profile = (props) => {
   const [description, setDescription] = useState('')
 
 
-  const kiemten=(text2)=>{
+  const checkName=(name)=>{
     let reg =/^[a-z0-9_-]{3,15}$/;
-    if(reg.test(text2)===true)
+    if(reg.test(name)===true)
     {
       //(1) Tên được phép chứa các ký tự, các số, gạch dưới, gạch nối.
       //(2) Tên phải có độ dài trong khoảng cho phép từ 3 đến 15 ký tự.
-      setVerifiedname({ name: text2 });
+      setVerifiedname({ name: name });
       console.log("ban da nhap dung");
       setVerifiedname(true);
       return true;
     }
     else
     {
-      setVerifiedname({ name: text2 });
+      setVerifiedname({ name: name });
       console.log("ban da nhap sai");
     }
   }
   
-  const chuyen=()=>{
+  const check=()=>{
     if(verifiedname==true)
     {
      ToastAndroid.show("Nhập đúng",ToastAndroid.SHORT);
@@ -160,7 +160,7 @@ const Profile = (props) => {
           <TextInput
             style={styles.textInput}
             placeholder="User"
-            onChangeText={(text2)=>kiemten(text2)}
+            onChangeText={(name)=>checkName(name)}
 
           />
         </View>
@@ -176,7 +176,7 @@ const Profile = (props) => {
             placeholder="Xin chào bạn cho vài lời"
           />
         </View>
-        <TouchableOpacity style={styles.buttonSave} onPress={chuyen}>
+        <TouchableOpacity style={styles.buttonSave} onPress={check}>
           <Text style={styles.text2}>Lưu thay đổi</Text>
         </TouchableOpacity>
       </View>

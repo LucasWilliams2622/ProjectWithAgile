@@ -38,40 +38,40 @@ const Register = (props) => {
   // }
 
 
-  const kiemtra=(text)=>{
+  const checkEmail=(setEmail)=>{
     let reg =/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    if(reg.test(text)===true)
+    if(reg.test(setEmail)===true)
     {
-      setVerifiedEmail({ email: text });
+      setVerifiedEmail({ email: setEmail });
       console.log("ban da nhap dung");
       setVerifiedEmail(true);
       return true;
     }
     else
     {
-      setVerifiedEmail({ email: text });
+      setVerifiedEmail({ email: setEmail });
       console.log("ban da nhap sai");
     }
   }
-  const kiemten=(text2)=>{
+  const checkName=(name)=>{
     let reg =/^[a-z0-9_-]{3,15}$/;
-    if(reg.test(text2)===true)
+    if(reg.test(name)===true)
     {
       //(1) Tên được phép chứa các ký tự, các số, gạch dưới, gạch nối.
       //(2) Tên phải có độ dài trong khoảng cho phép từ 3 đến 15 ký tự.
-      setname({ name: text2 });
+      setname({ name: name });
       console.log("ban da nhap dung");
       setname(true);
       return true;
     }
     else
     {
-      setname({ name: text2 });
+      setname({ name: name });
       console.log("ban da nhap sai");
     }
   }
   
-  const chuyen=()=>{
+  const check=()=>{
     if(verifiedEmail==true && name==true)
     {
      ToastAndroid.show("Nhập đúng",ToastAndroid.SHORT);
@@ -95,10 +95,10 @@ const Register = (props) => {
         <Image style={styles.imageLogin} source={require('../../asset/image/LoginAndRegister/signup.png')}></Image>
       </View>
 
-      <TextInput placeholder='Name Surname' style={styles.inputEmailAndPass} onChangeText={(text2)=>kiemten(text2)}></TextInput>
+      <TextInput placeholder='Name Surname' style={styles.inputEmailAndPass} onChangeText={(name)=>checkName(name)}></TextInput>
 
       <View style={styles.viewInputPass}>
-        <TextInput placeholder='Email' style={styles.inputEmailAndPass}  onChangeText={(text)=>kiemtra(text)}></TextInput>
+        <TextInput placeholder='Email' style={styles.inputEmailAndPass}  onChangeText={(setEmail)=>checkEmail(setEmail)}></TextInput>
       </View>
 
       <View style={{ marginTop: 7, marginLeft: 5 }}>
@@ -106,7 +106,7 @@ const Register = (props) => {
       </View>
 
       <View style={{ alignItems: 'center' }}>
-        <Pressable style={styles.viewPressable} onPress={chuyen}>
+        <Pressable style={styles.viewPressable} onPress={check}>
           <Text style={styles.textPressable}>Sign in</Text>
         </Pressable>
       </View>

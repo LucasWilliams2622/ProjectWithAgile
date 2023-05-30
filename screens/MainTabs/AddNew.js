@@ -14,7 +14,6 @@ const AddNew = (props) => {
       Alert.alert('Vui lòng nhập tiêu đề');
     } else if(isNaN(floatValue) || floatValue <= 0) {
       Alert.alert('Vui lòng nhập số tiền hợp lệ');
-     
     }
   };
 

@@ -6,28 +6,27 @@ import React ,{useState}from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 
 const SignPassword = () => {
-
     const [verifiedPassNew, setVerifiedPassNew] = useState(false);
     const [verifiedCfPass, setVerifiedCfPass] = useState(false);
     const [password, setpassword] = useState('');
     const [confirmPass, setconfirmPass] = useState('');
-    const kiemtrapasswordnew=(text1)=>{
+    const checkPassNew=(password)=>{
         let passreg=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-        if(passreg.test(text1)===true)
+        if(passreg.test(password)===true)
         {
-          setVerifiedPassNew({passreg:text1});
+          setVerifiedPassNew({passreg:password});
           setVerifiedPassNew(true);
-          setpassword(text1);
+          setpassword(password);
           console.log("password hợp lệ");
           return true;
         }
         else
         {
-          setVerifiedPassNew({passreg:text1});
+          setVerifiedPassNew({passreg:password});
           console.log("pass ko hợp lệ");
         }
       }
-      const kiemtraConFirmPass=(text1)=>{
+      const checkConFirmPass=(text1)=>{
         let passreg=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
         if(passreg.test(text1)===true)
         {
@@ -43,7 +42,7 @@ const SignPassword = () => {
           console.log("pass ko hợp lệ");
         }
       }
-      const chuyen=()=>{
+      const check=()=>{
         if(verifiedCfPass==true&&verifiedPassNew==true&& password===confirmPass  )
         {
          ToastAndroid.show("Nhập đúng",ToastAndroid.SHORT);
@@ -72,19 +71,19 @@ const SignPassword = () => {
             </View>
 
             <View style={styles.viewInputEmailAndPass}>
-                <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(text1)=>kiemtrapasswordnew(text1)}></TextInput>
+                <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(password)=>checkPassNew(password)}></TextInput>
                 <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIconEye}></Image>
                 <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
             </View>
 
             <View style={styles.viewInputEmailAndPass}>
-                <TextInput placeholder='Confirm Password' style={styles.inputEmailAndPass} onChangeText={(text1)=>kiemtraConFirmPass(text1)}></TextInput>
+                <TextInput placeholder='Confirm Password' style={styles.inputEmailAndPass} onChangeText={(text1)=>checkConFirmPass(text1)}></TextInput>
                 <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIconEye}></Image>
                 <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
             </View>
 
             <View style={{alignItems:'center'}}>
-                <Pressable style={styles.viewPressable} onPress={chuyen}>
+                <Pressable style={styles.viewPressable} onPress={check}>
                     <Text style={styles.textPressable}>Next</Text>
                 </Pressable>
             </View>
