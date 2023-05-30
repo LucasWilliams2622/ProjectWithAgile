@@ -1,5 +1,5 @@
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { Alert, SafeAreaView, StyleSheet, Text, View, } from 'react-native'
+import React, { useEffect } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -29,7 +29,7 @@ import ItemYear from './component/ItemYear'
 
 import TestPicker from './screens/TestTab/TestPicker'
 import PieChartScreen from './screens/TestTab/PieChartScreen'
-
+import messaging from '@react-native-firebase/messaging';
 
 
 const Stack = createNativeStackNavigator();
@@ -41,11 +41,29 @@ const StackBegin = () => {
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="ChangePassword" component={ChangePassword} />
 
-      
+
     </Stack.Navigator>
   )
 }
 const App = () => {
+  useEffect(() => {
+    getDeviceToken();
+
+  }, []);
+  const getDeviceToken = async () => {
+    let token = await messaging().getToken();
+    console.log(token);
+  };
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      Alert.alert(
+        'A new FCM message arrived in foreground mode!',
+        JSON.stringify(remoteMessage),
+      );
+    });
+    return unsubscribe;
+  }, []);
   return (
     // <NavigationContainer>
     //   <Stack.Navigator initialRouteName="StackBegin" screenOptions={{ headerShown: false }}>
@@ -56,7 +74,7 @@ const App = () => {
     //     <Stack.Screen name="Setting" component={Setting} />
     //    </Stack.Navigator>
     //  </NavigationContainer>
-    <Welcome/>
+    <Welcome />
   )
 }
 
