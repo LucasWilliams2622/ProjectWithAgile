@@ -23,6 +23,7 @@ import Item from './screens/MainTabs/Item'
 import Setting from './screens/MainTabs/Setting'
 import Profile from './screens/MainTabs/Profile'
 import Test from './screens/TestTab/AddGif'
+import Test2 from './screens/TestTab/Test'
 import ItemTransaction from './component/ItemTransaction'
 import ItemCollect from './component/ItemCollect'
 import ItemYear from './component/ItemYear'
@@ -74,7 +75,7 @@ const App = () => {
     //     <Stack.Screen name="Setting" component={Setting} />
     //    </Stack.Navigator>
     //  </NavigationContainer>
-    <Welcome />
+    <Login />
   )
 }
 

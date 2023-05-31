@@ -6,6 +6,17 @@ import React from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 
 const Welcome = () => {
+    const { navigation } = props;
+
+    //chuy?n qua màn hình dang ký
+    const clickRegister = () => {
+        navigation.navigate('Register')
+    }
+    //chuy?n qua màn hình dang ký
+    const clickLogin = () => {
+        navigation.navigate('Login')
+    }
+
     return (
         <View style={styles.container}>
 
@@ -21,11 +32,11 @@ const Welcome = () => {
             </View>
 
             <View style={styles.center}>
-                <Pressable style={styles.viewPressable}>
+                <Pressable style={styles.viewPressable} onPress={clickRegister}>
                     <Text style={styles.textPressable}>Sign up</Text>
                 </Pressable>
 
-                <Pressable style={[styles.viewPressable, { marginTop: 10 }]}>
+                <Pressable style={[styles.viewPressable, { marginTop: 10 }]} onPress={clickLogin}>
                     <Text style={styles.textPressable}>Sign in</Text>
                 </Pressable>
             </View>
