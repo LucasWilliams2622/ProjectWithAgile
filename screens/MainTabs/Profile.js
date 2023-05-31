@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, KeyboardAvoidingView ,ToastAndroid} from 'react-native'
 import React,{useState} from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import { TextInput } from 'react-native-paper'
@@ -33,14 +33,13 @@ const Profile = (props) => {
   }
   
   const check=()=>{
-    if(verifiedname==true)
+    if(name.trim()==='')
     {
-     ToastAndroid.show("Nhập đúng",ToastAndroid.SHORT);
-    //  navigation.navigate('Resigter');
+      Alert.alert('Error', 'vui lòng nhập tên!');
     }
-    else
+    else if(description.trim()==='')
     {
-      Alert.alert('Error', 'Bạn kiểm tra lại tên!');
+      Alert.alert('Error', 'vui lòng cho vài dòng thông tin!');
     }
  }
 
@@ -160,7 +159,7 @@ const Profile = (props) => {
           <TextInput
             style={styles.textInput}
             placeholder="User"
-            onChangeText={(name)=>checkName(name)}
+            onChangeText={setName} value={name}
 
           />
         </View>
@@ -174,6 +173,8 @@ const Profile = (props) => {
           <TextInput
             style={styles.textInput}
             placeholder="Xin chào bạn cho vài lời"
+
+            onChangeText={setDescription} value={description}
           />
         </View>
         <TouchableOpacity style={styles.buttonSave} onPress={check}>

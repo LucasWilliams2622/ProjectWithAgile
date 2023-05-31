@@ -1,8 +1,4 @@
-
-import {
-  Pressable, StyleSheet, Text, TextInput, View,
-  Image, ToastAndroid, Alert, TouchableOpacity
-} from 'react-native'
+import {Pressable, StyleSheet, Text, TextInput, View,Image, ToastAndroid, Alert, TouchableOpacity} from 'react-native'
 import React, { useState } from 'react'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { ICON, COLOR } from '../../constants/Themes'
@@ -18,8 +14,7 @@ const Register = (props) => {
     navigation.navigate('Login')
 
   }
-
-  // const dangKyNe = async () => {
+    // const dangKyNe = async () => {
   //   console.log(emailUser, passwordUser, nameUser);
   //   try {
   //     const response = await AxiosIntance().post("/user/register", { email: emailUser, password: passwordUser, name: nameUser });
@@ -34,10 +29,10 @@ const Register = (props) => {
   //     console.log(e);
   //   }
   // }
-  const kiemtra = (text) => {
+  const checkEmail = (setEmail) => {
     let reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    if (reg.test(text) === true) {
-      setVerifiedEmail({ email: text });
+    if (reg.test(setEmail) === true) {
+      setVerifiedEmail({ email: setEmail });
 
       console.log("ban da nhap dung");
       setVerifiedEmail(true);
@@ -49,9 +44,9 @@ const Register = (props) => {
       console.log("ban da nhap sai");
     }
   }
-  const kiemten = (text2) => {
+  const checkName = (name) => {
     let reg = /^[a-z0-9_-]{3,15}$/;
-    if (reg.test(text2) === true) {
+    if (reg.test(name) === true) {
 
       //(1) Tên được phép chứa các ký tự, các số, gạch dưới, gạch nối.
       //(2) Tên phải có độ dài trong khoảng cho phép từ 3 đến 15 ký tự.
@@ -67,7 +62,7 @@ const Register = (props) => {
     }
   }
   
-  const chuyen = () => {
+  const check = () => {
     if (verifiedEmail == true && name == true) {
       ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
       //  navigation.navigate('Resigter');
@@ -90,17 +85,10 @@ const Register = (props) => {
 
       <View style={styles.viewInputPass}>
         <TextInput placeholder='Email' style={styles.inputEmailAndPass}  onChangeText={(setEmail)=>checkEmail(setEmail)}></TextInput>
-
-      <TextInput placeholder='Name Surname' style={styles.inputEmailAndPass} onChangeText={(text2) => kiemten(text2)}></TextInput>
-
-      <View style={styles.viewInputPass}>
-        <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(text) => kiemtra(text)}></TextInput>
       </View>
-
       <View style={{ marginTop: 7, marginLeft: 5 }}>
         <Text style={styles.textInstruct}>We need to verify you. We will send you a one time verification code.</Text>
       </View>
-
       <View style={{ alignItems: 'center' }}>
         <Pressable style={styles.viewPressable} onPress={check}>
           <Text style={styles.textPressable}>Sign in</Text>
@@ -114,6 +102,8 @@ const Register = (props) => {
         </TouchableOpacity>
       </View>
     </View>
+
+
   )
 }
 

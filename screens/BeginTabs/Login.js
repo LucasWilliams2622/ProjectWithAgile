@@ -62,38 +62,38 @@ const Login = (props) => {
   //   return passRegex.test(pass);
   // };
 
-  const kiemtra=(text)=>{
+  const checkEmail=(email)=>{
     let reg =/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    if(reg.test(text)===true)
+    if(reg.test(email)===true)
     {
-      setVerifiedEmail({ email: text });
+      setVerifiedEmail({ email: email });
       console.log("ban da nhap dung");
       setVerifiedEmail(true);
       return true;
     }
     else
     {
-      setVerifiedEmail({ email: text });
+      setVerifiedEmail({ email: email });
       console.log("ban da nhap sai");
     }
   }
-  const kiemtrapassword=(text1)=>{
+  const checkPass=(pass)=>{
     let passreg=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    if(passreg.test(text1)===true)
+    if(passreg.test(pass)===true)
     {
-      setVerifiedPass({passreg:text1});
+      setVerifiedPass({passreg:pass});
       console.log("password không hợp lệ");
       setVerifiedPass(true);
       return true;
     }
     else
     {
-      setVerifiedPass({passreg:text1});
+      setVerifiedPass({passreg:pass});
       console.log("pass ko hợp lệ");
     }
   }
 
-  const chuyen=()=>{
+  const check=()=>{
     if(verifiedEmail==true && verifiedPass==true)
     {
      ToastAndroid.show("Nhập đúng",ToastAndroid.SHORT);
@@ -120,10 +120,10 @@ const Login = (props) => {
         <Text style={styles.textInstruct}>password to access your account</Text>
       </View>
 
-      <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(text)=>kiemtra(text)}  ></TextInput>
+      <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(email)=>checkEmail(email)}  ></TextInput>
 
       <View style={styles.viewInputPass}>
-        <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(text1)=>kiemtrapassword(text1)}></TextInput>
+        <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(pass)=>checkPass(pass)}></TextInput>
         <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIcon}></Image>
       </View>
 
@@ -132,7 +132,7 @@ const Login = (props) => {
       </View>
 
       <View style={{ alignItems: 'center' }}>
-        <Pressable style={styles.viewPressable} onPress={chuyen} >
+        <Pressable style={styles.viewPressable} onPress={check} >
           <Text style={styles.textPressable}>Sign in</Text>
         </Pressable>
       </View>
