@@ -6,9 +6,6 @@ import React, { useState } from 'react'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { ICON, COLOR } from '../../constants/Themes'
 
-
-
-
 const windowWIdth = Dimensions.get('window').width;
 const Login = (props) => {
   const { navigation } = props;
@@ -20,7 +17,7 @@ const Login = (props) => {
 
 
   //chuy?n qua màn hình dang ký
-  const dangKy = () => {
+  const goRegister = () => {
     navigation.navigate('Register')
   }
 
@@ -119,7 +116,7 @@ const Login = (props) => {
       </View>
 
       <View style={{ marginTop: 5 }}>
-        <Text style={styles.textInstruct}>Enter your phone number and</Text>
+        <Text style={styles.textInstruct}>Enter your email and</Text>
         <Text style={styles.textInstruct}>password to access your account</Text>
       </View>
 
@@ -142,7 +139,10 @@ const Login = (props) => {
 
       <View style={styles.center}>
         <Text style={styles.textNoneAcc}>Don’t have an account?</Text>
+        <TouchableOpacity onPress={()=>{goRegister()}}>
         <Text style={[styles.textNoneAcc, { color: COLOR.primary, marginLeft: 5 }]}>Sign Up</Text>
+
+        </TouchableOpacity>
       </View>
 
     </View>

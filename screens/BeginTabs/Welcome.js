@@ -5,12 +5,19 @@ import {
 import React from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 
-const Welcome = () => {
+const Welcome = (props) => {
+    const {navigation} = props;
+    const goLogin=()=>{
+        navigation.navigate("Login")
+    }
+    const goRegister=()=>{
+        navigation.navigate("Register")
+    }
     return (
         <View style={styles.container}>
 
             <View style={styles.center}>
-                <Image style={styles.imageLogin} source={require('../../asset/image/LoginAndRegister/Illustration.png')}></Image>
+                <Image style={styles.imageLogin} source={require('../../asset/image/logo.png')}></Image>
             </View>
 
             <View style={[styles.center, { marginTop: 10 }]}>
@@ -21,13 +28,13 @@ const Welcome = () => {
             </View>
 
             <View style={styles.center}>
-                <Pressable style={styles.viewPressable}>
+                <TouchableOpacity style={styles.viewPressable} onPress={()=>{goLogin()}}>
                     <Text style={styles.textPressable}>Sign up</Text>
-                </Pressable>
+                </TouchableOpacity>
 
-                <Pressable style={[styles.viewPressable, { marginTop: 10 }]}>
+                <TouchableOpacity style={[styles.viewPressable, { marginTop: 10 }]}onPress={()=>{goRegister()}}>
                     <Text style={styles.textPressable}>Sign in</Text>
-                </Pressable>
+                </TouchableOpacity>
             </View>
 
         </View>
@@ -55,13 +62,14 @@ const styles = StyleSheet.create({
         width: 343,
         height: 48,
         backgroundColor: COLOR.lightGray,
-        borderRadius: 5,
+        borderRadius: 10,
         marginTop: 15,
         fontFamily: 'Klarna Text',
         fontSize: 16,
         fontStyle: 'normal',
         fontWeight: '400',
         color: COLOR.black,
+        
         paddingLeft: 10
     },
     viewPressable: {
