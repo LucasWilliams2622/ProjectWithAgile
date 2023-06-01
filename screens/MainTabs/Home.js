@@ -14,8 +14,8 @@ const Home = () => {
 
       <TouchableOpacity>
         <View style={styles.viewAvatarAndText}>
-          <Image source={require('../../asset/icon/icon_profile.png')} style={styles.imageProfile}></Image>
-          <Text style={styles.textHello}>Xin chào Bạn: </Text>
+          <Image source={require('../../asset/image/logo.png')} style={styles.imageProfile}></Image>
+          <Text style={styles.textHello}>Xin chào Bạn </Text>
         </View>
       </TouchableOpacity>
 
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   background: {
-    backgroundColor: COLOR.title,
+    backgroundColor: COLOR.background2,
     height: 180,
     borderRadius: 20,
     marginTop: -40
@@ -124,7 +124,8 @@ const styles = StyleSheet.create({
   imageProfile: {
     height: 50,
     width: 50,
-    marginRight: 13
+    marginRight: 13,
+    borderRadius:100,
   },
   textHello: {
     fontSize: 16,

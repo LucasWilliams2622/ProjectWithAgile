@@ -31,7 +31,7 @@ const TopTabThuChi = () => {
                 screenOptions={{
                     tabBarLabelStyle: { fontSize: 14 },
                     tabBarItemStyle: { width: windowWidth / 2 },
-                    tabBarStyle: { backgroundColor: COLOR.primary },
+                    tabBarStyle: { backgroundColor: COLOR.background2, },
                     swipeEnabled: true,
 
                 }}

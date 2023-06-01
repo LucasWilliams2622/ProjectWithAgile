@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   background: {
-    backgroundColor: COLOR.title,
+    backgroundColor: COLOR.background2,
     height: 200,
     borderRadius: 30,
     marginTop: -40

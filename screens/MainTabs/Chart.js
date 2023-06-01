@@ -26,7 +26,7 @@ const Chart = () => {
         backBehavior='initialRoute'
         screenOptions={{
           tabBarItemStyle: { width: windowWidth / 2 },
-          tabBarStyle: { backgroundColor: COLOR.primary },
+          tabBarStyle: { backgroundColor: COLOR.background2 },
           swipeEnabled: true,
           tabBarLabelStyle: { fontSize: 16, fontWeight: '400' },
           tabBarActiveTintColor: 'white',
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'flex-start',
-    backgroundColor: COLOR.primary,
+    backgroundColor: COLOR.background2,
 
   },
   title: {

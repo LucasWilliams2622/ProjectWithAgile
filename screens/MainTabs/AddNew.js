@@ -10,11 +10,11 @@ const AddNew = (props) => {
   const [name, setname] = useState('');
   const [value, setValue] = useState('');
   const handleCheckInput = () => {
-    const floatValue = parseFloat(value.replace(',', '.')); 
+    const floatValue = parseFloat(value.replace(',', '.'));
     if (name.trim() === '') {
       Alert.alert('Vui lòng nhập tiêu đề');
     } else {
-     
+
     }
   };
 
@@ -31,16 +31,15 @@ const AddNew = (props) => {
       </View>
 
       <View style={styles.shadowView}>
-
-      <View style={styles.bgMain}>
-        <View style={styles.bgTop}>
-          <Image style={styles.imgColor} source={require('../../asset/icon/icon_edit.png')}></Image>
-          <TouchableOpacity >
-            <TextInput placeholderTextColor='white' underlineColor='transparent' style={styles.textMoney} placeholder='Nhập số tiền'></TextInput>
-          </TouchableOpacity>
-          <Text style={styles.textVND}>VNĐ</Text>
+        <View style={styles.bgMain}>
+          <View style={styles.bgTop}>
+            <Image style={styles.imgColor} source={require('../../asset/icon/icon_edit.png')}></Image>
+            <TouchableOpacity >
+              <TextInput placeholderTextColor='white' underlineColor='transparent' style={styles.textMoney} placeholder='Nhập số tiền'></TextInput>
+            </TouchableOpacity>
+            <Text style={styles.textVND}>VNĐ</Text>
+          </View>
         </View>
-      </View>
 
         <View >
           <View style={styles.input}>
@@ -69,13 +68,13 @@ const AddNew = (props) => {
         </View>
 
       </View>
-    
+
       <View style={{ alignItems: 'center' }}>
         <TouchableOpacity style={styles.viewSave} onPress={handleCheckInput}>
           <Text style={styles.textSave}>Lưu Chi tiêu</Text>
         </TouchableOpacity>
       </View>
-     
+
     </View>
 
   )
@@ -107,12 +106,13 @@ const styles = StyleSheet.create({
 
   },
   bgTop: {
-    backgroundColor: '#1488fa',
+    backgroundColor: COLOR.background2,
     flexDirection: 'row',
+    tintColor:'black'
   },
 
   bgMain: {
-    backgroundColor: '#1488fa',
+    backgroundColor: COLOR.background2,
     borderTopLeftRadius: 20,
     padding: 20,
     height: 100,
@@ -181,18 +181,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     backgroundColor: 'transparent',
   },
-  viewSave:{
-    left:10, 
-    right:10
+  viewSave: {
+    left: 10,
+    right: 10
   },
 
   btnSave: {
     top: 100,
-    backgroundColor: '#1488fa',
+    backgroundColor:COLOR.background2,
     height: 50,
     padding: 10,
     borderRadius: 20,
-   
+
   },
 
   btnTxt: {
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     width: 360,
     height: 50,
     borderRadius: 30,
-    backgroundColor:'#1488fa',
+    backgroundColor:COLOR.background2,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
