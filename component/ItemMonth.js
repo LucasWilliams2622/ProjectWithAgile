@@ -64,7 +64,6 @@ class ItemMonth extends React.Component {
         textSize: 20,
         textColor: processColor('black'),
         
-
       },
 
       show: false,
@@ -101,7 +100,7 @@ class ItemMonth extends React.Component {
           <Image style={styles.icon} source={require('../asset/icon/icon_calender.png')} />
           <Text style={styles.textMonthYear}>aaaaaaaa aaa</Text>
 
-          {/* <MonthPicker
+          <MonthPicker
             modal
             // open={this.state.show}
             value={this.state.date}
@@ -114,7 +113,7 @@ class ItemMonth extends React.Component {
             onCancel={() => {
               false
             }}
-          /> */}
+          />
         </TouchableOpacity>
         <View style={styles.boxChart}>
           <PieChart
@@ -127,7 +126,6 @@ class ItemMonth extends React.Component {
             highlights={this.state.highlights}
 
             // extraOffsets={{ left: 5, top: 5, right: 5, bottom: 5 }}
-
             entryLabelColor={processColor('green')}
             entryLabelTextSize={20}
             entryLabelFontFamily={'HelveticaNeue-Medium'}
@@ -162,12 +160,12 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.white
   },
   boxChart: {
-    borderColor: 'red', borderWidth: 2,
+    // borderColor: 'red', borderWidth: 2,
     flex: 1,
 
   },
   chart: {
-    borderColor: 'red', borderWidth: 2,
+    // borderColor: 'red', borderWidth: 2,
     flex: 0.8,
 
 
