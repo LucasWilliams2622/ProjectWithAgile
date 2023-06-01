@@ -78,7 +78,7 @@ const App = () => {
     //    </Stack.Navigator>
     //  </NavigationContainer>
     
-    <ChangePassword/>
+    <Profile/>
   
     
   )

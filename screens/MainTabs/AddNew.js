@@ -21,10 +21,7 @@ const AddNew = (props) => {
 
     <View style={styles.container} >
 
-      <View style={styles.bgTop}>
-        <TouchableOpacity>
-          <Image style={styles.imgColorTop} source={require('../../asset/icon/icon_back.png')}></Image>
-        </TouchableOpacity>
+      <View style={styles.bgView}>
         <Text style={styles.textTitle}>Thêm chi tiêu cho hôm nay</Text>
       </View>
 
@@ -61,7 +58,7 @@ const AddNew = (props) => {
 
         <View style={{ top: 10 }}>
           <View style={styles.input}>
-            <Image style={styles.imgNote} source={require('../../asset/icon/icon_note.png')} />
+            <Image style={styles.imgInput} source={require('../../asset/icon/icon_note.png')} />
             <TextInput placeholder='Ghi chú' style={styles.txtInput}></TextInput>
           </View>
         </View>
@@ -102,8 +99,17 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     borderRadius: 3,
+    borderBottomEndRadius:20,
+    borderBottomStartRadius:20,
+  },
+  bgView: {
+    backgroundColor: '#1488fa',
+    height:70,
+    borderBottomEndRadius:20,
+    borderBottomStartRadius:20
 
   },
+
   bgTop: {
     backgroundColor: '#1488fa',
     flexDirection: 'row',
@@ -112,9 +118,10 @@ const styles = StyleSheet.create({
   bgMain: {
     backgroundColor: '#1488fa',
     borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     padding: 20,
     height: 100,
-    borderTopRightRadius: 20,
+   
   },
   imgColorTop: {
     tintColor: "#fff",
@@ -133,7 +140,7 @@ const styles = StyleSheet.create({
   },
   textTitle: {
     color: '#fff',
-    left: 50,
+    left: 70,
     marginTop: 20,
     fontSize: 20,
     fontWeight: 'bold',
@@ -160,16 +167,12 @@ const styles = StyleSheet.create({
     top: 10,
   },
   imgInput: {
-    width: 50,
-    height: 50,
-    top: 3,
-  },
+    width: 25,
+    height: 25,
+    marginTop:20,
+    marginLeft:10
 
-  imgNote: {
-    top: 13,
-    height: 45,
-    width: 45,
-    marginRight: 5
+    
   },
 
   txtInput: {
@@ -178,11 +181,9 @@ const styles = StyleSheet.create({
     width: 310,
     borderWidth: 1,
     backgroundColor: 'transparent',
+    marginTop:5
   },
-  viewSave:{
-    left:10, 
-    right:10
-  },
+
 
   btnSave: {
     top: 100,
@@ -205,7 +206,7 @@ const styles = StyleSheet.create({
     backgroundColor:'#1488fa',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 50,
     marginBottom: 10
   },
   textSave: {

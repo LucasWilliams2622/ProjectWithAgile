@@ -2,58 +2,53 @@ import {
     Pressable, StyleSheet, Text, Alert, TextInput, Dimensions,
     View, Image, ToastAndroid, TouchableOpacity
 } from 'react-native'
-import React ,{useState}from 'react'
+import React, { useState } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 
 const SignPassword = () => {
-
-    const [verifiedPassNew, setVerifiedPassNew] = useState(false);
-    const [verifiedCfPass, setVerifiedCfPass] = useState(false);
     const [password, setpassword] = useState('');
     const [confirmPass, setconfirmPass] = useState('');
-    const kiemtrapasswordnew=(text1)=>{
-        let passreg=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-        if(passreg.test(text1)===true)
-        {
-          setVerifiedPassNew({passreg:text1});
-          setVerifiedPassNew(true);
-          setpassword(text1);
-          console.log("password hợp lệ");
-          return true;
+    const [verifiedPassNew, setVerifiedPassNew] = useState(false);
+    const [verifiedCfPass, setVerifiedCfPass] = useState(false);
+    const [getNewPassVisible, setNewPassVisible] = useState(false)
+    const [getConfirmPassVisible, setConfirmPassVisible] = useState(false)
+    const kiemtrapasswordnew = (setNewPassVisible) => {
+        let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        if (passreg.test(setNewPassVisible) === true) {
+            setVerifiedPassNew({ passreg: setNewPassVisible });
+            setVerifiedPassNew(true);
+            setpassword(setNewPassVisible);
+            console.log("password hợp lệ");
+            return true;
         }
-        else
-        {
-          setVerifiedPassNew({passreg:text1});
-          console.log("pass ko hợp lệ");
+        else {
+            setVerifiedPassNew({ passreg: setNewPassVisible });
+            console.log("pass ko hợp lệ");
         }
-      }
-      const kiemtraConFirmPass=(text1)=>{
-        let passreg=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-        if(passreg.test(text1)===true)
-        {
-          setVerifiedCfPass({passreg:text1});
-          setVerifiedCfPass(true);
-          setconfirmPass(text1);
-          console.log("password hợp lệ");
-          return true;
+    }
+    const kiemtraConFirmPass = (setConfirmPassVisible) => {
+        let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        if (passreg.test(setConfirmPassVisible) === true) {
+            setVerifiedCfPass({ passreg: setConfirmPassVisible });
+            setVerifiedCfPass(true);
+            setconfirmPass(setConfirmPassVisible);
+            console.log("password hợp lệ");
+            return true;
         }
-        else
-        {
-          setVerifiedCfPass({passreg:text1});
-          console.log("pass ko hợp lệ");
+        else {
+            setVerifiedCfPass({ passreg: setConfirmPassVisible });
+            console.log("pass ko hợp lệ");
         }
-      }
-      const chuyen=()=>{
-        if(verifiedCfPass==true&&verifiedPassNew==true&& password===confirmPass  )
-        {
-         ToastAndroid.show("Nhập đúng",ToastAndroid.SHORT);
-        //  navigation.navigate('Resigter');
+    }
+    const chuyen = () => {
+        if (verifiedCfPass == true && verifiedPassNew == true && password === confirmPass) {
+            ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
+            //  navigation.navigate('Resigter');
         }
-        else
-        {
-          Alert.alert('Error', 'Password của bạn đã sai! vui lòng kiểm tra lại.');
+        else {
+            Alert.alert('Error', 'Password của bạn đã sai! vui lòng kiểm tra lại.');
         }
-     }
+    }
     return (
         <View style={styles.container}>
 
@@ -72,18 +67,44 @@ const SignPassword = () => {
             </View>
 
             <View style={styles.viewInputEmailAndPass}>
-                <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(text1)=>kiemtrapasswordnew(text1)}></TextInput>
-                <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIconEye}></Image>
+                <TextInput placeholder='Password' style={styles.inputEmailAndPass}
+                    secureTextEntry={getNewPassVisible ? false : true}
+                    onChangeText={(setNewPassVisible) => kiemtrapasswordnew(setNewPassVisible)}></TextInput>
+                <TouchableOpacity style={styles.visible}
+                    onPress={() => {
+                        setNewPassVisible(!getNewPassVisible)
+                    }}>
+                    {
+                        getNewPassVisible ?
+                            <Image source={require('../../asset/icon/icon_visible.png')} style={styles.imageIconEye}></Image>
+                            :
+                            <Image source={require('../../asset/icon/icon_invisible.png')} style={styles.imageIconEye}></Image>
+                    }
+                </TouchableOpacity>
                 <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
+
             </View>
+
 
             <View style={styles.viewInputEmailAndPass}>
-                <TextInput placeholder='Confirm Password' style={styles.inputEmailAndPass} onChangeText={(text1)=>kiemtraConFirmPass(text1)}></TextInput>
-                <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIconEye}></Image>
+                <TextInput style={styles.inputEmailAndPass} placeholder='Confirm Password'
+                    secureTextEntry={getConfirmPassVisible ? false : true}
+                    onChangeText={(setConfirmPassVisible) => kiemtraConFirmPass(setConfirmPassVisible)} value={verifiedCfPass} />
+                <TouchableOpacity style={styles.visible}
+                    onPress={() => {
+                        setConfirmPassVisible(!getConfirmPassVisible)
+                    }}>
+                    {
+                        getConfirmPassVisible ?
+                            <Image source={require('../../asset/icon/icon_visible.png')} style={styles.imageIconEye}></Image>
+                            :
+                            <Image source={require('../../asset/icon/icon_invisible.png')} style={styles.imageIconEye}></Image>
+                    }
+                </TouchableOpacity>
                 <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
             </View>
 
-            <View style={{alignItems:'center'}}>
+            <View style={{ alignItems: 'center' }}>
                 <Pressable style={styles.viewPressable} onPress={chuyen}>
                     <Text style={styles.textPressable}>Next</Text>
                 </Pressable>
@@ -114,8 +135,8 @@ const styles = StyleSheet.create({
         color: COLOR.primary
     },
     imageLogin: {
-        width: 347.28,
-        height: 331.24,
+        width: 300,
+        height: 300,
         marginTop: -5
     },
     textInstruct: {
@@ -151,8 +172,9 @@ const styles = StyleSheet.create({
     imageIconPadlock: {
         width: 13,
         height: 17,
-        marginLeft: -323,
+        marginLeft: -330,
         marginTop: 15
+      
     },
     textForgote: {
         fontFamily: 'Klarna Text',

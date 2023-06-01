@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: COLOR.title,
-    height: 200,
+    height:150,
     borderBottomEndRadius: 30,
     borderBottomStartRadius: 30,
     flexDirection: 'column',
@@ -134,8 +134,8 @@ const styles = StyleSheet.create({
 
   },
   imageProfile: {
-    height: 130,
-    width: 130,
+    height: 100,
+    width: 100,
     alignSelf: 'center',
     left:20, 
     borderRadius:100
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   imageEdit: {
     width: 40,
     height: 40,
-    top: 80,
+    top: 50,
     right: 10
   },
   text1: {

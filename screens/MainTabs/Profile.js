@@ -219,11 +219,11 @@ const styles = StyleSheet.create({
   
   
   imageProfile: {
-    height: 150,
-    width: 150,
+    height: 120,
+    width: 120,
     alignSelf: 'center',
     marginTop:10,
-    borderRadius:300
+    borderRadius:100
   },
   content: {
     padding: 20
@@ -279,8 +279,8 @@ const styles = StyleSheet.create({
   },
   ImageBack: {
     padding: 10,
-    height: 25,
-    width:25,
+    height: 20,
+    width:20,
     marginLeft: 10,
     resizeMode: 'stretch',
     alignItems: 'center',

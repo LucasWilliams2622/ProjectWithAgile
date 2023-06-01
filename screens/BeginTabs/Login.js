@@ -62,51 +62,45 @@ const Login = (props) => {
   //   return passRegex.test(pass);
   // };
 
-  const kiemtra=(text)=>{
-    let reg =/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    if(reg.test(text)===true)
-    {
+  const kiemtra = (text) => {
+    let reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if (reg.test(text) === true) {
       setVerifiedEmail({ email: text });
       console.log("ban da nhap dung");
       setVerifiedEmail(true);
       return true;
     }
-    else
-    {
+    else {
       setVerifiedEmail({ email: text });
       console.log("ban da nhap sai");
     }
   }
-  const kiemtrapassword=(text1)=>{
-    let passreg=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    if(passreg.test(text1)===true)
-    {
-      setVerifiedPass({passreg:text1});
+  const kiemtrapassword = (setPasswordVisible) => {
+    let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    if (passreg.test(setPasswordVisible) === true) {
+      setVerifiedPass({ passreg: setPasswordVisible });
       console.log("password không hợp lệ");
       setVerifiedPass(true);
       return true;
     }
-    else
-    {
-      setVerifiedPass({passreg:text1});
+    else {
+      setVerifiedPass({ passreg: setPasswordVisible });
       console.log("pass ko hợp lệ");
     }
   }
 
-  const chuyen=()=>{
-    if(verifiedEmail==true && verifiedPass==true)
-    {
-     ToastAndroid.show("Nhập đúng",ToastAndroid.SHORT);
-    //  navigation.navigate('Resigter');
+  const chuyen = () => {
+    if (verifiedEmail == true && verifiedPass == true) {
+      ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
+      //  navigation.navigate('Resigter');
     }
-    else
-    {
+    else {
       Alert.alert('Error', 'Email hoặc Password của bạn đã sai! vui lòng kiểm tra lại.');
     }
- }
+  }
   return (
     <View style={styles.container}>
-
+      
       <View style={styles.center}>
         <Text style={styles.textSignIn}>Sign In</Text>
       </View>
@@ -120,11 +114,23 @@ const Login = (props) => {
         <Text style={styles.textInstruct}>password to access your account</Text>
       </View>
 
-      <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(text)=>kiemtra(text)}  ></TextInput>
+      <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(text) => kiemtra(text)}  ></TextInput>
 
       <View style={styles.viewInputPass}>
-        <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(text1)=>kiemtrapassword(text1)}></TextInput>
-        <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIcon}></Image>
+        <TextInput placeholder='Password' style={styles.inputEmailAndPass} 
+         secureTextEntry={getPasswordVisible ? false : true} 
+         onChangeText={(setPasswordVisible) => kiemtrapassword(setPasswordVisible)}  value={verifiedPass} ></TextInput>
+        <TouchableOpacity style={styles.visible}
+          onPress={() => {
+            setPasswordVisible(!getPasswordVisible)
+          }}>
+          {
+            getPasswordVisible ?
+              <Image source={require('../../asset/icon/icon_visible.png')} style={styles.imageIconEye}></Image>
+              :
+              <Image source={require('../../asset/icon/icon_invisible.png')} style={styles.imageIconEye}></Image>
+          }
+        </TouchableOpacity>
       </View>
 
       <View style={{ marginLeft: 220, marginTop: 5 }}>
@@ -139,8 +145,8 @@ const Login = (props) => {
 
       <View style={styles.center}>
         <Text style={styles.textNoneAcc}>Don’t have an account?</Text>
-        <TouchableOpacity onPress={()=>{goRegister()}}>
-        <Text style={[styles.textNoneAcc, { color: COLOR.primary, marginLeft: 5 }]}>Sign Up</Text>
+        <TouchableOpacity onPress={() => { goRegister() }}>
+          <Text style={[styles.textNoneAcc, { color: COLOR.primary, marginLeft: 5 }]}>Sign Up</Text>
 
         </TouchableOpacity>
       </View>
@@ -170,8 +176,8 @@ const styles = StyleSheet.create({
     color: COLOR.primary
   },
   imageLogin: {
-    width: 347.28,
-    height: 331.24,
+    width: 300,
+    height: 300,
     marginTop: -5
   },
   textInstruct: {
@@ -234,6 +240,13 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontWeight: '400',
     color: COLOR.black
-  }
+  },
+
+  imageIconEye: {
+    width: 24,
+    height: 24,
+    marginLeft: -33,
+    marginTop: 15
+  },
 
 })
