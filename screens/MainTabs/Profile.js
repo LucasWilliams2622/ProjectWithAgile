@@ -1,14 +1,48 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, KeyboardAvoidingView } from 'react-native'
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import { TextInput } from 'react-native-paper'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
 
 
 const Profile = (props) => {
   const { route, navigation } = props;
+  //const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState({"_id": {
+    "$oid": "6478632830be4c0f2ab4472a"
+  },
+  "name": "phitung",
+  "email": "tungh3210@gmail.com",
+  "password": "$2a$10$tQMCJ8lkCr4cb.tE57MC8.mqGpdJVuwDZzyNh8L/L/btw16uCAS7m",
+  "description": "hihihihi",
+  "avatar": "",
+  "role": {
+    "$numberInt": "1"
+  },
+  "isLogin": false,
+  "isActive": true,
+  "isVerified": false,
+  "verificationCode": "0",
+  "createAt": {
+    "$date": {
+      "$numberLong": "1685611304744"
+    }
+  },
+  "updateAt": {
+    "$date": {
+      "$numberLong": "1685611304744"
+    }
+  },
+  "isAble": true,
+  "__v": {
+    "$numberInt": "0"
+  }});
 
+  const [limit, setLimit] = useState(10000);
   const [avatar, setAvatar] = useState(null)
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
@@ -45,17 +79,8 @@ const Profile = (props) => {
     //   type: 'image/jpeg',
     //   name: 'image.jpg',
     // });
-
-    // const response = await AxiosInstance("multipart/form-data").post('user/api/upload-avatar', formdata);
-    // console.log(response.link);
-    // if (response.result == true) {
-    //   setAvatar(response.link);
-    //   ToastAndroid.show("Upload Image Success", ToastAndroid.SHORT);
-    // }
-    // else {
-    //   ToastAndroid.show("Upload Image Failed", ToastAndroid.SHORT);
-    // }
   }
+  
   const getImageLibrary = async () => {
     const result = await launchImageLibrary();
     console.log(result.assets[0].uri);
@@ -65,15 +90,6 @@ const Profile = (props) => {
     //   type: 'image/jpeg',
     //   name: 'image.jpg',
     // });
-    // const response = await AxiosInstance("multipart/form-data").post('user/api/upload-avatar', formdata);
-    // console.log(response.link);
-    // if (response.result == true) {
-    //   setAvatar(response.link);
-    //   ToastAndroid.show("Upload ảnh thành công", ToastAndroid.SHORT);
-    // }
-    // else {
-    //   ToastAndroid.show("Upload ảnh thất bại", ToastAndroid.SHORT);
-    // }
   }
   const updateProfile = async () => {
     let rawNumber = phoneNumber.substring(3)
@@ -83,7 +99,7 @@ const Profile = (props) => {
       const response = await AxiosInstance().put('user/api/update',
         {
           phoneNumber: rawNumber, password: password, name: name,
-          email: email, address: address, gender: gender, dob: dob, avatar: avatar, role: role
+          email: email, address: address, avatar: avatar, role: role, description: description
         })
       console.log(response)
       if (response.result) {
@@ -97,6 +113,47 @@ const Profile = (props) => {
     }
 
   }
+
+  const formik = useFormik({
+    initialValues: {...currentUser, limit: limit.toString()},
+    enableReinitialize: true,
+    validationSchema: Yup.object({
+      name: Yup.string()
+        .min(5, 'Họ Và Tên tối thiểu 5 ký tự trở lên.')
+        // .matches(, 'Họ Và Tên không đúng định dạng.')
+        .required('Họ Và Tên không được để trống!'),
+    }),
+    onSubmit: (form) => {
+      handleUpdateUser(form)
+    },
+  });
+
+  const getCurrentUserInfo = async () => {
+    // const response = await AxiosIntance().get("lay limit", { email: emailUser, password: passwordUser, name: nameUser });
+    // setLimit(....)
+  }
+  const [imageURI, setImageURI] = useState("");
+  const handleUpdateUser = async (form) => {
+    // const uploadAvatarForm = new FormData();
+    // uploadAvatarForm.append('file', {
+    //   uri: imageURI,
+    //   name: "image",
+    //   type: 'image/jpg',
+    // });
+    
+    // const responseAvatar = await AxiosIntance().post("/user/api/upload-avatar", uploadAvatarForm);
+    // const sendData = {
+    //   ...form,
+    //   limit: Number(limit), avatar: responseAvatar?.link
+    // }
+    // const responseUpdateUser = await AxiosIntance().post("/user/api/update", {...form, sendData})
+    setCurrentUser({...form, name: "Tung nui"})
+  }
+
+  useEffect(() =>{
+    getCurrentUserInfo()
+  }, [])
+
   return (
   <KeyboardAwareScrollView >
 
@@ -118,9 +175,8 @@ const Profile = (props) => {
             (<Image style={styles.imageProfile} source={{ uri: avatar }} />)
         }
       </TouchableOpacity>
-
       <View style={styles.content}>
-        <Text style={styles.text1}>Name</Text>
+        <Text style={styles.text1}>Email</Text>
         <View style={styles.SectionStyle}>
           <Image
             source={require('../../asset/image/editprofile.png')}
@@ -128,11 +184,26 @@ const Profile = (props) => {
 
           <TextInput
             style={styles.textInput}
-            placeholder="User"
-
+            placeholder="Email"
+            editable = {false}
+            defaultValue={currentUser.email}
           />
         </View>
+        <Text style={styles.text1}>Name</Text>
+        <View style={styles.SectionStyle}>
+          <Image
+            source={require('../../asset/image/editprofile.png')}
+            style={styles.ImageStyle}/>
 
+          <TextInput
+            style={styles.textInput}
+            placeholder="User"
+            onChangeText={formik.handleChange('name')}
+            value={formik.values?.name}
+          />
+          
+        </View>
+        {formik.errors.name && <Text style = {{color : COLOR.red}}>{formik.errors.name}</Text>}
         <Text style={styles.text1}>Description</Text>
         <View style={styles.SectionStyle}>
           <Image
@@ -142,9 +213,27 @@ const Profile = (props) => {
           <TextInput
             style={styles.textInput}
             placeholder="Xin chào bạn cho vài lời"
+            onChangeText={formik.handleChange('description')}
+            value={formik.values?.description}
+
           />
         </View>
-        <TouchableOpacity style={styles.buttonSave}>
+
+        <Text style={styles.text1}>Limit</Text>
+        <View style={styles.SectionStyle}>
+          <Image
+            source={require('../../asset/image/pen.png')}
+            style={[styles.ImageStyle, { tintColor: COLOR.black }]} />
+
+          <TextInput
+            style={styles.textInput}
+            placeholder="Hạn mức chi"
+            onChangeText={formik.handleChange('limit')}
+            value={formik.values?.limit}
+          />
+        </View>
+        
+        <TouchableOpacity style={styles.buttonSave} onPress={formik.handleSubmit}>
           <Text style={styles.text2}>Lưu thay đổi</Text>
         </TouchableOpacity>
       </View>
@@ -170,7 +259,7 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: COLOR.primary,
     width: "100%",
-    height: 100,
+    height: 60,
     flexDirection: 'row',
     alignItems: 'center'
   }
