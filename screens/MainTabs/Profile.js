@@ -144,7 +144,7 @@ const Profile = (props) => {
         {
           !avatar
             ?
-            (<Image style={styles.imageProfile} source={require('../../asset/icon/icon_profile.png')} />)
+            (<Image style={styles.imageProfile} source={require('../../asset/image/logo.png')} />)
             :
             (<Image style={styles.imageProfile} source={{ uri: avatar }} />)
         }
@@ -155,7 +155,6 @@ const Profile = (props) => {
           <Image
             source={require('../../asset/icon/icon_edit_profile.png')}
             style={styles.ImageStyle} />
-
           <TextInput
             style={styles.textInput}
             placeholder="Tên"
@@ -216,14 +215,15 @@ const styles = StyleSheet.create({
     height: 60,
     flexDirection: 'row',
     alignItems: 'center'
-  }
-  ,
+  },
+  
+  
   imageProfile: {
     height: 150,
     width: 150,
     alignSelf: 'center',
-    marginTop:10
-
+    marginTop:10,
+    borderRadius:300
   },
   content: {
     padding: 20

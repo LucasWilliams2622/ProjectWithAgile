@@ -15,7 +15,7 @@ const Home = () => {
       <TouchableOpacity>
         <View style={styles.viewAvatarAndText}>
           <Image source={require('../../asset/icon/icon_profile.png')} style={styles.imageProfile}></Image>
-          <Text style={styles.textHello}>Hello Bro</Text>
+          <Text style={styles.textHello}>Xin chào Bạn: </Text>
         </View>
       </TouchableOpacity>
 
