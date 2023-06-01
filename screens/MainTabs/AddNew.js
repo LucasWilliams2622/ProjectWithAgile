@@ -7,11 +7,13 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 const AddNew = (props) => {
   const { navigation } = props;
   const [name, setname] = useState('');
+  const [value, setValue] = useState('');
   const handleCheckInput = () => {
+    const floatValue = parseFloat(value.replace(',', '.')); 
     if (name.trim() === '') {
       Alert.alert('Vui lòng nhập tiêu đề');
-    } else {
-     
+    } else if(isNaN(floatValue) || floatValue <= 0) {
+      Alert.alert('Vui lòng nhập số tiền hợp lệ');
     }
   };
 
@@ -32,7 +34,7 @@ const AddNew = (props) => {
         <View style={styles.bgTop}>
           <Image style={styles.imgColor} source={require('../../asset/icon/icon_edit.png')}></Image>
           <TouchableOpacity >
-            <TextInput placeholderTextColor='white' underlineColor='transparent' style={styles.textMoney} placeholder='Nhập số tiền'></TextInput>
+            <TextInput value={value} onChangeText={setValue}  keyboardType="numeric"returnKeyType="done" placeholderTextColor='white' underlineColor='transparent' style={styles.textMoney} placeholder='Nhập số tiền'></TextInput>
           </TouchableOpacity>
           <Text style={styles.textVND}>VNĐ</Text>
         </View>

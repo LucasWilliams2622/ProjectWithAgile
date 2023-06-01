@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, KeyboardAvoidingView ,ToastAndroid} from 'react-native'
 import React,{useState} from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import { TextInput } from 'react-native-paper'
@@ -14,33 +14,32 @@ const Profile = (props) => {
   const [description, setDescription] = useState('')
 
 
-  const kiemten=(text2)=>{
+  const checkName=(name)=>{
     let reg =/^[a-z0-9_-]{3,15}$/;
-    if(reg.test(text2)===true)
+    if(reg.test(name)===true)
     {
       //(1) Tên được phép chứa các ký tự, các số, gạch dưới, gạch nối.
       //(2) Tên phải có độ dài trong khoảng cho phép từ 3 đến 15 ký tự.
-      setVerifiedname({ name: text2 });
+      setVerifiedname({ name: name });
       console.log("ban da nhap dung");
       setVerifiedname(true);
       return true;
     }
     else
     {
-      setVerifiedname({ name: text2 });
+      setVerifiedname({ name: name });
       console.log("ban da nhap sai");
     }
   }
   
-  const chuyen=()=>{
-    if(verifiedname==true)
+  const check=()=>{
+    if(name.trim()==='')
     {
-     ToastAndroid.show("Nhập đúng",ToastAndroid.SHORT);
-    //  navigation.navigate('Resigter');
+      Alert.alert('Error', 'vui lòng nhập tên!');
     }
-    else
+    else if(description.trim()==='')
     {
-      Alert.alert('Error', 'Bạn kiểm tra lại tên!');
+      Alert.alert('Error', 'vui lòng cho vài dòng thông tin!');
     }
  }
 
@@ -160,7 +159,7 @@ const Profile = (props) => {
           <TextInput
             style={styles.textInput}
             placeholder="User"
-            onChangeText={(text2)=>kiemten(text2)}
+            onChangeText={setName} value={name}
 
           />
         </View>
@@ -174,9 +173,11 @@ const Profile = (props) => {
           <TextInput
             style={styles.textInput}
             placeholder="Xin chào bạn cho vài lời"
+
+            onChangeText={setDescription} value={description}
           />
         </View>
-        <TouchableOpacity style={styles.buttonSave} onPress={chuyen}>
+        <TouchableOpacity style={styles.buttonSave} onPress={check}>
           <Text style={styles.text2}>Lưu thay đổi</Text>
         </TouchableOpacity>
       </View>

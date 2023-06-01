@@ -1,8 +1,4 @@
-
-import {
-  Pressable, StyleSheet, Text, TextInput, View,
-  Image, ToastAndroid, Alert, TouchableOpacity
-} from 'react-native'
+import {Pressable, StyleSheet, Text, TextInput, View,Image, ToastAndroid, Alert, TouchableOpacity} from 'react-native'
 import React, { useState } from 'react'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { ICON, COLOR } from '../../constants/Themes'
@@ -18,8 +14,7 @@ const Register = (props) => {
     navigation.navigate('Login')
 
   }
-
-  // const dangKyNe = async () => {
+    // const dangKyNe = async () => {
   //   console.log(emailUser, passwordUser, nameUser);
   //   try {
   //     const response = await AxiosIntance().post("/user/register", { email: emailUser, password: passwordUser, name: nameUser });
@@ -34,38 +29,40 @@ const Register = (props) => {
   //     console.log(e);
   //   }
   // }
-
-
-  const kiemtra = (text) => {
+  const checkEmail = (setEmail) => {
     let reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    if (reg.test(text) === true) {
-      setVerifiedEmail({ email: text });
+    if (reg.test(setEmail) === true) {
+      setVerifiedEmail({ email: setEmail });
+
       console.log("ban da nhap dung");
       setVerifiedEmail(true);
       return true;
     }
-    else {
-      setVerifiedEmail({ email: text });
+    else
+    {
+      setVerifiedEmail({ email: setEmail });
       console.log("ban da nhap sai");
     }
   }
-  const kiemten = (text2) => {
+  const checkName = (name) => {
     let reg = /^[a-z0-9_-]{3,15}$/;
-    if (reg.test(text2) === true) {
+    if (reg.test(name) === true) {
+
       //(1) Tên được phép chứa các ký tự, các số, gạch dưới, gạch nối.
       //(2) Tên phải có độ dài trong khoảng cho phép từ 3 đến 15 ký tự.
-      setname({ name: text2 });
+      setname({ name: name });
       console.log("ban da nhap dung");
       setname(true);
       return true;
     }
-    else {
-      setname({ name: text2 });
+    else
+    {
+      setname({ name: name });
       console.log("ban da nhap sai");
     }
   }
-
-  const chuyen = () => {
+  
+  const check = () => {
     if (verifiedEmail == true && name == true) {
       ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
       console.log(verifiedEmail);
@@ -102,6 +99,11 @@ const Register = (props) => {
       <View style={styles.center}>
         <Image style={styles.imageLogin} source={require('../../asset/image/LoginAndRegister/signup.png')}></Image>
       </View>
+      <TextInput placeholder='Name Surname' style={styles.inputEmailAndPass} onChangeText={(name)=>checkName(name)}></TextInput>
+
+      <View style={styles.viewInputPass}>
+        <TextInput placeholder='Email' style={styles.inputEmailAndPass}  onChangeText={(setEmail)=>checkEmail(setEmail)}></TextInput>
+        </View>
 
       <View style={{ marginTop: 7, marginLeft: 5 }}>
         <Text style={styles.textInstruct}>We need to verify you. We will send you a one time verification code.</Text>
@@ -112,8 +114,13 @@ const Register = (props) => {
         <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={setEmail} value={email}></TextInput>
       </View>
 
+      <View style={{ marginTop: 7, marginLeft: 5 }}>
+        <Text style={styles.textInstruct}>We need to verify you. We will send you a one time verification code.</Text>
+      </View>
 
       <View style={{ alignItems: 'center' }}>
+
+        <Pressable style={styles.viewPressable} onPress={check}/>
         <Pressable style={styles.viewPressable} onPress={sendVerifiedEmail}>
           <Text style={styles.textPressable}>Sign in</Text>
         </Pressable>
@@ -126,6 +133,8 @@ const Register = (props) => {
         </TouchableOpacity>
       </View>
     </View>
+
+
   )
 }
 

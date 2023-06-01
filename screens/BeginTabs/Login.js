@@ -62,37 +62,42 @@ const Login = (props) => {
   //   return passRegex.test(pass);
   // };
 
-  const kiemtra = (text) => {
-    let reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    if (reg.test(text) === true) {
+  const kiemtra=(text)=>{
+    let reg =/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if(reg.test(text)===true)
+    {
       setVerifiedEmail({ email: text });
       console.log("ban da nhap dung");
       setVerifiedEmail(true);
       return true;
     }
-    else {
+    else
+    {
       setVerifiedEmail({ email: text });
       console.log("ban da nhap sai");
     }
   }
-  const kiemtrapassword = (text1) => {
-    let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    if (passreg.test(text1) === true) {
-      setVerifiedPass({ passreg: text1 });
+  const kiemtrapassword=(text1)=>{
+    let passreg=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    if(passreg.test(text1)===true)
+    {
+      setVerifiedPass({passreg:text1});
       console.log("password không hợp lệ");
       setVerifiedPass(true);
       return true;
     }
-    else {
-      setVerifiedPass({ passreg: text1 });
+    else
+    {
+      setVerifiedPass({passreg:text1});
       console.log("pass ko hợp lệ");
     }
   }
 
-  const chuyen = () => {
-    if (verifiedEmail == true && verifiedPass == true) {
-      ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
-      //  navigation.navigate('Resigter');
+  const chuyen=()=>{
+    if(verifiedEmail==true && verifiedPass==true)
+    {
+     ToastAndroid.show("Nhập đúng",ToastAndroid.SHORT);
+    //  navigation.navigate('Resigter');
     }
     else {
       Alert.alert('Error', 'Email hoặc Password của bạn đã sai! vui lòng kiểm tra lại.');
@@ -114,12 +119,12 @@ const Login = (props) => {
           <Text style={styles.textInstruct}>password to access your account</Text>
         </View>
 
-        <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(text) => kiemtra(text)}  ></TextInput>
+      <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(text)=>kiemtra(text)}  ></TextInput>
 
-        <View style={styles.viewInputPass}>
-          <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(text1) => kiemtrapassword(text1)}></TextInput>
-          <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIcon}></Image>
-        </View>
+      <View style={styles.viewInputPass}>
+        <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(text1)=>kiemtrapassword(text1)}></TextInput>
+        <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIcon}></Image>
+      </View>
 
         <View style={{ marginLeft: 220, marginTop: 5 }}>
           <Text style={styles.textForgote}>Forgote Password</Text>
@@ -127,7 +132,7 @@ const Login = (props) => {
       </View>
 
       <View style={{ alignItems: 'center' }}>
-        <Pressable style={styles.viewPressable} onPress={chuyen} >
+        <Pressable style={styles.viewPressable} onPress={check} >
           <Text style={styles.textPressable}>Sign in</Text>
         </Pressable>
       </View>
