@@ -62,16 +62,16 @@ const Register = (props) => {
     }
   }
   
-  const check = () => {
-    if (verifiedEmail == true && name == true) {
-      ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
-      console.log(verifiedEmail);
-      //  navigation.navigate('Resigter');
-    }
-    else {
-      Alert.alert('Error', 'Email bạn chưa nhập hoặc nhập sai! vui lòng kiểm tra lại.');
-    }
-  }
+  // const check = () => {
+  //   if (verifiedEmail == true && name == true) {
+  //     ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
+  //     console.log(verifiedEmail);
+  //     //  navigation.navigate('Resigter');
+  //   }
+  //   else {
+  //     Alert.alert('Error', 'Email bạn chưa nhập hoặc nhập sai! vui lòng kiểm tra lại.');
+  //   }
+  // }
   const sendVerifiedEmail = async () => {
     try {
       //http://localhost:3000
@@ -103,19 +103,11 @@ const Register = (props) => {
 
       <View style={styles.viewInputPass}>
         <TextInput placeholder='Email' style={styles.inputEmailAndPass}  onChangeText={(setEmail)=>checkEmail(setEmail)}></TextInput>
-        </View>
-
-      <TextInput placeholder='Name Surname' style={styles.inputEmailAndPass} onChangeText={setname} value={name}></TextInput>
-
-      <View style={styles.viewInputPass}>
-        <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={setEmail} value={email}></TextInput>
-      </View>
+        </View> 
       <View style={{ marginTop: 7, marginLeft: 5 }}>
         <Text style={styles.textInstruct}>We need to verify you. We will send you a one time verification code.</Text>
       </View>
       <View style={{ alignItems: 'center' }}>
-
-        <Pressable style={styles.viewPressable} onPress={check}/>
         <Pressable style={styles.viewPressable} onPress={sendVerifiedEmail}>
           <Text style={styles.textPressable}>Sign in</Text>
         </Pressable>
