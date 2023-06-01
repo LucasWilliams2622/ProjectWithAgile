@@ -69,10 +69,13 @@ const AddNew = (props) => {
         </View>
 
       </View>
-
-      <TouchableOpacity style={styles.btnSave} onPress={handleCheckInput} >
-        <Text style={styles.btnTxt}>Lưu chi tiêu</Text>
-      </TouchableOpacity>
+    
+      <View style={{ alignItems: 'center' }}>
+        <TouchableOpacity style={styles.viewSave} onPress={handleCheckInput}>
+          <Text style={styles.textSave}>Lưu Chi tiêu</Text>
+        </TouchableOpacity>
+      </View>
+     
     </View>
 
   )
@@ -174,25 +177,46 @@ const styles = StyleSheet.create({
   txtInput: {
     borderColor: "#fff",
     borderBottomColor: "#000",
-    width: 320,
+    width: 310,
     borderWidth: 1,
     backgroundColor: 'transparent',
   },
+  viewSave:{
+    left:10, 
+    right:10
+  },
 
   btnSave: {
-    top: 130,
+    top: 100,
     backgroundColor: '#1488fa',
     height: 50,
     padding: 10,
-    borderRadius: 20
+    borderRadius: 20,
+   
   },
 
   btnTxt: {
     fontSize: 20,
     color: '#fff',
     textAlign: 'center',
-  }
-
+  },
+  viewSave: {
+    width: 360,
+    height: 50,
+    borderRadius: 30,
+    backgroundColor:'#1488fa',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: 10
+  },
+  textSave: {
+    fontFamily: 'Klarna Text',
+    fontSize: 20,
+    fontStyle: 'normal',
+    fontWeight: '700',
+    color: COLOR.white
+  },
 
 
 

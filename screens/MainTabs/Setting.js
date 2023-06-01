@@ -32,13 +32,13 @@ const Setting = (props) => {
         <View style={styles.view1}>
           <View>
             <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-              <Image style={styles.imageProfile} source={require('../../asset/icon/icon_profile.png')}></Image>
+              <Image style={styles.imageProfile} source={require('../../asset/image/logo.png')}></Image>
             </TouchableOpacity>
           </View>
 
           <View >
             <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-              <Image style={styles.imageEdit} source={require('../../asset/icon/icon_editSetting.png')}></Image>
+              <Image style={styles.imageEdit} source={require('../../asset/icon/icon_edit.png')}></Image>
             </TouchableOpacity>
           </View>
         </View>
@@ -137,6 +137,9 @@ const styles = StyleSheet.create({
     height: 130,
     width: 130,
     alignSelf: 'center',
+    left:20, 
+    borderRadius:100
+
 
   },
   view1: {
@@ -146,7 +149,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     top: 80,
-    right: 40
+    right: 10
   },
   text1: {
     color: COLOR.white,
