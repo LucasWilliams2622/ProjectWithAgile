@@ -2,58 +2,80 @@ import {
     Pressable, StyleSheet, Text, Alert, TextInput, Dimensions,
     View, Image, ToastAndroid, TouchableOpacity
 } from 'react-native'
-import React ,{useState}from 'react'
+import React, { useState } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
+import AxiosIntance from '../../constants/AxiosIntance';
 
-const SignPassword = () => {
+const SignPassword = (props) => {
+    const { route, navigation } = props;
+    const email = route.params.email;
+    const name = route.params.name;
 
     const [verifiedPassNew, setVerifiedPassNew] = useState(false);
     const [verifiedCfPass, setVerifiedCfPass] = useState(false);
     const [password, setpassword] = useState('');
     const [confirmPass, setconfirmPass] = useState('');
-    const kiemtrapasswordnew=(text1)=>{
-        let passreg=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-        if(passreg.test(text1)===true)
-        {
-          setVerifiedPassNew({passreg:text1});
-          setVerifiedPassNew(true);
-          setpassword(text1);
-          console.log("password hợp lệ");
-          return true;
+    const kiemtrapasswordnew = (text1) => {
+        let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        if (passreg.test(text1) === true) {
+            setVerifiedPassNew({ passreg: text1 });
+            setVerifiedPassNew(true);
+            setpassword(text1);
+            console.log("password hợp lệ");
+            return true;
         }
-        else
-        {
-          setVerifiedPassNew({passreg:text1});
-          console.log("pass ko hợp lệ");
+        else {
+            setVerifiedPassNew({ passreg: text1 });
+            console.log("pass ko hợp lệ");
         }
-      }
-      const kiemtraConFirmPass=(text1)=>{
-        let passreg=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-        if(passreg.test(text1)===true)
-        {
-          setVerifiedCfPass({passreg:text1});
-          setVerifiedCfPass(true);
-          setconfirmPass(text1);
-          console.log("password hợp lệ");
-          return true;
+    }
+    const kiemtraConFirmPass = (text1) => {
+        let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        if (passreg.test(text1) === true) {
+            setVerifiedCfPass({ passreg: text1 });
+            setVerifiedCfPass(true);
+            setconfirmPass(text1);
+            console.log("password hợp lệ");
+            return true;
         }
-        else
-        {
-          setVerifiedCfPass({passreg:text1});
-          console.log("pass ko hợp lệ");
+        else {
+            setVerifiedCfPass({ passreg: text1 });
+            console.log("pass ko hợp lệ");
         }
-      }
-      const chuyen=()=>{
-        if(verifiedCfPass==true&&verifiedPassNew==true&& password===confirmPass  )
-        {
-         ToastAndroid.show("Nhập đúng",ToastAndroid.SHORT);
-        //  navigation.navigate('Resigter');
+    }
+    const chuyen = async () => {
+        // if (verifiedCfPass == true && verifiedPassNew == true && password === confirmPass) {
+        //     ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
+        //     navigation.navigate('Welcome');
+        // }
+        // else {
+        //     Alert.alert('Error', 'Password của bạn đã sai! vui lòng kiểm tra lại.');
+        // }
+        try {
+            if (password === confirmPass) {
+                console.log(email);
+                console.log(name);
+                console.log(password);
+                ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
+                //http://localhost:3000/
+                const response = await AxiosIntance().post("user/api/register", { name: name, email: email, password: password });
+                console.log(response);
+                if (response.result === true) {
+                    ToastAndroid.show("Đăng kí tài khoản thành công", ToastAndroid.SHORT);
+                    navigation.navigate('Welcome');
+                }
+                else {
+                    ToastAndroid.show("Đăng kí tài khoản thất bại", ToastAndroid.SHORT);
+                    navigation.navigate('Register');
+                }
+            }
+            else {
+                Alert.alert('Error', 'Password của bạn đã sai! vui lòng kiểm tra lại.');
+            }
+        } catch (error) {
+
         }
-        else
-        {
-          Alert.alert('Error', 'Password của bạn đã sai! vui lòng kiểm tra lại.');
-        }
-     }
+    }
     return (
         <View style={styles.container}>
 
@@ -72,18 +94,24 @@ const SignPassword = () => {
             </View>
 
             <View style={styles.viewInputEmailAndPass}>
-                <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(text1)=>kiemtrapasswordnew(text1)}></TextInput>
+                <TextInput placeholder='Password' style={styles.inputEmailAndPass}
+                    onChangeText={(text1) => kiemtrapasswordnew(text1)}
+                >
+
+                </TextInput>
                 <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIconEye}></Image>
                 <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
             </View>
 
             <View style={styles.viewInputEmailAndPass}>
-                <TextInput placeholder='Confirm Password' style={styles.inputEmailAndPass} onChangeText={(text1)=>kiemtraConFirmPass(text1)}></TextInput>
+                <TextInput placeholder='Confirm Password' style={styles.inputEmailAndPass}
+                    onChangeText={(text1) => kiemtraConFirmPass(text1)}
+                ></TextInput>
                 <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIconEye}></Image>
                 <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
             </View>
 
-            <View style={{alignItems:'center'}}>
+            <View style={{ alignItems: 'center' }}>
                 <Pressable style={styles.viewPressable} onPress={chuyen}>
                     <Text style={styles.textPressable}>Next</Text>
                 </Pressable>
