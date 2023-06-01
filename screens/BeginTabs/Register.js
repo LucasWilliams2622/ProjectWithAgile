@@ -1,4 +1,4 @@
-import {Pressable, StyleSheet, Text, TextInput, View,Image, ToastAndroid, Alert, TouchableOpacity} from 'react-native'
+import { Pressable, StyleSheet, Text, TextInput, View, Image, ToastAndroid, Alert, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { ICON, COLOR } from '../../constants/Themes'
@@ -14,7 +14,7 @@ const Register = (props) => {
     navigation.navigate('Login')
 
   }
-    // const dangKyNe = async () => {
+  // const dangKyNe = async () => {
   //   console.log(emailUser, passwordUser, nameUser);
   //   try {
   //     const response = await AxiosIntance().post("/user/register", { email: emailUser, password: passwordUser, name: nameUser });
@@ -38,8 +38,7 @@ const Register = (props) => {
       setVerifiedEmail(true);
       return true;
     }
-    else
-    {
+    else {
       setVerifiedEmail({ email: setEmail });
       console.log("ban da nhap sai");
     }
@@ -55,16 +54,16 @@ const Register = (props) => {
       setname(true);
       return true;
     }
-    else
-    {
+    else {
       setname({ name: name });
       console.log("ban da nhap sai");
     }
   }
-  
+
   const check = () => {
     if (verifiedEmail == true && name == true) {
       ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
+      sendVerifiedEmail();
       console.log(verifiedEmail);
       //  navigation.navigate('Resigter');
     }
@@ -99,11 +98,7 @@ const Register = (props) => {
       <View style={styles.center}>
         <Image style={styles.imageLogin} source={require('../../asset/image/LoginAndRegister/signup.png')}></Image>
       </View>
-      <TextInput placeholder='Name Surname' style={styles.inputEmailAndPass} onChangeText={(name)=>checkName(name)}></TextInput>
-
-      <View style={styles.viewInputPass}>
-        <TextInput placeholder='Email' style={styles.inputEmailAndPass}  onChangeText={(setEmail)=>checkEmail(setEmail)}></TextInput>
-        </View>
+      
 
       <View style={{ marginTop: 7, marginLeft: 5 }}>
         <Text style={styles.textInstruct}>We need to verify you. We will send you a one time verification code.</Text>
@@ -114,19 +109,17 @@ const Register = (props) => {
         <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={setEmail} value={email}></TextInput>
       </View>
 
-      <View style={{ marginTop: 7, marginLeft: 5 }}>
-        <Text style={styles.textInstruct}>We need to verify you. We will send you a one time verification code.</Text>
-      </View>
+    
 
       <View style={{ alignItems: 'center' }}>
 
-        <Pressable style={styles.viewPressable} onPress={check}/>
-        <Pressable style={styles.viewPressable} onPress={sendVerifiedEmail}>
+        
+        <Pressable style={styles.viewPressable} onPress={()=>{check()}}>
           <Text style={styles.textPressable}>Sign in</Text>
         </Pressable>
       </View>
 
-      <View style={[styles.center,{marginTop:10}]}>
+      <View style={[styles.center, { marginTop: 10 }]}>
         <Text style={styles.textNoneAcc}>Already have an account?</Text>
         <TouchableOpacity onPress={() => { goLogin() }}>
           <Text style={[styles.textNoneAcc, { color: COLOR.primary, marginLeft: 5 }]}>Login</Text>

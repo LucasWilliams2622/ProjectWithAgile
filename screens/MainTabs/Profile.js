@@ -176,7 +176,7 @@ const Profile = (props) => {
             onChangeText={setDescription} value={description}
           />
         </View>
-        <TouchableOpacity style={styles.buttonSave} onPress={chuyen}>
+        <TouchableOpacity style={styles.buttonSave} onPress={check}>
           <Text style={styles.text2}>Lưu thay đổi</Text>
         </TouchableOpacity>
       </View>

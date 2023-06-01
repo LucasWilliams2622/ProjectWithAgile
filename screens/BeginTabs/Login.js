@@ -132,7 +132,7 @@ const Login = (props) => {
       </View>
 
       <View style={{ alignItems: 'center' }}>
-        <Pressable style={styles.viewPressable} onPress={check} >
+        <Pressable style={styles.viewPressable}  >
           <Text style={styles.textPressable}>Sign in</Text>
         </Pressable>
       </View>

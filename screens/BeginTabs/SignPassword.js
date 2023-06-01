@@ -122,7 +122,7 @@ const SignPassword = (props) => {
                 <TextInput placeholder='Password' style={styles.inputEmailAndPass}
                     onChangeText={(text1) => kiemtrapasswordnew(text1)}
                 >
-                </TextInput>
+                </TextInput>    
                 <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIconEye}></Image>
                 <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
             </View>
