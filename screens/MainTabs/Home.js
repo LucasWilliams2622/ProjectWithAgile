@@ -21,15 +21,20 @@ const Home = () => {
 
       <View style={styles.viewMenu}>
         <View style={styles.viewIn4Menu}>
-
           <View style={styles.viewIn4Menu1}>
             <View style={[styles.flex, { alignItems: 'center' }]}>
-              <Image style={styles.image} source={require('../../asset/icon/icon_profile.png')}></Image>
+              <Image style={styles.image} source={require('../../asset/icon/icon_calender.png')}></Image>
               <Text style={styles.textDate}>23-05-2023</Text>
             </View>
             <TouchableOpacity onPress={() => setisShow(!isShow)}>
-              <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_profile.png')}></Image>
+              {
+                isShow ?
+                  <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_invisible.png')}></Image>
+                  :
+                  <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_visible.png')}></Image>
+              }
             </TouchableOpacity>
+
           </View>
 
           <View style={styles.viewIn4Menu2}>
@@ -53,6 +58,18 @@ const Home = () => {
                 isShow ? <Text style={styles.textGiveAndPay}>********</Text> : <Text style={styles.textGiveAndPay}>1.000.000 VND</Text>
               }
             </View>
+          </View>
+          <View style={styles.viewIn4Menu3}>
+            <View style={[styles.flex, { alignItems: 'center' }]}>
+            <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_load.png')}></Image>
+            </View>
+            <View style={[styles.flex, { alignItems: 'center' }]}>
+
+              {
+                isShow ? <Text style={styles.textTotalManager}>********</Text> : <Text style={styles.textTotalManager}>40/100</Text>
+              }
+            </View>
+
           </View>
 
         </View>
@@ -121,7 +138,7 @@ const styles = StyleSheet.create({
   },
   viewIn4Menu: {
     backgroundColor: COLOR.secondary,
-    height: 100,
+    height: 120,
     width: 310,
     borderRadius: 15,
     borderWidth: 1,
@@ -180,6 +197,15 @@ const styles = StyleSheet.create({
     // fontFamily:,
     fontStyle: 'normal',
     fontWeight: '400',
+    color: COLOR.black
+  },
+  textTotalManager: {
+    //fontFamily:
+    fontSize: 12,
+    // fontFamily:,
+    fontStyle: 'normal',
+    fontWeight: '400',
+    right:200,
     color: COLOR.black
   },
   textToday: {
