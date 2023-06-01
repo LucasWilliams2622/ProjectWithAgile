@@ -5,12 +5,32 @@ import {
 import React, { useState } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import OTPInputView from '@twotalltotems/react-native-otp-input'
+import AxiosIntance from '../../constants/AxiosIntance'
 
-const SignCode = () => {
-
+const SignCode = (props) => {
+    const { route, navigation } = props;
+    const email = route.params.email;
+    const name = route.params.name;
     const [errorCode, setErrorCode] = useState('');
     const [otpCode, setOtpCode] = useState('');
+    const verifiedEmail = async () => {
+        try {
+            console.log(email);
+            console.log(otpCode);
+            const response = await AxiosIntance().post("user/api/verify-email", { email: email, verifyCode: otpCode });
+            console.log(response);
+            if (response.result === true) {
+                ToastAndroid.show("Xác thực thành công", ToastAndroid.SHORT);
+                navigation.navigate('SignPassword', { email: email, name: name });
+            }
+            else {
+                ToastAndroid.show("Xác thực thất bại ! False Code", ToastAndroid.SHORT);
+            }
 
+        } catch (error) {
+
+        }
+    }
     return (
         <View style={styles.container}>
 
@@ -25,12 +45,12 @@ const SignCode = () => {
 
             <Text style={styles.textEnter}>Enter Verification Code</Text>
             <Text style={styles.textOPT}>We have sent OPT to:</Text>
-            <Text style={styles.textOPT}>concumauxanh@gmail.com</Text>
+            <Text style={styles.textOPT}>{email}</Text>
 
             <View style={styles.center}>
                 <OTPInputView
                     style={{ width: '80%', height: 50 }}
-                    pinCount={6}
+                    pinCount={5}
                     // code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
                     // onCodeChanged = {code => { this.setState({code})}}
                     autoFocusOnLoad
@@ -52,11 +72,11 @@ const SignCode = () => {
                     onCodeFilled={(otpCode) => {
                         console.log(`Code is ${otpCode}, you are good to go!`);
                         setOtpCode(otpCode)
-                        if (isValidEmpty(otpCode) == false) {
-                            setErrorCode('Không được để trống')
-                        } else {
-                            setErrorCode('')
-                        }
+                        // if (isValidEmpty(otpCode) == false) {
+                        //     setErrorCode('Không được để trống')
+                        // } else {
+                        //     setErrorCode('')
+                        // }
                     }}
                 />
             </View>
@@ -66,9 +86,9 @@ const SignCode = () => {
             </Text>
 
             <View style={styles.center}>
-                <Pressable style={styles.viewPressable}>
+                <TouchableOpacity style={styles.viewPressable} onPress={verifiedEmail}>
                     <Text style={styles.textPressable}>Sign up</Text>
-                </Pressable>
+                </TouchableOpacity>
             </View>
 
         </View>

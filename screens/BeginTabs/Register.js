@@ -2,12 +2,12 @@ import {Pressable, StyleSheet, Text, TextInput, View,Image, ToastAndroid, Alert,
 import React, { useState } from 'react'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { ICON, COLOR } from '../../constants/Themes'
-
+import AxiosIntance from '../../constants/AxiosIntance'
 const Register = (props) => {
   const { navigation } = props;
   const [toggLeCheckBox, settoggLeCheckBox] = useState(false);
   const [verifiedEmail, setVerifiedEmail] = useState(false);
-  const [name, setname] = useState(false);
+  const [name, setname] = useState('');
   const [email, setEmail] = useState('');
   const [passwordUser, setpasswordUser] = useState("")
   const goLogin = () => {
@@ -65,10 +65,28 @@ const Register = (props) => {
   const check = () => {
     if (verifiedEmail == true && name == true) {
       ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
+      console.log(verifiedEmail);
       //  navigation.navigate('Resigter');
     }
     else {
       Alert.alert('Error', 'Email bạn chưa nhập hoặc nhập sai! vui lòng kiểm tra lại.');
+    }
+  }
+  const sendVerifiedEmail = async () => {
+    try {
+      //http://localhost:3000
+      console.log("email  ", email);
+      console.log("name  ", name);
+      const result = await AxiosIntance().post("user/api/send-verification-code", { email: email });
+      console.log(result);
+      if (result) {
+        ToastAndroid.show("Đã gửi code", ToastAndroid.SHORT);
+        navigation.navigate('SignCode', { email: email, name: name });
+      } else {
+
+      }
+    } catch (error) {
+
     }
   }
 
@@ -85,12 +103,20 @@ const Register = (props) => {
 
       <View style={styles.viewInputPass}>
         <TextInput placeholder='Email' style={styles.inputEmailAndPass}  onChangeText={(setEmail)=>checkEmail(setEmail)}></TextInput>
+        </View>
+
+      <TextInput placeholder='Name Surname' style={styles.inputEmailAndPass} onChangeText={setname} value={name}></TextInput>
+
+      <View style={styles.viewInputPass}>
+        <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={setEmail} value={email}></TextInput>
       </View>
       <View style={{ marginTop: 7, marginLeft: 5 }}>
         <Text style={styles.textInstruct}>We need to verify you. We will send you a one time verification code.</Text>
       </View>
       <View style={{ alignItems: 'center' }}>
-        <Pressable style={styles.viewPressable} onPress={check}>
+
+        <Pressable style={styles.viewPressable} onPress={check}/>
+        <Pressable style={styles.viewPressable} onPress={sendVerifiedEmail}>
           <Text style={styles.textPressable}>Sign in</Text>
         </Pressable>
       </View>
