@@ -22,7 +22,6 @@ import Item from './screens/MainTabs/Item'
 
 import Setting from './screens/MainTabs/Setting'
 import Profile from './screens/MainTabs/Profile'
-import Test from './screens/TestTab/AddGif'
 import ItemTransaction from './component/ItemTransaction'
 import ItemCollect from './component/ItemCollect'
 import ItemYear from './component/ItemYear'
