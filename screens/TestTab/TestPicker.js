@@ -16,20 +16,21 @@ const App = () => {
 
       showPicker(false);
       //setDate(selectedDate);
-      const formattedDate = moment(selectedDate).format('MMMM YYYY');
-      console.log(formattedDate);
+      const formattedDate = moment(selectedDate).format('YYYY-MM');
       setDate(formattedDate);
       setSelectedMonthYear(formattedDate);
-   
       const formattedYear = moment(selectedDate).format('YYYY');
       setYear(formattedYear)
-
+      console.log(formattedDate);
+      console.log(formattedYear);
+      console.log(currentDate);
     },
     [date, showPicker],
   );
- 
-  const currentDate = moment().format('YYYY-MM-DD-dddd');
- 
+
+  const currentDate = moment().format('YYYY-MM-DD');
+  const currentDate2 = moment().format('YYYY-MM-DD-dddd');
+
   return (
     <SafeAreaView>
       <Text>Month Year Picker Example</Text>

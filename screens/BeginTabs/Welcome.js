@@ -21,10 +21,10 @@ const Welcome = (props) => {
             </View>
 
             <View style={[styles.center, { marginTop: 10 }]}>
-                <Text style={styles.text}>Realax and shop</Text>
-                <Text style={[styles.text, { fontSize: 16, fontWeight: '400' }]}>Shop online and get grocories</Text>
-                <Text style={[styles.text, { fontSize: 16, fontWeight: '400' }]}>delivered from stores to your home</Text>
-                <Text style={[styles.text, { fontSize: 16, fontWeight: '400' }]}>in as fast as 1 hour .</Text>
+                <Text style={styles.text}>Master Your Money, Shape Your Future</Text>
+                <Text style={[styles.text, { fontSize: 16, fontWeight: '400',marginTop:10, }]}>Emphasize the importance</Text>
+                <Text style={[styles.text, { fontSize: 16, fontWeight: '400' }]}> of taking control of your  </Text>
+                <Text style={[styles.text, { fontSize: 16, fontWeight: '400' }]}>finances to create a better tomorrow.</Text>
             </View>
 
             <View style={styles.center}>
@@ -45,18 +45,15 @@ export default Welcome
 
 const styles = StyleSheet.create({
     container: {
-        marginStart: 16,
-        marginEnd: 16,
-        marginTop: 10
+    
     },
     center: {
         justifyContent: 'center',
         alignItems: 'center'
     },
     imageLogin: {
-        width: 329.36,
-        height: 362,
-        marginTop: 20
+        width: '100%',
+        height: 400,
     },
     inputEmailAndPass: {
         width: 343,

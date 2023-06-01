@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import {
   AppRegistry,
   StyleSheet,
@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   View,
   processColor,
+  Image,
+  Dimensions,
 } from 'react-native';
 
 import { PieChart } from 'react-native-charts-wrapper';
@@ -14,6 +16,8 @@ import { Calendar } from 'react-native-calendars';
 import MonthPicker from 'react-native-month-year-picker';
 import moment from 'moment';
 import DatePicker from 'react-native-date-picker'
+import { COLOR } from '../constants/Themes';
+const windowWidth = Dimensions.get('window').width;
 
 class ItemMonth extends React.Component {
   constructor() {
@@ -21,7 +25,7 @@ class ItemMonth extends React.Component {
     this.state = {
       legend: {
         enabled: true,
-        textSize: 20,
+        textSize: 16,
         form: 'CIRCLE',
 
         horizontalAlignment: "RIGHT",
@@ -31,16 +35,18 @@ class ItemMonth extends React.Component {
       },
       data: {
         dataSets: [{
-          values: [{ value: 20, label: 'tháng 5' },
-          { value: 10, label: 'tháng 1' },
-          { value: 15, label: 'tháng 2' },
-          { value: 9, label: 'tháng 3' },
-          { value: 15, label: 'tháng 4' }],
-          label: 'Pie dataset',
+          values: [{ value: 20, label: 'Thu nhập' },
+          { value: 10, label: 'Chi tiêu ' },
+          ],
+          // label: 'Chú thích',
           config: {
-            colors: [processColor('#C0FF8C'), processColor('#FFF78C'), processColor('#FFD08C'), processColor('#8CEAFF'), processColor('#FF8C9D')],
-            valueTextSize: 20,
+            colors: [processColor('#C0FF8C'), processColor('#FFF78C'), processColor('#FFD08C'),
+            processColor('#8CEAFF'), processColor('#FF8C9D'), processColor('#00C4FF')
+              , processColor('#EEE3CB'), processColor('#F1D4E5'), processColor('#D0F5BE')
+              , processColor('#A0D8B3'), processColor('#9376E0'), processColor('#C4B0FF')],
+            valueTextSize: 16,
             valueTextColor: processColor('green'),
+            
             sliceSpace: 5,
             selectionShift: 13,
             // xValuePosition: "OUTSIDE_SLICE",
@@ -53,15 +59,16 @@ class ItemMonth extends React.Component {
       },
       highlights: [{ x: 2 }],
       description: {
-        text: 'This is Pie chart description',
-        textSize: 15,
-        textColor: processColor('darkgray'),
-
+        textAlign:'center',
+        text: 'Chi tiêu tháng 6',
+        textSize: 20,
+        textColor: processColor('black'),
+        
       },
-    
-      show:false,
-      date:new Date(),
-      
+
+      show: false,
+      date: new Date(),
+
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
   }
@@ -78,43 +85,37 @@ class ItemMonth extends React.Component {
   }
 
   handleButtonClick() {
-    this.setState({ show: this.state.show =true });
+    this.setState({ show: this.state.show = true });
   }
- 
+
   handleButtonClick2() {
-    this.setState({ show: this.state.show =false });
+    this.setState({ show: this.state.show = false });
   }
 
   render() {
 
     return (
-      <View style={{ flex: 1 }}>
-        <View style={{}}>
-          <TouchableOpacity onPress={this.handleButtonClick}  style={{ backgroundColor: 'black', borderRadius: 10, margin: 0, padding: 10, width: 100, alignItems: 'center' }}>
-            <Text style={{ color: 'white' }}>Calendar</Text>
-          </TouchableOpacity>
-          {/* <Modal visible={this.state.show} animationType="fade" >
-            <Calendar style={{ borderRadius: 10, elevation: 4,height:100,}}></Calendar>
-          </Modal> */}
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.boxMonth} onPress={this.handleButtonClick}>
+          <Image style={styles.icon} source={require('../asset/icon/icon_calender.png')} />
+          <Text style={styles.textMonthYear}>Tháng 6, năm 2023</Text>
 
-          <DatePicker
-        modal
-        open={this.state.show}
-        date={this.state.date}
-        // minimumDate={new Date()}
-        // maximumDate={new Date(2030, 12)}
-        // locale="vn"
-        onConfirm={() => {
-          this.handleButtonClick2
-          
-        }}
-        onCancel={() => {
-        false
-         
-        }}
-      />
-        </View>
-        <View style={styles.container}>
+          <MonthPicker
+            modal
+            // open={this.state.show}
+            value={this.state.date}
+            maximumDate={new Date(2030, 12)}
+            // minimumDate={new Date()}
+            locale="vn"
+            onConfirm={() => {
+              this.handleButtonClick2
+            }}
+            onCancel={() => {
+              false
+            }}
+          />
+        </TouchableOpacity>
+        <View style={styles.boxChart}>
           <PieChart
             style={styles.chart}
             logEnabled={true}
@@ -124,8 +125,7 @@ class ItemMonth extends React.Component {
             legend={this.state.legend}
             highlights={this.state.highlights}
 
-            extraOffsets={{ left: 5, top: 5, right: 5, bottom: 5 }}
-
+            // extraOffsets={{ left: 5, top: 5, right: 5, bottom: 5 }}
             entryLabelColor={processColor('green')}
             entryLabelTextSize={20}
             entryLabelFontFamily={'HelveticaNeue-Medium'}
@@ -134,13 +134,13 @@ class ItemMonth extends React.Component {
             rotationEnabled={true}
             rotationAngle={45}
             usePercentValues={true}
-            styledCenterText={{ text: 'Pie center text!', color: processColor('pink'), fontFamily: 'HelveticaNeue-Medium', size: 20 }}
+            styledCenterText={{ text: 'Money Talk', color: processColor('black'), fontFamily: 'HelveticaNeue-Medium', size: 16 }}
             centerTextRadiusPercent={100}
-            holeRadius={40}
-            holeColor={processColor('#f0f0f0')}
-            transparentCircleRadius={45}
-            transparentCircleColor={processColor('#f0f0f088')}
-            maxAngle={350}
+            holeRadius={30}
+            holeColor={processColor('white')}
+            transparentCircleRadius={35}
+            transparentCircleColor={processColor('white')}
+            maxAngle={360}
             onSelect={this.handleSelect.bind(this)}
             onChange={(event) => console.log(event.nativeEvent)}
           />
@@ -157,10 +157,42 @@ class ItemMonth extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
+    backgroundColor: COLOR.white
+  },
+  boxChart: {
+    // borderColor: 'red', borderWidth: 2,
+    flex: 1,
+
   },
   chart: {
-    flex: 1
+    // borderColor: 'red', borderWidth: 2,
+    flex: 0.8,
+
+
+  },
+  boxMonth: {
+    height: 40,
+    width: windowWidth,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    backgroundColor: COLOR.white,
+    // borderColor: 'red', borderWidth: 2,
+    marginTop: 10,
+    marginHorizontal: 10,
+    flexDirection: 'row',
+
+  },
+  icon: {
+    width: 30,
+    height: 30,
+  },
+  textMonthYear: {
+    fontWeight: '400',
+    fontSize: 17,
+    marginHorizontal: 7,
+    letterSpacing: 0.3,
+    color: COLOR.black,
+
   }
 });
 

@@ -142,13 +142,13 @@ const BottomTabs = () => {
                     height: focused ? 37 : 27,
 
                     resizeMode: 'stretch',
-                    tintColor: focused ? COLOR.primary : COLOR.primary
+                    tintColor: focused ? COLOR.background2: COLOR.background2,
                   }} />
               </Animatable.View>
               <Text style={{
                 fontSize: focused ? 14 : 0,
                 marginTop: 4,
-                color: focused ? COLOR.primary : COLOR.primary,
+                color: focused ? COLOR.background2 : COLOR.background2,
 
               }}>{label}</Text>
             </View>;
