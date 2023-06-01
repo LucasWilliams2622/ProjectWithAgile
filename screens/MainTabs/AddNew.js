@@ -1,12 +1,16 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, Platform, StatusBar } from 'react-native'
 import React, { useState } from 'react'
 import { TextInput } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ICON, COLOR } from '../../constants/Themes'
 
-
 const AddNew = (props) => {
   const { navigation } = props;
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState('date')
+  const [show, setShow] = useState(false)
+  const [textDate, setTextDate] = useState("")
+
   const [name, setname] = useState('');
   const [value, setValue] = useState('');
   const handleCheckInput = () => {
@@ -19,10 +23,7 @@ const AddNew = (props) => {
   };
 
   return (
-
-
     <View style={styles.container} >
-
       <View style={styles.bgTop}>
         <TouchableOpacity>
           <Image style={styles.imgColorTop} source={require('../../asset/icon/icon_back.png')}></Image>
@@ -43,7 +44,8 @@ const AddNew = (props) => {
 
         <View >
           <View style={styles.input}>
-            <TouchableOpacity >
+            <TouchableOpacity
+            >
               <Image style={styles.imgInput} source={require('../../asset/icon/icon_calender.png')} />
             </TouchableOpacity>
             <TextInput style={styles.txtInput} value={name}
@@ -66,7 +68,6 @@ const AddNew = (props) => {
             <TextInput placeholder='Ghi chú' style={styles.txtInput}></TextInput>
           </View>
         </View>
-
       </View>
 
       <View style={{ alignItems: 'center' }}>
@@ -74,9 +75,8 @@ const AddNew = (props) => {
           <Text style={styles.textSave}>Lưu Chi tiêu</Text>
         </TouchableOpacity>
       </View>
-
+      <StatusBar style="auto" />
     </View>
-
   )
 }
 
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   bgTop: {
     backgroundColor: COLOR.background2,
     flexDirection: 'row',
-    tintColor:'black'
+    tintColor: 'black'
   },
 
   bgMain: {
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
 
   btnSave: {
     top: 100,
-    backgroundColor:COLOR.background2,
+    backgroundColor: COLOR.background2,
     height: 50,
     padding: 10,
     borderRadius: 20,
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     width: 360,
     height: 50,
     borderRadius: 30,
-    backgroundColor:COLOR.background2,
+    backgroundColor: COLOR.background2,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
