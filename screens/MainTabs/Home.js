@@ -3,8 +3,11 @@ import React, { useState } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace'
 
-const Home = () => {
-
+const Home = (props) => {
+  const { navigation } = props;
+  const goAddNew = () => {
+    navigation.navigate('AddNew');
+  }
   const [isShow, setisShow] = useState(true);
   return (
     <View>
@@ -42,7 +45,6 @@ const Home = () => {
             {
               isShow ? <Text style={styles.textPrice}>********</Text> : <Text style={styles.textPrice}>0 VND</Text>
             }
-
           </View>
 
           <View style={styles.viewIn4Menu3}>
@@ -61,7 +63,7 @@ const Home = () => {
           </View>
           <View style={styles.viewIn4Menu3}>
             <View style={[styles.flex, { alignItems: 'center' }]}>
-            <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_load.png')}></Image>
+              <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_load.png')}></Image>
             </View>
             <View style={[styles.flex, { alignItems: 'center' }]}>
 
@@ -69,9 +71,7 @@ const Home = () => {
                 isShow ? <Text style={styles.textTotalManager}>********</Text> : <Text style={styles.textTotalManager}>40/100</Text>
               }
             </View>
-
           </View>
-
         </View>
       </View>
 
@@ -79,16 +79,12 @@ const Home = () => {
 
       <ScrollView>
         <View style={styles.viewListGiveAndPay}>
-          <View>
-            <TouchableOpacity>
-              <Image style={{ height: 250, width: 250 }} source={require('../../asset/gif/statistic.gif')}></Image>
-            </TouchableOpacity>
-          </View>
-          <View style={{ marginTop: 30 }}>
-            <TouchableOpacity>
+          <TouchableOpacity onPress={() => { goAddNew() }}>
+            <Image style={{ height: 250, width: 250 }} source={require('../../asset/gif/statistic.gif')}></Image>
+            <View style={{ marginTop: 30 }} >
               <Text style={styles.textGif}>Hãy thêm chi tiêu hôm nay. Chạm vào đây dể thêm.</Text>
-            </TouchableOpacity>
-          </View>
+            </View>
+          </TouchableOpacity>
         </View>
       </ScrollView>
 
@@ -125,7 +121,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
     marginRight: 13,
-    borderRadius:100,
+    borderRadius: 100,
   },
   textHello: {
     fontSize: 16,
@@ -206,7 +202,7 @@ const styles = StyleSheet.create({
     // fontFamily:,
     fontStyle: 'normal',
     fontWeight: '400',
-    right:200,
+    right: 200,
     color: COLOR.black
   },
   textToday: {

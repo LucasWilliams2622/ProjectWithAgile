@@ -1,12 +1,15 @@
-import { StyleSheet, Text, View, TextInput, Image,Dimensions, ScrollView, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TextInput, Image, Dimensions, ScrollView, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 const windowWIdth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-const History = () => {
+const History = (props) => {
+  const { navigation } = props;
+  const goAddNew = () => {
+    navigation.navigate('AddNew');
+  }
   return (
     <View style={styles.container}>
-
       <View style={styles.background}></View>
       <Text style={styles.text}>Lịch sử chi tiêu</Text>
       <View style={styles.viewSearch}>
@@ -17,18 +20,16 @@ const History = () => {
       <View style={styles.jusCenter}>
         <View style={styles.viewLine}></View>
       </View>
+      
       <ScrollView>
         <View style={styles.viewListGiveAndPay}>
-          <View>
-            <TouchableOpacity>
-              <Image style={{ height: 300, width: 300 }} source={require('../../asset/gif/home.gif')}></Image>
-            </TouchableOpacity>
-          </View>
-          <View style={{ marginTop: 30 }}>
-            <TouchableOpacity>
+          <TouchableOpacity onPress={() => { goAddNew() }}>
+            <Image style={{ height: 300, width: 300 }} source={require('../../asset/gif/home.gif')}></Image>
+            <View style={{ marginTop: 30 }}>
               <Text style={styles.textGif}>Không có chi tiêu nào. Chạm vào đây dể thêm.</Text>
-            </TouchableOpacity>
-          </View>
+            </View>
+          </TouchableOpacity>
+
         </View>
       </ScrollView>
 
@@ -64,12 +65,12 @@ const styles = StyleSheet.create({
   },
   input: {
 
-   width:windowWIdth-30,
+    width: windowWIdth - 30,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: COLOR.gray,
-    marginLeft:30,
-   
+    marginLeft: 30,
+
     backgroundColor: COLOR.white,
     paddingLeft: 20
   },
@@ -80,12 +81,12 @@ const styles = StyleSheet.create({
     marginTop: 30,
 
     height: 50,
-    marginHorizontal:15,
+    marginHorizontal: 15,
   },
   imageSearch: {
     height: 25,
     width: 25,
-   left: -40,
+    left: -40,
     tintColor: COLOR.primary,
   },
   textToday: {
