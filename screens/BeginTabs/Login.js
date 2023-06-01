@@ -2,9 +2,10 @@ import {
   Pressable, StyleSheet, Text, Alert, TextInput, Dimensions,
   View, Image, ToastAndroid, TouchableOpacity
 } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { ICON, COLOR } from '../../constants/Themes'
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 
 const windowWIdth = Dimensions.get('window').width;
 const Login = (props) => {
@@ -13,15 +14,44 @@ const Login = (props) => {
   const [verifiedPass, setVerifiedPass] = useState(false);
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
-  const [getPasswordVisible, setPasswordVisible] = useState(false)
+  const [getPasswordVisible, setPasswordVisible] = useState(false);
+  const [infoUser, setInfoUser] = useState(null);
 
+  useEffect(() => {
+    GoogleSignin.configure({ webClientId: '999490167711-v29oh1m4p7u2vf1libthj7m2klog9ttp.apps.googleusercontent.com' });
+  }, [])
+
+  //login gg
+  const signInGG = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      console.log('Id: ', userInfo.user.id);
+      console.log('Email: ', userInfo.user.email);
+      console.log('Name: ', userInfo.user.name);
+      console.log('FamilyName: ', userInfo.user.familyName);
+      console.log('GivenName: ', userInfo.user.givenName);
+      console.log('Photo: ', userInfo.user.photo);
+      setInfoUser({ userInfo });
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
+    }
+  };
 
   //chuy?n qua màn hình dang ký
   const goRegister = () => {
     navigation.navigate('Register')
   }
 
-  const dangNhapNe = async () => {
+  const onLogin = async () => {
     try {
       const response = await AxiosIntance().post("/user/login", { email: emailUser, password: passwordUser });
       if (response.returnData.error === false) {
@@ -62,42 +92,37 @@ const Login = (props) => {
   //   return passRegex.test(pass);
   // };
 
-  const kiemtra=(text)=>{
-    let reg =/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    if(reg.test(text)===true)
-    {
+  const kiemtra = (text) => {
+    let reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if (reg.test(text) === true) {
       setVerifiedEmail({ email: text });
       console.log("ban da nhap dung");
       setVerifiedEmail(true);
       return true;
     }
-    else
-    {
+    else {
       setVerifiedEmail({ email: text });
       console.log("ban da nhap sai");
     }
   }
-  const kiemtrapassword=(text1)=>{
-    let passreg=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    if(passreg.test(text1)===true)
-    {
-      setVerifiedPass({passreg:text1});
+  const kiemtrapassword = (text1) => {
+    let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    if (passreg.test(text1) === true) {
+      setVerifiedPass({ passreg: text1 });
       console.log("password không hợp lệ");
       setVerifiedPass(true);
       return true;
     }
-    else
-    {
-      setVerifiedPass({passreg:text1});
+    else {
+      setVerifiedPass({ passreg: text1 });
       console.log("pass ko hợp lệ");
     }
   }
 
-  const chuyen=()=>{
-    if(verifiedEmail==true && verifiedPass==true)
-    {
-     ToastAndroid.show("Nhập đúng",ToastAndroid.SHORT);
-    //  navigation.navigate('Resigter');
+  const chuyen = () => {
+    if (verifiedEmail == true && verifiedPass == true) {
+      ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
+      //  navigation.navigate('Resigter');
     }
     else {
       Alert.alert('Error', 'Email hoặc Password của bạn đã sai! vui lòng kiểm tra lại.');
@@ -119,10 +144,10 @@ const Login = (props) => {
           <Text style={styles.textInstruct}>password to access your account</Text>
         </View>
 
-      <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(text)=>kiemtra(text)}  ></TextInput>
+      <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(text) => kiemtra(text)}  ></TextInput>
 
       <View style={styles.viewInputPass}>
-        <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(text1)=>kiemtrapassword(text1)}></TextInput>
+        <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(text1) => kiemtrapassword(text1)}></TextInput>
         <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIcon}></Image>
       </View>
 
@@ -136,6 +161,12 @@ const Login = (props) => {
           <Text style={styles.textPressable}>Sign in</Text>
         </Pressable>
       </View>
+
+      <TouchableOpacity style={styles.center} onPress={() => { signInGG(); }}>
+        <View style={styles.viewLoginGG}>
+          <Image style={styles.imageLoginGG} source={require('../../asset/image/LoginAndRegister/google.png')}></Image>
+        </View>
+      </TouchableOpacity>
 
       <View style={styles.center}>
         <Text style={styles.textNoneAcc}>Don’t have an account?</Text>
@@ -169,7 +200,7 @@ const styles = StyleSheet.create({
   imageLogin: {
     width: '100%',
     height: 331.24,
-    borderRadius: 30,
+    marginTop: -5
   },
   textInstruct: {
     fontFamily: 'Klarna Text',
@@ -215,7 +246,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.primary,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 40,
+    marginTop: 15,
     marginBottom: 10
   },
   textPressable: {
@@ -231,11 +262,6 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontWeight: '400',
     color: COLOR.black
-  },
-  main:{
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    marginHorizontal:23,
   }
 
 })
