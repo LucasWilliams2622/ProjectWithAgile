@@ -43,6 +43,7 @@ const StackBegin = () => {
       <Stack.Screen name="SignCode" component={SignCode} />
 
 
+
     </Stack.Navigator>
   )
 }
@@ -72,8 +73,7 @@ const App = () => {
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="BottomTabs" component={BottomTabs} />
         <Stack.Screen name="AddNew" component={AddNew} />
-        <Stack.Screen name="Chart" component={Chart} />
-        <Stack.Screen name="TestPicker" component={TestPicker} />
+        <Stack.Screen name="Setting" component={Setting} />
        </Stack.Navigator>
      </NavigationContainer>
   )

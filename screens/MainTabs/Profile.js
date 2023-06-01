@@ -134,7 +134,7 @@ const Profile = (props) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => { navigation.goBack() }}>
-          <Image style={[styles.ImageStyle, { tintColor: COLOR.white }]} source={require('../../asset/icon/icon_back.png')}></Image>
+          <Image style={[styles.ImageBack, { tintColor: COLOR.white }]} source={require('../../asset/icon/icon_back.png')}></Image>
         </TouchableOpacity>
         <Text style={styles.text}>Người dùng</Text>
       </View>
@@ -150,7 +150,6 @@ const Profile = (props) => {
       </TouchableOpacity>
 
       <View style={styles.content}>
-        <Text style={styles.text1}>Name</Text>
         <View style={styles.SectionStyle}>
           <Image
             source={require('../../asset/icon/icon_edit_profile.png')}
@@ -159,12 +158,12 @@ const Profile = (props) => {
           <TextInput
             style={styles.textInput}
             placeholder="User"
-            onChangeText={setName} value={name}
+            onChangeText={(text2)=>kiemten(text2)}
 
           />
         </View>
 
-        <Text style={styles.text1}>Description</Text>
+       
         <View style={styles.SectionStyle}>
           <Image
             source={require('../../asset/icon/icon_edit.png')}
@@ -177,7 +176,7 @@ const Profile = (props) => {
             onChangeText={setDescription} value={description}
           />
         </View>
-        <TouchableOpacity style={styles.buttonSave} onPress={check}>
+        <TouchableOpacity style={styles.buttonSave} onPress={chuyen}>
           <Text style={styles.text2}>Lưu thay đổi</Text>
         </TouchableOpacity>
       </View>
@@ -203,15 +202,16 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: COLOR.primary,
     width: "100%",
-    height: 100,
+    height: 60,
     flexDirection: 'row',
     alignItems: 'center'
   }
   ,
   imageProfile: {
-    height: 200,
-    width: 200,
+    height: 150,
+    width: 150,
     alignSelf: 'center',
+    marginTop:10
 
   },
   content: {
@@ -255,12 +255,21 @@ const styles = StyleSheet.create({
     borderTopStartRadius: 20,
     borderTopEndRadius: 20,
     borderRadius: 20,
+    marginBottom:20,
     backgroundColor: COLOR.gray
   },
   ImageStyle: {
     padding: 10,
     height: 30,
-    width: 30,
+    width:30,
+    marginLeft: 10,
+    resizeMode: 'stretch',
+    alignItems: 'center',
+  },
+  ImageBack: {
+    padding: 10,
+    height: 25,
+    width:25,
     marginLeft: 10,
     resizeMode: 'stretch',
     alignItems: 'center',

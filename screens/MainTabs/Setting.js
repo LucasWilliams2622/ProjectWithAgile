@@ -25,12 +25,22 @@ const Setting = (props) => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.text}>Cài đặt</Text>
+        <View>
+          <Image style={styles.imageSetting} source={require('../../asset/icon/icon_setting.png')}></Image>
+        </View>
+
         <View style={styles.view1}>
-          <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-            <Image style={styles.imageProfile} source={require('../../asset/icon/icon_profile.png')}></Image>
-          </TouchableOpacity>
-          <Text style={styles.text1}>User</Text>
+          <View>
+            <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+              <Image style={styles.imageProfile} source={require('../../asset/icon/icon_profile.png')}></Image>
+            </TouchableOpacity>
+          </View>
+
+          <View >
+            <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+              <Image style={styles.imageEdit} source={require('../../asset/icon/icon_editSetting.png')}></Image>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
 
@@ -67,7 +77,6 @@ const Setting = (props) => {
           <View style={styles.line}></View>
           <TouchableOpacity onPress={showVersion}>
             <Text style={styles.text4}>Phiên bản</Text>
-
           </TouchableOpacity>
           <View style={styles.line}></View>
           <Text style={styles.text4}>Chính sách bảo mật</Text>
@@ -75,6 +84,7 @@ const Setting = (props) => {
           <Text style={styles.text4}>Người phát triển: Nhóm 4</Text>
         </View>
       </View>
+
       <View style={styles.bottomItem} >
         <Text style={styles.text2}>Hỗ trợ chúng tôi</Text>
         <View style={styles.view4}>
@@ -87,7 +97,6 @@ const Setting = (props) => {
       </View>
 
     </ScrollView>
-
 
   )
 }
@@ -108,7 +117,6 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginTop: 20
   },
-
   header: {
     backgroundColor: COLOR.title,
     height: 200,
@@ -116,8 +124,15 @@ const styles = StyleSheet.create({
     borderBottomStartRadius: 30,
     flexDirection: 'column',
     alignItems: 'center'
-  }
-  ,
+  },
+  imageSetting: {
+    height: 30,
+    width: 30,
+    left: -170,
+    top: 10,
+    alignSelf: 'center',
+
+  },
   imageProfile: {
     height: 130,
     width: 130,
@@ -125,13 +140,18 @@ const styles = StyleSheet.create({
 
   },
   view1: {
-    flexDirection: 'column'
+    flexDirection: 'row'
+  },
+  imageEdit: {
+    width: 40,
+    height: 40,
+    top: 80,
+    right: 40
   },
   text1: {
     color: COLOR.white,
     justifyContent: 'center',
     alignSelf: 'center',
-    marginTop: -10,
     fontSize: 18
   }
   ,
@@ -144,25 +164,55 @@ const styles = StyleSheet.create({
   },
   view2: {
     backgroundColor: COLOR.white,
-    width: '100%',
+    width: '95%',
     height: 120,
+    right: 10,
+    left: 10,
     borderRadius: 20,
-    borderWidth: 1
+    borderWidth: 1,
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 9,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 9.22,
+    elevation: 12
   },
   view3: {
     backgroundColor: COLOR.white,
-    width: '100%',
+    width: '95%',
     height: 200,
+    right: 10,
+    left: 10,
     borderRadius: 20,
-    borderWidth: 1
+    borderWidth: 1,
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 9,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 9.22,
+    elevation: 12
   },
   view4: {
     backgroundColor: COLOR.white,
-    width: '100%',
+    width: '95%',
     height: 200,
+    right: 10,
+    left: 10,
     borderRadius: 20,
     borderWidth: 1,
-    marginBottom: 20
+    marginBottom: 20,
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 9,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 9.22,
+    elevation: 12
   },
   line: {
     backgroundColor: COLOR.gray,
@@ -193,7 +243,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  bottomItem:{
-    marginBottom:70,
+  bottomItem: {
+    marginBottom: 70,
   }
 })

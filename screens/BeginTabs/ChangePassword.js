@@ -1,90 +1,89 @@
 
-import { Pressable, StyleSheet, Text, TextInput, View, Image, ToastAndroid, Alert } from 'react-native'
+import { Pressable, StyleSheet, Text, TextInput, View, Image, ToastAndroid, TouchableOpacity, Alert } from 'react-native'
 import React, { useState } from 'react'
+import { ICON, COLOR } from '../../constants/Themes'
 
 const ChangePassword = () => {
   const [verifiedPass, setVerifiedPass] = useState(false);
   const [verifiedPassNew, setVerifiedPassNew] = useState(false);
   const [verifiedCfPass, setVerifiedCfPass] = useState(false);
+  const [getOldPassVisible, setOldPassVisible] = useState(false)
+  const [getNewPassVisible, setNewPassVisible] = useState(false)
+  const [getConfirmPassVisible, setConfirmPassVisible] = useState(false)
   const [password, setpassword] = useState('');
   const [confirmPass, setconfirmPass] = useState('')
-  const checkPass=(setpassword)=>{
+  const kiemtrapassword=(text1)=>{
     let passreg=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    if(passreg.test(setpassword)===true)
+    if(passreg.test(text1)===true)
     {
-      setVerifiedPass({passreg:setpassword});
+      setVerifiedPass({passreg:text1});
       console.log("password không hợp lệ");
       setVerifiedPass(true);
       return true;
     }
     else
     {
-      setVerifiedPass({passreg:setpassword});
+      setVerifiedPass({passreg:text1});
       console.log("pass ko hợp lệ");
     }
   }
-  const checkPassNew=(text)=>{
+  const kiemtrapasswordnew=(text1)=>{
     let passreg=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    if(passreg.test(text)===true)
+    if(passreg.test(text1)===true)
     {
-      setVerifiedPassNew({passreg:text});
+      setVerifiedPassNew({passreg:text1});
       setVerifiedPassNew(true);
-      setpassword(text);
+      setpassword(text1);
       console.log("password hợp lệ");
       return true;
     }
     else
     {
-      setVerifiedPassNew({passreg:text});
+      setVerifiedPassNew({passreg:text1});
       console.log("pass ko hợp lệ");
     }
   }
-  const checkConFirmPass=(setpassword)=>{
+  const kiemtraConFirmPass=(text1)=>{
     let passreg=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    if(passreg.test(setpassword)===true)
+    if(passreg.test(text1)===true)
     {
-      setVerifiedCfPass({passreg:setpassword});
+      setVerifiedCfPass({passreg:text1});
       setVerifiedCfPass(true);
-      setconfirmPass(setpassword);
+      setconfirmPass(text1);
       console.log("password hợp lệ");
       return true;
     }
     else
     {
-      setVerifiedCfPass({passreg:setpassword});
+      setVerifiedCfPass({passreg:text1});
       console.log("pass ko hợp lệ");
     }
   }
-  const check=()=>{
-    if(verifiedPass==true&&verifiedCfPass==true&&verifiedPassNew==true&& password===confirmPass)
+  const chuyen=()=>{
+    if(verifiedPass==true&&verifiedCfPass==true&&verifiedPassNew==true&& password===confirmPass  )
     {
      ToastAndroid.show("Nhập đúng",ToastAndroid.SHORT);
     //  navigation.navigate('Resigter');
     }
-    else
-    {
+    else {
       Alert.alert('Error', 'Password của bạn đã sai! vui lòng kiểm tra lại.');
     }
- }
+  }
   return (
-    <View>
-      <Text>ChangePassword</Text>
     <View style={styles.container}>
       <Text style={[styles.text, { color: '#1877F2' }]}>Hello!</Text>
       <Text style={styles.welcomeText}>Reset your password</Text>
      
-      <TextInput placeholder='Your pasword' style={styles.textInput} onChangeText={(setpassword)=>checkPass(setpassword)} ></TextInput>
-      <TextInput placeholder='Your new pasword' style={styles.textInput}onChangeText={(setpassword)=>checkPassNew(setpassword)}></TextInput>
-      <TextInput placeholder='Confirm your new password' style={styles.textInput} onChangeText={(setpassword)=>checkConFirmPass(setpassword)}></TextInput>
+      <TextInput placeholder='Your pasword' style={styles.textInput} onChangeText={(text1)=>kiemtrapassword(text1)} ></TextInput>
+      <TextInput placeholder='Your new pasword' style={styles.textInput}onChangeText={(text1)=>kiemtrapasswordnew(text1)}></TextInput>
+      <TextInput placeholder='Confirm your new password' style={styles.textInput} onChangeText={(text1)=>kiemtraConFirmPass(text1)}></TextInput>
 
       
-      <Pressable style={styles.buttonLogin} onPress={check}>
+      <Pressable style={styles.buttonLogin} onPress={chuyen}>
         <Text style={styles.textLogin}>Submit</Text>
       </Pressable>
       
     </View>
-    </View>
-
   )
 }
 
@@ -92,80 +91,115 @@ export default ChangePassword
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-
-    marginStart: 10,
-    marginEnd: 10,
-    flexDirection: 'column'
-  },
-  text: {
-    fontFamily: 'Popins',
-    fontSize: 50,
-    fontWeight: 'bold',
-    color: '#050505'
-  },
-  welcomeText: {
-    fontFamily: 'Popins',
-    fontSize: 20,
-    marginTop: 4,
-    color: '#4E4B66',
-    marginBottom: 20
-  },
-  textUser: {
-    color: '#050505'
-  },
-  textInput: {
-    height: 48,
-    borderRadius: 10,
-    borderWidth: 1,
-    marginTop: 5
-  },
-  viewRemember: {
-    flexDirection: 'row',
-    marginTop: 5
-  },
-  textRemember: {
-    color: '#050505'
-  },
-  buttonLogin: {
-    height: 48,
-    backgroundColor: '#1877F2',
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginStart: 16,
+    marginEnd: 16,
     marginTop: 10
   },
-  textLogin: {
-    color: '#FFFFFF',
-    fontSize: 20,
-    fontWeight: 'bold'
-
-  },
-  textWith: {
-    color: '#4E4B66',
-    textAlign: 'center'
-    
-  },
-  imageSocial: {
-    width: 21,
-    height: 21,
-    marginEnd: 10
-  },
-  buttonSocial: {
-    flexDirection: 'row',
-    width: 174,
-    height: 48,
-    backgroundColor: '#EEF1F4',
-    marginTop: 5,
-    borderRadius: 10,
+  center: {
     justifyContent: 'center',
     alignItems: 'center',
-
+    flexDirection: 'row'
   },
-  viewDonthave: {
-    margin: 4,
+  textSignIn: {
+    fontFamily: 'Klarna Text',
+    fontSize: 28,
+    fontStyle: 'normal',
+    fontWeight: '700',
+    color: COLOR.primary
+  },
+  imageLogin: {
+    width: 347.28,
+    height: 331.24,
+    marginTop: -5
+  },
+  textInstruct: {
+    fontFamily: 'Klarna Text',
+    fontSize: 20,
+    fontStyle: 'normal',
+    fontWeight: '700',
+    color: COLOR.brown,
+  },
+  inputPassword: {
+    width: 343,
+    height: 48,
+    backgroundColor: COLOR.lightGray,
+    borderRadius: 5,
+    marginTop: 15,
+    fontFamily: 'Klarna Text',
+    fontSize: 16,
+    fontStyle: 'normal',
+    fontWeight: '400',
+    color: COLOR.black,
+    paddingLeft: 35
+  },
+  viewInputOldPass: {
     flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 30,
+    marginTop: 30
+  },
+  viewInputNewPass: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  imageBack: {
+    width: 20,
+    height: 20,
+    marginLeft: -10,
+    marginTop: 15,
+  },
+  imageIconEye: {
+    width: 24,
+    height: 24,
+    marginLeft: -33,
+    marginTop: 15
+  },
+  imageIconPadlock: {
+    width: 13,
+    height: 17,
+    marginLeft: -330,
+    marginTop: 15
+  },
+  textForgote: {
+    fontFamily: 'Klarna Text',
+    fontSize: 14,
+    fontStyle: 'normal',
+    fontWeight: '400',
+    color: COLOR.background2
+  },
+  viewPressable: {
+    width: 343,
+    height: 50,
+    borderRadius: 30,
+    backgroundColor: COLOR.primary,
     justifyContent: 'center',
-    marginTop: 5
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: 10
+  },
+  textPressable: {
+    fontFamily: 'Klarna Text',
+    fontSize: 20,
+    fontStyle: 'normal',
+    fontWeight: '700',
+    color: COLOR.white
+  },
+  textNoneAcc: {
+    fontFamily: 'Klarna Text',
+    fontSize: 16,
+    fontStyle: 'normal',
+    fontWeight: '400',
+    color: COLOR.black
+  },
+  imagePhone: {
+    width: 92.53,
+    height: 188.14,
+    marginTop: -130,
+    marginBottom: 20
+  },
+  imageBackground: {
+    width: 315,
+    height: 211,
+    marginTop: 30
   }
 })
