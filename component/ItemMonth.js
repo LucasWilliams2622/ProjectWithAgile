@@ -98,7 +98,7 @@ class ItemMonth extends React.Component {
       <View style={styles.container}>
         <TouchableOpacity style={styles.boxMonth} onPress={this.handleButtonClick}>
           <Image style={styles.icon} source={require('../asset/icon/icon_calender.png')} />
-          <Text style={styles.textMonthYear}>aaaaaaaa aaa</Text>
+          <Text style={styles.textMonthYear}>Tháng 6, năm 2023</Text>
 
           <MonthPicker
             modal

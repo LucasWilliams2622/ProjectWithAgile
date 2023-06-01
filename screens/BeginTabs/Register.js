@@ -103,15 +103,15 @@ const Register = (props) => {
         <Image style={styles.imageLogin} source={require('../../asset/image/LoginAndRegister/signup.png')}></Image>
       </View>
 
+      <View style={{ marginTop: 7, marginLeft: 5 }}>
+        <Text style={styles.textInstruct}>We need to verify you. We will send you a one time verification code.</Text>
+      </View>
       <TextInput placeholder='Name Surname' style={styles.inputEmailAndPass} onChangeText={setname} value={name}></TextInput>
 
       <View style={styles.viewInputPass}>
         <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={setEmail} value={email}></TextInput>
       </View>
 
-      <View style={{ marginTop: 7, marginLeft: 5 }}>
-        <Text style={styles.textInstruct}>We need to verify you. We will send you a one time verification code.</Text>
-      </View>
 
       <View style={{ alignItems: 'center' }}>
         <Pressable style={styles.viewPressable} onPress={sendVerifiedEmail}>
@@ -119,7 +119,7 @@ const Register = (props) => {
         </Pressable>
       </View>
 
-      <View style={styles.center}>
+      <View style={[styles.center,{marginTop:10}]}>
         <Text style={styles.textNoneAcc}>Already have an account?</Text>
         <TouchableOpacity onPress={() => { goLogin() }}>
           <Text style={[styles.textNoneAcc, { color: COLOR.primary, marginLeft: 5 }]}>Login</Text>
