@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { ICON, COLOR } from '../../constants/Themes'
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const windowWIdth = Dimensions.get('window').width;
 const Login = (props) => {
@@ -129,52 +130,56 @@ const Login = (props) => {
     }
   }
   return (
-    <View style={styles.container}>
-      <View style={styles.center}>
-        <Text style={styles.textSignIn}>Sign In</Text>
-      </View>
+    <KeyboardAwareScrollView>
 
-      <View style={styles.center}>
-        <Image style={styles.imageLogin} source={require('../../asset/gif/phone.gif')}></Image>
-      </View>
-      <View style={styles.main}>
-
-        <View style={{ marginTop: 5 }}>
-          <Text style={styles.textInstruct}>Enter your email and</Text>
-          <Text style={styles.textInstruct}>password to access your account</Text>
+      <View style={styles.container}>
+        <View style={styles.center}>
+          <Text style={styles.textSignIn}>Sign In</Text>
         </View>
 
-      <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(text) => kiemtra(text)}  ></TextInput>
-
-      <View style={styles.viewInputPass}>
-        <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(text1) => kiemtrapassword(text1)}></TextInput>
-        <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIcon}></Image>
-      </View>
-
-        <View style={{ marginLeft: 220, marginTop: 5 }}>
-          <Text style={styles.textForgote}>Forgote Password</Text>
+        <View style={styles.center}>
+          <Image style={styles.imageLogin} source={require('../../asset/gif/phone.gif')}></Image>
         </View>
-      </View>
+        <View style={styles.main}>
 
-      <View style={{ alignItems: 'center' }}>
-        <Pressable style={styles.viewPressable}  >
-          <Text style={styles.textPressable}>Sign in</Text>
-        </Pressable>
-      </View>
+          <View style={{ marginTop: 5 }}>
+            <Text style={styles.textInstruct}>Enter your email and</Text>
+            <Text style={styles.textInstruct}>password to access your account</Text>
+          </View>
 
-      <TouchableOpacity style={styles.center} onPress={() => { signInGG(); }}>
-        <View style={styles.viewLoginGG}>
-          <Image style={styles.imageLoginGG} source={require('../../asset/image/LoginAndRegister/google.png')}></Image>
+          <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(text) => kiemtra(text)}  ></TextInput>
+
+          <View style={styles.viewInputPass}>
+            <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(text1) => kiemtrapassword(text1)}></TextInput>
+            <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIcon}></Image>
+          </View>
+
+          <View style={{ marginLeft: 220, marginTop: 5 }}>
+            <Text style={styles.textForgote}>Forgote Password</Text>
+          </View>
         </View>
-      </TouchableOpacity>
 
-      <View style={styles.center}>
-        <Text style={styles.textNoneAcc}>Don’t have an account?</Text>
-        <TouchableOpacity onPress={() => { goRegister() }}>
-          <Text style={[styles.textNoneAcc, { color: COLOR.primary, marginLeft: 5 }]}>Sign Up</Text>
+        <View style={{ alignItems: 'center' }}>
+          <Pressable style={styles.viewPressable}  >
+            <Text style={styles.textPressable}>Sign in</Text>
+          </Pressable>
+        </View>
+
+        <TouchableOpacity style={styles.center} onPress={() => { signInGG(); }}>
+          <View style={styles.viewLoginGG}>
+            <Image style={styles.imageLoginGG} source={require('../../asset/image/LoginAndRegister/google.png')} />
+            <Text style={styles.textGoogle}>Sign in with Google</Text>
+          </View>
         </TouchableOpacity>
+
+        <View style={styles.center}>
+          <Text style={styles.textNoneAcc}>Don’t have an account?</Text>
+          <TouchableOpacity onPress={() => { goRegister() }}>
+            <Text style={[styles.textNoneAcc, { color: COLOR.primary, marginLeft: 5 }]}>Sign Up</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   )
 }
 
@@ -200,7 +205,6 @@ const styles = StyleSheet.create({
   imageLogin: {
     width: '100%',
     height: 331.24,
-    marginTop: -5
   },
   textInstruct: {
     fontFamily: 'Klarna Text',
@@ -240,7 +244,7 @@ const styles = StyleSheet.create({
     color: COLOR.background2
   },
   viewPressable: {
-    width: 343,
+    width: '90%',
     height: 50,
     borderRadius: 30,
     backgroundColor: COLOR.primary,
@@ -262,6 +266,34 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontWeight: '400',
     color: COLOR.black
+  },
+  imageLoginGG: {
+    height: 30,
+    width: 30
+  },
+  viewLoginGG: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: COLOR.background2,
+    flexDirection: 'row',
+    padding: 10,
+    width: '90%',
+    height: 50,
+    borderRadius: 30,
+    marginBottom: 10,
+    // borderWidth: 2,
+    // borderColor: 'red'
+  },
+  main: {
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    marginHorizontal: 23,
+  },
+  textGoogle: {
+    color: COLOR.white,
+    fontWeight: 'bold',
+    letterSpacing: 0.5,
+    marginLeft: 14,
+    fontSize: 16,
   }
-
 })

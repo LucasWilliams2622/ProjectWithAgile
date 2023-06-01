@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, Text, TextInput, View, Image, ToastAndroid, TouchableOpacity, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const ChangePassword = () => {
   const [verifiedPass, setVerifiedPass] = useState(false);
@@ -63,90 +64,92 @@ const ChangePassword = () => {
     }
   }
   return (
-    <View style={styles.container}>
-      <View>
-        <Image source={require('../../asset/icon/icon_back.png')} style={styles.imageBack}></Image>
+    <KeyboardAwareScrollView>
+
+      <View style={styles.container}>
+        <View>
+          <Image source={require('../../asset/icon/icon_back.png')} style={styles.imageBack}></Image>
+        </View>
+        <View style={styles.center}>
+          <Text style={styles.textSignIn}>Change Password</Text>
+        </View>
+
+        <View style={styles.viewInputOldPass}>
+          <TextInput style={styles.inputPassword} placeholder='Old Password'
+            secureTextEntry={getOldPassVisible ? false : true}
+            onChangeText={(setOldPassVisible) => kiemtrapassword(setOldPassVisible)} value={verifiedPass} />
+          <TouchableOpacity style={styles.visible}
+            onPress={() => {
+              setOldPassVisible(!getOldPassVisible)
+            }}>
+            {
+              getOldPassVisible ?
+                <Image source={require('../../asset/icon/icon_visible.png')} style={styles.imageIconEye}></Image>
+                :
+                <Image source={require('../../asset/icon/icon_invisible.png')} style={styles.imageIconEye}></Image>
+            }
+          </TouchableOpacity>
+          <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
+        </View>
+
+        <View style={styles.viewInputNewPass}>
+          <TextInput style={styles.inputPassword} placeholder='New Password'
+            secureTextEntry={getNewPassVisible ? false : true}
+            onChangeText={(setNewPassVisible) => kiemtrapasswordnew(setNewPassVisible)} value={verifiedPassNew} />
+          <TouchableOpacity style={styles.visible}
+            onPress={() => {
+              setNewPassVisible(!getNewPassVisible)
+            }}>
+            {
+              getNewPassVisible ?
+                <Image source={require('../../asset/icon/icon_visible.png')} style={styles.imageIconEye}></Image>
+                :
+                <Image source={require('../../asset/icon/icon_invisible.png')} style={styles.imageIconEye}></Image>
+            }
+          </TouchableOpacity>
+          <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
+        </View>
+
+        <View style={styles.viewInputNewPass}>
+          <TextInput style={styles.inputPassword} placeholder='Confirm Password'
+            secureTextEntry={getConfirmPassVisible ? false : true}
+            onChangeText={(setConfirmPassVisible) => kiemtraConFirmPass(setConfirmPassVisible)} value={verifiedCfPass} />
+          <TouchableOpacity style={styles.visible}
+            onPress={() => {
+              setConfirmPassVisible(!getConfirmPassVisible)
+            }}>
+            {
+              getConfirmPassVisible ?
+                <Image source={require('../../asset/icon/icon_visible.png')} style={styles.imageIconEye}></Image>
+                :
+                <Image source={require('../../asset/icon/icon_invisible.png')} style={styles.imageIconEye}></Image>
+            }
+          </TouchableOpacity>
+          <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
+        </View>
+
+
+
+        <View style={{ alignItems: 'center' }}>
+          <Pressable style={styles.viewPressable} onPress={chuyen}>
+            <Text style={styles.textPressable}>Next</Text>
+          </Pressable>
+        </View>
+
+        <View style={{ alignItems: 'center' }}>
+          <Pressable style={styles.viewPressable} onPress={chuyen}>
+            <Text style={styles.textPressable}>Back To Sign In</Text>
+          </Pressable>
+        </View>
       </View>
-      <View style={styles.center}>
-        <Text style={styles.textSignIn}>Change Password</Text>
-      </View>
-
-      <View style={styles.viewInputOldPass}>
-        <TextInput style={styles.inputPassword} placeholder='Old Password'
-          secureTextEntry={getOldPassVisible ? false : true}
-onChangeText={(setOldPassVisible) => kiemtrapassword(setOldPassVisible)} value={verifiedPass} />
-        <TouchableOpacity style={styles.visible}
-          onPress={() => {
-          setOldPassVisible(!getOldPassVisible)
-          }}>
-          {
-            getOldPassVisible ?
-              <Image source={require('../../asset/icon/icon_visible.png')} style={styles.imageIconEye}></Image>
-              :
-              <Image source={require('../../asset/icon/icon_invisible.png')} style={styles.imageIconEye}></Image>
-          }
-        </TouchableOpacity>
-        <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
-      </View>
-
-      <View style={styles.viewInputNewPass}>
-        <TextInput style={styles.inputPassword} placeholder='New Password'
-          secureTextEntry={getNewPassVisible ? false : true}
-          onChangeText={(setNewPassVisible) => kiemtrapasswordnew(setNewPassVisible)} value={verifiedPassNew} />
-        <TouchableOpacity style={styles.visible}
-          onPress={() => {
-            setNewPassVisible(!getNewPassVisible)
-          }}>
-          {
-            getNewPassVisible ?
-              <Image source={require('../../asset/icon/icon_visible.png')} style={styles.imageIconEye}></Image>
-              :
-              <Image source={require('../../asset/icon/icon_invisible.png')} style={styles.imageIconEye}></Image>
-          }
-        </TouchableOpacity>
-        <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
-      </View>
-
-      <View style={styles.viewInputNewPass}>
-        <TextInput style={styles.inputPassword} placeholder='Confirm Password'
-          secureTextEntry={getConfirmPassVisible ? false : true}
-          onChangeText={(setConfirmPassVisible) => kiemtraConFirmPass(setConfirmPassVisible)} value={verifiedCfPass} />
-        <TouchableOpacity style={styles.visible}
-          onPress={() => {
-            setConfirmPassVisible(!getConfirmPassVisible)
-          }}>
-          {
-            getConfirmPassVisible ?
-              <Image source={require('../../asset/icon/icon_visible.png')} style={styles.imageIconEye}></Image>
-              :
-              <Image source={require('../../asset/icon/icon_invisible.png')} style={styles.imageIconEye}></Image>
-          }
-        </TouchableOpacity>
-        <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
-      </View>
-
-
-
-      <View style={{ alignItems: 'center' }}>
-        <Pressable style={styles.viewPressable} onPress={chuyen}>
-          <Text style={styles.textPressable}>Next</Text>
-        </Pressable>
-      </View>
-
-      <View style={{ alignItems: 'center' }}>
-        <Pressable style={styles.viewPressable} onPress={chuyen}>
-          <Text style={styles.textPressable}>Back To Sign In</Text>
-        </Pressable>
-      </View>
-
-    </View>
+    </KeyboardAwareScrollView>
   )
 }
 
 export default ChangePassword
 
 const styles = StyleSheet.create({
-container: {
+  container: {
     marginStart: 16,
     marginEnd: 16,
     marginTop: 10
