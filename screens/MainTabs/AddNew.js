@@ -2,8 +2,6 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-na
 import React,{useState} from 'react'
 import { TextInput } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-
-
 const AddNew = (props) => {
   const { navigation } = props;
   const [name, setname] = useState('');
@@ -55,7 +53,7 @@ const AddNew = (props) => {
 
       <View style={{ top: 10 }}>
         <View style={styles.input}>
-          <TouchableOpacity onPress={()=>{navigation.navigate('TopTabThuChi')}}>
+          <TouchableOpacity onPress={()=>{navigation.navigate("TopTabThuChi")}}>
             <Image style={styles.imgInput} source={require('../../asset/icon/icon_type.png')} />
           </TouchableOpacity>
           <TextInput placeholder='Chọn loại' style={styles.txtInput}></TextInput>

@@ -48,7 +48,8 @@ const data = [
 
 ]
 
-const TabThu = () => {
+const TabThu = (props) => {
+    const {navigation} = props;
 
   return (
       <View style={{flex : 1}}>

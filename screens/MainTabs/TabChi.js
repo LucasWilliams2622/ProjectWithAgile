@@ -107,8 +107,8 @@ const data = [
 
 ]
 
-const TopTabThuChi = () => {
-
+const TopTabThuChi = (props) => {
+    const {navigation} = props;
     return (
         <View style={{flex : 1}}>
 
@@ -124,7 +124,7 @@ const TopTabThuChi = () => {
 
 
                 }} >
-                    <TouchableOpacity style={styles.itemContainer}>
+                    <TouchableOpacity style={styles.itemContainer} onPress={()=>navigation.goBack({name:item.name}) }>
                         <Image style={styles.image} source={item.img} />
                         <Text style={styles.txt}>{item.name}</Text>
                     </TouchableOpacity>

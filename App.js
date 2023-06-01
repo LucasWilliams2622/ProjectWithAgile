@@ -10,7 +10,7 @@ import SignPassword from './screens/BeginTabs/SignPassword'
 import Welcome from './screens/BeginTabs/Welcome'
 import SignCode from './screens/BeginTabs/SignCode'
 import TabThu from './screens/MainTabs/TabThu';
-
+import TabChi from './screens/MainTabs/TabChi';
 import Intro from './screens/BeginTabs/Intro'
 
 import AddNew from './screens/MainTabs/AddNew'
@@ -26,7 +26,7 @@ import Test from './screens/TestTab/AddGif'
 import ItemTransaction from './component/ItemTransaction'
 import ItemCollect from './component/ItemCollect'
 import ItemYear from './component/ItemYear'
-
+import TopTabThuChi from './screens/MainTabs/TopTabThuChi';
 import TestPicker from './screens/TestTab/TestPicker'
 import PieChartScreen from './screens/TestTab/PieChartScreen'
 import messaging from '@react-native-firebase/messaging';
@@ -46,6 +46,7 @@ const StackBegin = () => {
 
       
     </Stack.Navigator>
+
   )
 }
 const App = () => {
@@ -69,7 +70,7 @@ const App = () => {
   }, []);
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="StackBegin" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="BottomTabs" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="StackBegin" component={StackBegin} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="BottomTabs" component={BottomTabs} />
@@ -78,6 +79,7 @@ const App = () => {
         <Stack.Screen name="TestPicker" component={TestPicker} />
        </Stack.Navigator>
      </NavigationContainer>
+  
   )
 }
 
