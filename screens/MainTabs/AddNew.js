@@ -258,5 +258,5 @@ const styles = StyleSheet.create({
       color: COLOR.white
     },
 
-
+  }
   })

@@ -4,6 +4,7 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { ICON, COLOR } from '../../constants/Themes'
 import AxiosIntance from '../../constants/AxiosIntance'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
 const Register = (props) => {
   const { navigation } = props;
   const [toggLeCheckBox, settoggLeCheckBox] = useState(false);
@@ -35,67 +36,68 @@ const Register = (props) => {
     if (reg.test(text) === true) {
       setVerifiedEmail({ email: text });
       console.log("Ban da nhap dung");
-    if (reg.test(setEmail) === true) {
-      setVerifiedEmail({ email: setEmail });
+      if (reg.test(setEmail) === true) {
+        setVerifiedEmail({ email: setEmail });
 
-      console.log("Ban da nhap dung");
-      setVerifiedEmail(true);
-      return true;
+        console.log("Ban da nhap dung");
+        setVerifiedEmail(true);
+        return true;
+      }
+      else {
+        setVerifiedEmail({ email: text });
+        console.log("Ban da nhap sai");
+        setVerifiedEmail({ email: setEmail });
+        console.log("Ban da nhap sai");
+      }
     }
-    else {
-      setVerifiedEmail({ email: text });
-      console.log("Ban da nhap sai");
-      setVerifiedEmail({ email: setEmail });
-      console.log("Ban da nhap sai");
-    }
-  }
-  const checkName = (name) => {
-    let reg = /^[a-z0-9_-]{3,15}$/;
-    if (reg.test(name) === true) {
+    const checkName = (name) => {
+      let reg = /^[a-z0-9_-]{3,15}$/;
+      if (reg.test(name) === true) {
 
-      //(1) Tên được phép chứa các ký tự, các số, gạch dưới, gạch nối.
-      //(2) Tên phải có độ dài trong khoảng cho phép từ 3 đến 15 ký tự.
-      setname({ name: text2 });
-      console.log("Ban da nhap dung");
-      setname({ name: name });
-      console.log("Ban da nhap dung");
-      setname(true);
-      return true;
+        //(1) Tên được phép chứa các ký tự, các số, gạch dưới, gạch nối.
+        //(2) Tên phải có độ dài trong khoảng cho phép từ 3 đến 15 ký tự.
+        setname({ name: text2 });
+        console.log("Ban da nhap dung");
+        setname({ name: name });
+        console.log("Ban da nhap dung");
+        setname(true);
+        return true;
+      }
+      else {
+        setname({ name: text2 });
+        console.log("Ban da nhap sai");
+        setname({ name: name });
+        console.log("Ban da nhap sai");
+      }
     }
-    else {
-      setname({ name: text2 });
-      console.log("Ban da nhap sai");
-      setname({ name: name });
-      console.log("Ban da nhap sai");
-    }
-  }
 
-  const check = () => {
-    if (verifiedEmail == true && name == true) {
-      ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
-      console.log(verifiedEmail);
-      sendVerifiedEmail();
-      //  navigation.navigate('Resigter');
+    const check = () => {
+      if (verifiedEmail == true && name == true) {
+        ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
+        console.log(verifiedEmail);
+        sendVerifiedEmail();
+        //  navigation.navigate('Resigter');
+      }
+      else {
+        Alert.alert('Error', 'Email bạn chưa nhập hoặc nhập sai! vui lòng kiểm tra lại.');
+      }
     }
-    else {
-      Alert.alert('Error', 'Email bạn chưa nhập hoặc nhập sai! vui lòng kiểm tra lại.');
-    }
-  }
-  const sendVerifiedEmail = async () => {
-    try {
-      //http://localhost:3000
-      console.log("email  ", email);
-      console.log("name  ", name);
-      const result = await AxiosIntance().post("user/api/send-verification-code", { email: email });
-      console.log(result);
-      if (result) {
-        ToastAndroid.show("Đã gửi code", ToastAndroid.SHORT);
-        navigation.navigate('SignCode', { email: email, name: name });
-      } else {
+    const sendVerifiedEmail = async () => {
+      try {
+        //http://localhost:3000
+        console.log("email  ", email);
+        console.log("name  ", name);
+        const result = await AxiosIntance().post("user/api/send-verification-code", { email: email });
+        console.log(result);
+        if (result) {
+          ToastAndroid.show("Đã gửi code", ToastAndroid.SHORT);
+          navigation.navigate('SignCode', { email: email, name: name });
+        } else {
+
+        }
+      } catch (error) {
 
       }
-    } catch (error) {
-
     }
   }
 
@@ -131,7 +133,7 @@ const Register = (props) => {
             <Text style={styles.textPressable}>Sign in</Text>
           </Pressable>
           <Text style={styles.textPressable}>Sign in</Text>
-        </Pressable>
+      
       </View>
 
       <View style={[styles.center, { marginTop: 10 }]}>
@@ -143,7 +145,6 @@ const Register = (props) => {
     </View>
     </KeyboardAwareScrollView >
   )
-}
 }
 
 export default Register
