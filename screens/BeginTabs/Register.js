@@ -71,17 +71,30 @@ const Register = (props) => {
     }
   }
 
-  const check = () => {
+  const checkAll = () => {
     if (verifiedEmail == true && name == true) {
       ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
-      console.log(verifiedEmail);
       sendVerifiedEmail();
+      console.log(verifiedEmail);
       //  navigation.navigate('Resigter');
     }
     else {
       Alert.alert('Error', 'Email bạn chưa nhập hoặc nhập sai! vui lòng kiểm tra lại.');
     }
   }
+
+
+  // const check = () => {
+  //   if (verifiedEmail == true && name == true) {
+  //     ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
+  //     console.log(verifiedEmail);
+  //     //  navigation.navigate('Resigter');
+  //   }
+  //   else {
+  //     Alert.alert('Error', 'Email bạn chưa nhập hoặc nhập sai! vui lòng kiểm tra lại.');
+  //   }
+  // }
+
   const sendVerifiedEmail = async () => {
     try {
       //http://localhost:3000
@@ -103,6 +116,7 @@ const Register = (props) => {
   return (
     <KeyboardAwareScrollView>
 
+
       <View style={styles.container}>
         <View style={styles.center}>
           <Text style={styles.textSignIn}>Sign Up</Text>
@@ -116,22 +130,18 @@ const Register = (props) => {
         <View style={{ marginTop: 7, marginLeft: 5 }}>
           <Text style={styles.textInstruct}>We need to verify you. We will send you a one time verification code.</Text>
         </View>
+       
+        <TextInput placeholder='Name Surname' style={styles.inputEmailAndPass} onChangeText={(name) => checkName(name)} value={name}></TextInput>
+
         <View style={styles.viewInputPass}>
-          <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(setEmail) => checkEmail(setEmail)}></TextInput>
+          <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(setEmail) => checkEmail(setEmail)} value={email}></TextInput>
         </View>
-
-        <TextInput placeholder='Name Surname' style={styles.inputEmailAndPass} onChangeText={setname} value={name}></TextInput>
-
-        {/* <View style={styles.viewInputPass}>
-          <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={setEmail} value={email}></TextInput>
-        </View> */}
-
         <View style={{ alignItems: 'center' }}>
 
-          <Pressable style={styles.viewPressable} onPress={() => { check() }}>
-            <Text style={styles.textPressable}>Sign in</Text>
-          </Pressable>
 
+          <Pressable style={styles.viewPressable} onPress={sendVerifiedEmail}>
+            <Text style={styles.textPressable}  onPress={checkAll}>Sign in</Text>
+          </Pressable>
         </View>
 
         <View style={[styles.center, { marginTop: 10 }]}>
@@ -142,6 +152,11 @@ const Register = (props) => {
         </View>
       </View>
     </KeyboardAwareScrollView>
+
+
+
+
+
   )
 }
 

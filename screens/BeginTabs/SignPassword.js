@@ -17,7 +17,7 @@ const SignPassword = (props) => {
     const [getConfirmPassVisible, setConfirmPassVisible] = useState(false)
     const [password, setpassword] = useState('');
     const [confirmPass, setconfirmPass] = useState('');
-    const checkPassNew = (password) => {
+    const checkNewPass = (password) => {
         let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
         if (passreg.test(password) === true) {
             setVerifiedPassNew({ passreg: password });
@@ -45,8 +45,29 @@ const SignPassword = (props) => {
             console.log("pass ko hợp lệ");
         }
     }
-
-
+    const kiemtraConFirmPass = (text1) => {
+        let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        if (passreg.test(text1) === true) {
+            setVerifiedCfPass({ passreg: text1 });
+            setVerifiedCfPass(true);
+            setconfirmPass(text1);
+            console.log("password hợp lệ");
+            return true;
+        }
+        else {
+            setVerifiedCfPass({ passreg: text1 });
+            console.log("pass ko hợp lệ");
+        }
+    }
+    const checkAll = () => {
+        if (verifiedCfPass == true && verifiedPassNew == true && password === confirmPass) {
+            ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
+            //  navigation.navigate('Resigter');
+        }
+        else {
+            Alert.alert('Error', 'Password của bạn đã sai! vui lòng kiểm tra lại.');
+        }
+    }
     const chuyen = async () => {
         // if (verifiedCfPass == true && verifiedPassNew == true && password === confirmPass) {
         //     ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
@@ -97,7 +118,8 @@ const SignPassword = (props) => {
                 </View>
 
                 <View style={styles.viewInputEmailAndPass}>
-                    <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(text1) => kiemtrapasswordnew(text1)}></TextInput>
+                    <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(password) => checkPassNew(password)}></TextInput>
+
                     <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIconEye}></Image>
                     <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
                 </View>
@@ -109,11 +131,14 @@ const SignPassword = (props) => {
                 </View>
 
                 <View style={{ alignItems: 'center' }}>
-                    <Pressable style={styles.viewPressable} onPress={chuyen}>
-                        <Text style={styles.textPressable}>Next</Text>
-                    </Pressable>
-                </View>
+                   
 
+                    <View style={{ alignItems: 'center' }}>
+                        <Pressable style={styles.viewPressable} onPress={chuyen}>
+                            <Text style={styles.textPressable}>Next</Text>
+                        </Pressable>
+                    </View>
+                </View>
             </View>
         </KeyboardAwareScrollView>
     )

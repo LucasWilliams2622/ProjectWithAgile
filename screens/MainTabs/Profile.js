@@ -65,7 +65,7 @@ const Profile = (props) => {
     }
   }
 
-  const check = () => {
+  const checkAll = () => {
     if (name.trim() === '') {
       Alert.alert('Error', 'vui lòng nhập tên!');
     }
@@ -244,7 +244,7 @@ const Profile = (props) => {
               value={formik.values?.limit}
             />
           </View>
-          <TouchableOpacity style={styles.buttonSave} onPress={formik.handleSubmit}>
+          <TouchableOpacity style={styles.buttonSave} onPress={checkAll}>
             <Text style={styles.text2}>Lưu thay đổi</Text>
           </TouchableOpacity>
         </View>
