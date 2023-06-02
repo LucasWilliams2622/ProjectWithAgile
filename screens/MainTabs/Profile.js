@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, KeyboardAvoidingView ,ToastAndroid} from 'react-native'
-import React,{useState} from 'react'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, KeyboardAvoidingView, ToastAndroid } from 'react-native'
+import React, { useState } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import { TextInput } from 'react-native-paper'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
@@ -14,10 +14,9 @@ const Profile = (props) => {
   const [description, setDescription] = useState('')
 
 
-  const checkName=(name)=>{
-    let reg =/^[a-z0-9_-]{3,15}$/;
-    if(reg.test(name)===true)
-    {
+  const checkName = (name) => {
+    let reg = /^[a-z0-9_-]{3,15}$/;
+    if (reg.test(name) === true) {
       //(1) Tên được phép chứa các ký tự, các số, gạch dưới, gạch nối.
       //(2) Tên phải có độ dài trong khoảng cho phép từ 3 đến 15 ký tự.
       setVerifiedname({ name: name });
@@ -25,23 +24,20 @@ const Profile = (props) => {
       setVerifiedname(true);
       return true;
     }
-    else
-    {
+    else {
       setVerifiedname({ name: name });
       console.log("ban da nhap sai");
     }
   }
-  
-  const check=()=>{
-    if(name.trim()==='')
-    {
+
+  const check = () => {
+    if (name.trim() === '') {
       Alert.alert('Error', 'vui lòng nhập tên!');
     }
-    else if(description.trim()==='')
-    {
+    else if (description.trim() === '') {
       Alert.alert('Error', 'vui lòng cho vài dòng thông tin!');
     }
- }
+  }
 
   const dialogImageChoose = () => {
     return Alert.alert(
@@ -129,60 +125,68 @@ const Profile = (props) => {
 
   }
   return (
-  <KeyboardAwareScrollView >
+    <KeyboardAwareScrollView >
 
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => { navigation.goBack() }}>
-          <Image style={[styles.ImageStyle, { tintColor: COLOR.white }]} source={require('../../asset/icon/icon_back.png')}></Image>
-        </TouchableOpacity>
-        <Text style={styles.text}>Người dùng</Text>
-      </View>
-
-      <TouchableOpacity onPress={dialogImageChoose}>
-        {
-          !avatar
-            ?
-            (<Image style={styles.imageProfile} source={require('../../asset/icon/icon_profile.png')} />)
-            :
-            (<Image style={styles.imageProfile} source={{ uri: avatar }} />)
-        }
-      </TouchableOpacity>
-
-      <View style={styles.content}>
-        <Text style={styles.text1}>Name</Text>
-        <View style={styles.SectionStyle}>
-          <Image
-            source={require('../../asset/icon/icon_edit_profile.png')}
-            style={styles.ImageStyle} />
-
-          <TextInput
-            style={styles.textInput}
-            placeholder="User"
-            onChangeText={setName} value={name}
-
-          />
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => { navigation.goBack() }}>
+            <Image style={[styles.ImageBack, { tintColor: COLOR.white }]} source={require('../../asset/icon/icon_back.png')}></Image>
+          </TouchableOpacity>
+          <Text style={styles.text}>Người dùng</Text>
         </View>
 
-        <Text style={styles.text1}>Description</Text>
-        <View style={styles.SectionStyle}>
-          <Image
-            source={require('../../asset/icon/icon_edit.png')}
-            style={[styles.ImageStyle, { tintColor: COLOR.black }]} />
-
-          <TextInput
-            style={styles.textInput}
-            placeholder="Xin chào bạn cho vài lời"
-
-            onChangeText={setDescription} value={description}
-          />
-        </View>
-        <TouchableOpacity style={styles.buttonSave} onPress={check}>
-          <Text style={styles.text2}>Lưu thay đổi</Text>
+        <TouchableOpacity onPress={dialogImageChoose}>
+          {
+            !avatar
+              ?
+              (<Image style={styles.imageProfile} source={require('../../asset/image/logo.png')} />)
+              :
+              (<Image style={styles.imageProfile} source={{ uri: avatar }} />)
+          }
         </TouchableOpacity>
-      </View>
-    </View >
-  </KeyboardAwareScrollView>
+
+        <View style={styles.content}>
+          <View style={styles.SectionStyle}>
+            <Image
+              source={require('../../asset/icon/icon_edit_profile.png')}
+              style={styles.ImageStyle} />
+            <TextInput
+              style={styles.textInput}
+              placeholder="User"
+              onChangeText={(text2) => kiemten(text2)}
+
+            />
+          </View>
+
+
+          <View style={styles.SectionStyle}>
+            <Image
+              source={require('../../asset/icon/icon_edit.png')}
+              style={[styles.ImageStyle, { tintColor: COLOR.black }]} />
+
+            <TextInput
+              style={styles.textInput}
+              placeholder="Xin chào bạn cho vài lời"
+
+              onChangeText={setDescription} value={description}
+            />
+          </View>
+          <View style={styles.SectionStyle}>
+            <Image
+              source={require('../../asset/icon/icon_edit.png')}
+              style={[styles.ImageStyle, { tintColor: COLOR.black }]} />
+
+            <TextInput
+              style={styles.textInput}
+              placeholder="Hạn mức chi tiêu"
+            />
+          </View>
+          <TouchableOpacity style={styles.buttonSave} onPress={check}>
+            <Text style={styles.text2}>Lưu thay đổi</Text>
+          </TouchableOpacity>
+        </View>
+      </View >
+    </KeyboardAwareScrollView>
 
   )
 }
@@ -201,18 +205,20 @@ const styles = StyleSheet.create({
   },
 
   header: {
-    backgroundColor: COLOR.primary,
+    backgroundColor: COLOR.background2,
     width: "100%",
-    height: 100,
+    height: 60,
     flexDirection: 'row',
     alignItems: 'center'
-  }
-  ,
-  imageProfile: {
-    height: 200,
-    width: 200,
-    alignSelf: 'center',
+  },
 
+
+  imageProfile: {
+    height: 150,
+    width: 150,
+    alignSelf: 'center',
+    marginTop: 10,
+    borderRadius: 300
   },
   content: {
     padding: 20
@@ -232,14 +238,14 @@ const styles = StyleSheet.create({
     width: 300
   },
   buttonSave: {
-    backgroundColor: COLOR.primary,
+    backgroundColor: COLOR.background2,
     alignSelf: 'center',
     width: "100%",
     marginLeft: 20,
     marginRight: 20,
     height: 50,
     marginTop: 50,
-    borderRadius: 20,
+    borderRadius: 30,
     justifyContent: 'center'
 
   }
@@ -247,6 +253,8 @@ const styles = StyleSheet.create({
     color: COLOR.white,
     textAlign: 'center',
     alignSelf: 'center',
+    fontSize:17,
+    fontWeight:'bold'
   },
 
   SectionStyle: {
@@ -255,12 +263,21 @@ const styles = StyleSheet.create({
     borderTopStartRadius: 20,
     borderTopEndRadius: 20,
     borderRadius: 20,
+    marginBottom: 20,
     backgroundColor: COLOR.gray
   },
   ImageStyle: {
     padding: 10,
     height: 30,
     width: 30,
+    marginLeft: 10,
+    resizeMode: 'stretch',
+    alignItems: 'center',
+  },
+  ImageBack: {
+    padding: 10,
+    height: 25,
+    width: 25,
     marginLeft: 10,
     resizeMode: 'stretch',
     alignItems: 'center',

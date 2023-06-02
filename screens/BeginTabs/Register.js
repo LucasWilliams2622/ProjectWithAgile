@@ -1,8 +1,9 @@
-import {Pressable, StyleSheet, Text, TextInput, View,Image, ToastAndroid, Alert, TouchableOpacity} from 'react-native'
+import { Pressable, StyleSheet, Text, TextInput, View, Image, ToastAndroid, Alert, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { ICON, COLOR } from '../../constants/Themes'
 import AxiosIntance from '../../constants/AxiosIntance'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 const Register = (props) => {
   const { navigation } = props;
   const [toggLeCheckBox, settoggLeCheckBox] = useState(false);
@@ -14,7 +15,7 @@ const Register = (props) => {
     navigation.navigate('Login')
 
   }
-    // const dangKyNe = async () => {
+  // const dangKyNe = async () => {
   //   console.log(emailUser, passwordUser, nameUser);
   //   try {
   //     const response = await AxiosIntance().post("/user/register", { email: emailUser, password: passwordUser, name: nameUser });
@@ -38,8 +39,7 @@ const Register = (props) => {
       setVerifiedEmail(true);
       return true;
     }
-    else
-    {
+    else {
       setVerifiedEmail({ email: setEmail });
       console.log("ban da nhap sai");
     }
@@ -55,12 +55,12 @@ const Register = (props) => {
       setname(true);
       return true;
     }
-    else
-    {
+    else {
       setname({ name: name });
       console.log("ban da nhap sai");
     }
   }
+
   
   // const check = () => {
   //   if (verifiedEmail == true && name == true) {
@@ -72,6 +72,18 @@ const Register = (props) => {
   //     Alert.alert('Error', 'Email bạn chưa nhập hoặc nhập sai! vui lòng kiểm tra lại.');
   //   }
   // }
+
+  const check = () => {
+    if (verifiedEmail == true && name == true) {
+      ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
+      sendVerifiedEmail();
+      console.log(verifiedEmail);
+      //  navigation.navigate('Resigter');
+    }
+    else {
+      Alert.alert('Error', 'Email bạn chưa nhập hoặc nhập sai! vui lòng kiểm tra lại.');
+    }
+  }
   const sendVerifiedEmail = async () => {
     try {
       //http://localhost:3000
@@ -91,11 +103,8 @@ const Register = (props) => {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.center}>
-        <Text style={styles.textSignIn}>Sign Up</Text>
-      </View>
-
+    <KeyboardAwareScrollView>
+      <View style={styles.container}>
       <View style={styles.center}>
         <Image style={styles.imageLogin} source={require('../../asset/image/LoginAndRegister/signup.png')}></Image>
       </View>
@@ -119,9 +128,46 @@ const Register = (props) => {
           <Text style={[styles.textNoneAcc, { color: COLOR.primary, marginLeft: 5 }]}>Login</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    
 
 
+      // 
+      //   <View style={styles.center}>
+      //     <Text style={styles.textSignIn}>Sign Up</Text>
+      //   </View>
+
+      //   <View style={styles.center}>
+      //     <Image style={styles.imageLogin} source={require('../../asset/image/LoginAndRegister/signup.png')}></Image>
+      //   </View>
+
+
+      //   <View style={{ marginTop: 7, marginLeft: 5 }}>
+      //     <Text style={styles.textInstruct}>We need to verify you. We will send you a one time verification code.</Text>
+      //   </View>
+      //   <TextInput placeholder='Name Surname' style={styles.inputEmailAndPass} onChangeText={setname} value={name}></TextInput>
+
+      //   <View style={styles.viewInputPass}>
+      //     <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={setEmail} value={email}></TextInput>
+      //   </View>
+
+
+
+      //   <View style={{ alignItems: 'center' }}>
+
+
+      //     <Pressable style={styles.viewPressable} onPress={() => { check() }}>
+      //       <Text style={styles.textPressable}>Sign in</Text>
+      //     </Pressable>
+      //   </View>
+
+      //   <View style={[styles.center, { marginTop: 10 }]}>
+      //     <Text style={styles.textNoneAcc}>Already have an account?</Text>
+      //     <TouchableOpacity onPress={() => { goLogin() }}>
+      //       <Text style={[styles.textNoneAcc, { color: COLOR.primary, marginLeft: 5 }]}>Login</Text>
+      //     </TouchableOpacity>
+      //   </View>
+      </View>
+    </KeyboardAwareScrollView>
   )
 }
 

@@ -3,8 +3,11 @@ import React, { useState } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace'
 
-const Home = () => {
-
+const Home = (props) => {
+  const { navigation } = props;
+  const goAddNew = () => {
+    navigation.navigate('AddNew');
+  }
   const [isShow, setisShow] = useState(true);
   return (
     <View>
@@ -14,22 +17,27 @@ const Home = () => {
 
       <TouchableOpacity>
         <View style={styles.viewAvatarAndText}>
-          <Image source={require('../../asset/icon/icon_profile.png')} style={styles.imageProfile}></Image>
-          <Text style={styles.textHello}>Hello Bro</Text>
+          <Image source={require('../../asset/image/logo.png')} style={styles.imageProfile}></Image>
+          <Text style={styles.textHello}>Xin chào Bạn </Text>
         </View>
       </TouchableOpacity>
 
       <View style={styles.viewMenu}>
         <View style={styles.viewIn4Menu}>
-
           <View style={styles.viewIn4Menu1}>
             <View style={[styles.flex, { alignItems: 'center' }]}>
-              <Image style={styles.image} source={require('../../asset/icon/icon_profile.png')}></Image>
+              <Image style={styles.image} source={require('../../asset/icon/icon_calender.png')}></Image>
               <Text style={styles.textDate}>23-05-2023</Text>
             </View>
             <TouchableOpacity onPress={() => setisShow(!isShow)}>
-              <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_profile.png')}></Image>
+              {
+                isShow ?
+                  <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_invisible.png')}></Image>
+                  :
+                  <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_visible.png')}></Image>
+              }
             </TouchableOpacity>
+
           </View>
 
           <View style={styles.viewIn4Menu2}>
@@ -37,7 +45,6 @@ const Home = () => {
             {
               isShow ? <Text style={styles.textPrice}>********</Text> : <Text style={styles.textPrice}>0 VND</Text>
             }
-
           </View>
 
           <View style={styles.viewIn4Menu3}>
@@ -54,7 +61,17 @@ const Home = () => {
               }
             </View>
           </View>
+          <View style={styles.viewIn4Menu3}>
+            <View style={[styles.flex, { alignItems: 'center' }]}>
+              <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_load.png')}></Image>
+            </View>
+            <View style={[styles.flex, { alignItems: 'center' }]}>
 
+              {
+                isShow ? <Text style={styles.textTotalManager}>********</Text> : <Text style={styles.textTotalManager}>40/100</Text>
+              }
+            </View>
+          </View>
         </View>
       </View>
 
@@ -62,16 +79,12 @@ const Home = () => {
 
       <ScrollView>
         <View style={styles.viewListGiveAndPay}>
-          <View>
-            <TouchableOpacity>
-              <Image style={{ height: 250, width: 250 }} source={require('../../asset/gif/statistic.gif')}></Image>
-            </TouchableOpacity>
-          </View>
-          <View style={{ marginTop: 30 }}>
-            <TouchableOpacity>
+          <TouchableOpacity onPress={() => { goAddNew() }}>
+            <Image style={{ height: 250, width: 250 }} source={require('../../asset/gif/statistic.gif')}></Image>
+            <View style={{ marginTop: 30 }} >
               <Text style={styles.textGif}>Hãy thêm chi tiêu hôm nay. Chạm vào đây dể thêm.</Text>
-            </TouchableOpacity>
-          </View>
+            </View>
+          </TouchableOpacity>
         </View>
       </ScrollView>
 
@@ -92,7 +105,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   background: {
-    backgroundColor: COLOR.title,
+    backgroundColor: COLOR.background2,
     height: 180,
     borderRadius: 20,
     marginTop: -40
@@ -107,7 +120,8 @@ const styles = StyleSheet.create({
   imageProfile: {
     height: 50,
     width: 50,
-    marginRight: 13
+    marginRight: 13,
+    borderRadius: 100,
   },
   textHello: {
     fontSize: 16,
@@ -121,7 +135,7 @@ const styles = StyleSheet.create({
   },
   viewIn4Menu: {
     backgroundColor: COLOR.secondary,
-    height: 100,
+    height: 120,
     width: 310,
     borderRadius: 15,
     borderWidth: 1,
@@ -180,6 +194,15 @@ const styles = StyleSheet.create({
     // fontFamily:,
     fontStyle: 'normal',
     fontWeight: '400',
+    color: COLOR.black
+  },
+  textTotalManager: {
+    //fontFamily:
+    fontSize: 12,
+    // fontFamily:,
+    fontStyle: 'normal',
+    fontWeight: '400',
+    right: 200,
     color: COLOR.black
   },
   textToday: {

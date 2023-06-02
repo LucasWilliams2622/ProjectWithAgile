@@ -2,9 +2,11 @@ import {
   Pressable, StyleSheet, Text, Alert, TextInput, Dimensions,
   View, Image, ToastAndroid, TouchableOpacity
 } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { ICON, COLOR } from '../../constants/Themes'
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const windowWIdth = Dimensions.get('window').width;
 const Login = (props) => {
@@ -13,15 +15,44 @@ const Login = (props) => {
   const [verifiedPass, setVerifiedPass] = useState(false);
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
-  const [getPasswordVisible, setPasswordVisible] = useState(false)
+  const [getPasswordVisible, setPasswordVisible] = useState(false);
+  const [infoUser, setInfoUser] = useState(null);
 
+  useEffect(() => {
+    GoogleSignin.configure({ webClientId: '999490167711-v29oh1m4p7u2vf1libthj7m2klog9ttp.apps.googleusercontent.com' });
+  }, [])
+
+  //login gg
+  const signInGG = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      console.log('Id: ', userInfo.user.id);
+      console.log('Email: ', userInfo.user.email);
+      console.log('Name: ', userInfo.user.name);
+      console.log('FamilyName: ', userInfo.user.familyName);
+      console.log('GivenName: ', userInfo.user.givenName);
+      console.log('Photo: ', userInfo.user.photo);
+      setInfoUser({ userInfo });
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
+    }
+  };
 
   //chuy?n qua màn hình dang ký
   const goRegister = () => {
     navigation.navigate('Register')
   }
 
-  const dangNhapNe = async () => {
+  const onLogin = async () => {
     try {
       const response = await AxiosIntance().post("/user/login", { email: emailUser, password: passwordUser });
       if (response.returnData.error === false) {
@@ -62,90 +93,93 @@ const Login = (props) => {
   //   return passRegex.test(pass);
   // };
 
-  const checkEmail=(email)=>{
-    let reg =/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    if(reg.test(email)===true)
-    {
-      setVerifiedEmail({ email: email });
+  const kiemtra = (text) => {
+    let reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if (reg.test(text) === true) {
+      setVerifiedEmail({ email: text });
       console.log("ban da nhap dung");
       setVerifiedEmail(true);
       return true;
     }
-    else
-    {
-      setVerifiedEmail({ email: email });
+    else {
+      setVerifiedEmail({ email: text });
       console.log("ban da nhap sai");
     }
   }
-  const checkPass=(pass)=>{
-    let passreg=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    if(passreg.test(pass)===true)
-    {
-      setVerifiedPass({passreg:pass});
+  const kiemtrapassword = (text1) => {
+    let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    if (passreg.test(text1) === true) {
+      setVerifiedPass({ passreg: text1 });
       console.log("password không hợp lệ");
       setVerifiedPass(true);
       return true;
     }
-    else
-    {
-      setVerifiedPass({passreg:pass});
+    else {
+      setVerifiedPass({ passreg: text1 });
       console.log("pass ko hợp lệ");
     }
   }
 
-  const check=()=>{
-    if(verifiedEmail==true && verifiedPass==true)
-    {
-     ToastAndroid.show("Nhập đúng",ToastAndroid.SHORT);
-    //  navigation.navigate('Resigter');
+  const chuyen = () => {
+    if (verifiedEmail == true && verifiedPass == true) {
+      ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
+      //  navigation.navigate('Resigter');
     }
-    else
-    {
+    else {
       Alert.alert('Error', 'Email hoặc Password của bạn đã sai! vui lòng kiểm tra lại.');
     }
- }
+  }
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView>
 
-      <View style={styles.center}>
-        <Text style={styles.textSignIn}>Sign In</Text>
-      </View>
+      <View style={styles.container}>
+        <View style={styles.center}>
+          <Text style={styles.textSignIn}>Sign In</Text>
+        </View>
 
-      <View style={styles.center}>
-        <Image style={styles.imageLogin} source={require('../../asset/image/LoginAndRegister/login.png')}></Image>
-      </View>
+        <View style={styles.center}>
+          <Image style={styles.imageLogin} source={require('../../asset/gif/phone.gif')}></Image>
+        </View>
+        <View style={styles.main}>
 
-      <View style={{ marginTop: 5 }}>
-        <Text style={styles.textInstruct}>Enter your email and</Text>
-        <Text style={styles.textInstruct}>password to access your account</Text>
-      </View>
+          <View style={{ marginTop: 5 }}>
+            <Text style={styles.textInstruct}>Enter your email and</Text>
+            <Text style={styles.textInstruct}>password to access your account</Text>
+          </View>
 
-      <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(email)=>checkEmail(email)}  ></TextInput>
+          <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(text) => kiemtra(text)}  ></TextInput>
 
-      <View style={styles.viewInputPass}>
-        <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(pass)=>checkPass(pass)}></TextInput>
-        <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIcon}></Image>
-      </View>
+          <View style={styles.viewInputPass}>
+            <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(text1) => kiemtrapassword(text1)}></TextInput>
+            <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIcon}></Image>
+          </View>
 
-      <View style={{ marginLeft: 220, marginTop: 5 }}>
-        <Text style={styles.textForgote}>Forgote Password</Text>
-      </View>
+          <View style={{ marginLeft: 220, marginTop: 5 }}>
+            <Text style={styles.textForgote}>Forgote Password</Text>
+          </View>
+        </View>
 
-      <View style={{ alignItems: 'center' }}>
-        <Pressable style={styles.viewPressable} onPress={check} >
-          <Text style={styles.textPressable}>Sign in</Text>
-        </Pressable>
-      </View>
+        <View style={{ alignItems: 'center' }}>
+          <Pressable style={styles.viewPressable}  >
+            <Text style={styles.textPressable}>Sign in</Text>
+          </Pressable>
+        </View>
 
-      <View style={styles.center}>
-        <Text style={styles.textNoneAcc}>Don’t have an account?</Text>
-        <TouchableOpacity onPress={()=>{goRegister()}}>
-        <Text style={[styles.textNoneAcc, { color: COLOR.primary, marginLeft: 5 }]}>Sign Up</Text>
-
+        <TouchableOpacity style={styles.center} onPress={() => { signInGG(); }}>
+          <View style={styles.viewLoginGG}>
+            <Image style={styles.imageLoginGG} source={require('../../asset/image/LoginAndRegister/google.png')} />
+            <Text style={styles.textGoogle}>Sign in with Google</Text>
+          </View>
         </TouchableOpacity>
-      </View>
 
-    </View>
+        <View style={styles.center}>
+          <Text style={styles.textNoneAcc}>Don’t have an account?</Text>
+          <TouchableOpacity onPress={() => { goRegister() }}>
+            <Text style={[styles.textNoneAcc, { color: COLOR.primary, marginLeft: 5 }]}>Sign Up</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </KeyboardAwareScrollView>
   )
 }
 
@@ -153,8 +187,7 @@ export default Login
 
 const styles = StyleSheet.create({
   container: {
-    marginStart: 16,
-    marginEnd: 16,
+    backgroundColor: '#eceded',
     marginTop: 10
   },
   center: {
@@ -170,9 +203,8 @@ const styles = StyleSheet.create({
     color: COLOR.primary
   },
   imageLogin: {
-    width: 347.28,
+    width: '100%',
     height: 331.24,
-    marginTop: -5
   },
   textInstruct: {
     fontFamily: 'Klarna Text',
@@ -212,13 +244,13 @@ const styles = StyleSheet.create({
     color: COLOR.background2
   },
   viewPressable: {
-    width: 343,
+    width: '90%',
     height: 50,
     borderRadius: 30,
     backgroundColor: COLOR.primary,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 40,
+    marginTop: 15,
     marginBottom: 10
   },
   textPressable: {
@@ -234,6 +266,34 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontWeight: '400',
     color: COLOR.black
+  },
+  imageLoginGG: {
+    height: 30,
+    width: 30
+  },
+  viewLoginGG: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: COLOR.background2,
+    flexDirection: 'row',
+    padding: 10,
+    width: '90%',
+    height: 50,
+    borderRadius: 30,
+    marginBottom: 10,
+    // borderWidth: 2,
+    // borderColor: 'red'
+  },
+  main: {
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    marginHorizontal: 23,
+  },
+  textGoogle: {
+    color: COLOR.white,
+    fontWeight: 'bold',
+    letterSpacing: 0.5,
+    marginLeft: 14,
+    fontSize: 16,
   }
-
 })

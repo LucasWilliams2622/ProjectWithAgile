@@ -3,12 +3,15 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
-  processColor
+  processColor, Image,
+  Dimensions,
 } from 'react-native';
 import { ICON, COLOR } from '../constants/Themes'
+const windowWidth = Dimensions.get('window').width;
 
-import {BarChart} from 'react-native-charts-wrapper';
+import { BarChart } from 'react-native-charts-wrapper';
 
 
 // const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -25,7 +28,7 @@ import {BarChart} from 'react-native-charts-wrapper';
 //     month: month,
 //     income: income[index],
 //     expense: expense[index],
-  
+
 //   }
 // });
 
@@ -49,40 +52,40 @@ class BarChartScreen extends React.Component {
       },
       data: {
         dataSets: [{
-          values: [{y: 20}, {y: 105}, {y: 102}, {y: 10}, {y: 114}, {y: 10}, {y: 105}, {y: 99}, {y: 95}],
+          values: [{ y: 20 }, { y: 105 }, { y: 102 }, { y: 10 }, { y: 114 }, { y: 10 }, { y: 105 }, { y: 99 }, { y: 95 }],
           label: 'Income',
           config: {
             color: processColor('#00C4FF'),
             barShadowColor: processColor('#30A2FF'),
-            valueTextSize:12,
+            valueTextSize: 12,
             highlightAlpha: 100,
             highlightColor: processColor('#30A2FF'),
           }
         },
         {
           values: [
-            {y: 10}, {y: 95}, {y: 72}, {y: 190}, {y: 0}, {y: 109}, {y: 105}, {y: 99}, {y: 95}
+            { y: 10 }, { y: 95 }, { y: 72 }, { y: 190 }, { y: 0 }, { y: 109 }, { y: 105 }, { y: 99 }, { y: 95 }
           ],
           label: 'Expense',
           config: {
             color: processColor('#F99B7D'),
             barShadowColor: processColor('gray'),
             highlightAlpha: 90,
-            valueTextSize:12,
+            valueTextSize: 12,
             highlightColor: processColor('gray'),
           }
         }
-      ],
+        ],
 
         config: {
           barWidth: 0.3,
         }
       },
-      highlights: [{x: 3}, {x: 6}],
+      highlights: [{ x: 3 }, { x: 6 }],
       xAxis: {
         valueFormatter: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
         granularityEnabled: true,
-        granularity : 1,
+        granularity: 1,
       }
     };
   }
@@ -90,11 +93,11 @@ class BarChartScreen extends React.Component {
   handleSelect(event) {
     let entry = event.nativeEvent
     if (entry == null) {
-      this.setState({...this.state, selectedEntry: null})
-     
+      this.setState({ ...this.state, selectedEntry: null })
+
     } else {
-      this.setState({...this.state, selectedEntry: JSON.stringify(entry)})
-      console.log("=========> ",entry.y,entry.x)
+      this.setState({ ...this.state, selectedEntry: JSON.stringify(entry) })
+      console.log("=========> ", entry.y, entry.x)
     }
 
     console.log(event.nativeEvent)
@@ -104,22 +107,24 @@ class BarChartScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-
-        <View style={{height:40}}>
+        <TouchableOpacity style={styles.boxMonth}>
+          <Image style={styles.icon} source={require('../asset/icon/icon_calender.png')} />
+          <Text style={styles.textMonthYear}>2023</Text>
+        </TouchableOpacity>
+        <View style={{ height: 40 }}>
           <Text> selected entry</Text>
           <Text style={styles.infoMonth}> {this.state.selectedEntry}</Text>
         </View>
-
 
         <View style={styles.container}>
           <BarChart
             style={styles.chart}
             data={this.state.data}
             xAxis={this.state.xAxis}
-            animation={{durationX: 2000}}
+            animation={{ durationX: 2000 }}
             legend={this.state.legend}
             gridBackgroundColor={processColor('#ffffff')}
-            visibleRange={{x: { min: 5, max: 5 }}}
+            visibleRange={{ x: { min: 5, max: 5 } }}
             drawBarShadow={false}
             drawValueAboveBar={true}
             drawHighlightArrow={true}
@@ -137,14 +142,37 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5FCFF',
-    marginBottom:40,
+    marginBottom: 40,
   },
   chart: {
     flex: 1
   },
-  infoMonth:{
-    fontWeight:'500',
-    color:COLOR.black,
+  infoMonth: {
+    fontWeight: '500',
+    color: COLOR.black,
+
+  }, boxMonth: {
+    height: 40,
+    width: windowWidth,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    backgroundColor: COLOR.white,
+    // borderColor: 'red', borderWidth: 2,
+    marginTop: 10,
+    marginHorizontal: 10,
+    flexDirection: 'row',
+
+  },
+  icon: {
+    width: 30,
+    height: 30,
+  },
+  textMonthYear: {
+    fontWeight: '400',
+    fontSize: 17,
+    marginHorizontal: 7,
+    letterSpacing: 0.3,
+    color: COLOR.black,
 
   }
 });

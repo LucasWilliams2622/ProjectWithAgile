@@ -22,7 +22,6 @@ import Item from './screens/MainTabs/Item'
 
 import Setting from './screens/MainTabs/Setting'
 import Profile from './screens/MainTabs/Profile'
-import Test from './screens/TestTab/AddGif'
 import ItemTransaction from './component/ItemTransaction'
 import ItemCollect from './component/ItemCollect'
 import ItemYear from './component/ItemYear'
@@ -35,7 +34,7 @@ import messaging from '@react-native-firebase/messaging';
 const Stack = createNativeStackNavigator();
 const StackBegin = () => {
   return (
-    <Stack.Navigator initialRouteName="Register" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
@@ -44,7 +43,7 @@ const StackBegin = () => {
       <Stack.Screen name="SignCode" component={SignCode} />
 
 
-      
+
     </Stack.Navigator>
 
   )
@@ -76,7 +75,6 @@ const App = () => {
         <Stack.Screen name="BottomTabs" component={BottomTabs} />
         <Stack.Screen name="AddNew" component={AddNew} />
         <Stack.Screen name="Setting" component={Setting} />
-        <Stack.Screen name="TestPicker" component={TestPicker} />
        </Stack.Navigator>
      </NavigationContainer>
   

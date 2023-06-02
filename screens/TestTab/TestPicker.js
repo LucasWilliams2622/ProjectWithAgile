@@ -16,7 +16,7 @@ const App = () => {
 
       showPicker(false);
       //setDate(selectedDate);
-      const formattedDate = moment(selectedDate).format('MMMM YYYY');
+      const formattedDate = moment(selectedDate).format('YYYY-MM');
       setDate(formattedDate);
       setSelectedMonthYear(formattedDate);
       const formattedYear = moment(selectedDate).format('YYYY');
@@ -28,7 +28,8 @@ const App = () => {
     [date, showPicker],
   );
 
-  const currentDate = moment().format('YYYY-MM-DD-dddd');
+  const currentDate = moment().format('YYYY-MM-DD');
+  const currentDate2 = moment().format('YYYY-MM-DD-dddd');
 
   return (
     <SafeAreaView>
