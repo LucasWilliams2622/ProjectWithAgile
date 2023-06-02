@@ -58,12 +58,12 @@ const Login = (props) => {
       if (response.returnData.error === false) {
         console.log(response.returnData.data.token);
         await AsyncStorage.setItem("token", response.returnData.data.token);
-        ToastAndroid.show("Ðang nh?p thành công", ToastAndroid.SHORT);
+        ToastAndroid.show("Ðăng nhập thành công", ToastAndroid.SHORT);
         setinfoUser(response.returnData.data.user);
         setupdatenew(response.returnData.data);
         setisLogin(true);
       } else {
-        ToastAndroid.show("Ðang nh?p th?t b?i", ToastAndroid.SHORT);
+        ToastAndroid.show("Đăng nhập thất bại", ToastAndroid.SHORT);
       }
     } catch (e) {
       console.log(e);
