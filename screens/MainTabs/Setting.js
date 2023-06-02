@@ -54,7 +54,6 @@ const Setting = (props) => {
             </View>
             <Switch
               style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }], marginRight: 10, }}
-
               thumbColor={isEnabled ? '#FFFFFF' : '#FFFFFF'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleSwitch}
@@ -62,6 +61,7 @@ const Setting = (props) => {
               trackColor={{ false: '#767577', true: '#81b0ff' }}
             />
           </View>
+          
           <View style={styles.line}></View>
           <TouchableOpacity style={styles.allignview1} onPress={showNotification}>
             <Text style={styles.text4}>Đơn vị tiền tệ</Text>
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: COLOR.background2,
-    height:150,
+    height: 150,
     borderBottomEndRadius: 30,
     borderBottomStartRadius: 30,
     flexDirection: 'column',
@@ -137,8 +137,8 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100,
     alignSelf: 'center',
-    left:20, 
-    borderRadius:100
+    left: 20,
+    borderRadius: 100
 
 
   },

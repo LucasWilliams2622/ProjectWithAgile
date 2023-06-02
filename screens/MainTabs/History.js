@@ -1,21 +1,13 @@
-<<<<<<<<< Temporary merge branch 1
-import { StyleSheet, Text, View, TextInput, Image, Dimensions, ScrollView, TouchableOpacity } from 'react-native'
-import React from 'react'
-=========
 import { StyleSheet, Text, View, TextInput, Image, Dimensions, ScrollView, TouchableOpacity, ToastAndroid, FlatList } from 'react-native'
-import React ,{useState,useEffect}from 'react'
->>>>>>>>> Temporary merge branch 2
+import React, { useState, useEffect } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import ItemTransaction from '../../component/ItemTransaction';
 import AxiosIntance from '../../constants/AxiosIntance';
 const windowWIdth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const History = (props) => {
-<<<<<<<<< Temporary merge branch 1
- 
-
-  const { navigation,route } = props;
-  const {params}=route;
+  const { navigation, route } = props;
+  const { params } = route;
   const [data, setdata] = useState([]);
   useEffect(() => {
     const getTransaction = async () => {
@@ -29,27 +21,22 @@ const History = (props) => {
       }
     }
     getTransaction();
-
-    return () => {
-
-    }
   }, []);
   return (
-      <View style={styles.container}>
-        <View style={styles.background}></View>
-        <Text style={styles.text}>Lịch sử chi tiêu</Text>
-        <View style={styles.viewSearch}>
-          <TextInput placeholder='Tìm kiếm' style={styles.input}></TextInput>
-          <Image style={styles.imageSearch} source={require('../../asset/icon/icon_search.png')}></Image>
->>>>>>>>> Temporary merge branch 2
-        </View>
-        <Text style={styles.textToday}>23-05-2023</Text>
-        <View style={styles.jusCenter}>
-          <View style={styles.viewLine}></View>
-        </View>
-        <ScrollView>
-          <View style={styles.viewListGiveAndPay}>
-            {/* <View>
+    <View style={styles.container}>
+      <View style={styles.background}></View>
+      <Text style={styles.text}>Lịch sử chi tiêu</Text>
+      <View style={styles.viewSearch}>
+        <TextInput placeholder='Tìm kiếm' style={styles.input}></TextInput>
+        <Image style={styles.imageSearch} source={require('../../asset/icon/icon_search.png')}></Image>
+      </View>
+      <Text style={styles.textToday}>23-05-2023</Text>
+      <View style={styles.jusCenter}>
+        <View style={styles.viewLine}></View>
+      </View>
+      <ScrollView>
+        <View style={styles.viewListGiveAndPay}>
+          {/* <View>
               <TouchableOpacity>
                 <Image style={{ height: 300, width: 300 }} source={require('../../asset/gif/home.gif')}></Image>
               </TouchableOpacity>
@@ -59,17 +46,17 @@ const History = (props) => {
             </View>
           </TouchableOpacity> */}
           <View>
-              {
-                <FlatList
-                  data={data}
-                  renderItem={({ item }) => <ItemTransaction dulieu={item} navigation={navigation} />}
-                  keyExtractor={item => item._id}
-                  showsVerticalScrollIndicator={false} 
-                />
-                // data.map((item)=><ItemTransaction dulieu={item} key={item._id} navigation={navigation} />)
-                
-              }
-            </View>
+            {
+              <FlatList
+                data={data}
+                renderItem={({ item }) => <ItemTransaction dulieu={item} navigation={navigation} />}
+                keyExtractor={item => item._id}
+                showsVerticalScrollIndicator={false}
+              />
+              // data.map((item)=><ItemTransaction dulieu={item} key={item._id} navigation={navigation} />)
+
+            }
+          </View>
         </View>
       </ScrollView>
 
@@ -94,9 +81,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   text: {
-    //fontFamily:
     fontSize: 20,
-    // fontFamily:,
     fontStyle: 'normal',
     fontWeight: '700',
     marginLeft: 20,
@@ -110,7 +95,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLOR.gray,
     marginLeft: 30,
-
     backgroundColor: COLOR.white,
     paddingLeft: 20
   },
@@ -119,7 +103,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 30,
-
     height: 50,
     marginHorizontal: 15,
   },

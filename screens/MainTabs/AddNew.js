@@ -1,19 +1,11 @@
-<<<<<<<<< Temporary merge branch 1
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert,ToastAndroid, StatusBar,Platform} from 'react-native'
+
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, ToastAndroid, StatusBar, Platform } from 'react-native'
 import React, { useState } from 'react'
 import { TextInput } from 'react-native-paper'
 import AxiosIntance from '../../constants/AxiosIntance'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ICON, COLOR } from '../../constants/Themes'
 
-
-=========
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, ToastAndroid } from 'react-native'
-import React,{useState} from 'react'
-import { TextInput } from 'react-native-paper'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import AxiosIntance from '../../constants/AxiosIntance'
->>>>>>>>> Temporary merge branch 2
 const AddNew = (props) => {
   const { navigation, route } = props;
   const { params } = route;
@@ -22,7 +14,7 @@ const AddNew = (props) => {
   const [name, setname] = useState('');
   const [money, setMoney] = useState('');
   const [note, setNote] = useState('');
-  let title=params?.name;
+  let title = params?.name;
   const [value, setValue] = useState('');
   const handleCheckInput = () => {
     const floatValue = parseFloat(value.replace(',', '.'));
@@ -42,10 +34,10 @@ const AddNew = (props) => {
   //     Alert.alert('Vui lòng nhập số tiền hợp lệ');
   //   }
   // };
-  const addNew = async() =>{
+  const addNew = async () => {
     try {
-      
-      const floatValue = parseFloat(money.replace(',', '.')); 
+
+      const floatValue = parseFloat(money.replace(',', '.'));
       if (title.trim() === '') {
         Alert.alert('Vui lòng nhập tiêu đề');
       } else if (isNaN(floatValue) || floatValue <= 0) {
@@ -77,42 +69,8 @@ const AddNew = (props) => {
       <View style={styles.bgTop}>
         <Text style={styles.textTitle}>Thêm chi tiêu cho hôm nay</Text>
       </View>
-      <View style={styles.bgMain}>
-        <View style={styles.bgTop}>
-          <Image style={styles.imgColor} source={require('../../asset/icon/icon_edit.png')}></Image>
-          <TouchableOpacity >
-            <TextInput value={money} onChangeText={setMoney} keyboardType="numeric" returnKeyType="done" placeholderTextColor='white' underlineColor='transparent' style={styles.textMoney} placeholder='Nhập số tiền'></TextInput>
-          </TouchableOpacity>
-          <Text style={styles.textVND}>VNĐ</Text>
-        </View>
-      </View>
+     
 
-      <View>
-        <View style={styles.input}>
-          <TouchableOpacity >
-            <Image style={styles.imgInput} source={require('../../asset/icon/icon_calender.png')} />
-          </TouchableOpacity>
-          <TextInput style={styles.txtInput}></TextInput>
-        </View>
-      </View>
-      <View style={{ top: 10 }}>
-        <View style={styles.input}>
-          <TouchableOpacity onPress={() => { navigation.navigate("TopTabThuChi") }}>
-            <Image style={styles.imgInput} source={require('../../asset/icon/icon_type.png')} />
-          </TouchableOpacity>
-          <TextInput placeholder='Chọn loại' style={styles.txtInput} value={title}></TextInput>
-        </View>
-      </View>
-      <View style={{ top: 10 }}>
-        <View style={styles.input}>
-          <Image style={styles.imgNote} source={require('../../asset/icon/icon_note.png')} />
-          <TextInput onChangeText={setNote} value={note} placeholder='Ghi chú' style={styles.txtInput}></TextInput>
-        </View>
-      </View>
-
-      <TouchableOpacity style={styles.btnSave} onPress={addNew} >
-        <Text style={styles.btnTxt}>Lưu chi tiêu</Text>
-      </TouchableOpacity>
       <View style={styles.shadowView}>
         <View style={styles.bgMain}>
           <View style={styles.bgTop}>
@@ -176,8 +134,6 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   shadowView: {
-    
-
     shadowColor: "#000000",
     shadowOffset: {
       width: 0,
@@ -205,7 +161,10 @@ const styles = StyleSheet.create({
   bgTop: {
     backgroundColor: COLOR.background2,
     flexDirection: 'row',
-    tintColor: 'black'
+    tintColor: 'black',
+    height:70,
+    borderBottomLeftRadius:20,
+    borderBottomRightRadius:20,
   },
 
   bgMain: {

@@ -18,7 +18,6 @@ import BottomTabs from './screens/MainTabs/BottomTabs'
 import Chart from './screens/MainTabs/Chart'
 import History from './screens/MainTabs/History'
 import Home from './screens/MainTabs/Home'
-import Item from './screens/MainTabs/Item'
 
 import Setting from './screens/MainTabs/Setting'
 import Profile from './screens/MainTabs/Profile'
@@ -29,7 +28,6 @@ import TopTabThuChi from './screens/MainTabs/TopTabThuChi';
 import TestPicker from './screens/TestTab/TestPicker'
 import Test from './screens/TestTab/Test'
 
-import PieChartScreen from './screens/TestTab/PieChartScreen'
 import messaging from '@react-native-firebase/messaging';
 
 
@@ -44,24 +42,19 @@ const StackBegin = () => {
       <Stack.Screen name="SignPassword" component={SignPassword} />
       <Stack.Screen name="SignCode" component={SignCode} />
 
-
-
     </Stack.Navigator>
 
   )
 }
 const App = () => {
-  // Lấy token của thiết bị
-  useEffect(() => {
-    getDeviceToken();
 
-  }, []);
   const getDeviceToken = async () => {
     let token = await messaging().getToken();
     console.log(token);
   };
-
   useEffect(() => {
+    getDeviceToken();
+
     // Lắng nghe sự kiện khi ứng dụng chạy ngầm
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       Alert.alert(
@@ -71,16 +64,17 @@ const App = () => {
     });
     return unsubscribe;
   }, []);
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="StackBegin" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="BottomTabs" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="StackBegin" component={StackBegin} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="BottomTabs" component={BottomTabs} />
         <Stack.Screen name="AddNew" component={AddNew} />
         <Stack.Screen name="Test" component={Test} />
-       </Stack.Navigator>
-     </NavigationContainer>
+      </Stack.Navigator>
+    </NavigationContainer>
 
   )
 }

@@ -14,7 +14,6 @@ const Home = (props) => {
       <Text>Home</Text>
 
       <View style={styles.background}></View>
-
       <TouchableOpacity>
         <View style={styles.viewAvatarAndText}>
           <Image source={require('../../asset/image/logo.png')} style={styles.imageProfile}></Image>
@@ -87,7 +86,6 @@ const Home = (props) => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-
     </View>
   )
 }
@@ -112,7 +110,6 @@ const styles = StyleSheet.create({
   },
   viewAvatarAndText: {
     flexDirection: 'row',
-    //fontFamily:
     alignItems: 'center',
     marginTop: -125,
     marginLeft: 17
@@ -167,9 +164,7 @@ const styles = StyleSheet.create({
     width: 30
   },
   textDate: {
-    //fontFamily:
     fontSize: 14,
-    // fontFamily:,
     fontStyle: 'normal',
     fontWeight: '400',
     marginLeft: 10,
@@ -180,35 +175,27 @@ const styles = StyleSheet.create({
     width: 30
   },
   textPrice: {
-    //fontFamily:
     fontSize: 20,
-    // fontFamily:,
     fontStyle: 'normal',
     fontWeight: '700',
     marginLeft: 10,
     color: COLOR.black
   },
   textGiveAndPay: {
-    //fontFamily:
     fontSize: 12,
-    // fontFamily:,
     fontStyle: 'normal',
     fontWeight: '400',
     color: COLOR.black
   },
   textTotalManager: {
-    //fontFamily:
     fontSize: 12,
-    // fontFamily:,
     fontStyle: 'normal',
     fontWeight: '400',
     right: 200,
     color: COLOR.black
   },
   textToday: {
-    //fontFamily:
     fontSize: 14,
-    // fontFamily:,
     fontStyle: 'italic',
     fontWeight: '400',
     color: COLOR.black,
@@ -223,9 +210,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textGif: {
-    //fontFamily:
     fontSize: 14,
-    // fontFamily:,
     fontStyle: 'normal',
     fontWeight: '400',
   }
