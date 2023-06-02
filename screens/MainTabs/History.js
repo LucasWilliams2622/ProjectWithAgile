@@ -1,15 +1,37 @@
 import { StyleSheet, Text, View, TextInput, Image, Dimensions, ScrollView, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
+import ItemTransaction from '../../component/ItemTransaction';
+import AxiosIntance from '../../constants/AxiosIntance';
 const windowWIdth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const History = (props) => {
-  const { navigation } = props;
+  const { navigation, route } = props;
+  const { params } = route;
+  const [data, setdata] = useState([]);
   const goAddNew = () => {
     navigation.navigate('AddNew');
   }
+  useEffect(() => {
+    const getTransaction = async () => {
+      const response = await AxiosIntance().get("transaction/api/get-all-transaction");
+      console.log(response.transaction);
+      if (response.result == true) // lấy dữ liệu thành công
+      {
+        setdata(response.transaction);
+      } else {
+        ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
+      }
+    }
+    getTransaction();
+
+    return () => {
+
+    }
+  }, []);
   return (
     <View style={styles.container}>
+
       <View style={styles.background}></View>
       <Text style={styles.text}>Lịch sử chi tiêu</Text>
       <View style={styles.viewSearch}>
@@ -20,16 +42,26 @@ const History = (props) => {
       <View style={styles.jusCenter}>
         <View style={styles.viewLine}></View>
       </View>
-      
       <ScrollView>
         <View style={styles.viewListGiveAndPay}>
-          <TouchableOpacity onPress={() => { goAddNew() }}>
+          {/* <TouchableOpacity onPress={() => { goAddNew() }}>
             <Image style={{ height: 300, width: 300 }} source={require('../../asset/gif/home.gif')}></Image>
             <View style={{ marginTop: 30 }}>
               <Text style={styles.textGif}>Không có chi tiêu nào. Chạm vào đây dể thêm.</Text>
             </View>
-          </TouchableOpacity>
-
+          </TouchableOpacity> */}
+          <View>
+              {
+                <FlatList
+                  data={data}
+                  renderItem={({ item }) => <ItemTransaction dulieu={item} navigation={navigation} />}
+                  keyExtractor={item => item._id}
+                  showsVerticalScrollIndicator={false} 
+                />
+                // data.map((item)=><ItemTransaction dulieu={item} key={item._id} navigation={navigation} />)
+                
+              }
+            </View>
         </View>
       </ScrollView>
 

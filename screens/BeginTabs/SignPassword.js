@@ -6,12 +6,15 @@ import React, { useState } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import AxiosIntance from '../../constants/AxiosIntance';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 const SignPassword = (props) => {
     const { route, navigation } = props;
     const email = route.params.email;
     const name = route.params.name;
     const [verifiedPassNew, setVerifiedPassNew] = useState(false);
     const [verifiedCfPass, setVerifiedCfPass] = useState(false);
+    const [getNewPassVisible, setNewPassVisible] = useState(false)
+    const [getConfirmPassVisible, setConfirmPassVisible] = useState(false)
     const [password, setpassword] = useState('');
     const [confirmPass, setconfirmPass] = useState('');
     const checkPassNew = (password) => {
@@ -37,29 +40,33 @@ const SignPassword = (props) => {
             console.log("password hợp lệ");
             return true;
         }
-        else {
-            setVerifiedPassNew({ passreg: text1 });
-            console.log("pass ko hợp lệ");
+        else
+        {
+          setVerifiedPassNew({passreg:text1});
+          console.log("pass ko hợp lệ");
         }
-    }
-    const kiemtraConFirmPass = (text1) => {
-        let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-        if (passreg.test(text1) === true) {
-            setVerifiedCfPass({ passreg: text1 });
-            setVerifiedCfPass(true);
-            setconfirmPass(text1);
-            console.log("password hợp lệ");
-            return true;
+      }
+      const kiemtraConFirmPass=(text1)=>{
+        let passreg=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        if(passreg.test(text1)===true)
+        {
+          setVerifiedCfPass({passreg:text1});
+          setVerifiedCfPass(true);
+          setconfirmPass(text1);
+          console.log("password hợp lệ");
+          return true;
         }
-        else {
-            setVerifiedCfPass({ passreg: text1 });
-            console.log("pass ko hợp lệ");
+        else
+        {
+          setVerifiedCfPass({passreg:text1});
+          console.log("pass ko hợp lệ");
         }
-    }
-    const check = () => {
-        if (verifiedCfPass == true && verifiedPassNew == true && password === confirmPass) {
-            ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
-            //  navigation.navigate('Resigter');
+      }
+      const chuyen=()=>{
+        if(verifiedCfPass==true&&verifiedPassNew==true&& password===confirmPass  )
+        {
+         ToastAndroid.show("Nhập đúng",ToastAndroid.SHORT);
+        //  navigation.navigate('Resigter');
         }
         else {
             Alert.alert('Error', 'Password của bạn đã sai! vui lòng kiểm tra lại.');
@@ -115,37 +122,25 @@ const SignPassword = (props) => {
                     <Text style={[styles.textInstruct, { fontSize: 16, fontWeight: '400', marginTop: 5 }]}>For the security & safety please choose a password</Text>
                 </View>
 
-                <View style={styles.viewInputEmailAndPass}>
-                    <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(password) => checkPassNew(password)}></TextInput>
-                    <TextInput placeholder='Password' style={styles.inputEmailAndPass}
-                        onChangeText={(text1) => kiemtrapasswordnew(text1)}
-                    >
-                    </TextInput>
-                    <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIconEye}></Image>
-                    <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
-                </View>
-
-                <View style={styles.viewInputEmailAndPass}>
-                    <TextInput placeholder='Confirm Password' style={styles.inputEmailAndPass} onChangeText={(text1) => checkConFirmPass(text1)}></TextInput>
-
-                    <TextInput placeholder='Confirm Password' style={styles.inputEmailAndPass}
-                        onChangeText={(text1) => kiemtraConFirmPass(text1)}
-                    ></TextInput>
-
-                    <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIconEye}></Image>
-                    <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
-                </View>
-                <View style={{ alignItems: 'center' }}>
-                    <Pressable style={styles.viewPressable} onPress={check} />
-
-                    <View style={{ alignItems: 'center' }}>
-                        <Pressable style={styles.viewPressable} onPress={chuyen}>
-                            <Text style={styles.textPressable}>Next</Text>
-                        </Pressable>
-                    </View>
-                </View>
+            <View style={styles.viewInputEmailAndPass}>
+                <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(text1)=>kiemtrapasswordnew(text1)}></TextInput>
+                <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIconEye}></Image>
+                <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
             </View>
-        </KeyboardAwareScrollView>
+
+            <View style={styles.viewInputEmailAndPass}>
+                <TextInput placeholder='Confirm Password' style={styles.inputEmailAndPass} onChangeText={(text1)=>kiemtraConFirmPass(text1)}></TextInput>
+                <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIconEye}></Image>
+                <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
+            </View>
+
+            <View style={{alignItems:'center'}}>
+                <Pressable style={styles.viewPressable} onPress={chuyen}>
+                    <Text style={styles.textPressable}>Next</Text>
+                </Pressable>
+            </View>
+
+        </View>
     )
 }
 
@@ -170,8 +165,8 @@ const styles = StyleSheet.create({
         color: COLOR.primary
     },
     imageLogin: {
-        width: 347.28,
-        height: 331.24,
+        width: 300,
+        height: 300,
         marginTop: -5
     },
     textInstruct: {
@@ -207,8 +202,9 @@ const styles = StyleSheet.create({
     imageIconPadlock: {
         width: 13,
         height: 17,
-        marginLeft: -323,
+        marginLeft: -330,
         marginTop: 15
+      
     },
     textForgote: {
         fontFamily: 'Klarna Text',

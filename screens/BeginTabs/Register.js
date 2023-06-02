@@ -73,8 +73,8 @@ const Register = (props) => {
   const check = () => {
     if (verifiedEmail == true && name == true) {
       ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
-      sendVerifiedEmail();
       console.log(verifiedEmail);
+      sendVerifiedEmail();
       //  navigation.navigate('Resigter');
     }
     else {
@@ -115,30 +115,33 @@ const Register = (props) => {
         <View style={{ marginTop: 7, marginLeft: 5 }}>
           <Text style={styles.textInstruct}>We need to verify you. We will send you a one time verification code.</Text>
         </View>
-        <TextInput placeholder='Name Surname' style={styles.inputEmailAndPass} onChangeText={setname} value={name}></TextInput>
-
         <View style={styles.viewInputPass}>
-          <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={setEmail} value={email}></TextInput>
+          <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(setEmail) => checkEmail(setEmail)}></TextInput>
         </View>
 
+        <TextInput placeholder='Name Surname' style={styles.inputEmailAndPass} onChangeText={setname} value={name}></TextInput>
 
+        {/* <View style={styles.viewInputPass}>
+          <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={setEmail} value={email}></TextInput>
+        </View> */}
 
         <View style={{ alignItems: 'center' }}>
-
 
           <Pressable style={styles.viewPressable} onPress={() => { check() }}>
             <Text style={styles.textPressable}>Sign in</Text>
           </Pressable>
-        </View>
-
-        <View style={[styles.center, { marginTop: 10 }]}>
-          <Text style={styles.textNoneAcc}>Already have an account?</Text>
-          <TouchableOpacity onPress={() => { goLogin() }}>
-            <Text style={[styles.textNoneAcc, { color: COLOR.primary, marginLeft: 5 }]}>Login</Text>
-          </TouchableOpacity>
-        </View>
+          <Text style={styles.textPressable}>Sign in</Text>
+        </Pressable>
       </View>
-    </KeyboardAwareScrollView>
+
+      <View style={[styles.center, { marginTop: 10 }]}>
+        <Text style={styles.textNoneAcc}>Already have an account?</Text>
+        <TouchableOpacity onPress={() => { goLogin() }}>
+          <Text style={[styles.textNoneAcc, { color: COLOR.primary, marginLeft: 5 }]}>Login</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+    </KeyboardAwareScrollView >
   )
 }
 }

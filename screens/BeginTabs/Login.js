@@ -106,16 +106,18 @@ const Login = (props) => {
       console.log("ban da nhap sai");
     }
   }
-  const kiemtrapassword = (text1) => {
-    let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    if (passreg.test(text1) === true) {
-      setVerifiedPass({ passreg: text1 });
+  const kiemtrapassword=(text1)=>{
+    let passreg=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    if(passreg.test(text1)===true)
+    {
+      setVerifiedPass({passreg:text1});
       console.log("password không hợp lệ");
       setVerifiedPass(true);
       return true;
     }
-    else {
-      setVerifiedPass({ passreg: text1 });
+    else
+    {
+      setVerifiedPass({passreg:text1});
       console.log("pass ko hợp lệ");
     }
   }
@@ -147,12 +149,24 @@ const Login = (props) => {
             <Text style={styles.textInstruct}>password to access your account</Text>
           </View>
 
-          <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(text) => kiemtra(text)}  ></TextInput>
+      <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(text)=>kiemtra(text)}  ></TextInput>
 
-          <View style={styles.viewInputPass}>
-            <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(text1) => kiemtrapassword(text1)}></TextInput>
-            <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIcon}></Image>
-          </View>
+      <View style={styles.viewInputPass}>
+        <TextInput placeholder='Password' style={styles.inputEmailAndPass} 
+         secureTextEntry={getPasswordVisible ? false : true} 
+         onChangeText={(setPasswordVisible) => kiemtrapassword(setPasswordVisible)}  value={verifiedPass} ></TextInput>
+        <TouchableOpacity style={styles.visible}
+          onPress={() => {
+            setPasswordVisible(!getPasswordVisible)
+          }}>
+          {
+            getPasswordVisible ?
+              <Image source={require('../../asset/icon/icon_visible.png')} style={styles.imageIconEye}></Image>
+              :
+              <Image source={require('../../asset/icon/icon_invisible.png')} style={styles.imageIconEye}></Image>
+          }
+        </TouchableOpacity>
+      </View>
 
           <View style={{ marginLeft: 220, marginTop: 5 }}>
             <Text style={styles.textForgote}>Forgote Password</Text>
@@ -203,8 +217,9 @@ const styles = StyleSheet.create({
     color: COLOR.primary
   },
   imageLogin: {
-    width: '100%',
+    width: 347.28,
     height: 331.24,
+    marginTop: -5
   },
   textInstruct: {
     fontFamily: 'Klarna Text',
@@ -296,4 +311,5 @@ const styles = StyleSheet.create({
     marginLeft: 14,
     fontSize: 16,
   }
+
 })
