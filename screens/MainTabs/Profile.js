@@ -197,7 +197,7 @@ const Profile = (props) => {
           {
             !avatar
               ?
-              (<Image style={styles.imageProfile} source={require('../../asset/image/profile.png')} />)
+              (<Image style={styles.imageProfile} source={require('../../asset/icon/icon_profile.png')} />)
               :
               (<Image style={styles.imageProfile} source={{ uri: avatar }} />)
           }

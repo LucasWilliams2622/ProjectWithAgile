@@ -36,7 +36,7 @@ import messaging from '@react-native-firebase/messaging';
 const Stack = createNativeStackNavigator();
 const StackBegin = () => {
   return (
-    <Stack.Navigator initialRouteName="Register" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="Welcome" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
@@ -84,5 +84,5 @@ const App = () => {
   )
 }
 
-export default Profile
+export default App
 
