@@ -45,29 +45,8 @@ const SignPassword = (props) => {
             console.log("pass ko hợp lệ");
         }
     }
-    const kiemtraConFirmPass = (text1) => {
-        let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-        if (passreg.test(text1) === true) {
-            setVerifiedCfPass({ passreg: text1 });
-            setVerifiedCfPass(true);
-            setconfirmPass(text1);
-            console.log("password hợp lệ");
-            return true;
-        }
-        else {
-            setVerifiedCfPass({ passreg: text1 });
-            console.log("pass ko hợp lệ");
-        }
-    }
-    const chuyen = () => {
-        if (verifiedCfPass == true && verifiedPassNew == true && password === confirmPass) {
-            ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
-            //  navigation.navigate('Resigter');
-        }
-        else {
-            Alert.alert('Error', 'Password của bạn đã sai! vui lòng kiểm tra lại.');
-        }
-    }
+
+
     const chuyen = async () => {
         // if (verifiedCfPass == true && verifiedPassNew == true && password === confirmPass) {
         //     ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
@@ -102,7 +81,6 @@ const SignPassword = (props) => {
     }
     return (
         <KeyboardAwareScrollView>
-
             <View style={styles.container}>
                 <View style={styles.center}>
                     <Text style={styles.textSignIn}>Sign Up</Text>
@@ -125,7 +103,7 @@ const SignPassword = (props) => {
                 </View>
 
                 <View style={styles.viewInputEmailAndPass}>
-                    <TextInput placeholder='Confirm Password' style={styles.inputEmailAndPass} onChangeText={(text1) => kiemtraConFirmPass(text1)}></TextInput>
+                    <TextInput placeholder='Confirm Password' style={styles.inputEmailAndPass} onChangeText={(text1) => checkConFirmPass(text1)}></TextInput>
                     <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIconEye}></Image>
                     <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
                 </View>
@@ -135,7 +113,6 @@ const SignPassword = (props) => {
                         <Text style={styles.textPressable}>Next</Text>
                     </Pressable>
                 </View>
-
             </View>
         </KeyboardAwareScrollView>
     )

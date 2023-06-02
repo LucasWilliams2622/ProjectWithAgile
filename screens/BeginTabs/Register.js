@@ -136,14 +136,16 @@ const Register = (props) => {
       
       </View>
 
-      <View style={[styles.center, { marginTop: 10 }]}>
-        <Text style={styles.textNoneAcc}>Already have an account?</Text>
-        <TouchableOpacity onPress={() => { goLogin() }}>
-          <Text style={[styles.textNoneAcc, { color: COLOR.primary, marginLeft: 5 }]}>Login</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-    </KeyboardAwareScrollView >
+        </View>
+
+        <View style={[styles.center, { marginTop: 10 }]}>
+          <Text style={styles.textNoneAcc}>Already have an account?</Text>
+          <TouchableOpacity onPress={() => { goLogin() }}>
+            <Text style={[styles.textNoneAcc, { color: COLOR.primary, marginLeft: 5 }]}>Login</Text>
+          </TouchableOpacity>
+        </View>
+     
+    </KeyboardAwareScrollView>
   )
 }
 
@@ -153,7 +155,7 @@ const styles = StyleSheet.create({
   container: {
     marginStart: 16,
     marginEnd: 16,
-    marginTop: 10
+    marginTop: 10,
   },
   center: {
     justifyContent: 'center',

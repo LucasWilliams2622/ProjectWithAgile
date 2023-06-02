@@ -36,7 +36,7 @@ import messaging from '@react-native-firebase/messaging';
 const Stack = createNativeStackNavigator();
 const StackBegin = () => {
   return (
-    <Stack.Navigator initialRouteName="Welcome" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="Register" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
@@ -73,7 +73,7 @@ const App = () => {
   }, []);
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="BottomTabs" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="StackBegin" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="StackBegin" component={StackBegin} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="BottomTabs" component={BottomTabs} />
