@@ -35,18 +35,19 @@ const Register = (props) => {
     if (reg.test(text) === true) {
       setVerifiedEmail({ email: text });
       console.log("Ban da nhap dung");
-    if (reg.test(setEmail) === true) {
-      setVerifiedEmail({ email: setEmail });
+      if (reg.test(setEmail) === true) {
+        setVerifiedEmail({ email: setEmail });
 
-      console.log("Ban da nhap dung");
-      setVerifiedEmail(true);
-      return true;
-    }
-    else {
-      setVerifiedEmail({ email: text });
-      console.log("Ban da nhap sai");
-      setVerifiedEmail({ email: setEmail });
-      console.log("Ban da nhap sai");
+        console.log("Ban da nhap dung");
+        setVerifiedEmail(true);
+        return true;
+      }
+      else {
+        setVerifiedEmail({ email: text });
+        console.log("Ban da nhap sai");
+        setVerifiedEmail({ email: setEmail });
+        console.log("Ban da nhap sai");
+      }
     }
   }
   const checkName = (name) => {
@@ -130,21 +131,20 @@ const Register = (props) => {
           <Pressable style={styles.viewPressable} onPress={() => { check() }}>
             <Text style={styles.textPressable}>Sign in</Text>
           </Pressable>
-          <Text style={styles.textPressable}>Sign in</Text>
-        </Pressable>
-      </View>
 
-      <View style={[styles.center, { marginTop: 10 }]}>
-        <Text style={styles.textNoneAcc}>Already have an account?</Text>
-        <TouchableOpacity onPress={() => { goLogin() }}>
-          <Text style={[styles.textNoneAcc, { color: COLOR.primary, marginLeft: 5 }]}>Login</Text>
-        </TouchableOpacity>
+        </View>
+
+        <View style={[styles.center, { marginTop: 10 }]}>
+          <Text style={styles.textNoneAcc}>Already have an account?</Text>
+          <TouchableOpacity onPress={() => { goLogin() }}>
+            <Text style={[styles.textNoneAcc, { color: COLOR.primary, marginLeft: 5 }]}>Login</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
-    </KeyboardAwareScrollView >
+    </KeyboardAwareScrollView>
   )
 }
-}
+
 
 export default Register
 
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   container: {
     marginStart: 16,
     marginEnd: 16,
-    marginTop: 10
+    marginTop: 10,
   },
   center: {
     justifyContent: 'center',

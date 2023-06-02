@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Platform, ToastAndroid, Alert } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Platform, ToastAndroid, Alert, StatusBar } from 'react-native'
 import React, { useState } from 'react'
 import { TextInput } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -15,14 +15,14 @@ const AddNew = (props) => {
   const [money, setMoney] = useState('');
   const [note, setNote] = useState('');
   let title = params?.name;
-  // const handleCheckInput = () => {
-  //   const floatValue = parseFloat(value.replace(',', '.')); 
-  //   if (name.trim() === '') {
-  //     Alert.alert('Vui lòng nhập tiêu đề');
-  //   } else if(isNaN(floatValue) || floatValue <= 0) {
-  //     Alert.alert('Vui lòng nhập số tiền hợp lệ');
-  //   }
-  // };
+  const handleCheckInput = () => {
+    const floatValue = parseFloat(value.replace(',', '.'));
+    if (name.trim() === '') {
+      Alert.alert('Vui lòng nhập tiêu đề');
+    } else if (isNaN(floatValue) || floatValue <= 0) {
+      Alert.alert('Vui lòng nhập số tiền hợp lệ');
+    }
+  };
   const addNew = async () => {
     try {
 
@@ -56,7 +56,6 @@ const AddNew = (props) => {
     <View style={styles.container} >
 
       <View style={styles.bgTop}>
-
         <Text style={styles.textTitle}>Thêm chi tiêu cho hôm nay</Text>
       </View>
 
@@ -89,7 +88,7 @@ const AddNew = (props) => {
             <TouchableOpacity onPress={() => { navigation.navigate('TopTabThuChi') }}>
               <Image style={styles.imgInput} source={require('../../asset/icon/icon_type.png')} />
             </TouchableOpacity>
-            <TextInput placeholder='Chọn loại' style={styles.txtInput}  value={title}></TextInput>
+            <TextInput placeholder='Chọn loại' style={styles.txtInput} value={title}></TextInput>
           </View>
         </View>
 
@@ -123,6 +122,8 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   shadowView: {
+    
+
     shadowColor: "#000000",
     shadowOffset: {
       width: 0,
@@ -240,23 +241,24 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#fff',
     textAlign: 'center',
-    viewSave: {
-      width: 360,
-      height: 50,
-      borderRadius: 30,
-      backgroundColor: COLOR.background2,
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginTop: 50,
-      marginBottom: 10
-    },
-    textSave: {
-      fontFamily: 'Klarna Text',
-      fontSize: 20,
-      fontStyle: 'normal',
-      fontWeight: '700',
-      color: COLOR.white
-    },
+  },
+  viewSave: {
+    width: 360,
+    height: 50,
+    borderRadius: 30,
+    backgroundColor: COLOR.background2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 50,
+    marginBottom: 10
+  },
+  textSave: {
+    fontFamily: 'Klarna Text',
+    fontSize: 20,
+    fontStyle: 'normal',
+    fontWeight: '700',
+    color: COLOR.white
+  },
 
 
-  })
+})

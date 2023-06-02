@@ -40,38 +40,26 @@ const SignPassword = (props) => {
             console.log("password hợp lệ");
             return true;
         }
-        else
-        {
-          setVerifiedPassNew({passreg:text1});
-          console.log("pass ko hợp lệ");
-        }
-      }
-      const kiemtraConFirmPass=(text1)=>{
-        let passreg=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-        if(passreg.test(text1)===true)
-        {
-          setVerifiedCfPass({passreg:text1});
-          setVerifiedCfPass(true);
-          setconfirmPass(text1);
-          console.log("password hợp lệ");
-          return true;
-        }
-        else
-        {
-          setVerifiedCfPass({passreg:text1});
-          console.log("pass ko hợp lệ");
-        }
-      }
-      const chuyen=()=>{
-        if(verifiedCfPass==true&&verifiedPassNew==true&& password===confirmPass  )
-        {
-         ToastAndroid.show("Nhập đúng",ToastAndroid.SHORT);
-        //  navigation.navigate('Resigter');
-        }
         else {
-            Alert.alert('Error', 'Password của bạn đã sai! vui lòng kiểm tra lại.');
+            setVerifiedPassNew({ passreg: text1 });
+            console.log("pass ko hợp lệ");
         }
     }
+    const kiemtraConFirmPass = (text1) => {
+        let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        if (passreg.test(text1) === true) {
+            setVerifiedCfPass({ passreg: text1 });
+            setVerifiedCfPass(true);
+            setconfirmPass(text1);
+            console.log("password hợp lệ");
+            return true;
+        }
+        else {
+            setVerifiedCfPass({ passreg: text1 });
+            console.log("pass ko hợp lệ");
+        }
+    }
+
     const chuyen = async () => {
         // if (verifiedCfPass == true && verifiedPassNew == true && password === confirmPass) {
         //     ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
@@ -122,25 +110,26 @@ const SignPassword = (props) => {
                     <Text style={[styles.textInstruct, { fontSize: 16, fontWeight: '400', marginTop: 5 }]}>For the security & safety please choose a password</Text>
                 </View>
 
-            <View style={styles.viewInputEmailAndPass}>
-                <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(text1)=>kiemtrapasswordnew(text1)}></TextInput>
-                <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIconEye}></Image>
-                <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
-            </View>
+                <View style={styles.viewInputEmailAndPass}>
+                    <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(text1) => kiemtrapasswordnew(text1)}></TextInput>
+                    <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIconEye}></Image>
+                    <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
+                </View>
 
-            <View style={styles.viewInputEmailAndPass}>
-                <TextInput placeholder='Confirm Password' style={styles.inputEmailAndPass} onChangeText={(text1)=>kiemtraConFirmPass(text1)}></TextInput>
-                <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIconEye}></Image>
-                <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
-            </View>
+                <View style={styles.viewInputEmailAndPass}>
+                    <TextInput placeholder='Confirm Password' style={styles.inputEmailAndPass} onChangeText={(text1) => kiemtraConFirmPass(text1)}></TextInput>
+                    <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIconEye}></Image>
+                    <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
+                </View>
 
-            <View style={{alignItems:'center'}}>
-                <Pressable style={styles.viewPressable} onPress={chuyen}>
-                    <Text style={styles.textPressable}>Next</Text>
-                </Pressable>
-            </View>
+                <View style={{ alignItems: 'center' }}>
+                    <Pressable style={styles.viewPressable} onPress={chuyen}>
+                        <Text style={styles.textPressable}>Next</Text>
+                    </Pressable>
+                </View>
 
-        </View>
+            </View>
+        </KeyboardAwareScrollView>
     )
 }
 
@@ -204,7 +193,7 @@ const styles = StyleSheet.create({
         height: 17,
         marginLeft: -330,
         marginTop: 15
-      
+
     },
     textForgote: {
         fontFamily: 'Klarna Text',
