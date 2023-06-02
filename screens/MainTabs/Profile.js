@@ -30,7 +30,7 @@ const Profile = (props) => {
     }
   }
 
-  const check = () => {
+  const checkAll = () => {
     if (name.trim() === '') {
       Alert.alert('Error', 'vui lòng nhập tên!');
     }
@@ -181,7 +181,7 @@ const Profile = (props) => {
               placeholder="Hạn mức chi tiêu"
             />
           </View>
-          <TouchableOpacity style={styles.buttonSave} onPress={check}>
+          <TouchableOpacity style={styles.buttonSave} onPress={checkAll}>
             <Text style={styles.text2}>Lưu thay đổi</Text>
           </TouchableOpacity>
         </View>

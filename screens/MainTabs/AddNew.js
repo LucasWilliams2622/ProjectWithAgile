@@ -2,11 +2,7 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, ToastAndroid } from 'react-native'
 import React, { useState } from 'react'
 import { TextInput } from 'react-native-paper'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import AxiosIntance from '../../constants/AxiosIntance'
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native'
-import React, { useState } from 'react'
-import { TextInput } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ICON, COLOR } from '../../constants/Themes'
 

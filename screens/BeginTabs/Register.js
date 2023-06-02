@@ -73,7 +73,7 @@ const Register = (props) => {
   //   }
   // }
 
-  const check = () => {
+  const checkAll = () => {
     if (verifiedEmail == true && name == true) {
       ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
       sendVerifiedEmail();
@@ -118,7 +118,7 @@ const Register = (props) => {
       </View>
       <View style={{ alignItems: 'center' }}>
         <Pressable style={styles.viewPressable} onPress={sendVerifiedEmail}>
-          <Text style={styles.textPressable}>Sign in</Text>
+          <Text style={styles.textPressable} onPress={checkAll}>Sign in</Text>
         </Pressable>
       </View>
 
@@ -155,7 +155,7 @@ const Register = (props) => {
       //   <View style={{ alignItems: 'center' }}>
 
 
-      //     <Pressable style={styles.viewPressable} onPress={() => { check() }}>
+      //     <Pressable style={styles.viewPressable} onPress={() => { checkAll() }}>
       //       <Text style={styles.textPressable}>Sign in</Text>
       //     </Pressable>
       //   </View>

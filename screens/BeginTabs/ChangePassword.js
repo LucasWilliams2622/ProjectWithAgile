@@ -13,7 +13,7 @@ const ChangePassword = () => {
   const [password, setpassword] = useState('');
   const [confirmPass, setconfirmPass] = useState('')
 
-  const kiemtrapassword = (setOldPassVisible) => {
+  const checkPass = (setOldPassVisible) => {
     let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     if (passreg.test(setOldPassVisible) === true) {
       setVerifiedPass({ passreg: setOldPassVisible });
@@ -26,7 +26,7 @@ const ChangePassword = () => {
       console.log("pass ko hợp lệ");
     }
   }
-  const kiemtrapasswordnew = (setNewPassVisible) => {
+  const checkNewPass = (setNewPassVisible) => {
     let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     if (passreg.test(setNewPassVisible) === true) {
       setVerifiedPassNew({ passreg: setNewPassVisible });
@@ -40,7 +40,7 @@ const ChangePassword = () => {
       console.log("pass ko hợp lệ");
     }
   }
-  const kiemtraConFirmPass = (setConfirmPassVisible) => {
+  const checkCfPass = (setConfirmPassVisible) => {
     let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     if (passreg.test(setConfirmPassVisible) === true) {
       setVerifiedCfPass({ passreg: setConfirmPassVisible });
@@ -54,7 +54,7 @@ const ChangePassword = () => {
       console.log("pass ko hợp lệ");
     }
   }
-  const chuyen = () => {
+  const checkAll = () => {
     if (verifiedPass == true && verifiedCfPass == true && verifiedPassNew == true && password === confirmPass) {
       ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
       //  navigation.navigate('Resigter');
@@ -77,7 +77,7 @@ const ChangePassword = () => {
         <View style={styles.viewInputOldPass}>
           <TextInput style={styles.inputPassword} placeholder='Old Password'
             secureTextEntry={getOldPassVisible ? false : true}
-            onChangeText={(setOldPassVisible) => kiemtrapassword(setOldPassVisible)} value={verifiedPass} />
+            onChangeText={(setOldPassVisible) => checkPass(setOldPassVisible)} value={verifiedPass} />
           <TouchableOpacity style={styles.visible}
             onPress={() => {
               setOldPassVisible(!getOldPassVisible)
@@ -95,7 +95,7 @@ const ChangePassword = () => {
         <View style={styles.viewInputNewPass}>
           <TextInput style={styles.inputPassword} placeholder='New Password'
             secureTextEntry={getNewPassVisible ? false : true}
-            onChangeText={(setNewPassVisible) => kiemtrapasswordnew(setNewPassVisible)} value={verifiedPassNew} />
+            onChangeText={(setNewPassVisible) => checkNewPass(setNewPassVisible)} value={verifiedPassNew} />
           <TouchableOpacity style={styles.visible}
             onPress={() => {
               setNewPassVisible(!getNewPassVisible)
@@ -113,7 +113,7 @@ const ChangePassword = () => {
         <View style={styles.viewInputNewPass}>
           <TextInput style={styles.inputPassword} placeholder='Confirm Password'
             secureTextEntry={getConfirmPassVisible ? false : true}
-            onChangeText={(setConfirmPassVisible) => kiemtraConFirmPass(setConfirmPassVisible)} value={verifiedCfPass} />
+            onChangeText={(setConfirmPassVisible) => checkCfPass(setConfirmPassVisible)} value={verifiedCfPass} />
           <TouchableOpacity style={styles.visible}
             onPress={() => {
               setConfirmPassVisible(!getConfirmPassVisible)
@@ -131,7 +131,7 @@ const ChangePassword = () => {
 
 
         <View style={{ alignItems: 'center' }}>
-          <Pressable style={styles.viewPressable} onPress={chuyen}>
+          <Pressable style={styles.viewPressable} onPress={checkAll}>
             <Text style={styles.textPressable}>Next</Text>
           </Pressable>
         </View>
