@@ -43,6 +43,7 @@ const StackBegin = () => {
       <Stack.Screen name="ChangePassword" component={ChangePassword} />
       <Stack.Screen name="SignPassword" component={SignPassword} />
       <Stack.Screen name="SignCode" component={SignCode} />
+      <Stack.Screen name="Home" component={Home} />
 
 
 

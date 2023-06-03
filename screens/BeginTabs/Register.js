@@ -11,27 +11,28 @@ const Register = (props) => {
   const [verifiedEmail, setVerifiedEmail] = useState(false);
   const [name, setname] = useState('');
   const [email, setEmail] = useState('');
-  const [passwordUser, setpasswordUser] = useState("")
+  const [passwordUser, setpasswordUser] = useState("");
   const goLogin = () => {
     navigation.navigate('Login')
-
   }
-  // const dangKyNe = async () => {
-  //   console.log(emailUser, passwordUser, nameUser);
-  //   try {
-  //     const response = await AxiosIntance().post("/user/register", { email: emailUser, password: passwordUser, name: nameUser });
-  //     console.log(response)
-  //     if (response.error === false) {
-  //       ToastAndroid.show("Ðang ký thành công", ToastAndroid.SHORT);
-  //       navigation.navigate("Login")
-  //     } else {
-  //       ToastAndroid.show("Ðang ký th?t b?i", ToastAndroid.SHORT);
-  //     }
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }
-  const checkEmail = (setEmail) => {
+
+
+  const dangKyGGNe = async () => {
+    console.log(email ,name);
+    try {
+      const response = await AxiosIntance().post("/user/api/registerGG", { email: email, name: name });
+      console.log(response)
+      if (response.error === false) {
+        ToastAndroid.show("Ðăng ký thành công", ToastAndroid.SHORT);
+        navigation.navigate("Login")
+      } else {
+        ToastAndroid.show("Ðăng ký thất bại", ToastAndroid.SHORT);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  const checkEmail = (text) => {
     let reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     if (reg.test(text) === true) {
       setVerifiedEmail({ email: text });
@@ -71,7 +72,7 @@ const Register = (props) => {
       }
     }
 
-    const check = () => {
+    const checkSignUp = () => {
       if (verifiedEmail == true && name == true) {
         ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
         console.log(verifiedEmail);
@@ -129,22 +130,22 @@ const Register = (props) => {
 
         <View style={{ alignItems: 'center' }}>
 
-          <Pressable style={styles.viewPressable} onPress={() => { check() }}>
-            <Text style={styles.textPressable}>Sign in</Text>
-          </Pressable>
+          <TouchableOpacity style={styles.viewPressable} onPress={() => { checkSignUp() }}>
+            <Text style={styles.textPressable}>Sign Up</Text>
+          </TouchableOpacity>
           <Text style={styles.textPressable}>Sign in</Text>
-      
+
+        </View>
+
       </View>
 
-        </View>
+      <View style={[styles.center, { marginTop: 10 }]}>
+        <Text style={styles.textNoneAcc}>Already have an account?</Text>
+        <TouchableOpacity onPress={() => { goLogin() }}>
+          <Text style={[styles.textNoneAcc, { color: COLOR.primary, marginLeft: 5 }]}>Login</Text>
+        </TouchableOpacity>
+      </View>
 
-        <View style={[styles.center, { marginTop: 10 }]}>
-          <Text style={styles.textNoneAcc}>Already have an account?</Text>
-          <TouchableOpacity onPress={() => { goLogin() }}>
-            <Text style={[styles.textNoneAcc, { color: COLOR.primary, marginLeft: 5 }]}>Login</Text>
-          </TouchableOpacity>
-        </View>
-     
     </KeyboardAwareScrollView>
   )
 }

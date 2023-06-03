@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { ICON, COLOR } from '../../constants/Themes'
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import AxiosIntance from '../../constants/AxiosIntance';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const windowWIdth = Dimensions.get('window').width;
@@ -14,7 +15,7 @@ const Login = (props) => {
   const [verifiedEmail, setVerifiedEmail] = useState(false);
   const [verifiedPass, setVerifiedPass] = useState(false);
   const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
+  const [password, setpassword] = useState('');
   const [getPasswordVisible, setPasswordVisible] = useState(false);
   const [infoUser, setInfoUser] = useState(null);
 
@@ -34,6 +35,7 @@ const Login = (props) => {
       console.log('GivenName: ', userInfo.user.givenName);
       console.log('Photo: ', userInfo.user.photo);
       setInfoUser({ userInfo });
+  
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
@@ -46,7 +48,9 @@ const Login = (props) => {
       }
     }
   };
-
+  const goHome = () => {
+    navigation.navigate('BottomTabs');
+  }
   //chuy?n qua màn hình dang ký
   const goRegister = () => {
     navigation.navigate('Register')
@@ -54,18 +58,30 @@ const Login = (props) => {
 
   const onLogin = async () => {
     try {
-      const response = await AxiosIntance().post("/user/login", { email: emailUser, password: passwordUser });
-      if (response.returnData.error === false) {
-        console.log(response.returnData.data.token);
-        await AsyncStorage.setItem("token", response.returnData.data.token);
+      console.log(email, password);
+      const response = await AxiosIntance().post("user/api/login", { email: email, password: password });
+      
+      if (response.result) {
         ToastAndroid.show("Ðăng nhập thành công", ToastAndroid.SHORT);
-        setinfoUser(response.returnData.data.user);
-        setupdatenew(response.returnData.data);
-        setisLogin(true);
+        navigation.navigate('BottomTabs');
       } else {
         ToastAndroid.show("Đăng nhập thất bại", ToastAndroid.SHORT);
       }
     } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const loginGG = async () => {
+    try{
+      const response = await AxiosIntance().post("user/api/loginGG", { email: infoUser.userInfo.user.email });
+      if (response.result) {
+        ToastAndroid.show("Ðăng nhập thành công", ToastAndroid.SHORT);
+        navigation.navigate('BottomTabs');
+      } else {
+        ToastAndroid.show("Đăng nhập thất bại", ToastAndroid.SHORT);
+      }
+    }catch(e){
       console.log(e);
     }
   }
@@ -123,7 +139,7 @@ const Login = (props) => {
   const chuyen = () => {
     if (verifiedEmail == true && verifiedPass == true) {
       ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
-      //  navigation.navigate('Resigter');
+       navigation.navigate('Home');
     }
     else {
       Alert.alert('Error', 'Email hoặc Password của bạn đã sai! vui lòng kiểm tra lại.');
@@ -147,12 +163,12 @@ const Login = (props) => {
             <Text style={styles.textInstruct}>password to access your account</Text>
           </View>
 
-          <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(text) => kiemtra(text)}  ></TextInput>
+          <TextInput placeholder='Email' value={email} style={styles.inputEmailAndPass} onChangeText={(text) => setEmail(text)}  ></TextInput>
 
           <View style={styles.viewInputPass}>
-            <TextInput placeholder='Password' style={styles.inputEmailAndPass}
+            <TextInput  placeholder='Password' style={styles.inputEmailAndPass}
               secureTextEntry={getPasswordVisible ? false : true}
-              onChangeText={(setPasswordVisible) => kiemtrapassword(setPasswordVisible)} value={verifiedPass} ></TextInput>
+              onChangeText={(setPasswordVisible) => setpassword(setPasswordVisible)} value={password} ></TextInput>
             <TouchableOpacity style={styles.visible}
               onPress={() => {
                 setPasswordVisible(!getPasswordVisible)
@@ -172,9 +188,9 @@ const Login = (props) => {
         </View>
 
         <View style={{ alignItems: 'center' }}>
-          <Pressable style={styles.viewPressable}  >
+          <TouchableOpacity style={styles.viewPressable}  onPress={() => { onLogin(); }} >
             <Text style={styles.textPressable}>Sign in</Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
 
         <TouchableOpacity style={styles.center} onPress={() => { signInGG(); }}>
