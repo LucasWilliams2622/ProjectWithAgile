@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, Image, Dimensions, ScrollView, TouchableOpacity, ToastAndroid, FlatList } from 'react-native'
+import { StyleSheet, Text, View, TextInput, Image, Dimensions, ScrollView, TouchableOpacity, ToastAndroid,StatusBar, FlatList, SafeAreaView } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import ItemTransaction from '../../component/ItemTransaction';
@@ -23,7 +23,7 @@ const History = (props) => {
     getTransaction();
   }, []);
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.background}></View>
       <Text style={styles.text}>Lịch sử chi tiêu</Text>
       <View style={styles.viewSearch}>
@@ -59,8 +59,8 @@ const History = (props) => {
           </View>
         </View>
       </ScrollView>
-
-    </View>
+      <StatusBar style="auto" barStyle="dark-content" backgroundColor={COLOR.background2} />
+    </SafeAreaView>
   )
 }
 

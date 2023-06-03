@@ -38,22 +38,14 @@ const Login = (props) => {
       console.log('FamilyName: ', userInfo.user.familyName);
       console.log('GivenName: ', userInfo.user.givenName);
       console.log('Photo: ', userInfo.user.photo);
-
       try {
-        const response = await AxiosInstance().post("user/api/registerGoogle",
+        const response = await AxiosInstance().post("user/api/loginGoogle",
           { email: email, name: name, avatar: avatar });
         if (response.result) {
-          console.log("Sign up Success");
-          const response = await AxiosInstance().post("user/api/loginGoogle",
-            { email: email });
-          if (response.result) {
-            console.log("Sign up Success");
-            navigation.navigate("BottomTabs")
-          } else {
-            console.log("Sign in by Google is failed");
-          }
+          console.log("SIGN UP & SIGN IN GOOGLE SUCCESS!");
+          navigation.navigate("BottomTabs")
         } else {
-          console.log("Sign up by Google is failed");
+          console.log("SIGN UP & SIGN IN GOOGLE FAILED!");
         }
       } catch (error) {
         console.log(error);

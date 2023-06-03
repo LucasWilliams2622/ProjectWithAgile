@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, KeyboardAvoidingView, ToastAndroid } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert,StatusBar, KeyboardAvoidingView, ToastAndroid } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import { TextInput } from 'react-native-paper'
@@ -64,7 +64,6 @@ const Profile = (props) => {
       console.log("ban da nhap sai");
     }
   }
-
   const checkAll = () => {
     if (name.trim() === '') {
       Alert.alert('Error', 'vui lòng nhập tên!');
@@ -73,7 +72,9 @@ const Profile = (props) => {
       Alert.alert('Error', 'vui lòng cho vài dòng thông tin!');
     }
   }
-
+  const onLogOut = async ()=>{
+    
+  }
   const dialogImageChoose = () => {
     return Alert.alert(
       "Thông báo",
@@ -108,7 +109,6 @@ const Profile = (props) => {
     //   name: 'image.jpg',
     // });
   }
-
   const getImageLibrary = async () => {
     const result = await launchImageLibrary();
     console.log(result.assets[0].uri);
@@ -189,10 +189,15 @@ const Profile = (props) => {
 
       <View style={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => { navigation.goBack() }}>
-            <Image style={[styles.ImageBack, { tintColor: COLOR.white }]} source={require('../../asset/icon/icon_back.png')}></Image>
+          <View style={styles.boxTop}>
+            <TouchableOpacity onPress={() => { navigation.goBack() }}>
+              <Image style={[styles.ImageBack, { tintColor: COLOR.white }]} source={require('../../asset/icon/icon_back.png')}></Image>
+            </TouchableOpacity>
+            <Text style={styles.text}>Người dùng</Text>
+          </View>
+          <TouchableOpacity onPress={() => { onLogOut() }}>
+            <Image style={[styles.ImageBack, { tintColor: COLOR.white, height: 30, width: 30, marginRight: 10, }]} source={require('../../asset/icon/icon_logout.png')}></Image>
           </TouchableOpacity>
-          <Text style={styles.text}>Người dùng</Text>
         </View>
 
         <TouchableOpacity onPress={dialogImageChoose}>
@@ -277,7 +282,8 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 60,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
 
 
@@ -349,5 +355,10 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     resizeMode: 'stretch',
     alignItems: 'center',
+  },
+  boxTop: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })

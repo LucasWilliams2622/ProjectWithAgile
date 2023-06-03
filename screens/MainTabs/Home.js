@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView ,StatusBar, SafeAreaView} from 'react-native'
 import React, { useState ,useEffect} from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace'
@@ -23,7 +23,7 @@ const Home = (props) => {
   }
   const [isShow, setisShow] = useState(true);
   return (
-    <View>
+    <SafeAreaView>
       <Text>Home</Text>
 
       <View style={styles.background}></View>
@@ -101,7 +101,8 @@ const Home = (props) => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </View>
+      <StatusBar style="auto" barStyle="dark-content" backgroundColor={COLOR.background2} />
+    </SafeAreaView>
   )
 }
 

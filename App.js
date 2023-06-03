@@ -1,5 +1,5 @@
 import { Alert, SafeAreaView, StyleSheet, Text, View, } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -43,23 +43,18 @@ const StackBegin = () => {
       <Stack.Screen name="ChangePassword" component={ChangePassword} />
       <Stack.Screen name="SignPassword" component={SignPassword} />
       <Stack.Screen name="SignCode" component={SignCode} />
-      
-
-
-
+      <Stack.Screen name="Loading" component={Loading} />
+      <Stack.Screen name="BottomTabs" component={BottomTabs} />
     </Stack.Navigator>
-
   )
 }
 const App = () => {
-
   const getDeviceToken = async () => {
     let token = await messaging().getToken();
     // console.log("TOKEN NOTIFICATION",token);
   };
   useEffect(() => {
     getDeviceToken();
-
     // Lắng nghe sự kiện khi ứng dụng chạy ngầm
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       Alert.alert(
@@ -69,24 +64,20 @@ const App = () => {
     });
     return unsubscribe;
   }, []);
-
+  const [isLogin, setIsLogin] = useState(false)
   return (
     <Provider store={Redux.store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="StackBegin" screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="StackBegin" component={StackBegin} />
-          <Stack.Screen name="Loading" component={Loading} />
-          <Stack.Screen name="BottomTabs" component={BottomTabs} />
-
-
-          <Stack.Screen name="AddNew" component={AddNew} />
-          <Stack.Screen name="Test" component={Test} />
-          <Stack.Screen name="Profile" component={Profile} />
-
+        <Stack.Navigator initialRouteName="BottomTabs" screenOptions={{ headerShown: false }}>
+          {
+            !isLogin ?
+              <Stack.Screen name="StackBegin" component={StackBegin}  />
+              :
+              <Stack.Screen name="BottomTabs" component={BottomTabs} setIsLogin={setIsLogin}/>
+          }
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
-
   )
 }
 

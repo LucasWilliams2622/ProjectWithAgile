@@ -1,5 +1,5 @@
 
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, ToastAndroid, StatusBar, Platform } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, ToastAndroid, StatusBar, Platform, SafeAreaView } from 'react-native'
 import React, { useState } from 'react'
 import { TextInput } from 'react-native-paper'
 import AxiosInstance from '../../constants/AxiosInstance'
@@ -64,13 +64,11 @@ const AddNew = (props) => {
     }
   }
   return (
-    <View style={styles.container} >
-
+    <SafeAreaView style={styles.container} >
       <View style={styles.bgTop}>
         <Text style={styles.textTitle}>Thêm chi tiêu cho hôm nay</Text>
       </View>
      
-
       <View style={styles.shadowView}>
         <View style={styles.bgMain}>
           <View style={styles.bgTop}>
@@ -93,7 +91,6 @@ const AddNew = (props) => {
           </View>
         </View>
 
-
         <View style={{ top: 10 }}>
           <View style={styles.input}>
             <TouchableOpacity onPress={() => { navigation.navigate('TopTabThuChi') }}>
@@ -102,8 +99,6 @@ const AddNew = (props) => {
             <TextInput placeholder='Chọn loại' style={styles.txtInput} value={title}></TextInput>
           </View>
         </View>
-
-
 
         <View style={{ top: 10 }}>
           <View style={styles.input}>
@@ -118,9 +113,8 @@ const AddNew = (props) => {
           <Text style={styles.textSave}>Lưu Chi tiêu</Text>
         </TouchableOpacity>
       </View>
-      <StatusBar style="auto" />
-
-    </View>
+      <StatusBar style="auto"  />
+    </SafeAreaView>
   )
 }
 
@@ -164,7 +158,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.background2,
     flexDirection: 'row',
     tintColor: 'black',
-    height:70,
+    height:80,
     borderBottomLeftRadius:20,
     borderBottomRightRadius:20,
   },
