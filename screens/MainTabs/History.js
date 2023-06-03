@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, TextInput, Image, Dimensions, ScrollView, TouchableOpacity, FlatList } from 'react-native'
-import React,{useState,useEffect} from 'react'
+import { StyleSheet, Text, View, TextInput, Image, Dimensions, ScrollView, TouchableOpacity, ToastAndroid, FlatList } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import ItemTransaction from '../../component/ItemTransaction';
 import AxiosIntance from '../../constants/AxiosIntance';
@@ -9,9 +9,6 @@ const History = (props) => {
   const { navigation, route } = props;
   const { params } = route;
   const [data, setdata] = useState([]);
-  const goAddNew = () => {
-    navigation.navigate('AddNew');
-  }
   useEffect(() => {
     const getTransaction = async () => {
       const response = await AxiosIntance().get("transaction/api/get-all-transaction");
@@ -24,14 +21,9 @@ const History = (props) => {
       }
     }
     getTransaction();
-
-    return () => {
-
-    }
   }, []);
   return (
     <View style={styles.container}>
-
       <View style={styles.background}></View>
       <Text style={styles.text}>Lịch sử chi tiêu</Text>
       <View style={styles.viewSearch}>
@@ -44,24 +36,27 @@ const History = (props) => {
       </View>
       <ScrollView>
         <View style={styles.viewListGiveAndPay}>
-          {/* <TouchableOpacity onPress={() => { goAddNew() }}>
-            <Image style={{ height: 300, width: 300 }} source={require('../../asset/gif/home.gif')}></Image>
+          {/* <View>
+              <TouchableOpacity>
+                <Image style={{ height: 300, width: 300 }} source={require('../../asset/gif/home.gif')}></Image>
+              </TouchableOpacity>
+            </View>
             <View style={{ marginTop: 30 }}>
               <Text style={styles.textGif}>Không có chi tiêu nào. Chạm vào đây dể thêm.</Text>
             </View>
           </TouchableOpacity> */}
           <View>
-              {
-                <FlatList
-                  data={data}
-                  renderItem={({ item }) => <ItemTransaction dulieu={item} navigation={navigation} />}
-                  keyExtractor={item => item._id}
-                  showsVerticalScrollIndicator={false} 
-                />
-                // data.map((item)=><ItemTransaction dulieu={item} key={item._id} navigation={navigation} />)
-                
-              }
-            </View>
+            {
+              <FlatList
+                data={data}
+                renderItem={({ item }) => <ItemTransaction dulieu={item} navigation={navigation} />}
+                keyExtractor={item => item._id}
+                showsVerticalScrollIndicator={false}
+              />
+              // data.map((item)=><ItemTransaction dulieu={item} key={item._id} navigation={navigation} />)
+
+            }
+          </View>
         </View>
       </ScrollView>
 
@@ -86,9 +81,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   text: {
-    //fontFamily:
     fontSize: 20,
-    // fontFamily:,
     fontStyle: 'normal',
     fontWeight: '700',
     marginLeft: 20,
@@ -102,7 +95,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLOR.gray,
     marginLeft: 30,
-
     backgroundColor: COLOR.white,
     paddingLeft: 20
   },
@@ -111,7 +103,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 30,
-
     height: 50,
     marginHorizontal: 15,
   },

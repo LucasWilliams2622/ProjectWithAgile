@@ -18,32 +18,32 @@ import BottomTabs from './screens/MainTabs/BottomTabs'
 import Chart from './screens/MainTabs/Chart'
 import History from './screens/MainTabs/History'
 import Home from './screens/MainTabs/Home'
-import Item from './screens/MainTabs/Item'
 
 import Setting from './screens/MainTabs/Setting'
 import Profile from './screens/MainTabs/Profile'
 import ItemTransaction from './component/ItemTransaction'
+import Loading from './component/Loading'
+
 import ItemCollect from './component/ItemCollect'
 import ItemYear from './component/ItemYear'
 import TopTabThuChi from './screens/MainTabs/TopTabThuChi';
 import TestPicker from './screens/TestTab/TestPicker'
-import Test from './screens/TestTab/Test'
+import Test from './screens/TestTab/TestReduxSaga'
 
-import PieChartScreen from './screens/TestTab/PieChartScreen'
 import messaging from '@react-native-firebase/messaging';
-
-
+import { Provider } from 'react-redux';
+import Redux from './redux/store'
 const Stack = createNativeStackNavigator();
 const StackBegin = () => {
   return (
-    <Stack.Navigator initialRouteName="Register" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="Welcome" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="ChangePassword" component={ChangePassword} />
       <Stack.Screen name="SignPassword" component={SignPassword} />
       <Stack.Screen name="SignCode" component={SignCode} />
-      <Stack.Screen name="Home" component={Home} />
+      
 
 
 
@@ -52,17 +52,14 @@ const StackBegin = () => {
   )
 }
 const App = () => {
-  // Lấy token của thiết bị
+
+  const getDeviceToken = async () => {
+    let token = await messaging().getToken();
+    // console.log("TOKEN NOTIFICATION",token);
+  };
   useEffect(() => {
     getDeviceToken();
 
-  }, []);
-  const getDeviceToken = async () => {
-    let token = await messaging().getToken();
-    console.log(token);
-  };
-
-  useEffect(() => {
     // Lắng nghe sự kiện khi ứng dụng chạy ngầm
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       Alert.alert(
@@ -72,16 +69,24 @@ const App = () => {
     });
     return unsubscribe;
   }, []);
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="StackBegin" screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="StackBegin" component={StackBegin} />
-        <Stack.Screen name="Profile" component={Profile} />
-        <Stack.Screen name="BottomTabs" component={BottomTabs} />
-        <Stack.Screen name="AddNew" component={AddNew} />
-        <Stack.Screen name="Test" component={Test} />
-       </Stack.Navigator>
-     </NavigationContainer>
+    <Provider store={Redux.store}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Test" screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="StackBegin" component={StackBegin} />
+          <Stack.Screen name="Loading" component={Loading} />
+          <Stack.Screen name="BottomTabs" component={BottomTabs} />
+
+
+          <Stack.Screen name="AddNew" component={AddNew} />
+          <Stack.Screen name="Test" component={Test} />
+          <Stack.Screen name="Profile" component={Profile} />
+
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
+
   )
 }
 

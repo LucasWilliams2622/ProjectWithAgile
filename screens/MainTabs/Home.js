@@ -1,10 +1,23 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState ,useEffect} from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace'
-
+import { useSelector, useDispatch } from "react-redux"
 const Home = (props) => {
   const { navigation } = props;
+  // const [darkMode, setDarkMode] = useState(false)
+  const darkMode = useSelector(state => state.appReducer.darkMode);
+  const isLoading = useSelector(state => state.appReducer.isLoading);
+  const nameUser = useSelector(state => state.appReducer.nameUser);
+  const dispath = useDispatch();
+  console.log("darkMode", darkMode);
+  console.log("nameUser", nameUser);
+
+  useEffect(() => {
+    console.log('isLoading', isLoading);
+  }, [isLoading])
+
+
   const goAddNew = () => {
     navigation.navigate('AddNew');
   }
@@ -14,8 +27,9 @@ const Home = (props) => {
       <Text>Home</Text>
 
       <View style={styles.background}></View>
-
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>
+        dispath({type:'CHANGE_APP_MODE',payload:{darkMode:!darkMode},}
+        )}>
         <View style={styles.viewAvatarAndText}>
           <Image source={require('../../asset/image/logo.png')} style={styles.imageProfile}></Image>
           <Text style={styles.textHello}>Xin chào Bạn </Text>
@@ -87,7 +101,6 @@ const Home = (props) => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-
     </View>
   )
 }
@@ -112,7 +125,6 @@ const styles = StyleSheet.create({
   },
   viewAvatarAndText: {
     flexDirection: 'row',
-    //fontFamily:
     alignItems: 'center',
     marginTop: -125,
     marginLeft: 17
@@ -167,9 +179,7 @@ const styles = StyleSheet.create({
     width: 30
   },
   textDate: {
-    //fontFamily:
     fontSize: 14,
-    // fontFamily:,
     fontStyle: 'normal',
     fontWeight: '400',
     marginLeft: 10,
@@ -180,35 +190,27 @@ const styles = StyleSheet.create({
     width: 30
   },
   textPrice: {
-    //fontFamily:
     fontSize: 20,
-    // fontFamily:,
     fontStyle: 'normal',
     fontWeight: '700',
     marginLeft: 10,
     color: COLOR.black
   },
   textGiveAndPay: {
-    //fontFamily:
     fontSize: 12,
-    // fontFamily:,
     fontStyle: 'normal',
     fontWeight: '400',
     color: COLOR.black
   },
   textTotalManager: {
-    //fontFamily:
     fontSize: 12,
-    // fontFamily:,
     fontStyle: 'normal',
     fontWeight: '400',
     right: 200,
     color: COLOR.black
   },
   textToday: {
-    //fontFamily:
     fontSize: 14,
-    // fontFamily:,
     fontStyle: 'italic',
     fontWeight: '400',
     color: COLOR.black,
@@ -223,9 +225,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textGif: {
-    //fontFamily:
     fontSize: 14,
-    // fontFamily:,
     fontStyle: 'normal',
     fontWeight: '400',
   }

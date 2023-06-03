@@ -105,6 +105,7 @@ const Register = (props) => {
   return (
     <KeyboardAwareScrollView>
 
+
       <View style={styles.container}>
         <View style={styles.center}>
           <Text style={styles.textSignIn}>Sign Up</Text>
@@ -118,16 +119,12 @@ const Register = (props) => {
         <View style={{ marginTop: 7, marginLeft: 5 }}>
           <Text style={styles.textInstruct}>We need to verify you. We will send you a one time verification code.</Text>
         </View>
+       
+        <TextInput placeholder='Name Surname' style={styles.inputEmailAndPass} onChangeText={(name) => checkName(name)} value={name}></TextInput>
+
         <View style={styles.viewInputPass}>
-          <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(setEmail) => checkEmail(setEmail)}></TextInput>
+          <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(setEmail) => checkEmail(setEmail)} value={email}></TextInput>
         </View>
-
-        <TextInput placeholder='Name Surname' style={styles.inputEmailAndPass} onChangeText={setname} value={name}></TextInput>
-
-        {/* <View style={styles.viewInputPass}>
-          <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={setEmail} value={email}></TextInput>
-        </View> */}
-
         <View style={{ alignItems: 'center' }}>
 
           <TouchableOpacity style={styles.viewPressable} onPress={() => { checkSignUp() }}>
@@ -147,6 +144,11 @@ const Register = (props) => {
       </View>
 
     </KeyboardAwareScrollView>
+
+
+
+
+
   )
 }
 

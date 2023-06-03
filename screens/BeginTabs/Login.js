@@ -109,34 +109,34 @@ const Login = (props) => {
   //   return passRegex.test(pass);
   // };
 
-  const kiemtra = (text) => {
+  const checkEmail = (email) => {
     let reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    if (reg.test(text) === true) {
-      setVerifiedEmail({ email: text });
+    if (reg.test(email) === true) {
+      setVerifiedEmail({ email: email });
       console.log("ban da nhap dung");
       setVerifiedEmail(true);
       return true;
     }
     else {
-      setVerifiedEmail({ email: text });
+      setVerifiedEmail({ email: email });
       console.log("ban da nhap sai");
     }
   }
-  const kiemtrapassword = (text1) => {
+  const checkPass = (pass) => {
     let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    if (passreg.test(text1) === true) {
-      setVerifiedPass({ passreg: text1 });
+    if (passreg.test(pass) === true) {
+      setVerifiedPass({ passreg: pass });
       console.log("password không hợp lệ");
       setVerifiedPass(true);
       return true;
     }
     else {
-      setVerifiedPass({ passreg: text1 });
+      setVerifiedPass({ passreg: pass });
       console.log("pass ko hợp lệ");
     }
   }
 
-  const chuyen = () => {
+  const checkAll = () => {
     if (verifiedEmail == true && verifiedPass == true) {
       ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
        navigation.navigate('Home');

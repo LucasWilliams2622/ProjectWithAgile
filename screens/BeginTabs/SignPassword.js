@@ -17,7 +17,7 @@ const SignPassword = (props) => {
     const [getConfirmPassVisible, setConfirmPassVisible] = useState(false)
     const [password, setpassword] = useState('');
     const [confirmPass, setconfirmPass] = useState('');
-    const checkPassNew = (password) => {
+    const checkNewPass = (password) => {
         let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
         if (passreg.test(password) === true) {
             setVerifiedPassNew({ passreg: password });
@@ -97,7 +97,8 @@ const SignPassword = (props) => {
                 </View>
 
                 <View style={styles.viewInputEmailAndPass}>
-                    <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(text1) => kiemtrapasswordnew(text1)}></TextInput>
+                    <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(password) => checkPassNew(password)}></TextInput>
+
                     <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIconEye}></Image>
                     <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
                 </View>
@@ -112,6 +113,13 @@ const SignPassword = (props) => {
                     <Pressable style={styles.viewPressable} onPress={chuyen}>
                         <Text style={styles.textPressable}>Next</Text>
                     </Pressable>
+                   
+
+                    <View style={{ alignItems: 'center' }}>
+                        <Pressable style={styles.viewPressable} onPress={chuyen}>
+                            <Text style={styles.textPressable}>Next</Text>
+                        </Pressable>
+                    </View>
                 </View>
             </View>
         </KeyboardAwareScrollView>
