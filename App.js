@@ -22,15 +22,17 @@ import Home from './screens/MainTabs/Home'
 import Setting from './screens/MainTabs/Setting'
 import Profile from './screens/MainTabs/Profile'
 import ItemTransaction from './component/ItemTransaction'
+import Loading from './component/Loading'
+
 import ItemCollect from './component/ItemCollect'
 import ItemYear from './component/ItemYear'
 import TopTabThuChi from './screens/MainTabs/TopTabThuChi';
 import TestPicker from './screens/TestTab/TestPicker'
-import Test from './screens/TestTab/Test'
+import Test from './screens/TestTab/TestReduxSaga'
 
 import messaging from '@react-native-firebase/messaging';
-
-
+import { Provider } from 'react-redux';
+import Redux from './redux/store'
 const Stack = createNativeStackNavigator();
 const StackBegin = () => {
   return (
@@ -41,7 +43,6 @@ const StackBegin = () => {
       <Stack.Screen name="ChangePassword" component={ChangePassword} />
       <Stack.Screen name="SignPassword" component={SignPassword} />
       <Stack.Screen name="SignCode" component={SignCode} />
-
     </Stack.Navigator>
 
   )
@@ -50,7 +51,7 @@ const App = () => {
 
   const getDeviceToken = async () => {
     let token = await messaging().getToken();
-    console.log(token);
+    // console.log("TOKEN NOTIFICATION",token);
   };
   useEffect(() => {
     getDeviceToken();
@@ -66,15 +67,21 @@ const App = () => {
   }, []);
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Profile" screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="StackBegin" component={StackBegin} />
-        <Stack.Screen name="Profile" component={Profile} />
-        <Stack.Screen name="BottomTabs" component={BottomTabs} />
-        <Stack.Screen name="AddNew" component={AddNew} />
-        <Stack.Screen name="Test" component={Test} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={Redux.store}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Test" screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="StackBegin" component={StackBegin} />
+          <Stack.Screen name="Loading" component={Loading} />
+          <Stack.Screen name="BottomTabs" component={BottomTabs} />
+
+
+          <Stack.Screen name="AddNew" component={AddNew} />
+          <Stack.Screen name="Test" component={Test} />
+          <Stack.Screen name="Profile" component={Profile} />
+
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
 
   )
 }

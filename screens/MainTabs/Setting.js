@@ -1,11 +1,21 @@
 import { StyleSheet, Text, View, Image, Switch, TouchableOpacity, ScrollView, Alert, ToastAndroid } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import ToggleSwitch from 'toggle-switch-react-native'
+import { useSelector, useDispatch } from "react-redux"
 
 const Setting = (props) => {
   const { navigation } = props;
   const [isEnabled, setIsEnabled] = useState(false);
+  const darkMode = useSelector(state => state.appReducer.darkMode);
+  const isLoading = useSelector(state => state.appReducer.isLoading);
+  const dispath = useDispatch();
+  console.log("===>", darkMode);
+  useEffect(() => {
+    console.log('isLoading', isLoading);
+  }, [isLoading])
+
+
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const version = '1.0.0.0';
   const showVersion = () => {
@@ -56,7 +66,7 @@ const Setting = (props) => {
               style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }], marginRight: 10, }}
               thumbColor={isEnabled ? '#FFFFFF' : '#FFFFFF'}
               ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitch}
+              onValueChange={()=>dispath({type:'CHANGE_DRAK_MODE'})}
               value={isEnabled}
               trackColor={{ false: '#767577', true: '#81b0ff' }}
             />
