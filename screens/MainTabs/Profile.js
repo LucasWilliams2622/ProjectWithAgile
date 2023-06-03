@@ -6,12 +6,12 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-
+import AxiosIntance from '../../constants/AxiosIntance'
 
 
 const Profile = (props) => {
   const { route, navigation } = props;
-
+  const [email, setemail] = useState('quochuy3232@gmail.com')
   const [avatar, setAvatar] = useState(null)
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
@@ -120,14 +120,15 @@ const Profile = (props) => {
     // });
   }
   const updateProfile = async () => {
-    let rawNumber = phoneNumber.substring(3)
-    console.log("----------------->", avatar, dob, name, phoneNumber, email, address)
-    console.log(rawNumber)
+    //let rawNumber = phoneNumber.substring(3)
+    console.log("----------------->", avatar, name, email)
+    // console.log(rawNumber)
     try {
-      const response = await AxiosInstance().put('user/api/update',
+      const response = await AxiosIntance().put('user/api/update',
         {
-          phoneNumber: rawNumber, password: password, name: name,
-          email: email, address: address, avatar: avatar, role: role, description: description
+          email: email,
+          name: name,
+          avatar: avatar, description: description
         })
       console.log(response)
       if (response.result) {
@@ -137,6 +138,7 @@ const Profile = (props) => {
       }
     } catch (error) {
       ToastAndroid.show("Update ERROR SYS", ToastAndroid.SHORT, ToastAndroid.CENTER);
+      console.log(error);
 
     }
 
@@ -213,8 +215,9 @@ const Profile = (props) => {
             <TextInput
               style={styles.textInput}
               placeholder="Name"
-              editable={false}
-              defaultValue={currentUser.email}
+              onChangeText={setName} value={name}
+            //editable={false}
+            //defaultValue={currentUser.email}
             />
           </View>
           {formik.errors.name && <Text style={{ color: COLOR.red }}>{formik.errors.name}</Text>}
@@ -227,8 +230,10 @@ const Profile = (props) => {
             <TextInput
               style={styles.textInput}
               placeholder="Xin chào bạn cho vài lời"
-              onChangeText={formik.handleChange('description')}
-              value={formik.values?.description}
+              // onChangeText={formik.handleChange('description')}
+              // value={formik.values?.description}
+              onChangeText={setDescription}
+              value={description}
             />
           </View>
           <Text style={styles.text1}>Limit</Text>
@@ -244,7 +249,7 @@ const Profile = (props) => {
               value={formik.values?.limit}
             />
           </View>
-          <TouchableOpacity style={styles.buttonSave} onPress={checkAll}>
+          <TouchableOpacity style={styles.buttonSave} onPress={updateProfile}>
             <Text style={styles.text2}>Lưu thay đổi</Text>
           </TouchableOpacity>
         </View>
