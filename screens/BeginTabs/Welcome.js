@@ -28,10 +28,10 @@ const Welcome = (props) => {
             </View>
 
             <View style={styles.center}>
-                <TouchableOpacity style={styles.viewPressable} onPress={()=>{goLogin()}}>
+                <TouchableOpacity style={styles.viewPressable} onPress={()=>{goRegister()}}>
                     <Text style={styles.textPressable}>Sign up</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.viewPressable, { marginTop: 10 }]}onPress={()=>{goRegister()}}>
+                <TouchableOpacity style={[styles.viewPressable, { marginTop: 10 }]}onPress={()=>{goLogin()}}>
                     <Text style={styles.textPressable}>Sign in</Text>
                 </TouchableOpacity>
             </View>

@@ -4,7 +4,7 @@ import {
 } from 'react-native'
 import React, { useState } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
-import AxiosIntance from '../../constants/AxiosIntance';
+import AxiosInstance from '../../constants/AxiosInstance';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const SignPassword = (props) => {
@@ -62,7 +62,7 @@ const SignPassword = (props) => {
                 console.log(password);
                 ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
                 //http://localhost:3000/
-                const response = await AxiosIntance().post("user/api/register", { name: name, email: email, password: password });
+                const response = await AxiosInstance().post("user/api/register", { name: name, email: email, password: password });
                 console.log(response);
                 if (response.result === true) {
                     ToastAndroid.show("Đăng kí tài khoản thành công", ToastAndroid.SHORT);

@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TextInput, Image, Dimensions, ScrollView, Touch
 import React, { useState, useEffect } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import ItemTransaction from '../../component/ItemTransaction';
-import AxiosIntance from '../../constants/AxiosIntance';
+import AxiosInstance from '../../constants/AxiosInstance';
 const windowWIdth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const History = (props) => {
@@ -11,7 +11,7 @@ const History = (props) => {
   const [data, setdata] = useState([]);
   useEffect(() => {
     const getTransaction = async () => {
-      const response = await AxiosIntance().get("transaction/api/get-all-transaction");
+      const response = await AxiosInstance().get("transaction/api/get-all-transaction");
       console.log(response.transaction);
       if (response.result == true) // lấy dữ liệu thành công
       {

@@ -6,7 +6,7 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import AxiosIntance from '../../constants/AxiosIntance'
+import AxiosInstance from '../../constants/AxiosInstance'
 
 
 const Profile = (props) => {
@@ -124,7 +124,7 @@ const Profile = (props) => {
     console.log("----------------->", avatar, name, email)
     // console.log(rawNumber)
     try {
-      const response = await AxiosIntance().put('user/api/update',
+      const response = await AxiosInstance().put('user/api/update',
         {
           email: email,
           name: name,
@@ -159,7 +159,7 @@ const Profile = (props) => {
   });
 
   const getCurrentUserInfo = async () => {
-    // const response = await AxiosIntance().get("lay limit", { email: emailUser, password: passwordUser, name: nameUser });
+    // const response = await AxiosInstance().get("lay limit", { email: emailUser, password: passwordUser, name: nameUser });
     // setLimit(....)
   }
   const [imageURI, setImageURI] = useState("");
@@ -171,12 +171,12 @@ const Profile = (props) => {
     //   type: 'image/jpg',
     // });
 
-    // const responseAvatar = await AxiosIntance().post("/user/api/upload-avatar", uploadAvatarForm);
+    // const responseAvatar = await AxiosInstance().post("/user/api/upload-avatar", uploadAvatarForm);
     // const sendData = {
     //   ...form,
     //   limit: Number(limit), avatar: responseAvatar?.link
     // }
-    // const responseUpdateUser = await AxiosIntance().post("/user/api/update", {...form, sendData})
+    // const responseUpdateUser = await AxiosInstance().post("/user/api/update", {...form, sendData})
     setCurrentUser({ ...form, name: "Tung nui" })
   }
 

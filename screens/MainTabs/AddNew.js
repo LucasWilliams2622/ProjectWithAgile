@@ -2,7 +2,7 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, ToastAndroid, StatusBar, Platform } from 'react-native'
 import React, { useState } from 'react'
 import { TextInput } from 'react-native-paper'
-import AxiosIntance from '../../constants/AxiosIntance'
+import AxiosInstance from '../../constants/AxiosInstance'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ICON, COLOR } from '../../constants/Themes'
 
@@ -44,7 +44,7 @@ const AddNew = (props) => {
         Alert.alert('Vui lòng nhập số tiền hợp lệ');
       }
       else {
-        const response = await AxiosIntance()
+        const response = await AxiosInstance()
           .post("transaction/api/add-new", { money: money, note: title });
         console.log(response);
         if (response.result === true) {

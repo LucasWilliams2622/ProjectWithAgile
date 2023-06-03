@@ -6,7 +6,7 @@ import React, { useState, useEffect } from 'react'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { ICON, COLOR } from '../../constants/Themes'
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
-import AxiosIntance from '../../constants/AxiosIntance';
+import AxiosInstance from '../../constants/AxiosInstance';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const windowWIdth = Dimensions.get('window').width;
@@ -28,14 +28,36 @@ const Login = (props) => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
+
+      const email = userInfo.user.email;
+      const name = userInfo.user.name;
+      const avatar = userInfo.user.photo;
       console.log('Id: ', userInfo.user.id);
       console.log('Email: ', userInfo.user.email);
       console.log('Name: ', userInfo.user.name);
       console.log('FamilyName: ', userInfo.user.familyName);
       console.log('GivenName: ', userInfo.user.givenName);
       console.log('Photo: ', userInfo.user.photo);
-      setInfoUser({ userInfo });
-  
+
+      try {
+        const response = await AxiosInstance().post("user/api/registerGoogle",
+          { email: email, name: name, avatar: avatar });
+        if (response.result) {
+          console.log("Sign up Success");
+          const response = await AxiosInstance().post("user/api/loginGoogle",
+            { email: email });
+          if (response.result) {
+            console.log("Sign up Success");
+            navigation.navigate("BottomTabs")
+          } else {
+            console.log("Sign in by Google is failed");
+          }
+        } else {
+          console.log("Sign up by Google is failed");
+        }
+      } catch (error) {
+        console.log(error);
+      }
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
@@ -59,8 +81,8 @@ const Login = (props) => {
   const onLogin = async () => {
     try {
       console.log(email, password);
-      const response = await AxiosIntance().post("user/api/login", { email: email, password: password });
-      
+      const response = await AxiosInstance().post("user/api/login", { email: email, password: password });
+
       if (response.result) {
         ToastAndroid.show("Ðăng nhập thành công", ToastAndroid.SHORT);
         navigation.navigate('BottomTabs');
@@ -73,15 +95,15 @@ const Login = (props) => {
   }
 
   const loginGG = async () => {
-    try{
-      const response = await AxiosIntance().post("user/api/loginGG", { email: infoUser.userInfo.user.email });
+    try {
+      const response = await AxiosInstance().post("user/api/loginGG", { email: infoUser.userInfo.user.email });
       if (response.result) {
         ToastAndroid.show("Ðăng nhập thành công", ToastAndroid.SHORT);
         navigation.navigate('BottomTabs');
       } else {
         ToastAndroid.show("Đăng nhập thất bại", ToastAndroid.SHORT);
       }
-    }catch(e){
+    } catch (e) {
       console.log(e);
     }
   }
@@ -139,7 +161,7 @@ const Login = (props) => {
   const checkAll = () => {
     if (verifiedEmail == true && verifiedPass == true) {
       ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
-       navigation.navigate('Home');
+      navigation.navigate('Home');
     }
     else {
       Alert.alert('Error', 'Email hoặc Password của bạn đã sai! vui lòng kiểm tra lại.');
@@ -166,7 +188,7 @@ const Login = (props) => {
           <TextInput placeholder='Email' value={email} style={styles.inputEmailAndPass} onChangeText={(text) => setEmail(text)}  ></TextInput>
 
           <View style={styles.viewInputPass}>
-            <TextInput  placeholder='Password' style={styles.inputEmailAndPass}
+            <TextInput placeholder='Password' style={styles.inputEmailAndPass}
               secureTextEntry={getPasswordVisible ? false : true}
               onChangeText={(setPasswordVisible) => setpassword(setPasswordVisible)} value={password} ></TextInput>
             <TouchableOpacity style={styles.visible}
@@ -188,7 +210,7 @@ const Login = (props) => {
         </View>
 
         <View style={{ alignItems: 'center' }}>
-          <TouchableOpacity style={styles.viewPressable}  onPress={() => { onLogin(); }} >
+          <TouchableOpacity style={styles.viewPressable} onPress={() => { onLogin(); }} >
             <Text style={styles.textPressable}>Sign in</Text>
           </TouchableOpacity>
         </View>

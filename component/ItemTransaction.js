@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, ToastAndroid } from 'react-native'
 import React from 'react'
 import { COLOR } from '../constants/Themes'
-import AxiosIntance from '../constants/AxiosIntance';
+import AxiosInstance from '../constants/AxiosInstance';
 const windowWIdth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const ItemTransaction = (props) => {
@@ -12,7 +12,7 @@ const ItemTransaction = (props) => {
 
   }
   const DeleteTransaction = async () => {
-    const response = await AxiosIntance().delete("transaction/api/delete-by-id?id=" + dulieu._id);
+    const response = await AxiosInstance().delete("transaction/api/delete-by-id?id=" + dulieu._id);
     console.log(response);
     if (response.result == true) {//lấy thành công
       ToastAndroid.show("Xoá bài viết thành công", ToastAndroid.SHORT);
