@@ -32,22 +32,16 @@ const Register = (props) => {
   // }
   const checkEmail = (setEmail) => {
     let reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    if (reg.test(text) === true) {
-      setVerifiedEmail({ email: text });
-      console.log("Ban da nhap dung");
-      if (reg.test(setEmail) === true) {
+    if (reg.test(setEmail) === true) {
         setVerifiedEmail({ email: setEmail });
-
-        console.log("Ban da nhap dung");
+        console.log("Ban da nhap dung email");
         setVerifiedEmail(true);
         return true;
       }
       else {
-        setVerifiedEmail({ email: text });
-        console.log("Ban da nhap sai");
         setVerifiedEmail({ email: setEmail });
-        console.log("Ban da nhap sai");
-      }
+        console.log("Ban da nhap sai email");
+      
     }
   }
   const checkName = (name) => {
@@ -56,18 +50,14 @@ const Register = (props) => {
 
       //(1) Tên được phép chứa các ký tự, các số, gạch dưới, gạch nối.
       //(2) Tên phải có độ dài trong khoảng cho phép từ 3 đến 15 ký tự.
-      setname({ name: text2 });
-      console.log("Ban da nhap dung");
       setname({ name: name });
-      console.log("Ban da nhap dung");
+      console.log("Ban da nhap dung ten");
       setname(true);
       return true;
     }
     else {
-      setname({ name: text2 });
-      console.log("Ban da nhap sai");
       setname({ name: name });
-      console.log("Ban da nhap sai");
+      console.log("Ban da nhap sai ten");
     }
   }
   // const check = () => {

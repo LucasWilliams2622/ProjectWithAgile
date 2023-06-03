@@ -7,81 +7,89 @@ const windowWIdth = Dimensions.get('window').width;
 const History = (props) => {
   const { navigation,route } = props;
   const {params}=route;
+  const [createAt, setCreateAt] = useState("");
   const [data, setdata] = useState([]);
+  const [isLoading, setisLoading] = useState(true);
   const goAddNew = () => {
     navigation.navigate('AddNew');
   }
-  useEffect(() => {
-    const getTransaction = async () => {
-      const response = await AxiosIntance().get("transaction/api/get-all-transaction");
+    const getTransactionByDate = async () => {
+      console.log(createAt);
+      const response = await AxiosIntance().get("transaction/api/search-by-date?date="+createAt);
       console.log(response.transaction);
       if (response.result == true) // lấy dữ liệu thành công
       {
         setdata(response.transaction);
+        checkIsLoading();
       } else {
         ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
       }
-    }
-    getTransaction();
 
-    return () => {
-
+  
     }
-  }, []);
+    const checkIsLoading=()=>{
+      if(data.length===0)
+      {
+        setisLoading(true);
+      }
+      else{
+        setisLoading(false);
+      }
+    
+
+      
+    }
   return (
     <View style={styles.container}>
       <View style={styles.background}></View>
       <Text style={styles.text}>Lịch sử chi tiêu</Text>
       <View style={styles.viewSearch}>
-        <TextInput placeholder='Tìm kiếm' style={styles.input}></TextInput>
-        <Image style={styles.imageSearch} source={require('../../asset/icon/icon_search.png')}></Image>
+        <TextInput placeholder='Tìm kiếm theo ngày(2003-02-01)' style={styles.input} value={createAt} onChangeText={(text)=>setCreateAt(text)}></TextInput>
+       <TouchableOpacity onPress={getTransactionByDate}>
+       <Image style={styles.imageSearch} source={require('../../asset/icon/icon_search.png')}></Image>
+       </TouchableOpacity>
       </View>
-      <Text style={styles.textToday}>23-05-2023</Text>
-      <View style={styles.jusCenter}>
-        <View style={styles.viewLine}></View>
-      </View>
-      <ScrollView>
-        <View style={styles.viewListGiveAndPay}>
-          <TouchableOpacity onPress={() => { goAddNew() }}>
-            <Image style={{ height: 300, width: 300 }} source={require('../../asset/gif/home.gif')}></Image>
-            <View style={{ marginTop: 30 }}>
-              <Text style={styles.textGif}>Không có chi tiêu nào. Chạm vào đây dể thêm.</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.textToday}>23-05-2023</Text>
+      {
+      isLoading==true?(
+        <View>
+        <Text style={styles.textToday}>{createAt}</Text>
         <View style={styles.jusCenter}>
           <View style={styles.viewLine}></View>
         </View>
-        </ScrollView>
         <ScrollView>
           <View style={styles.viewListGiveAndPay}>
-            {/* <View>
-              <TouchableOpacity>
-                <Image style={{ height: 300, width: 300 }} source={require('../../asset/gif/home.gif')}></Image>
-              </TouchableOpacity>
-            </View>
-
-          {/* <TouchableOpacity onPress={() => { goAddNew() }}>
-            <Image style={{ height: 300, width: 300 }} source={require('../../asset/gif/home.gif')}></Image>
-            <View style={{ marginTop: 30 }}>
-              <Text style={styles.textGif}>Không có chi tiêu nào. Chạm vào đây dể thêm.</Text>
-            </View>
-          </TouchableOpacity> */}
-          <View>
-              {
-                <FlatList
-                  data={data}
-                  renderItem={({ item }) => <ItemTransaction dulieu={item} navigation={navigation} />}
-                  keyExtractor={item => item._id}
-                  showsVerticalScrollIndicator={false} 
-                />
-                // data.map((item)=><ItemTransaction dulieu={item} key={item._id} navigation={navigation} />)
+            <TouchableOpacity onPress={() => { goAddNew() }}>
+              <Image style={{ height: 300, width: 300 }} source={require('../../asset/gif/home.gif')}></Image>
+              <View style={{ marginTop: 30 }}>
+                <Text style={styles.textGif}>Không có chi tiêu nào. Chạm vào đây dể thêm.</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.textToday}>{createAt}</Text>
+          <View style={styles.jusCenter}>
+            <View style={styles.viewLine}></View>
+          </View>
+          </ScrollView>
+          </View>
+      ):
+      (
+          <ScrollView style={{marginTop:20}}>
+            <View style={styles.viewListGiveAndPay}>
+            <View>
                 
-              }
-            </View>
-        </View>
-      </ScrollView>
+                  <FlatList
+                    data={data}
+                    renderItem={({ item }) => <ItemTransaction dulieu={item} navigation={navigation} />}
+                    keyExtractor={item => item._id}
+                    showsVerticalScrollIndicator={false} 
+                  />
+                  {/* // data.map((item)=><ItemTransaction dulieu={item} key={item._id} navigation={navigation} />) */}
+              </View>
+          </View>
+        </ScrollView>
+        )
+      }
+      
 
     </View>
   )

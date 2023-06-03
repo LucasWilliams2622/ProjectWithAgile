@@ -4,7 +4,6 @@ import { TextInput } from 'react-native-paper'
 import AxiosIntance from '../../constants/AxiosIntance'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ICON, COLOR } from '../../constants/Themes'
-import AxiosIntance from '../../constants/AxiosIntance'
 const AddNew = (props) => {
   const { navigation, route } = props;
   const { params } = route;
@@ -55,41 +54,6 @@ const AddNew = (props) => {
       <View style={styles.bgTop}>
         <Text style={styles.textTitle}>Thêm chi tiêu cho hôm nay</Text>
       </View>
-      <View style={styles.bgMain}>
-        <View style={styles.bgTop}>
-          <Image style={styles.imgColor} source={require('../../asset/icon/icon_edit.png')}></Image>
-          <TouchableOpacity >
-            <TextInput value={money} onChangeText={setMoney} keyboardType="numeric" returnKeyType="done" placeholderTextColor='white' underlineColor='transparent' style={styles.textMoney} placeholder='Nhập số tiền'></TextInput>
-          </TouchableOpacity>
-          <Text style={styles.textVND}>VNĐ</Text>
-        </View>
-      </View>
-      <View>
-        <View style={styles.input}>
-          <TouchableOpacity >
-            <Image style={styles.imgInput} source={require('../../asset/icon/icon_calender.png')} />
-          </TouchableOpacity>
-          <TextInput style={styles.txtInput}></TextInput>
-        </View>
-      </View>
-      <View style={{ top: 10 }}>
-        <View style={styles.input}>
-          <TouchableOpacity onPress={() => { navigation.navigate("TopTabThuChi") }}>
-            <Image style={styles.imgInput} source={require('../../asset/icon/icon_type.png')} />
-          </TouchableOpacity>
-          <TextInput placeholder='Chọn loại' style={styles.txtInput} value={title}></TextInput>
-        </View>
-      </View>
-      <View style={{ top: 10 }}>
-        <View style={styles.input}>
-          <Image style={styles.imgNote} source={require('../../asset/icon/icon_note.png')} />
-          <TextInput onChangeText={setNote} value={note} placeholder='Ghi chú' style={styles.txtInput}></TextInput>
-        </View>
-      </View>
-
-      <TouchableOpacity style={styles.btnSave} onPress={addNew} >
-        <Text style={styles.btnTxt}>Lưu chi tiêu</Text>
-      </TouchableOpacity>
       <View style={styles.shadowView}>
         <View style={styles.bgMain}>
           <View style={styles.bgTop}>
@@ -122,8 +86,6 @@ const AddNew = (props) => {
           </View>
         </View>
 
-
-
         <View style={{ top: 10 }}>
           <View style={styles.input}>
             <Image style={styles.imgInput} source={require('../../asset/icon/icon_note.png')} />
@@ -133,7 +95,7 @@ const AddNew = (props) => {
       </View>
 
       <View style={{ alignItems: 'center' }}>
-        <TouchableOpacity style={styles.viewSave} onPress={handleCheckInput}>
+        <TouchableOpacity style={styles.viewSave} onPress={addNew}>
           <Text style={styles.textSave}>Lưu Chi tiêu</Text>
         </TouchableOpacity>
       </View>
@@ -152,7 +114,7 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   shadowView: {
-    
+
 
     shadowColor: "#000000",
     shadowOffset: {

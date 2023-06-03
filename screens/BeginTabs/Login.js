@@ -148,13 +148,10 @@ const Login = (props) => {
           </View>
 
           <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(email) => checkEmail(email)}  ></TextInput>
-
           <View style={styles.viewInputPass}>
-            <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(pass) => checkPass(pass)}></TextInput>
-            <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIcon}></Image>
             <TextInput placeholder='Password' style={styles.inputEmailAndPass}
               secureTextEntry={getPasswordVisible ? false : true}
-              onChangeText={(setPasswordVisible) => kiemtrapassword(setPasswordVisible)} value={verifiedPass} ></TextInput>
+              onChangeText={(setPasswordVisible) => checkPass(setPasswordVisible)} value={verifiedPass} ></TextInput>
             <TouchableOpacity style={styles.visible}
               onPress={() => {
                 setPasswordVisible(!getPasswordVisible)
