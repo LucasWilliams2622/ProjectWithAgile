@@ -1,12 +1,9 @@
-
-
 import React ,{useState,useEffect}from 'react'
-import { StyleSheet, Text, View, TextInput, Image, Dimensions, ScrollView, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TextInput, Image, Dimensions, ScrollView, TouchableOpacity, FlatList } from 'react-native'
 import { ICON, COLOR } from '../../constants/Themes'
 import ItemTransaction from '../../component/ItemTransaction';
 import AxiosIntance from '../../constants/AxiosIntance';
 const windowWIdth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 const History = (props) => {
   const { navigation,route } = props;
   const {params}=route;
@@ -31,7 +28,6 @@ const History = (props) => {
 
     }
   }, []);
-
   return (
     <View style={styles.container}>
       <View style={styles.background}></View>
@@ -52,7 +48,6 @@ const History = (props) => {
               <Text style={styles.textGif}>Không có chi tiêu nào. Chạm vào đây dể thêm.</Text>
             </View>
           </TouchableOpacity>
-
         </View>
         <Text style={styles.textToday}>23-05-2023</Text>
         <View style={styles.jusCenter}>
@@ -66,12 +61,14 @@ const History = (props) => {
                 <Image style={{ height: 300, width: 300 }} source={require('../../asset/gif/home.gif')}></Image>
               </TouchableOpacity>
             </View>
+
+          {/* <TouchableOpacity onPress={() => { goAddNew() }}>
+            <Image style={{ height: 300, width: 300 }} source={require('../../asset/gif/home.gif')}></Image>
             <View style={{ marginTop: 30 }}>
-              <TouchableOpacity>
-                <Text style={styles.textGif}>Không có chi tiêu nào. Chạm vào đây dể thêm.</Text>
-              </TouchableOpacity>
-            </View> */}
-            <View>
+              <Text style={styles.textGif}>Không có chi tiêu nào. Chạm vào đây dể thêm.</Text>
+            </View>
+          </TouchableOpacity> */}
+          <View>
               {
                 <FlatList
                   data={data}
@@ -83,9 +80,10 @@ const History = (props) => {
                 
               }
             </View>
-          </View>
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
+
+    </View>
   )
 }
 

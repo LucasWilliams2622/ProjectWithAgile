@@ -27,6 +27,8 @@ import ItemCollect from './component/ItemCollect'
 import ItemYear from './component/ItemYear'
 import TopTabThuChi from './screens/MainTabs/TopTabThuChi';
 import TestPicker from './screens/TestTab/TestPicker'
+import Test from './screens/TestTab/Test'
+
 import PieChartScreen from './screens/TestTab/PieChartScreen'
 import messaging from '@react-native-firebase/messaging';
 
@@ -34,7 +36,7 @@ import messaging from '@react-native-firebase/messaging';
 const Stack = createNativeStackNavigator();
 const StackBegin = () => {
   return (
-    <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="Welcome" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
@@ -49,6 +51,7 @@ const StackBegin = () => {
   )
 }
 const App = () => {
+  // Lấy token của thiết bị
   useEffect(() => {
     getDeviceToken();
 
@@ -59,6 +62,7 @@ const App = () => {
   };
 
   useEffect(() => {
+    // Lắng nghe sự kiện khi ứng dụng chạy ngầm
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       Alert.alert(
         'A new FCM message arrived in foreground mode!',
@@ -74,10 +78,9 @@ const App = () => {
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="BottomTabs" component={BottomTabs} />
         <Stack.Screen name="AddNew" component={AddNew} />
-        <Stack.Screen name="Setting" component={Setting} />
+        <Stack.Screen name="Test" component={Test} />
        </Stack.Navigator>
      </NavigationContainer>
-  
   )
 }
 

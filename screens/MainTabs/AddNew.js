@@ -1,11 +1,10 @@
-
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, ToastAndroid } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Platform, ToastAndroid, Alert, StatusBar } from 'react-native'
 import React, { useState } from 'react'
 import { TextInput } from 'react-native-paper'
 import AxiosIntance from '../../constants/AxiosIntance'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ICON, COLOR } from '../../constants/Themes'
-
+import AxiosIntance from '../../constants/AxiosIntance'
 const AddNew = (props) => {
   const { navigation, route } = props;
   const { params } = route;
@@ -38,7 +37,6 @@ const AddNew = (props) => {
         if (response.result === true) {
           ToastAndroid.show("Thêm mới thành công", ToastAndroid.SHORT);
           navigation.navigate("BottomTabs");
-
         }
         else {
           ToastAndroid.show("Thêm mới không thành công không thành công", ToastAndroid.SHORT);
@@ -52,14 +50,9 @@ const AddNew = (props) => {
     }
   }
   return (
-
-
     <View style={styles.container} >
 
       <View style={styles.bgTop}>
-        <TouchableOpacity>
-          <Image style={styles.imgColorTop} source={require('../../asset/icon/icon_back.png')}></Image>
-        </TouchableOpacity>
         <Text style={styles.textTitle}>Thêm chi tiêu cho hôm nay</Text>
       </View>
       <View style={styles.bgMain}>
@@ -71,7 +64,6 @@ const AddNew = (props) => {
           <Text style={styles.textVND}>VNĐ</Text>
         </View>
       </View>
-
       <View>
         <View style={styles.input}>
           <TouchableOpacity >
@@ -103,7 +95,7 @@ const AddNew = (props) => {
           <View style={styles.bgTop}>
             <Image style={styles.imgColor} source={require('../../asset/icon/icon_edit.png')}></Image>
             <TouchableOpacity >
-              <TextInput placeholderTextColor='white' underlineColor='transparent' style={styles.textMoney} placeholder='Nhập số tiền'></TextInput>
+              <TextInput value={money} onChangeText={setMoney} keyboardType="numeric" returnKeyType="done" placeholderTextColor='white' underlineColor='transparent' style={styles.textMoney} placeholder='Nhập số tiền'></TextInput>
             </TouchableOpacity>
             <Text style={styles.textVND}>VNĐ</Text>
           </View>
@@ -111,7 +103,8 @@ const AddNew = (props) => {
 
         <View >
           <View style={styles.input}>
-            <TouchableOpacity >
+            <TouchableOpacity
+            >
               <Image style={styles.imgInput} source={require('../../asset/icon/icon_calender.png')} />
             </TouchableOpacity>
             <TextInput style={styles.txtInput} value={name}
@@ -119,22 +112,24 @@ const AddNew = (props) => {
           </View>
         </View>
 
+
         <View style={{ top: 10 }}>
           <View style={styles.input}>
             <TouchableOpacity onPress={() => { navigation.navigate('TopTabThuChi') }}>
               <Image style={styles.imgInput} source={require('../../asset/icon/icon_type.png')} />
             </TouchableOpacity>
-            <TextInput placeholder='Chọn loại' style={styles.txtInput}></TextInput>
+            <TextInput placeholder='Chọn loại' style={styles.txtInput} value={title}></TextInput>
           </View>
         </View>
+
+
 
         <View style={{ top: 10 }}>
           <View style={styles.input}>
-            <Image style={styles.imgNote} source={require('../../asset/icon/icon_note.png')} />
-            <TextInput placeholder='Ghi chú' style={styles.txtInput}></TextInput>
+            <Image style={styles.imgInput} source={require('../../asset/icon/icon_note.png')} />
+            <TextInput onChangeText={setNote} placeholder='Ghi chú' style={styles.txtInput}></TextInput>
           </View>
         </View>
-
       </View>
 
       <View style={{ alignItems: 'center' }}>
@@ -142,8 +137,8 @@ const AddNew = (props) => {
           <Text style={styles.textSave}>Lưu Chi tiêu</Text>
         </TouchableOpacity>
       </View>
+      <StatusBar style="auto" />
     </View>
-
   )
 }
 
@@ -157,6 +152,8 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   shadowView: {
+    
+
     shadowColor: "#000000",
     shadowOffset: {
       width: 0,
@@ -170,8 +167,17 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     borderRadius: 3,
+    borderBottomEndRadius: 20,
+    borderBottomStartRadius: 20,
+  },
+  bgView: {
+    backgroundColor: '#1488fa',
+    height: 70,
+    borderBottomEndRadius: 20,
+    borderBottomStartRadius: 20
 
   },
+
   bgTop: {
     backgroundColor: COLOR.background2,
     flexDirection: 'row',
@@ -181,9 +187,10 @@ const styles = StyleSheet.create({
   bgMain: {
     backgroundColor: COLOR.background2,
     borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     padding: 20,
     height: 100,
-    borderTopRightRadius: 20,
+
   },
   imgColorTop: {
     tintColor: "#fff",
@@ -202,7 +209,7 @@ const styles = StyleSheet.create({
   },
   textTitle: {
     color: '#fff',
-    left: 50,
+    left: 70,
     marginTop: 20,
     fontSize: 20,
     fontWeight: 'bold',
@@ -229,16 +236,12 @@ const styles = StyleSheet.create({
     top: 10,
   },
   imgInput: {
-    width: 50,
-    height: 50,
-    top: 3,
-  },
+    width: 25,
+    height: 25,
+    marginTop: 20,
+    marginLeft: 10
 
-  imgNote: {
-    top: 13,
-    height: 45,
-    width: 45,
-    marginRight: 5
+
   },
 
   txtInput: {
@@ -247,11 +250,13 @@ const styles = StyleSheet.create({
     width: 310,
     borderWidth: 1,
     backgroundColor: 'transparent',
+    marginTop: 5
   },
   viewSave: {
     left: 10,
     right: 10
   },
+
 
   btnSave: {
     top: 100,
@@ -274,7 +279,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.background2,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 50,
     marginBottom: 10
   },
   textSave: {
@@ -284,7 +289,6 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: COLOR.white
   },
-
 
 
 })

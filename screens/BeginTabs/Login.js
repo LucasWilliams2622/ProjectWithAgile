@@ -152,6 +152,20 @@ const Login = (props) => {
           <View style={styles.viewInputPass}>
             <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(pass) => checkPass(pass)}></TextInput>
             <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIcon}></Image>
+            <TextInput placeholder='Password' style={styles.inputEmailAndPass}
+              secureTextEntry={getPasswordVisible ? false : true}
+              onChangeText={(setPasswordVisible) => kiemtrapassword(setPasswordVisible)} value={verifiedPass} ></TextInput>
+            <TouchableOpacity style={styles.visible}
+              onPress={() => {
+                setPasswordVisible(!getPasswordVisible)
+              }}>
+              {
+                getPasswordVisible ?
+                  <Image source={require('../../asset/icon/icon_visible.png')} style={styles.imageIconEye}></Image>
+                  :
+                  <Image source={require('../../asset/icon/icon_invisible.png')} style={styles.imageIconEye}></Image>
+              }
+            </TouchableOpacity>
           </View>
 
           <View style={{ marginLeft: 220, marginTop: 5 }}>
@@ -203,8 +217,9 @@ const styles = StyleSheet.create({
     color: COLOR.primary
   },
   imageLogin: {
-    width: '100%',
+    width: 347.28,
     height: 331.24,
+    marginTop: -5
   },
   textInstruct: {
     fontFamily: 'Klarna Text',
@@ -296,4 +311,5 @@ const styles = StyleSheet.create({
     marginLeft: 14,
     fontSize: 16,
   }
+
 })

@@ -32,16 +32,22 @@ const Register = (props) => {
   // }
   const checkEmail = (setEmail) => {
     let reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    if (reg.test(setEmail) === true) {
-      setVerifiedEmail({ email: setEmail });
+    if (reg.test(text) === true) {
+      setVerifiedEmail({ email: text });
+      console.log("Ban da nhap dung");
+      if (reg.test(setEmail) === true) {
+        setVerifiedEmail({ email: setEmail });
 
-      console.log("ban da nhap dung");
-      setVerifiedEmail(true);
-      return true;
-    }
-    else {
-      setVerifiedEmail({ email: setEmail });
-      console.log("ban da nhap sai");
+        console.log("Ban da nhap dung");
+        setVerifiedEmail(true);
+        return true;
+      }
+      else {
+        setVerifiedEmail({ email: text });
+        console.log("Ban da nhap sai");
+        setVerifiedEmail({ email: setEmail });
+        console.log("Ban da nhap sai");
+      }
     }
   }
   const checkName = (name) => {
@@ -50,18 +56,20 @@ const Register = (props) => {
 
       //(1) Tên được phép chứa các ký tự, các số, gạch dưới, gạch nối.
       //(2) Tên phải có độ dài trong khoảng cho phép từ 3 đến 15 ký tự.
+      setname({ name: text2 });
+      console.log("Ban da nhap dung");
       setname({ name: name });
-      console.log("ban da nhap dung");
+      console.log("Ban da nhap dung");
       setname(true);
       return true;
     }
     else {
+      setname({ name: text2 });
+      console.log("Ban da nhap sai");
       setname({ name: name });
-      console.log("ban da nhap sai");
+      console.log("Ban da nhap sai");
     }
   }
-
-  
   // const check = () => {
   //   if (verifiedEmail == true && name == true) {
   //     ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
@@ -104,7 +112,6 @@ const Register = (props) => {
 
   return (
     <KeyboardAwareScrollView>
-      <View style={styles.container}>
       <View style={styles.center}>
         <Image style={styles.imageLogin} source={require('../../asset/image/LoginAndRegister/signup.png')}></Image>
       </View>
@@ -129,47 +136,48 @@ const Register = (props) => {
         </TouchableOpacity>
       </View>
     
+      <View style={styles.container}>
+        <View style={styles.center}>
+          <Text style={styles.textSignIn}>Sign Up</Text>
+        </View>
+
+        <View style={styles.center}>
+          <Image style={styles.imageLogin} source={require('../../asset/image/LoginAndRegister/signup.png')}></Image>
+        </View>
 
 
-      // 
-      //   <View style={styles.center}>
-      //     <Text style={styles.textSignIn}>Sign Up</Text>
-      //   </View>
+        <View style={{ marginTop: 7, marginLeft: 5 }}>
+          <Text style={styles.textInstruct}>We need to verify you. We will send you a one time verification code.</Text>
+        </View>
+        <View style={styles.viewInputPass}>
+          <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(setEmail) => checkEmail(setEmail)}></TextInput>
+        </View>
 
-      //   <View style={styles.center}>
-      //     <Image style={styles.imageLogin} source={require('../../asset/image/LoginAndRegister/signup.png')}></Image>
-      //   </View>
+        <TextInput placeholder='Name Surname' style={styles.inputEmailAndPass} onChangeText={setname} value={name}></TextInput>
 
+        {/* <View style={styles.viewInputPass}>
+          <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={setEmail} value={email}></TextInput>
+        </View> */}
 
-      //   <View style={{ marginTop: 7, marginLeft: 5 }}>
-      //     <Text style={styles.textInstruct}>We need to verify you. We will send you a one time verification code.</Text>
-      //   </View>
-      //   <TextInput placeholder='Name Surname' style={styles.inputEmailAndPass} onChangeText={setname} value={name}></TextInput>
+        <View style={{ alignItems: 'center' }}>
 
-      //   <View style={styles.viewInputPass}>
-      //     <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={setEmail} value={email}></TextInput>
-      //   </View>
+          <Pressable style={styles.viewPressable} onPress={() => { check() }}>
+            <Text style={styles.textPressable}>Sign in</Text>
+          </Pressable>
 
+        </View>
 
-
-      //   <View style={{ alignItems: 'center' }}>
-
-
-      //     <Pressable style={styles.viewPressable} onPress={() => { checkAll() }}>
-      //       <Text style={styles.textPressable}>Sign in</Text>
-      //     </Pressable>
-      //   </View>
-
-      //   <View style={[styles.center, { marginTop: 10 }]}>
-      //     <Text style={styles.textNoneAcc}>Already have an account?</Text>
-      //     <TouchableOpacity onPress={() => { goLogin() }}>
-      //       <Text style={[styles.textNoneAcc, { color: COLOR.primary, marginLeft: 5 }]}>Login</Text>
-      //     </TouchableOpacity>
-      //   </View>
+        <View style={[styles.center, { marginTop: 10 }]}>
+          <Text style={styles.textNoneAcc}>Already have an account?</Text>
+          <TouchableOpacity onPress={() => { goLogin() }}>
+            <Text style={[styles.textNoneAcc, { color: COLOR.primary, marginLeft: 5 }]}>Login</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </KeyboardAwareScrollView>
   )
 }
+
 
 export default Register
 
@@ -177,7 +185,7 @@ const styles = StyleSheet.create({
   container: {
     marginStart: 16,
     marginEnd: 16,
-    marginTop: 10
+    marginTop: 10,
   },
   center: {
     justifyContent: 'center',
