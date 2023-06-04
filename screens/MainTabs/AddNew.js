@@ -44,12 +44,10 @@ const AddNew = (props) => {
     } else {
       toggleDatePicker();
     }
-
   };
 
   const formatDate = (rawDate) => {
     let date = new Date(rawDate);
-
     let year = date.getFullYear();
     let month = date.getMonth() + 1;
     let day = date.getDate();
@@ -57,7 +55,6 @@ const AddNew = (props) => {
     //Bé hơn 10 thì thêm số 0
     month = month < 10 ? `0${month}` : `${month}`;
     day = day < 10 ? `0${day}` : `${day}`;
-
     return `${day}/${month}/${year}`;
   };
 
@@ -98,9 +95,7 @@ const AddNew = (props) => {
         else {
           ToastAndroid.show("Thêm mới không thành công không thành công", ToastAndroid.SHORT);
         }
-
       }
-
     } catch (error) {
       console.log("ERROR", error);
     }
@@ -151,8 +146,9 @@ const AddNew = (props) => {
           <View style={styles.bgTop}>
             <Image style={styles.imgColor} source={require('../../asset/icon/icon_edit.png')}></Image>
             <TouchableOpacity >
-              <TextInput value={money} onChangeText={setMoney} keyboardType="numeric" returnKeyType="done" placeholderTextColor='white'
-                underlineColor='transparent' style={styles.textMoney} placeholder='Nhập số tiền'></TextInput>
+              <TextInput value={money}  onChangeText={(text)=>(setMoney(text))} keyboardType="numeric" 
+              returnKeyType="done" placeholderTextColor='white' 
+              underlineColor='transparent' style={styles.textMoney} placeholder='Nhập số tiền'></TextInput>
             </TouchableOpacity>
             <Text style={styles.textVND}>VNĐ</Text>
           </View>
@@ -185,7 +181,10 @@ const AddNew = (props) => {
 
               <Image style={styles.imgInput} source={require('../../asset/icon/icon_type.png')} />
             </TouchableOpacity>
-            <TextInput onChangeText={setCategory} value={category} editable={false} placeholder='Chọn loại' style={styles.txtInput}></TextInput>
+            <TextInput onChangeText={setCategory} 
+            value={category}
+            // value={title}
+             placeholder='Chọn loại'editable={false} style={styles.txtInput}></TextInput>
           </View>
         </View>
 

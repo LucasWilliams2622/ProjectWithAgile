@@ -4,13 +4,15 @@ import React, { useState, useEffect } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import ItemTransaction from '../../component/ItemTransaction';
 import AxiosInstance from '../../constants/AxiosInstance';
+import { Card } from 'react-native-paper';
+import moment from 'moment';
 const windowWIdth = Dimensions.get('window').width;
 const History = (props) => {
-
   const { navigation, route } = props;
   const { params } = route;
   const [data, setdata] = useState([]);
   const [createAt, setCreateAt] = useState("");
+  const [data2, setData2] = useState([])
   const [isLoading, setisLoading] = useState(false)
   const [stateList, setStateList] = useState(0);
   const [refreshControl, setRefreshControl] = useState();
@@ -18,18 +20,28 @@ const History = (props) => {
     navigation.navigate('AddNew');
   }
   useEffect(() => {
-    const getTransaction = async () => {
-      const response = await AxiosInstance().get("transaction/api/get-all-transaction");
+    const getTransactionRecent = async () => {
+      const date = new Date();
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate() - 1;
+      console.log(`Ngày tháng năm: ${year}-0${month}-0${day}`)
+      const response = await AxiosInstance().get("transaction/api/search-by-recent?date=" + `${year}-0${month}-0${day}`);
       console.log(response.transaction);
       if (response.result == true) // lấy dữ liệu thành công
       {
-        setdata(response.transaction);
+        setData(response.transaction);
+        checkIsLoading();
       } else {
         ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
       }
     }
-    getTransaction();
-  }, [stateList]);
+    getTransactionRecent();
+    return () => {
+
+    }
+  }, []);
+
   const checkIsLoading = () => {
     if (data.length === 0) {
       setisLoading(true);
@@ -43,15 +55,15 @@ const History = (props) => {
       <View style={styles.background}></View>
       <Text style={styles.text}>Lịch sử chi tiêu</Text>
       <View style={styles.viewSearch}>
-        <TextInput placeholder='Tìm kiếm theo ngày(2003-02-01)' style={styles.input} value={createAt} onChangeText={(text) => setCreateAt(text)}></TextInput>
-        <TouchableOpacity >
+        <TextInput placeholder='Tìm kiếm ' style={styles.input} ></TextInput>
+        <TouchableOpacity onPress={getTransactionByDate}>
           <Image style={styles.imageSearch} source={require('../../asset/icon/icon_search.png')}></Image>
         </TouchableOpacity>
       </View>
-      <Text style={styles.textToday}>{createAt ?createAt :"00/00/0000" }</Text>
       {
         isLoading == true ? (
           <View>
+            <Text style={styles.textToday}>{createAt ? createAt : "00/00/0000"}</Text>
             <View style={styles.jusCenter}>
               <View style={styles.viewLine}></View>
             </View>
@@ -66,31 +78,32 @@ const History = (props) => {
               </View>
             </ScrollView>
           </View>
-        ) : (
-          <ScrollView style={{ marginTop: 20 }}>
-            <View style={styles.viewListGiveAndPay}>
-              <View>
-                <FlatList
-                  data={data}
-                  renderItem={({ item }) => <ItemTransaction dulieu={item} navigation={navigation} />}
-                  keyExtractor={item => item._id}
-                  showsVerticalScrollIndicator={false}
-                  refreshControl={
-                    <RefreshControl refreshing={refreshControl} onRefresh={() => {
-                      setRefreshControl(true)
-                      console.log("Refresh")
-                      setStateList(stateList + 1)
-                      console.log(stateList)
-
-                      setRefreshControl(false)
-                    }} colors={['green']} />
-                  }
-                />
-                {/* data.map((item)=><ItemTransaction dulieu={item} key={item._id} navigation={navigation} />) */}
+        ) :
+          (
+            <ScrollView style={{ marginTop: 20 }}>
+              <View style={styles.viewListGiveAndPay}>
+                <View>
+                  <FlatList
+                    data={data}
+                    renderItem={({ item }) => <ItemTransaction dulieu={item} navigation={navigation} />}
+                    keyExtractor={item => item._id}
+                    showsVerticalScrollIndicator={false}
+                    refreshControl={
+                      <RefreshControl refreshing={refreshControl} onRefresh={() => {
+                        setRefreshControl(true)
+                        console.log("Refresh")
+                        setStateList(stateList + 1)
+                        console.log(stateList)
+  
+                        setRefreshControl(false)
+                      }} colors={['green']} />
+                    }
+                  />
+                  {/* // data.map((item)=><ItemTransaction dulieu={item} key={item._id} navigation={navigation} />) */}
+                </View>
               </View>
-            </View>
-          </ScrollView>
-        )
+            </ScrollView>
+          )
       }
       <StatusBar style="auto" barStyle="dark-content" backgroundColor={COLOR.background2} />
     </SafeAreaView>

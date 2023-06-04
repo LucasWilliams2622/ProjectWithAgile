@@ -15,14 +15,14 @@ const SignPassword = (props) => {
     const [verifiedCfPass, setVerifiedCfPass] = useState(false);
     const [getNewPassVisible, setNewPassVisible] = useState(false)
     const [getConfirmPassVisible, setConfirmPassVisible] = useState(false)
-    const [password, setpassword] = useState('');
-    const [confirmPass, setconfirmPass] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPass, setConfirmPass] = useState('');
     const checkNewPass = (password) => {
         let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
         if (passreg.test(password) === true) {
             setVerifiedPassNew({ passreg: password });
             setVerifiedPassNew(true);
-            setpassword(password);
+            setPassword(password);
             console.log("password hợp lệ");
             return true;
         }
@@ -36,7 +36,7 @@ const SignPassword = (props) => {
         if (passreg.test(text1) === true) {
             setVerifiedCfPass({ passreg: text1 });
             setVerifiedCfPass(true);
-            setconfirmPass(text1);
+            setConfirmPass(text1);
             console.log("password hợp lệ");
             return true;
         }
@@ -45,24 +45,6 @@ const SignPassword = (props) => {
             console.log("pass ko hợp lệ");
         }
     }
-
-
-
-
-    // const kiemtraConFirmPass = (text1) => {
-    //     let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    //     if (passreg.test(text1) === true) {
-    //         setVerifiedCfPass({ passreg: text1 });
-    //         setVerifiedCfPass(true);
-    //         setconfirmPass(text1);
-    //         console.log("password hợp lệ");
-    //         return true;
-    //     }
-    //     else {
-    //         setVerifiedCfPass({ passreg: text1 });
-    //         console.log("pass ko hợp lệ");
-    //     }
-    // }
     const checkAll = () => {
         if (verifiedCfPass == true && verifiedPassNew == true && password === confirmPass) {
             ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
@@ -73,7 +55,7 @@ const SignPassword = (props) => {
         }
     }
 
-    const chuyen = async () => {
+    const goLogin = async () => {
         // if (verifiedCfPass == true && verifiedPassNew == true && password === confirmPass) {
         //     ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
         //     navigation.navigate('Welcome');
@@ -126,9 +108,6 @@ const SignPassword = (props) => {
 
 
                     <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(password) => checkNewPass(password)}></TextInput>
-                    <TextInput placeholder='Password' style={styles.inputEmailAndPass}
-                        onChangeText={(text1) => kiemtrapasswordnew(text1)} >
-                    </TextInput>
                     <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIconEye}></Image>
                     <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
                 </View>
@@ -140,7 +119,7 @@ const SignPassword = (props) => {
                 </View>
 
                 <View style={{ alignItems: 'center' }}>
-                    <Pressable style={styles.viewPressable} onPress={chuyen}>
+                    <Pressable style={styles.viewPressable} onPress={goLogin}>
                         <Text style={styles.textPressable}>Next</Text>
                     </Pressable>
                 </View>
