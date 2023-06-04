@@ -177,12 +177,12 @@ const Login = (props) => {
             <Text style={styles.textInstruct}>password to access your account</Text>
           </View>
 
-          <TextInput placeholder='Email' value={email} style={styles.inputEmailAndPass} onChangeText={(text) => setEmail(text)}  ></TextInput>
+          <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(email) => checkEmail(email)}  ></TextInput>
 
           <View style={styles.viewInputPass}>
             <TextInput placeholder='Password' style={styles.inputEmailAndPass}
               secureTextEntry={getPasswordVisible ? false : true}
-              onChangeText={(setPasswordVisible) => setpassword(setPasswordVisible)} value={password} ></TextInput>
+              onChangeText={(setPasswordVisible) => checkPass(setPasswordVisible)} value={verifiedPass} ></TextInput>
             <TouchableOpacity style={styles.visible}
               onPress={() => {
                 setPasswordVisible(!getPasswordVisible)

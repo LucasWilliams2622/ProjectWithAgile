@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert,StatusBar, KeyboardAvoidingView, ToastAndroid } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, StatusBar, KeyboardAvoidingView, ToastAndroid } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import { TextInput } from 'react-native-paper'
@@ -15,6 +15,8 @@ const Profile = (props) => {
   const [avatar, setAvatar] = useState(null)
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
+  const [imageURI, setImageURI] = useState("");
+
   const [currentUser, setCurrentUser] = useState({
     "_id": {
       "$oid": "6478632830be4c0f2ab4472a"
@@ -72,8 +74,8 @@ const Profile = (props) => {
       Alert.alert('Error', 'vui lòng cho vài dòng thông tin!');
     }
   }
-  const onLogOut = async ()=>{
-    
+  const onLogOut = async () => {
+
   }
   const dialogImageChoose = () => {
     return Alert.alert(
@@ -162,7 +164,6 @@ const Profile = (props) => {
     // const response = await AxiosInstance().get("lay limit", { email: emailUser, password: passwordUser, name: nameUser });
     // setLimit(....)
   }
-  const [imageURI, setImageURI] = useState("");
   const handleUpdateUser = async (form) => {
     // const uploadAvatarForm = new FormData();
     // uploadAvatarForm.append('file', {
@@ -254,9 +255,10 @@ const Profile = (props) => {
               value={formik.values?.limit}
             />
           </View>
-          <TouchableOpacity style={styles.buttonSave} onPress={updateProfile}>
-            <Text style={styles.text2}>Lưu thay đổi</Text>
-          </TouchableOpacity>
+          // <TouchableOpacity style={styles.buttonSave} onPress={formik.handleSubmit}>
+            <TouchableOpacity style={styles.buttonSave} onPress={checkAll}>
+              <Text style={styles.text2}>Lưu thay đổi</Text>
+            </TouchableOpacity>
         </View>
       </View >
     </KeyboardAwareScrollView>
