@@ -71,7 +71,7 @@ const App = () => {
       <Stack.Navigator initialRouteName="BottomTabs" screenOptions={{ headerShown: false }}>
         {
           !isLogin ?
-            <Stack.Screen name="StackBegin" component={BottomTabs}  />
+            <Stack.Screen name="StackBegin" component={StackBegin}  />
             :
             <Stack.Screen name="BottomTabs" component={BottomTabs} setIsLogin={setIsLogin}/>
         }
