@@ -58,7 +58,7 @@ const Register = (props) => {
       console.log(e);
     }
   }
-  const checkEmail = (text) => {
+  const checkEmail = (setEmail) => {
     let reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     if (reg.test(setEmail) === true) {
       setVerifiedEmail({ email: setEmail });
@@ -67,7 +67,6 @@ const Register = (props) => {
       return true;
     }
     else {
-      setVerifiedEmail({ email: setEmail });
       console.log("Ban da nhap sai email");
 
     }
@@ -89,7 +88,7 @@ const Register = (props) => {
       //http://localhost:3000
       console.log("email  ", email);
       console.log("name  ", name);
-      const result = await AxiosIntance().post("user/api/send-verification-code", { email: email });
+      const result = await AxiosInstance().post("user/api/send-verification-code", { email: email });
       console.log(result);
       if (result) {
         ToastAndroid.show("Đã gửi code", ToastAndroid.SHORT);

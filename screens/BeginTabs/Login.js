@@ -140,13 +140,13 @@ const Login = (props) => {
     let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     if (passreg.test(pass) === true) {
       setVerifiedPass({ passreg: pass });
-      console.log("password không hợp lệ");
+      console.log("password hợp lệ");
       setVerifiedPass(true);
       return true;
     }
     else {
       setVerifiedPass({ passreg: pass });
-      console.log("pass ko hợp lệ");
+      console.log("password ko hợp lệ");
     }
   }
 

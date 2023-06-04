@@ -10,7 +10,7 @@ const AddNew = (props) => {
   const { navigation, route } = props;
   const { params } = route;
   const [category, setCategory] = useState('');
-  const [name, setname] = useState('');
+  const [name, setName] = useState('');
   const [value, setValue] = useState('');
   const [money, setMoney] = useState('');
   const [note, setNote] = useState('');
@@ -60,7 +60,7 @@ const AddNew = (props) => {
           <View style={styles.bgTop}>
             <Image style={styles.imgColor} source={require('../../asset/icon/icon_edit.png')}></Image>
             <TouchableOpacity >
-              <TextInput value={money} keyboardType="numeric" returnKeyType="done" placeholderTextColor='white' 
+              <TextInput value={money} onChangeText={(text)=>(setMoney(text))} keyboardType="numeric" returnKeyType="done" placeholderTextColor='white' 
               underlineColor='transparent' style={styles.textMoney} placeholder='Nhập số tiền'></TextInput>
             </TouchableOpacity>
             <Text style={styles.textVND}>VNĐ</Text>
@@ -84,7 +84,7 @@ const AddNew = (props) => {
             <TouchableOpacity onPress={() => { navigation.navigate('TopTabThuChi') }}>
               <Image style={styles.imgInput} source={require('../../asset/icon/icon_type.png')} />
             </TouchableOpacity>
-            <TextInput onChangeText={setCategory} value={category} placeholder='Chọn loại' style={styles.txtInput}></TextInput>
+            <TextInput onChangeText={setCategory} value={title} placeholder='Chọn loại' style={styles.txtInput}></TextInput>
           </View>
         </View>
 
