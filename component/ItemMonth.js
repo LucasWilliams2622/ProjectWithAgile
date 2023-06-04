@@ -15,7 +15,6 @@ import { Modal } from 'react-native-paper';
 import { Calendar } from 'react-native-calendars';
 import MonthPicker from 'react-native-month-year-picker';
 import moment from 'moment';
-import DatePicker from 'react-native-date-picker'
 import { COLOR } from '../constants/Themes';
 const windowWidth = Dimensions.get('window').width;
 

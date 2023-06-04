@@ -6,17 +6,17 @@ const data = [
     {
         id: 1,
         name: 'Chứng khoán',
-        img: require('../../asset/icon/item/business.png')
+        img: require('../../asset/icon/item/stock.png')
     },
     {
         id: 2,
         name: 'Quà tặng',
-        img: require('../../asset/icon/item/business.png')
+        img: require('../../asset/icon/item/gift.png')
     },
     {
         id: 3,
         name: 'Thưởng',
-        img: require('../../asset/icon/item/business.png')
+        img: require('../../asset/icon/item/wage.png')
 
     },
     {
@@ -27,22 +27,22 @@ const data = [
     {
         id: 5,
         name: 'Lì xì',
-        img: require('../../asset/icon/item/business.png')
+        img: require('../../asset/icon/item/money.png')
     },
     {
         id: 6,
         name: 'Luong',
-        img: require('../../asset/icon/item/business.png')
+        img: require('../../asset/icon/item/bonus.png')
     },
     {
         id: 7,
         name: 'Trúng thưởng',
-        img: require('../../asset/icon/item/business.png')
+        img: require('../../asset/icon/item/prize.png')
     },
     {
         id: 8,
         name: 'Khác',
-        img: require('../../asset/icon/item/business.png')
+        img: require('../../asset/icon/item/other.png')
     }
 ]
 

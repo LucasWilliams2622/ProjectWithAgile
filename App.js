@@ -44,6 +44,7 @@ const StackBegin = () => {
       <Stack.Screen name="SignPassword" component={SignPassword} />
       <Stack.Screen name="SignCode" component={SignCode} />
       
+      
 
 
 
@@ -73,7 +74,7 @@ const App = () => {
   return (
     <Provider store={Redux.store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Test" screenOptions={{ headerShown: false }}>
+        <Stack.Navigator initialRouteName="BottomTabs" screenOptions={{ headerShown: false }}>
           <Stack.Screen name="StackBegin" component={StackBegin} />
           <Stack.Screen name="Loading" component={Loading} />
           <Stack.Screen name="BottomTabs" component={BottomTabs} />

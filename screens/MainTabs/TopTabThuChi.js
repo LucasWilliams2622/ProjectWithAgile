@@ -10,7 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const Tab = createMaterialTopTabNavigator();
-const TopTabThuChi = () => {
+const TopTabThuChi = (props) => {
     return (
         <SafeAreaView style={styles.container}>
 

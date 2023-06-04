@@ -5,15 +5,55 @@ import { TextInput } from 'react-native-paper'
 import AxiosIntance from '../../constants/AxiosIntance'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ICON, COLOR } from '../../constants/Themes'
+import DateTimePicker from '@react-native-community/datetimepicker';
+import RNDateTimePicker from '@react-native-community/datetimepicker'
 
 const AddNew = (props) => {
   const { navigation, route } = props;
   const { params } = route;
   const [category, setCategory] = useState('');
-
-  const [name, setname] = useState('');
+  const [dateTime, setDateTime] = useState('');
   const [money, setMoney] = useState('');
   const [note, setNote] = useState('');
+  //Datepicker
+  const [date, setDate] = useState(new Date());
+  const [showPicker, setShowPicker] = useState(false);
+
+  const toggleDatePicker = () => {
+    setShowPicker(!showPicker);
+  };
+
+  const onChange = ({ type }, selectedDate) => {
+    if (type == "set") {
+      const currentDate = selectedDate;
+      setDate(currentDate);
+
+      if(Platform.OS === 'android'){
+        toggleDatePicker();
+        setDateTime(formatDate(currentDate));
+      }
+    } else {
+      toggleDatePicker();
+    }
+
+  };
+
+  const formatDate = (rawDate) => {
+    let date = new Date(rawDate);
+
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    //Bé hơn 10 thì thêm số 0
+    month = month < 10 ? `0${month}` : `${month}`;
+    day = day < 10 ? `0${day}` : `${day}`;
+
+    return `${day}/${month}/${year}`;
+  };
+
+
+
   let title = params?.name;
   const [value, setValue] = useState('');
   const handleCheckInput = () => {
@@ -34,6 +74,9 @@ const AddNew = (props) => {
   //     Alert.alert('Vui lòng nhập số tiền hợp lệ');
   //   }
   // };
+  const gotoTopTabThuChi = () => {
+    navigation.navigate('TopTabThuChi')
+  }
   const addNew = async () => {
     try {
 
@@ -63,13 +106,16 @@ const AddNew = (props) => {
 
     }
   }
+
+
+
   return (
     <View style={styles.container} >
 
       <View style={styles.bgTop}>
         <Text style={styles.textTitle}>Thêm chi tiêu cho hôm nay</Text>
       </View>
-     
+
 
       <View style={styles.shadowView}>
         <View style={styles.bgMain}>
@@ -84,19 +130,30 @@ const AddNew = (props) => {
 
         <View >
           <View style={styles.input}>
-            <TouchableOpacity
-            >
+            {showPicker && (
+              <RNDateTimePicker
+                mode='date'
+                display='spinner'
+                value={date}
+                onChange={onChange}
+                positiveButton={{label: 'OK', textColor: COLOR.background2}}
+                negativeButton={{label: 'Cancel', textColor: COLOR.background2}}
+                
+              />
+            )}
+            <TouchableOpacity onPress={toggleDatePicker}>
               <Image style={styles.imgInput} source={require('../../asset/icon/icon_calender.png')} />
             </TouchableOpacity>
-            <TextInput style={styles.txtInput} value={name}
-              onChangeText={setname}></TextInput>
+            <TextInput style={styles.txtInput} value={dateTime} editable={false}
+              onChangeText={setDateTime}></TextInput>
           </View>
         </View>
 
 
         <View style={{ top: 10 }}>
           <View style={styles.input}>
-            <TouchableOpacity onPress={() => { navigation.navigate('TopTabThuChi') }}>
+            <TouchableOpacity onPress={() => { gotoTopTabThuChi() }}>
+
               <Image style={styles.imgInput} source={require('../../asset/icon/icon_type.png')} />
             </TouchableOpacity>
             <TextInput placeholder='Chọn loại' style={styles.txtInput} value={title}></TextInput>
@@ -164,9 +221,9 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.background2,
     flexDirection: 'row',
     tintColor: 'black',
-    height:70,
-    borderBottomLeftRadius:20,
-    borderBottomRightRadius:20,
+    height: 70,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
   },
 
   bgMain: {
