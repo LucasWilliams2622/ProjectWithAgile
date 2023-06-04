@@ -1,5 +1,5 @@
 import { Alert, SafeAreaView, StyleSheet, Text, View, } from 'react-native'
-import React, { useEffect,useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -71,17 +71,17 @@ const App = () => {
   const [isLogin, setIsLogin] = useState(false)
   return (
     <Provider store={Redux.store}>
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="BottomTabs" screenOptions={{ headerShown: false }}>
-        {
-          !isLogin ?
-            <Stack.Screen name="StackBegin" component={StackBegin}  />
-            :
-            <Stack.Screen name="BottomTabs" component={BottomTabs} setIsLogin={setIsLogin}/>
-        }
-      </Stack.Navigator>
-    </NavigationContainer>
-  </Provider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="BottomTabs" screenOptions={{ headerShown: false }}>
+          {
+            !isLogin ?
+              <Stack.Screen name="StackBegin" component={StackBegin} />
+              :
+              <Stack.Screen name="BottomTabs" component={BottomTabs} setIsLogin={setIsLogin} />
+          }
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
 
   )
 }
