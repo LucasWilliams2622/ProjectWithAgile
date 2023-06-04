@@ -189,9 +189,9 @@ const Login = (props) => {
               }}>
               {
                 getPasswordVisible ?
-                  <Image source={require('../../asset/icon/icon_visible.png')} style={styles.imageIconEye}></Image>
+                  <Image source={require('../../asset/icon/icon_visible.png')} style={styles.imageIcon}></Image>
                   :
-                  <Image source={require('../../asset/icon/icon_invisible.png')} style={styles.imageIconEye}></Image>
+                  <Image source={require('../../asset/icon/icon_invisible.png')} style={styles.imageIcon}></Image>
               }
             </TouchableOpacity>
           </View>

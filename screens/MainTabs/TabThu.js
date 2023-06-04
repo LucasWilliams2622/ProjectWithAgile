@@ -48,6 +48,21 @@ const data = [
 
 const TabThu = (props) => {
     const { navigation } = props;
+    // const [dataNe, setdataNe] = useState([]);
+
+    // useEffect(() => {
+    //     const getAllExpense = async () => {
+    //       const response = await AxiosInstance().get("category/api/search-by-type/type=false");
+    //       console.log(response.category);
+    //       if (response.category) // lấy dữ liệu thành công
+    //       {
+    //         setdata(response.category);
+    //       } else {
+    //         ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
+    //       }
+    //     }
+    //     getAllExpense();
+    //   }, []);
 
     return (
         <View style={{ flex: 1 }}>
@@ -59,7 +74,8 @@ const TabThu = (props) => {
                     width: Dimensions.get('window').width / 2.2,
 
                 }} >
-                    <TouchableOpacity style={styles.itemContainer}>
+                    <TouchableOpacity style={styles.itemContainer} 
+                     onPress={()=>navigation.navigate('AddNew',{name:item.name, img: item.img}) }>
                         <Image style={styles.image} source={item.img} />
                         <Text style={styles.txt}>{item.name}</Text>
                     </TouchableOpacity>
@@ -67,6 +83,12 @@ const TabThu = (props) => {
 
                 }
             />
+            {/* <FlatList
+            data={data}
+            renderItem={({ item }) => <ItemCollect dulieu={item} navigation={navigation} />}
+            keyExtractor={item => item._id}
+            showsVerticalScrollIndicator={false}
+          /> */}
         </View>
     );
 }

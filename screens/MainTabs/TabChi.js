@@ -109,6 +109,21 @@ const data = [
 
 const TopTabThuChi = (props) => {
     const {navigation} = props;
+    
+    // useEffect(() => {
+    //     const getAllIncome = async () => {
+    //       const response = await AxiosInstance().get("category/api/search-by-type/type=true");
+    //       console.log(response.category);
+    //       if (response.category) // lấy dữ liệu thành công
+    //       {
+    //         setdata(response.category);
+    //       } else {
+    //         ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
+    //       }
+    //     }
+    //     getAllIncome();
+    //   }, []);
+
     return (
         <View style={{flex : 1}}>
 
@@ -124,7 +139,8 @@ const TopTabThuChi = (props) => {
 
 
                 }} >
-                    <TouchableOpacity style={styles.itemContainer} onPress={()=>navigation.navigate('AddNew',{name:item.name}) }>
+                    <TouchableOpacity style={styles.itemContainer} 
+                    onPress={()=>navigation.navigate('AddNew',{name:item.name, img: item.img}) }>
                         <Image style={styles.image} source={item.img} />
                         <Text style={styles.txt}>{item.name}</Text>
                     </TouchableOpacity>
@@ -132,6 +148,12 @@ const TopTabThuChi = (props) => {
 
                 }
             />
+            {/* <FlatList
+            data={data}
+            renderItem={({ item }) => <ItemCollect dulieu={item} navigation={navigation} />}
+            keyExtractor={item => item._id}
+            showsVerticalScrollIndicator={false}
+          /> */}
         </View>
     );
 }
