@@ -36,7 +36,7 @@ import Redux from './redux/store'
 const Stack = createNativeStackNavigator();
 const StackBegin = () => {
   return (
-    <Stack.Navigator initialRouteName="Test" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="BottomTabs" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />

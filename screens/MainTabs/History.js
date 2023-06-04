@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, Image, Dimensions, ScrollView, TouchableOpacity, FlatList, ToastAndroid, StatusBar, SafeAreaView } from 'react-native'
+import { StyleSheet, Text, View, TextInput, Image, Dimensions, ScrollView, TouchableOpacity, FlatList, ToastAndroid, StatusBar, SafeAreaView, RefreshControl } from 'react-native'
 import React, { useState, useEffect } from 'react'
 
 import { ICON, COLOR } from '../../constants/Themes'
@@ -19,7 +19,7 @@ const History = (props) => {
   }
   useEffect(() => {
     const getTransaction = async () => {
-      const response = await AxiosIntance().get("transaction/api/get-all-transaction");
+      const response = await AxiosInstance().get("transaction/api/get-all-transaction");
       console.log(response.transaction);
       if (response.result == true) // lấy dữ liệu thành công
       {
@@ -44,7 +44,7 @@ const History = (props) => {
       <Text style={styles.text}>Lịch sử chi tiêu</Text>
       <View style={styles.viewSearch}>
         <TextInput placeholder='Tìm kiếm theo ngày(2003-02-01)' style={styles.input} value={createAt} onChangeText={(text) => setCreateAt(text)}></TextInput>
-        <TouchableOpacity onPress={getTransactionByDate}>
+        <TouchableOpacity >
           <Image style={styles.imageSearch} source={require('../../asset/icon/icon_search.png')}></Image>
         </TouchableOpacity>
       </View>

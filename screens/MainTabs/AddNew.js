@@ -3,7 +3,7 @@ import {
   StyleSheet, Text, View, Image, TouchableOpacity,
   Alert, ToastAndroid, StatusBar, Platform, SafeAreaView
 } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { TextInput } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ICON, COLOR } from '../../constants/Themes'
@@ -107,7 +107,7 @@ const AddNew = (props) => {
   }
   const clickEditTransaction = async () => {
     try {
-      const response = await AxiosIntance().put("/transaction/api/edit-by-id", { money: money, note: note, category: category, createAt: createAt });
+      const response = await AxiosInstance().put("/transaction/api/edit-by-id", { money: money, note: note, category: category, createAt: createAt });
       console.log('value edit: ', response);
       if (response.result === true) {
         ToastAndroid.show("Cập nhật thành công", ToastAndroid.SHORT);
@@ -122,7 +122,7 @@ const AddNew = (props) => {
 
   useEffect(() => {
     const getInforTransaction = async () => {
-      const respone = await AxiosIntance().get("/transaction/api/get-by-id?id=" + params.id);
+      const respone = await AxiosInstance().get("/transaction/api/get-by-id?id=" + params.id);
       console.log("aaaaaaaa", respone);
       if (respone.result) {
         setMoney(respone.transaction.money);
@@ -175,7 +175,7 @@ const AddNew = (props) => {
               <Image style={styles.imgInput} source={require('../../asset/icon/icon_calender.png')} />
             </TouchableOpacity>
             <TextInput style={styles.txtInput} editable={false}
-              onChangeText={setCreateAt} value={createAt}></TextInput>
+              onChangeText={setCreateAt} value={dateTime}></TextInput>
           </View>
         </View>
 
