@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, Image, Dimensions, ScrollView, TouchableOpacity, ToastAndroid, FlatList } from 'react-native'
+import { StyleSheet, Text, View, TextInput, Image, Dimensions, ScrollView, TouchableOpacity, ToastAndroid, FlatList, RefreshControl } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import ItemTransaction from '../../component/ItemTransaction';
@@ -9,26 +9,37 @@ const History = (props) => {
   const { navigation, route } = props;
   const { params } = route;
   const [data, setdata] = useState([]);
-  useEffect(() => {
-    const getTransaction = async () => {
-      const response = await AxiosIntance().get("transaction/api/get-all-transaction");
-      console.log(response.transaction);
-      if (response.result == true) // lấy dữ liệu thành công
-      {
-        setdata(response.transaction);
-      } else {
-        ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
-      }
+  const [stateList, setStateList] = useState(0);
+  const [refreshControl, setRefreshControl] = useState();
+  const getTransaction = async () => {
+    const response = await AxiosIntance().get("transaction/api/get-all-transaction");
+    console.log(response.transaction);
+    if (response.result == true) // lấy dữ liệu thành công
+    {
+      setdata(response.transaction);
+    } else {
+      ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
     }
+  }
+  const check = async () => {
+    setStateList(1)
+    console.log(stateList);
+  }
+  useEffect(() => {
     getTransaction();
-  }, []);
+
+    return () => {
+    }
+  }, [stateList])
   return (
     <View style={styles.container}>
       <View style={styles.background}></View>
       <Text style={styles.text}>Lịch sử chi tiêu</Text>
       <View style={styles.viewSearch}>
         <TextInput placeholder='Tìm kiếm' style={styles.input}></TextInput>
-        <Image style={styles.imageSearch} source={require('../../asset/icon/icon_search.png')}></Image>
+        <TouchableOpacity onPress={() => { check() }}>
+          <Image style={styles.imageSearch} source={require('../../asset/icon/icon_search.png')} />
+        </TouchableOpacity>
       </View>
       <Text style={styles.textToday}>23-05-2023</Text>
       <View style={styles.jusCenter}>
@@ -46,16 +57,25 @@ const History = (props) => {
             </View>
           </TouchableOpacity> */}
           <View>
-            {
-              <FlatList
-                data={data}
-                renderItem={({ item }) => <ItemTransaction dulieu={item} navigation={navigation} />}
-                keyExtractor={item => item._id}
-                showsVerticalScrollIndicator={false}
-              />
-              // data.map((item)=><ItemTransaction dulieu={item} key={item._id} navigation={navigation} />)
 
-            }
+            <FlatList
+              data={data}
+              renderItem={({ item }) => <ItemTransaction dulieu={item} navigation={navigation} />}
+              keyExtractor={item => item._id}
+              showsVerticalScrollIndicator={false}
+              refreshControl={
+                <RefreshControl refreshing={refreshControl} onRefresh={() => {
+                  setRefreshControl(true)
+                  console.log("Refresh")
+                  setStateList(stateList + 1)
+                  console.log(stateList)
+
+                  setRefreshControl(false)
+                }} colors={['green']} />
+              }
+            />
+
+
           </View>
         </View>
       </ScrollView>

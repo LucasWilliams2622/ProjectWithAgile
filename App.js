@@ -67,16 +67,17 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="History" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="StackBegin" component={StackBegin} />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="History" component={History} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="BottomTabs" component={BottomTabs} />
         <Stack.Screen name="AddNew" component={AddNew} />
         <Stack.Screen name="Test" component={Test} />
       </Stack.Navigator>
     </NavigationContainer>
-
+    
   )
 }
 

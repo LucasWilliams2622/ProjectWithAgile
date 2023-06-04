@@ -1,21 +1,22 @@
 
 import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, ToastAndroid, StatusBar, Platform } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { TextInput } from 'react-native-paper'
 import AxiosIntance from '../../constants/AxiosIntance'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ICON, COLOR } from '../../constants/Themes'
 
+
 const AddNew = (props) => {
   const { navigation, route } = props;
   const { params } = route;
-  const [category, setCategory] = useState('');
-
   const [name, setname] = useState('');
   const [money, setMoney] = useState('');
   const [note, setNote] = useState('');
+  const [category, setCategory] = useState('');
+  const [createAt, setCreateAt] = useState('');
   let title = params?.name;
-  const [value, setValue] = useState('');
+  //const [value, setValue] = useState('');
   const handleCheckInput = () => {
     const floatValue = parseFloat(value.replace(',', '.'));
     if (name.trim() === '') {
@@ -63,20 +64,58 @@ const AddNew = (props) => {
 
     }
   }
+
+  const clickEditTransaction = async () => {
+    try {
+      const response = await AxiosIntance().put("/transaction/api/edit-by-id", { money: money, note: note, category: category, createAt: createAt });
+      console.log('value edit: ', response);
+      if (response.result === true) {
+        ToastAndroid.show("Cập nhật thành công", ToastAndroid.SHORT);
+      }
+      else {
+        ToastAndroid.show("Cập nhật không thành công không thành công", ToastAndroid.SHORT);
+      }
+    } catch (e) {
+      console.log("chua edit dc", e);
+    }
+  }
+
+  useEffect(() => {
+    const getInforTransaction = async () => {
+      const respone = await AxiosIntance().get("/transaction/api/get-by-id?id=" + params.id);
+      console.log("aaaaaaaa", respone);
+      if (respone.result) {
+        setMoney(respone.transaction.money);
+        console.log('moneyyyyyyy',money);
+        console.log('transaction moneyyyyyyy',respone.transaction.money);
+        setCreateAt(respone.transaction.createAt);
+        setCategory(respone.transaction.category);
+        setNote(respone.transaction.note);
+        ToastAndroid.show("Lây dư liệu thành công !", ToastAndroid.SHORT);
+      }
+    }
+    getInforTransaction();
+    return () => {
+
+    }
+  }, [])
+
   return (
     <View style={styles.container} >
 
       <View style={styles.bgTop}>
         <Text style={styles.textTitle}>Thêm chi tiêu cho hôm nay</Text>
       </View>
-     
+
 
       <View style={styles.shadowView}>
         <View style={styles.bgMain}>
           <View style={styles.bgTop}>
             <Image style={styles.imgColor} source={require('../../asset/icon/icon_edit.png')}></Image>
             <TouchableOpacity >
-              <TextInput value={money} onChangeText={setMoney} keyboardType="numeric" returnKeyType="done" placeholderTextColor='white' underlineColor='transparent' style={styles.textMoney} placeholder='Nhập số tiền'></TextInput>
+              <TextInput value={money} onChangeText={setMoney} 
+              keyboardType="numeric" returnKeyType="done" placeholderTextColor='white' 
+              underlineColor='transparent' style={styles.textMoney} placeholder='Nhập số tiền'></TextInput>
             </TouchableOpacity>
             <Text style={styles.textVND}>VNĐ</Text>
           </View>
@@ -88,8 +127,8 @@ const AddNew = (props) => {
             >
               <Image style={styles.imgInput} source={require('../../asset/icon/icon_calender.png')} />
             </TouchableOpacity>
-            <TextInput style={styles.txtInput} value={name}
-              onChangeText={setname}></TextInput>
+            <TextInput style={styles.txtInput}
+              onChangeText={setCreateAt} value={createAt}></TextInput>
           </View>
         </View>
 
@@ -99,7 +138,7 @@ const AddNew = (props) => {
             <TouchableOpacity onPress={() => { navigation.navigate('TopTabThuChi') }}>
               <Image style={styles.imgInput} source={require('../../asset/icon/icon_type.png')} />
             </TouchableOpacity>
-            <TextInput placeholder='Chọn loại' style={styles.txtInput} value={title}></TextInput>
+            <TextInput onChangeText={setCategory} value={category} placeholder='Chọn loại' style={styles.txtInput}></TextInput>
           </View>
         </View>
 
@@ -108,13 +147,13 @@ const AddNew = (props) => {
         <View style={{ top: 10 }}>
           <View style={styles.input}>
             <Image style={styles.imgInput} source={require('../../asset/icon/icon_note.png')} />
-            <TextInput onChangeText={setNote} placeholder='Ghi chú' style={styles.txtInput}></TextInput>
+            <TextInput onChangeText={setNote} value={note} placeholder='Ghi chú' style={styles.txtInput}></TextInput>
           </View>
         </View>
       </View>
 
       <View style={{ alignItems: 'center' }}>
-        <TouchableOpacity style={styles.viewSave} onPress={handleCheckInput}>
+        <TouchableOpacity style={styles.viewSave} onPress={clickEditTransaction}>
           <Text style={styles.textSave}>Lưu Chi tiêu</Text>
         </TouchableOpacity>
       </View>
@@ -162,9 +201,9 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.background2,
     flexDirection: 'row',
     tintColor: 'black',
-    height:70,
-    borderBottomLeftRadius:20,
-    borderBottomRightRadius:20,
+    height: 70,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
   },
 
   bgMain: {

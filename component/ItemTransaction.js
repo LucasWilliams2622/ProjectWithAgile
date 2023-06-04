@@ -1,16 +1,17 @@
-import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, ToastAndroid } from 'react-native'
+import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, ToastAndroid, Alert } from 'react-native'
 import React from 'react'
 import { COLOR } from '../constants/Themes'
 import AxiosIntance from '../constants/AxiosIntance';
 const windowWIdth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const ItemTransaction = (props) => {
-  const {dulieu,navigation}=props;
-  const ClickItem = () => {
-    console.log('click item');
-    navigation.navigate("History", { id: dulieu._id });
+  const { dulieu, navigation } = props;
 
+  const EditTransaction = async () => {
+    console.log('click item');
+    navigation.navigate("AddNew", { id: dulieu._id });
   }
+
   const DeleteTransaction = async () => {
     const response = await AxiosIntance().delete("transaction/api/delete-by-id?id=" + dulieu._id);
     console.log(response);
@@ -20,6 +21,30 @@ const ItemTransaction = (props) => {
       ToastAndroid.show("Xoá bài viết thất bại", ToastAndroid.SHORT)
     }
   }
+
+  const checkDeleteTransaction = async () => {
+    Alert.alert(
+      //Title
+      'Xóa 1 mục',
+      //Body
+      'Bạn có muốn xóa mục này ?',
+      [
+        {
+          text: 'Không',
+          onPress: () => {
+            console.log('Không xóa');
+          }
+        },
+        {
+          text: 'Có',
+          onPress: () => {
+            DeleteTransaction();
+          }
+        }
+      ]
+    )
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.boxItem}>
@@ -32,13 +57,13 @@ const ItemTransaction = (props) => {
           </View>
           <View style={styles.boxDetail}>
             <View style={styles.boxIcon}>
-              <TouchableOpacity>
-              <Image style={[styles.icon, { tintColor: COLOR.primary, width: 30, height: 27 }]} source={require('../asset/icon/icon_edit.png')} />
+              <TouchableOpacity onPress={EditTransaction}>
+                <Image style={[styles.icon, { tintColor: COLOR.primary, width: 30, height: 27 }]} source={require('../asset/icon/icon_edit.png')} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={DeleteTransaction}>
-              <Image style={[styles.icon, { tintColor: COLOR.darkRed }]} source={require('../asset/icon/icon_delete.png')} />
+              <TouchableOpacity onPress={checkDeleteTransaction}>
+                <Image style={[styles.icon, { tintColor: COLOR.darkRed }]} source={require('../asset/icon/icon_delete.png')} />
               </TouchableOpacity>
-             
+
             </View>
             <Text style={styles.date}>{dulieu.createAt}</Text>
           </View>
@@ -52,8 +77,8 @@ const ItemTransaction = (props) => {
 export default ItemTransaction
 
 const styles = StyleSheet.create({
-  container:{
-    marginTop: 5, flexDirection:'column'
+  container: {
+    marginTop: 5, flexDirection: 'column'
   },
   boxItem: {
     flexDirection: 'row',
