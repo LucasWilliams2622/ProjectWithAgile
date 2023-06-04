@@ -33,7 +33,7 @@ const Register = (props) => {
     }
   }
   const checkSignUp = () => {
-    if (verifiedEmail == true && name == true) {
+    if (name == true) {
       ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
       console.log(verifiedEmail);
       sendVerifiedEmail();
@@ -125,7 +125,7 @@ const Register = (props) => {
             onChangeText={(setEmail) => checkEmail(setEmail)}></TextInput>
         </View>
         <View style={{ alignItems: 'center' }}>
-          <TouchableOpacity style={styles.viewPressable} onPress={() => { checkSignUp() }}>
+          <TouchableOpacity style={styles.viewPressable} onPress={() => { sendVerifiedEmail() }}>
             <Text style={styles.textPressable}>Sign Up</Text>
           </TouchableOpacity>
           <View style={[styles.center, { marginTop: 10 }]}>
