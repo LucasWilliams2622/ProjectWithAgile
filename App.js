@@ -47,7 +47,8 @@ const StackBegin = () => {
       <Stack.Screen name="BottomTabs" component={BottomTabs} />
       <Stack.Screen name="Test" component={Test} />
 
-      
+
+
     </Stack.Navigator>
   )
 }
@@ -81,7 +82,7 @@ const App = () => {
       </Stack.Navigator>
     </NavigationContainer>
   </Provider>
- 
+
   )
 }
 

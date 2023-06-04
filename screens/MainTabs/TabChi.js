@@ -16,7 +16,7 @@ const data = [
     {
         id: 3,
         name: 'Tiền nhà',
-        img: require('../../asset/icon/item/business.png')
+        img: require('../../asset/icon/item/homemoney.png')
     },
     {
         id: 4,
@@ -66,7 +66,7 @@ const data = [
     {
         id: 13,
         name: 'Quà tặng',
-        img: require('../../asset/icon/item/business.png')
+        img: require('../../asset/icon/item/gift.png')
     },
     {
         id: 14,
