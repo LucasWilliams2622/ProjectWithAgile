@@ -1,14 +1,15 @@
-import axios from "axios";
+import axios from 'axios';
 
-export default getComments = () => {
+// Define the API call function
+export default getAllTransactions = () => {
     return new Promise((resolve, reject) => {
-        axios
-            .get('https://63e46788c04baebbcda5418e.mockapi.io/api/vn/comments')
+        console.log("CALL API");
+        axios.get('http://192.168.0.102:3000/transaction/api/get-all-transaction')
+        
             // .get('http://localhost:3000/transaction/api/get-all-transaction')
-
             .then(function (response) {
                 //handle success
-                console.log("RESPONSE",response);
+                console.log("RESPONSE", response);
                 resolve(response.data)// this one is data on website
             })
             .catch(function (error) {
@@ -16,4 +17,5 @@ export default getComments = () => {
                 reject(error)
             })
     })
-}   
+
+}

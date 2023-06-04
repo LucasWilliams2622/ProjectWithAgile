@@ -5,7 +5,7 @@ const initData = {
 
 export default demoReducer = (state = initData, { type, payload }) => {
     switch (type) {
-        case 'CET_COMMENTS':
+        case 'GET_COMMENTS':
             return {
                 ...state,
                 isLoading: true,
