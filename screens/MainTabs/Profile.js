@@ -255,14 +255,15 @@ const Profile = (props) => {
               value={formik.values?.limit}
             />
           </View>
-          // <TouchableOpacity style={styles.buttonSave} onPress={formik.handleSubmit}>
+           {/* <TouchableOpacity style={styles.buttonSave} onPress={formik.handleSubmit}> */}
             <TouchableOpacity style={styles.buttonSave} onPress={checkAll}>
               <Text style={styles.text2}>Lưu thay đổi</Text>
             </TouchableOpacity>
         </View>
       </View >
-    </KeyboardAwareScrollView>
+      <StatusBar style="auto" barStyle="dark-content" backgroundColor={COLOR.background2} />
 
+    </KeyboardAwareScrollView>
   )
 }
 

@@ -1,7 +1,6 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Platform, ToastAndroid, Alert, StatusBar,Platform, SafeAreaView } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Platform, ToastAndroid, Alert, StatusBar, SafeAreaView } from 'react-native'
 import React, { useState } from 'react'
 import { TextInput } from 'react-native-paper'
-import AxiosInstance from '../../constants/AxiosInstance'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ICON, COLOR } from '../../constants/Themes'
 
@@ -15,6 +14,7 @@ const AddNew = (props) => {
   const [value, setValue] = useState('');
   const [money, setMoney] = useState('');
   const [note, setNote] = useState('');
+  const [createAt, setCreateAt] = useState('');
   let title = params?.name;
   const handleCheckInput = () => {
     const floatValue = parseFloat(value.replace(',', '.'));
@@ -55,42 +55,48 @@ const AddNew = (props) => {
       <View style={styles.bgTop}>
         <Text style={styles.textTitle}>Thêm chi tiêu cho hôm nay</Text>
       </View>
-      <View style={styles.bgMain}>
-        <View style={styles.bgTop}>
-          <Image style={styles.imgColor} source={require('../../asset/icon/icon_edit.png')}></Image>
-          <TouchableOpacity >
-            <TextInput value={money} onChangeText={setMoney} keyboardType="numeric" returnKeyType="done" placeholderTextColor='white' underlineColor='transparent' style={styles.textMoney} placeholder='Nhập số tiền'></TextInput>
-          </TouchableOpacity>
-          <Text style={styles.textVND}>VNĐ</Text>
+      <View style={styles.shadowView}>
+        <View style={styles.bgMain}>
+          <View style={styles.bgTop}>
+            <Image style={styles.imgColor} source={require('../../asset/icon/icon_edit.png')}></Image>
+            <TouchableOpacity >
+              <TextInput value={money} keyboardType="numeric" returnKeyType="done" placeholderTextColor='white' 
+              underlineColor='transparent' style={styles.textMoney} placeholder='Nhập số tiền'></TextInput>
+            </TouchableOpacity>
+            <Text style={styles.textVND}>VNĐ</Text>
+          </View>
         </View>
-      </View>
+
+        <View >
+          <View style={styles.input}>
+            <TouchableOpacity
+            >
+              <Image style={styles.imgInput} source={require('../../asset/icon/icon_calender.png')} />
+            </TouchableOpacity>
+            <TextInput style={styles.txtInput}
+              onChangeText={setCreateAt} value={createAt}></TextInput>
+          </View>
+        </View>
 
 
-      <View>
-        <View style={styles.input}>
-          <TouchableOpacity >
-            <Image style={styles.imgInput} source={require('../../asset/icon/icon_calender.png')} />
-          </TouchableOpacity>
-          <TextInput style={styles.txtInput}></TextInput>
+        <View style={{ top: 10 }}>
+          <View style={styles.input}>
+            <TouchableOpacity onPress={() => { navigation.navigate('TopTabThuChi') }}>
+              <Image style={styles.imgInput} source={require('../../asset/icon/icon_type.png')} />
+            </TouchableOpacity>
+            <TextInput onChangeText={setCategory} value={category} placeholder='Chọn loại' style={styles.txtInput}></TextInput>
+          </View>
         </View>
-      </View>
-      <View style={{ top: 10 }}>
-        <View style={styles.input}>
-          <TouchableOpacity onPress={() => { navigation.navigate("TopTabThuChi") }}>
-            <Image style={styles.imgInput} source={require('../../asset/icon/icon_type.png')} />
-          </TouchableOpacity>
-          <TextInput placeholder='Chọn loại' style={styles.txtInput} value={title}></TextInput>
-        </View>
-      </View>
-      <View style={{ top: 10 }}>
-        <View style={styles.input}>
-          <Image style={styles.imgNote} source={require('../../asset/icon/icon_note.png')} />
-          <TextInput onChangeText={setNote} value={note} placeholder='Ghi chú' style={styles.txtInput}></TextInput>
-        </View>
-      </View>
 
 
-      
+
+        <View style={{ top: 10 }}>
+          <View style={styles.input}>
+            <Image style={styles.imgInput} source={require('../../asset/icon/icon_note.png')} />
+            <TextInput onChangeText={setNote} value={note} placeholder='Ghi chú' style={styles.txtInput}></TextInput>
+          </View>
+        </View>
+      </View>
 
       <View style={{ alignItems: 'center' }}>
         <TouchableOpacity style={styles.viewSave} onPress={addNew}>

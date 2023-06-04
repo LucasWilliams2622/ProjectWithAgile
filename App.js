@@ -71,13 +71,14 @@ const App = () => {
       <Stack.Navigator initialRouteName="BottomTabs" screenOptions={{ headerShown: false }}>
         {
           !isLogin ?
-            <Stack.Screen name="StackBegin" component={StackBegin}  />
+            <Stack.Screen name="BottomTabs" component={BottomTabs}  />
             :
             <Stack.Screen name="BottomTabs" component={BottomTabs} setIsLogin={setIsLogin}/>
         }
       </Stack.Navigator>
     </NavigationContainer>
   </Provider>
+ 
   )
 }
 

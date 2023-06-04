@@ -10,13 +10,13 @@ const History = (props) => {
   const { params } = route;
   const [data, setdata] = useState([]);
   const [createAt, setCreateAt] = useState("");
-
+  const [isLoading, setisLoading] = useState(false)
   const goAddNew = () => {
     navigation.navigate('AddNew');
   }
   useEffect(() => {
     // const getTransaction = async () => {
-    //   const response = await AxiosIntance().get("transaction/api/get-all-transaction");
+    //   const response = await AxiosInstance().get("transaction/api/get-all-transaction");
     //   console.log(response.transaction);
     //   if (response.result == true) // lấy dữ liệu thành công
     //   {
@@ -36,7 +36,7 @@ const History = (props) => {
   }, []);
   const getTransactionByDate = async () => {
     console.log(createAt);
-    const response = await AxiosIntance().get("transaction/api/search-by-date?date="+createAt);
+    const response = await AxiosInstance().get("transaction/api/search-by-date?date=" + createAt);
     console.log(response.transaction);
     if (response.result == true) // lấy dữ liệu thành công
     {
@@ -81,10 +81,6 @@ const History = (props) => {
                     <Text style={styles.textGif}>Không có chi tiêu nào. Chạm vào đây dể thêm.</Text>
                   </View>
                 </TouchableOpacity>
-              </View>
-              <Text style={styles.textToday}>{createAt}</Text>
-              <View style={styles.jusCenter}>
-                <View style={styles.viewLine}></View>
               </View>
             </ScrollView>
           </View>
