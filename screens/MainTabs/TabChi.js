@@ -1,128 +1,26 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, FlatList } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import AxiosInstance from '../../constants/AxiosInstance';
 
-
-const data = [
-    {
-        id: 1,
-        name: 'Quần Áo',
-        img: require('../../asset/icon/item/clothes.png')
-    },
-    {
-        id: 2,
-        name: 'Bus',
-        img: require('../../asset/icon/item/bus.png')
-    },
-    {
-        id: 3,
-        name: 'Tiền nhà',
-        img: require('../../asset/icon/item/homemoney.png')
-    },
-    {
-        id: 4,
-        name: 'Điện',
-        img: require('../../asset/icon/item/electric.png')
-    },
-    {
-        id: 5,
-        name: 'Cafe',
-        img: require('../../asset/icon/item/cafe.png')
-    },
-    {
-        id: 6,
-        name: 'Ăn uống',
-        img: require('../../asset/icon/item/eat.png')
-    },
-    {
-        id: 7,
-        name: 'Giải trí',
-        img: require('../../asset/icon/item/entertainment.png')
-    },
-    {
-        id: 8,
-        name: 'Xăng',
-        img: require('../../asset/icon/item/gas.png')
-    },
-    {
-        id: 9,
-        name: 'Kinh doanh',
-        img: require('../../asset/icon/item/business.png')
-    },
-    {
-        id: 10,
-        name: 'Sửa chữa',
-        img: require('../../asset/icon/item/machine.png')
-    },
-    {
-        id: 11,
-        name: 'Xem phim',
-        img: require('../../asset/icon/item/movie.png')
-    },
-    {
-        id: 12,
-        name: 'Vé máy bay',
-        img: require('../../asset/icon/item/plane.png')
-    },
-    {
-        id: 13,
-        name: 'Quà tặng',
-        img: require('../../asset/icon/item/gift.png')
-    },
-    {
-        id: 14,
-        name: 'Thuê mượn',
-        img: require('../../asset/icon/item/rent.png')
-    },
-    {
-        id: 15,
-        name: 'Mua sắm',
-        img: require('../../asset/icon/item/shopping.png')
-    },
-    {
-        id: 16,
-        name: 'Giày dép',
-        img: require('../../asset/icon/item/shoe.png')
-    },
-    {
-        id: 17,
-        name: 'Taxi',
-        img: require('../../asset/icon/item/taxi.png')
-    },
-    {
-        id: 18,
-        name: 'Du lịch',
-        img: require('../../asset/icon/item/travel.png')
-    },
-    {
-        id: 19,
-        name: 'Tiền nước',
-        img: require('../../asset/icon/item/water.png')
-    },
-    {
-        id: 20,
-        name: 'Đồ gia dụng',
-        img: require('../../asset/icon/item/cooking.png')
-    },
-   
-
-]
 
 const TopTabThuChi = (props) => {
     const {navigation} = props;
+    const [data, setData] = useState([]);
     
-    // useEffect(() => {
-    //     const getAllIncome = async () => {
-    //       const response = await AxiosInstance().get("category/api/search-by-type/type=true");
-    //       console.log(response.category);
-    //       if (response.category) // lấy dữ liệu thành công
-    //       {
-    //         setdata(response.category);
-    //       } else {
-    //         ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
-    //       }
-    //     }
-    //     getAllIncome();
-    //   }, []);
+    useEffect(() => {
+        const getAllIncome = async () => {
+          const response = await AxiosInstance().get("category/api/search-by-type?type=true");
+          console.log("aaaaaaaaaaaaaaa", response);
+          if (response.result) // lấy dữ liệu thành công
+          {
+            setData(response.category);
+            console.log(">>>>>>>>>>", data);
+          } else {
+            ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
+          }
+        }
+        getAllIncome();
+      }, []);
 
     return (
         <View style={{flex : 1}}>
@@ -140,20 +38,15 @@ const TopTabThuChi = (props) => {
 
                 }} >
                     <TouchableOpacity style={styles.itemContainer} 
-                    onPress={()=>navigation.navigate('AddNew',{name:item.name, img: item.img}) }>
-                        <Image style={styles.image} source={item.img} />
+                    onPress={()=>navigation.navigate('AddNew',{ name:item.name, image: item.image}) }>
+                        <Image style={styles.image} source={{uri:item.image}} />
                         <Text style={styles.txt}>{item.name}</Text>
                     </TouchableOpacity>
                 </View>
 
                 }
             />
-            {/* <FlatList
-            data={data}
-            renderItem={({ item }) => <ItemCollect dulieu={item} navigation={navigation} />}
-            keyExtractor={item => item._id}
-            showsVerticalScrollIndicator={false}
-          /> */}
+
         </View>
     );
 }

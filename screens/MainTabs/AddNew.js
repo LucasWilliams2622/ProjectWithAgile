@@ -3,7 +3,7 @@ import {
   StyleSheet, Text, View, Image, TouchableOpacity,
   Alert, ToastAndroid, StatusBar, Platform, SafeAreaView
 } from 'react-native'
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { TextInput } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ICON, COLOR } from '../../constants/Themes'
@@ -19,13 +19,12 @@ const AddNew = (props) => {
   const [category, setCategory] = useState('');
   const [dateTime, setDateTime] = useState('');
   const [value, setValue] = useState('');
-  const [getImage, setImage] = useState(false); 
   const [name, setname] = useState('');
   const [money, setMoney] = useState('');
   const [note, setNote] = useState('');
   const [createAt, setCreateAt] = useState('');
   let title = params?.name;
-  let img = params?.img
+  let image = params?.image
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
 
@@ -178,8 +177,16 @@ const AddNew = (props) => {
 
         <View style={{ top: 10 }}>
           <View style={styles.input}>
-            <TouchableOpacity onPress={() => {navigation.navigate('TopTabThuChi')}}>
-              <Image style={styles.imgInput} source={require('../../asset/icon/icon_type.png')} />
+            <TouchableOpacity onPress={() => { navigation.navigate('TopTabThuChi') }}>
+              <Image style={styles.imgInput}
+                source={
+                  image == null?(
+                    require('../../asset/icon/icon_type.png')
+                  ):(
+                    { uri:image }
+                  )
+                }
+              />
             </TouchableOpacity>
             <TextInput onChangeText={setCategory} value={category} editable={false} 
             placeholder='Chọn loại' style={styles.txtInput}></TextInput>
@@ -302,8 +309,8 @@ const styles = StyleSheet.create({
     top: 10,
   },
   imgInput: {
-    width: 25,
-    height: 25,
+    width: 30,
+    height: 30,
     marginTop: 20,
     marginLeft: 10
 
