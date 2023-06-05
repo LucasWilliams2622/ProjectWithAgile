@@ -4,12 +4,28 @@ import { COLOR } from '../constants/Themes';
 const windowWIdth = Dimensions.get('window').width;
 
 const ItemCollect = () => {
+  // const { dulieu, navigation } = props;
+  // const AddCategory = () => {
+  //     console.log('Click ne');
+  //     navigation.navigate("AddNew", {id: dulieu._id});
+  // }
+
   return (
     <View style={styles.ItemCollect}>
       <Image style={styles.icon} 
       source={require('../asset/icon/item/bonus.png')} />
       <Text style={styles.text}>ItemCollect</Text>
     </View>
+
+    // <TouchableOpacity onPress={AddCategory}>
+    //   <View style={styles.ItemCollect}>
+    //     <Image style={styles.icon}
+    //       source={require('../asset/icon/item/bonus.png')} />
+    //     <Text style={styles.text}>ItemCollect</Text>
+    //   </View>
+    // </TouchableOpacity>
+
+
   )
 }
 
