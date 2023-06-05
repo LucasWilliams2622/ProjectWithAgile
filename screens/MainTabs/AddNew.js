@@ -19,7 +19,6 @@ const AddNew = (props) => {
   const [category, setCategory] = useState('');
   const [dateTime, setDateTime] = useState('');
   const [value, setValue] = useState('');
-  const [getImage, setImage] = useState(false);
   const [name, setname] = useState('');
   const [money, setMoney] = useState('');
   const [note, setNote] = useState('');
@@ -184,14 +183,12 @@ const AddNew = (props) => {
           <View style={styles.input}>
             <TouchableOpacity onPress={() => { navigation.navigate('TopTabThuChi') }}>
               <Image style={styles.imgInput}
-
                 source={
-                  image==null?(
+                  image == null?(
                     require('../../asset/icon/icon_type.png')
                   ):(
-                    {uri:image}
+                    { uri:image }
                   )
-                  
                 }
               />
             </TouchableOpacity>
@@ -315,8 +312,8 @@ const styles = StyleSheet.create({
     top: 10,
   },
   imgInput: {
-    width: 25,
-    height: 25,
+    width: 30,
+    height: 30,
     marginTop: 20,
     marginLeft: 10
 

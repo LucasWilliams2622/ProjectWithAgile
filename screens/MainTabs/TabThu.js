@@ -3,49 +3,6 @@ import React, { useState, useEffect } from 'react'
 import AxiosInstance from '../../constants/AxiosInstance';
 
 
-const data = [
-    {
-        id: 1,
-        name: 'Chứng khoán',
-        img: require('../../asset/icon/item/stock.png')
-    },
-    {
-        id: 2,
-        name: 'Quà tặng',
-        img: require('../../asset/icon/item/gift.png')
-    },
-    {
-        id: 3,
-        name: 'Thưởng',
-        img: require('../../asset/icon/item/wage.png')
-
-    },
-    {
-        id: 4,
-        name: 'Kinh doanh',
-        img: require('../../asset/icon/item/business.png')
-    },
-    {
-        id: 5,
-        name: 'Lì xì',
-        img: require('../../asset/icon/item/money.png')
-    },
-    {
-        id: 6,
-        name: 'Luong',
-        img: require('../../asset/icon/item/bonus.png')
-    },
-    {
-        id: 7,
-        name: 'Trúng thưởng',
-        img: require('../../asset/icon/item/prize.png')
-    },
-    {
-        id: 8,
-        name: 'Khác',
-        img: require('../../asset/icon/item/other.png')
-    }
-]
 
 const TabThu = (props) => {
     const { navigation } = props;
@@ -54,7 +11,7 @@ const TabThu = (props) => {
     useEffect(() => {
         const getAllExpense = async () => {
             const response = await AxiosInstance().get("category/api/search-by-type?type=false");
-            console.log(response.category);
+            console.log(response);
             if (response.result) // lấy dữ liệu thành công
             {
                 setData(response.category);
@@ -83,12 +40,7 @@ const TabThu = (props) => {
                 </View>
                 }
             />
-            {/* <FlatList
-            data={data}
-            renderItem={({ item }) => <ItemCollect dulieu={item} navigation={navigation} />}
-            keyExtractor={item => item._id}
-            showsVerticalScrollIndicator={false}
-          /> */}
+         
         </View>
     );
 }
