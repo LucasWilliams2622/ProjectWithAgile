@@ -1,34 +1,42 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView ,StatusBar, SafeAreaView} from 'react-native'
-import React, { useState ,useEffect} from 'react'
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, StatusBar, SafeAreaView, FlatList, RefreshControl } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace'
 import { useSelector, useDispatch } from "react-redux"
+import ItemTransaction from '../../component/ItemTransaction';
+import AxiosInstance from '../../constants/AxiosInstance';
+
 const Home = (props) => {
   const { navigation } = props;
-  // const [darkMode, setDarkMode] = useState(false)
-  const darkMode = useSelector(state => state.appReducer.darkMode);
-  const isLoading = useSelector(state => state.appReducer.isLoading);
-  const nameUser = useSelector(state => state.appReducer.nameUser);
-  const dispath = useDispatch();
-  console.log("darkMode", darkMode);
-  console.log("nameUser", nameUser);
 
+  const [isLoading, setIsLoading] = useState(true)
+  const [data, setData] = useState(null)
+  const [stateList, setStateList] = useState(0)
+  const [isShow, setIsShow] = useState(true);
+  const [refreshControl, setRefreshControl] = useState(false)
+  const getTransactionRecent = async () => {
+
+    const response = await AxiosInstance().get("transaction/api/get-all-transaction");
+    console.log(response.transaction);
+    if (response.result) {
+      console.log("===>");
+      setData(response.transaction);
+      setIsLoading(false)
+    } else {
+      ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
+    }
+  }
   useEffect(() => {
-    console.log('isLoading', isLoading);
-  }, [isLoading])
-
-
+    getTransactionRecent()
+  }, [stateList])
   const goAddNew = () => {
     navigation.navigate('AddNew');
   }
-  const [isShow, setisShow] = useState(true);
   return (
     <SafeAreaView>
-      <Text>Home</Text>
-
       <View style={styles.background}></View>
-      <TouchableOpacity onPress={()=>
-        dispath({type:'CHANGE_APP_MODE',payload:{darkMode:!darkMode},}
+      <TouchableOpacity onPress={() =>
+        dispath({ type: 'CHANGE_APP_MODE', payload: { darkMode: !darkMode }, }
         )}>
         <View style={styles.viewAvatarAndText}>
           <Image source={require('../../asset/image/logo.png')} style={styles.imageProfile}></Image>
@@ -43,7 +51,7 @@ const Home = (props) => {
               <Image style={styles.image} source={require('../../asset/icon/icon_calender.png')}></Image>
               <Text style={styles.textDate}>23-05-2023</Text>
             </View>
-            <TouchableOpacity onPress={() => setisShow(!isShow)}>
+            <TouchableOpacity onPress={() => setIsShow(!isShow)}>
               {
                 isShow ?
                   <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_invisible.png')}></Image>
@@ -90,17 +98,41 @@ const Home = (props) => {
       </View>
 
       <Text style={styles.textToday}>Hôm nay:</Text>
+      {!isLoading ?
+        (<View>
+          <FlatList
+            style={{ height: '100%', width: '100%' }}
+            data={data}
+            renderItem={({ item }) => <ItemTransaction dulieu={item} navigation={navigation} />}
+            keyExtractor={item => item._id}
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl refreshing={refreshControl} onRefresh={() => {
+                setRefreshControl(true)
+                console.log("Refresh")
+                setStateList(stateList + 1)
+                console.log(stateList)
 
-      <ScrollView>
-        <View style={styles.viewListGiveAndPay}>
-          <TouchableOpacity onPress={() => { goAddNew() }}>
-            <Image style={{ height: 250, width: 250 }} source={require('../../asset/gif/statistic.gif')}></Image>
-            <View style={{ marginTop: 30 }} >
-              <Text style={styles.textGif}>Hãy thêm chi tiêu hôm nay. Chạm vào đây dể thêm.</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+                setRefreshControl(false)
+              }} colors={['green']} />
+            }
+          />
+          {/* // data.map((item)=><ItemTransaction dulieu={item} key={item._id} navigation={navigation} />) */}
+        </View>)
+        :
+        (<ScrollView>
+          <View style={styles.viewListGiveAndPay}>
+            <TouchableOpacity onPress={() => { goAddNew() }}>
+              <Image style={{ height: 250, width: 250 }} source={require('../../asset/gif/statistic.gif')}></Image>
+              <View style={{ marginTop: 30 }} >
+                <Text style={styles.textGif}>Hãy thêm chi tiêu hôm nay. Chạm vào đây dể thêm.</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>)
+
+      }
+
       <StatusBar style="auto" barStyle="dark-content" backgroundColor={COLOR.background2} />
     </SafeAreaView>
   )

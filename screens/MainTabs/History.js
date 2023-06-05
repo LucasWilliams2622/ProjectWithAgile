@@ -12,59 +12,57 @@ const History = (props) => {
   const { params } = route;
   const [data, setdata] = useState([]);
   const [createAt, setCreateAt] = useState("");
-  const [data2, setData2] = useState([])
+ 
   const [isLoading, setisLoading] = useState(false)
   const [stateList, setStateList] = useState(0);
   const [refreshControl, setRefreshControl] = useState();
   const goAddNew = () => {
     navigation.navigate('AddNew');
   }
-  useEffect(() => {
-    const getTransactionRecent = async () => {
-      const date = new Date();
-      const year = date.getFullYear();
-      const month = date.getMonth() + 1;
-      const day = date.getDate() - 1;
-      console.log(`Ngày tháng năm: ${year}-0${month}-0${day}`)
-      const response = await AxiosInstance().get("transaction/api/search-by-recent?date=" + `${year}-0${month}-0${day}`);
-      console.log(response.transaction);
-      if (response.result == true) // lấy dữ liệu thành công
-      {
-        setData(response.transaction);
-        checkIsLoading();
-      } else {
-        ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
-      }
+  const getTransactionRecent = async () => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate() - 1;
+    console.log(`Ngày tháng năm: ${year}-0${month}-0${day}`)
+    const response = await AxiosInstance().get("transaction/api/search-by-recent?date=" + `${year}-0${month}-0${day}`);
+    console.log(response.transaction);
+    if (response.result == true) // lấy dữ liệu thành công
+    {
+      console.log("===>");
+      setdata(response.transaction);
+      setCreateAt(response.transaction.createAt)
+      console.log(response.transaction.createAt);
+      setisLoading(false)
+    } else {
+      ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
     }
+  }
+  useEffect(() => {
+
     getTransactionRecent();
     return () => {
 
     }
   }, []);
 
-  const checkIsLoading = () => {
-    if (data.length === 0) {
-      setisLoading(true);
-    }
-    else {
-      setisLoading(false);
-    }
-  }
+ 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.background}></View>
       <Text style={styles.text}>Lịch sử chi tiêu</Text>
       <View style={styles.viewSearch}>
         <TextInput placeholder='Tìm kiếm ' style={styles.input} ></TextInput>
-        <TouchableOpacity onPress={getTransactionByDate}>
+        <TouchableOpacity>
           <Image style={styles.imageSearch} source={require('../../asset/icon/icon_search.png')}></Image>
         </TouchableOpacity>
       </View>
       {
         isLoading == true ? (
           <View>
-            <Text style={styles.textToday}>{createAt ? createAt : "00/00/0000"}</Text>
             <View style={styles.jusCenter}>
+            <Text style={styles.textToday}>{createAt ? createAt : "00/00/0000"}</Text>
+
               <View style={styles.viewLine}></View>
             </View>
             <ScrollView>
@@ -80,10 +78,13 @@ const History = (props) => {
           </View>
         ) :
           (
+
             <ScrollView style={{ marginTop: 20 }}>
+              <View style={styles.viewLine}></View>
               <View style={styles.viewListGiveAndPay}>
                 <View>
                   <FlatList
+                    style={{ height:'100%' ,width:'100%'}}
                     data={data}
                     renderItem={({ item }) => <ItemTransaction dulieu={item} navigation={navigation} />}
                     keyExtractor={item => item._id}
@@ -94,7 +95,7 @@ const History = (props) => {
                         console.log("Refresh")
                         setStateList(stateList + 1)
                         console.log(stateList)
-  
+
                         setRefreshControl(false)
                       }} colors={['green']} />
                     }
@@ -160,22 +161,21 @@ const styles = StyleSheet.create({
   },
   textToday: {
     fontSize: 14,
-    fontStyle: 'normal',
     fontWeight: '400',
     color: COLOR.black,
-    marginTop: 55,
     marginLeft: 20,
-    marginBottom: 10
+    marginTop: 15,
+    fontStyle: 'italic'
   },
   viewLine: {
     borderBottomWidth: 1,
     width: 350,
     marginRight: 20,
-    marginLeft: 20
+    marginLeft: 20,
+    marginTop: 6,
   },
   viewListGiveAndPay: {
-    width: 400,
-    height: 400,
+    height:'100%' ,width:'100%',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10
@@ -184,5 +184,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontStyle: 'normal',
     fontWeight: '400',
-  }
+  },
+
 })

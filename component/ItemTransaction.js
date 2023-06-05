@@ -6,7 +6,7 @@ const windowWIdth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const ItemTransaction = (props) => {
   const { dulieu, navigation } = props;
-
+  
   const EditTransaction = async () => {
     console.log('click item');
     navigation.navigate("AddNew", { id: dulieu._id });
@@ -46,14 +46,17 @@ const ItemTransaction = (props) => {
   }
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container}>
       <View style={styles.boxItem}>
         <View style={styles.boxContent}>
-          <Image style={styles.image} resizeMode='cover' source={require('../asset/icon/item/water.png')} />
+          <Image style={styles.image} resizeMode='cover'
+          //  source={{uri:transaction.category.image}} 
+          source={require('../asset/icon/item/drink.png')}
+           />
           <View style={styles.boxText} >
             <Text style={styles.title}>{dulieu.note}</Text>
             <Text style={styles.money}>{dulieu.money}</Text>
-            <Text style={styles.note}>Không có ghi chú</Text>
+            <Text style={styles.note}>{dulieu.note}</Text>
           </View>
           <View style={styles.boxDetail}>
             <View style={styles.boxIcon}>
@@ -69,7 +72,7 @@ const ItemTransaction = (props) => {
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
 
   )
 }
@@ -78,7 +81,11 @@ export default ItemTransaction
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 5, flexDirection: 'column'
+    marginTop: 5, flexDirection: 'column',
+   left:-8,
+    // borderWidth:2,
+    // borderColor:'red',
+   marginBottom:10,
   },
   boxItem: {
     flexDirection: 'row',
@@ -88,8 +95,8 @@ const styles = StyleSheet.create({
   image: {
     borderRadius: 1000,
     borderColor: COLOR.black,
-    height: 55,
-    width: 55,
+    height: 60,
+    width: 60,
     left: -36,
   },
   boxContent: {
@@ -101,21 +108,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 5,
     width: windowWIdth - 50,
+    
 
   },
   boxText: {
     flexDirection: 'column',
     marginRight: 30,
-    borderColor: COLOR.red,
-    borderWidth: 1,
-    left: -45,
+    left: -30,
+    width:100,
+    // borderWidth:2,
+    // borderColor:'red',
   },
   boxDetail: {
     flexDirection: 'column',
     marginLeft: 15,
     justifyContent: 'space-between',
-    borderColor: COLOR.red,
-    borderWidth: 1,
     marginRight: 5,
   },
   boxIcon: {
@@ -130,14 +137,14 @@ const styles = StyleSheet.create({
     margin: 3,
   },
   title: {
-    fontSize: 21,
+    fontSize: 24,
     fontWeight: '400',
     color: COLOR.black,
     left: -5,
   },
   money: {
     fontWeight: '450',
-    fontSize: 10,
+    fontSize: 18,
     color: COLOR.black,
     fontStyle: 'italic',
     marginVertical: 7,
