@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, FlatList } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import AxiosInstance from '../../constants/AxiosInstance';
 
 
 const data = [
@@ -48,21 +49,21 @@ const data = [
 
 const TabThu = (props) => {
     const { navigation } = props;
-    // const [dataNe, setdataNe] = useState([]);
+    const [data, setData] = useState([]);
 
-    // useEffect(() => {
-    //     const getAllExpense = async () => {
-    //       const response = await AxiosInstance().get("category/api/search-by-type/type=false");
-    //       console.log(response.category);
-    //       if (response.category) // lấy dữ liệu thành công
-    //       {
-    //         setdata(response.category);
-    //       } else {
-    //         ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
-    //       }
-    //     }
-    //     getAllExpense();
-    //   }, []);
+    useEffect(() => {
+        const getAllExpense = async () => {
+            const response = await AxiosInstance().get("category/api/search-by-type?type=false");
+            console.log(response.category);
+            if (response.result) // lấy dữ liệu thành công
+            {
+                setData(response.category);
+            } else {
+                ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
+            }
+        }
+        getAllExpense();
+    }, []);
 
     return (
         <View style={{ flex: 1 }}>
@@ -74,13 +75,12 @@ const TabThu = (props) => {
                     width: Dimensions.get('window').width / 2.2,
 
                 }} >
-                    <TouchableOpacity style={styles.itemContainer} 
-                     onPress={()=>navigation.navigate('AddNew',{name:item.name, img: item.img}) }>
-                        <Image style={styles.image} source={item.img} />
+                    <TouchableOpacity style={styles.itemContainer}
+                        onPress={() => navigation.navigate('AddNew', { name: item.name, image: item.image })}>
+                        <Image style={styles.image} source={{uri:item.image}} />
                         <Text style={styles.txt}>{item.name}</Text>
                     </TouchableOpacity>
                 </View>
-
                 }
             />
             {/* <FlatList
