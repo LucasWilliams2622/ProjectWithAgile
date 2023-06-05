@@ -1,5 +1,5 @@
 import { Alert, SafeAreaView, StyleSheet, Text, View, } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -28,7 +28,7 @@ import ItemCollect from './component/ItemCollect'
 import ItemYear from './component/ItemYear'
 import TopTabThuChi from './screens/MainTabs/TopTabThuChi';
 import TestPicker from './screens/TestTab/TestPicker'
-import Test from './screens/TestTab/TestReduxSaga'
+import Test from './screens/TestTab/TestReduxNo2'
 
 import messaging from '@react-native-firebase/messaging';
 import { Provider } from 'react-redux';
@@ -36,31 +36,29 @@ import Redux from './redux/store'
 const Stack = createNativeStackNavigator();
 const StackBegin = () => {
   return (
-    <Stack.Navigator initialRouteName="Welcome" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="BottomTabs" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="ChangePassword" component={ChangePassword} />
       <Stack.Screen name="SignPassword" component={SignPassword} />
       <Stack.Screen name="SignCode" component={SignCode} />
-      
-      
+      <Stack.Screen name="Loading" component={Loading} />
+      <Stack.Screen name="BottomTabs" component={BottomTabs} />
+      <Stack.Screen name="Test" component={Test} />
 
 
 
     </Stack.Navigator>
-
   )
 }
 const App = () => {
-
   const getDeviceToken = async () => {
     let token = await messaging().getToken();
     // console.log("TOKEN NOTIFICATION",token);
   };
   useEffect(() => {
     getDeviceToken();
-
     // Lắng nghe sự kiện khi ứng dụng chạy ngầm
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       Alert.alert(
@@ -70,20 +68,17 @@ const App = () => {
     });
     return unsubscribe;
   }, []);
-
+  const [isLogin, setIsLogin] = useState(false)
   return (
     <Provider store={Redux.store}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="BottomTabs" screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="StackBegin" component={StackBegin} />
-          <Stack.Screen name="Loading" component={Loading} />
-          <Stack.Screen name="BottomTabs" component={BottomTabs} />
-
-
-          <Stack.Screen name="AddNew" component={AddNew} />
-          <Stack.Screen name="Test" component={Test} />
-          <Stack.Screen name="Profile" component={Profile} />
-
+          {
+            !isLogin ?
+              <Stack.Screen name="StackBegin" component={StackBegin} />
+              :
+              <Stack.Screen name="BottomTabs" component={BottomTabs} setIsLogin={setIsLogin} />
+          }
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

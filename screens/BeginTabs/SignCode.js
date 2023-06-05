@@ -5,7 +5,7 @@ import {
 import React, { useState } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import OTPInputView from '@twotalltotems/react-native-otp-input'
-import AxiosIntance from '../../constants/AxiosIntance'
+import AxiosInstance from '../../constants/AxiosInstance'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const SignCode = (props) => {
@@ -18,7 +18,7 @@ const SignCode = (props) => {
         try {
             console.log(email);
             console.log(otpCode);
-            const response = await AxiosIntance().post("user/api/verify-email", { email: email, verifyCode: otpCode });
+            const response = await AxiosInstance().post("user/api/verify-email", { email: email, verifyCode: otpCode });
             console.log(response);
             if (response.result === true) {
                 ToastAndroid.show("Xác thực thành công", ToastAndroid.SHORT);

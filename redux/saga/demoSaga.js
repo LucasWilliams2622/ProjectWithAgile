@@ -6,4 +6,5 @@ export default function* (action) {
     const comments = yield call(getComments) //call api
     console.log("comments", comments);
     yield put({ type: 'GET_COMMENTS_SUCCESS', payload: comments })
+    
 }

@@ -6,7 +6,7 @@ import React, { useState, useEffect } from 'react'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { ICON, COLOR } from '../../constants/Themes'
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
-import AxiosIntance from '../../constants/AxiosIntance';
+import AxiosInstance from '../../constants/AxiosInstance';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const windowWIdth = Dimensions.get('window').width;
@@ -28,14 +28,28 @@ const Login = (props) => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
+
+      const email = userInfo.user.email;
+      const name = userInfo.user.name;
+      const avatar = userInfo.user.photo;
       console.log('Id: ', userInfo.user.id);
       console.log('Email: ', userInfo.user.email);
       console.log('Name: ', userInfo.user.name);
       console.log('FamilyName: ', userInfo.user.familyName);
       console.log('GivenName: ', userInfo.user.givenName);
       console.log('Photo: ', userInfo.user.photo);
-      setInfoUser({ userInfo });
-  
+      try {
+        const response = await AxiosInstance().post("user/api/loginGoogle",
+          { email: email, name: name, avatar: avatar });
+        if (response.result) {
+          console.log("SIGN UP & SIGN IN GOOGLE SUCCESS!");
+          navigation.navigate("BottomTabs")
+        } else {
+          console.log("SIGN UP & SIGN IN GOOGLE FAILED!");
+        }
+      } catch (error) {
+        console.log(error);
+      }
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
@@ -59,8 +73,8 @@ const Login = (props) => {
   const onLogin = async () => {
     try {
       console.log(email, password);
-      const response = await AxiosIntance().post("user/api/login", { email: email, password: password });
-      
+      const response = await AxiosInstance().post("user/api/login", { email: email, password: password });
+
       if (response.result) {
         ToastAndroid.show("Ðăng nhập thành công", ToastAndroid.SHORT);
         navigation.navigate('BottomTabs');
@@ -73,15 +87,15 @@ const Login = (props) => {
   }
 
   const loginGG = async () => {
-    try{
-      const response = await AxiosIntance().post("user/api/loginGG", { email: infoUser.userInfo.user.email });
+    try {
+      const response = await AxiosInstance().post("user/api/loginGG", { email: infoUser.userInfo.user.email });
       if (response.result) {
         ToastAndroid.show("Ðăng nhập thành công", ToastAndroid.SHORT);
         navigation.navigate('BottomTabs');
       } else {
         ToastAndroid.show("Đăng nhập thất bại", ToastAndroid.SHORT);
       }
-    }catch(e){
+    } catch (e) {
       console.log(e);
     }
   }
@@ -126,20 +140,20 @@ const Login = (props) => {
     let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     if (passreg.test(pass) === true) {
       setVerifiedPass({ passreg: pass });
-      console.log("password không hợp lệ");
+      console.log("password hợp lệ");
       setVerifiedPass(true);
       return true;
     }
     else {
       setVerifiedPass({ passreg: pass });
-      console.log("pass ko hợp lệ");
+      console.log("password ko hợp lệ");
     }
   }
 
   const checkAll = () => {
     if (verifiedEmail == true && verifiedPass == true) {
       ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
-       navigation.navigate('Home');
+      navigation.navigate('Home');
     }
     else {
       Alert.alert('Error', 'Email hoặc Password của bạn đã sai! vui lòng kiểm tra lại.');
@@ -163,21 +177,21 @@ const Login = (props) => {
             <Text style={styles.textInstruct}>password to access your account</Text>
           </View>
 
-          <TextInput placeholder='Email' value={email} style={styles.inputEmailAndPass} onChangeText={(text) => setEmail(text)}  ></TextInput>
+          <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(email) => checkEmail(email)}  ></TextInput>
 
           <View style={styles.viewInputPass}>
-            <TextInput  placeholder='Password' style={styles.inputEmailAndPass}
+            <TextInput placeholder='Password' style={styles.inputEmailAndPass}
               secureTextEntry={getPasswordVisible ? false : true}
-              onChangeText={(setPasswordVisible) => setpassword(setPasswordVisible)} value={password} ></TextInput>
+              onChangeText={(setPasswordVisible) => checkPass(setPasswordVisible)} value={verifiedPass} ></TextInput>
             <TouchableOpacity style={styles.visible}
               onPress={() => {
                 setPasswordVisible(!getPasswordVisible)
               }}>
               {
                 getPasswordVisible ?
-                  <Image source={require('../../asset/icon/icon_visible.png')} style={styles.imageIconEye}></Image>
+                  <Image source={require('../../asset/icon/icon_visible.png')} style={styles.imageIcon}></Image>
                   :
-                  <Image source={require('../../asset/icon/icon_invisible.png')} style={styles.imageIconEye}></Image>
+                  <Image source={require('../../asset/icon/icon_invisible.png')} style={styles.imageIcon}></Image>
               }
             </TouchableOpacity>
           </View>
@@ -188,7 +202,7 @@ const Login = (props) => {
         </View>
 
         <View style={{ alignItems: 'center' }}>
-          <TouchableOpacity style={styles.viewPressable}  onPress={() => { onLogin(); }} >
+          <TouchableOpacity style={styles.viewPressable} onPress={() => { onLogin(); }} >
             <Text style={styles.textPressable}>Sign in</Text>
           </TouchableOpacity>
         </View>

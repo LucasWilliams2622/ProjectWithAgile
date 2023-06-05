@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text, TextInput, View, Image, ToastAndroid, Aler
 import React, { useState } from 'react'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { ICON, COLOR } from '../../constants/Themes'
-import AxiosIntance from '../../constants/AxiosIntance'
+import AxiosInstance from '../../constants/AxiosInstance'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const Register = (props) => {
@@ -16,11 +16,37 @@ const Register = (props) => {
     navigation.navigate('Login')
   }
 
+  const checkName = (name) => {
+    let reg = /^[a-z0-9_-]{3,15}$/;
+    if (reg.test(name) === true) {
 
+      //(1) Tên được phép chứa các ký tự, các số, gạch dưới, gạch nối.
+      //(2) Tên phải có độ dài trong khoảng cho phép từ 3 đến 15 ký tự.
+      setname({ name: name });
+      console.log("Ban da nhap dung");
+      setname(true);
+      return true;
+    }
+    else {
+      setname({ name: name });
+      console.log("Ban da nhap sai");
+    }
+  }
+  const checkSignUp = () => {
+    if (name == true) {
+      ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
+      console.log(verifiedEmail);
+      sendVerifiedEmail();
+      //  navigation.navigate('Resigter');
+    }
+    else {
+      Alert.alert('Error', 'Email bạn chưa nhập hoặc nhập sai! vui lòng kiểm tra lại.');
+    }
+  }
   const dangKyGGNe = async () => {
-    console.log(email ,name);
+    console.log(email, name);
     try {
-      const response = await AxiosIntance().post("/user/api/registerGG", { email: email, name: name });
+      const response = await AxiosInstance().post("/user/api/registerGG", { email: email, name: name });
       console.log(response)
       if (response.error === false) {
         ToastAndroid.show("Ðăng ký thành công", ToastAndroid.SHORT);
@@ -32,80 +58,52 @@ const Register = (props) => {
       console.log(e);
     }
   }
-  const checkEmail = (text) => {
+  const checkEmail = (setEmail) => {
     let reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    if (reg.test(text) === true) {
-      setVerifiedEmail({ email: text });
-      console.log("Ban da nhap dung");
-      if (reg.test(setEmail) === true) {
-        setVerifiedEmail({ email: setEmail });
-
-        console.log("Ban da nhap dung");
-        setVerifiedEmail(true);
-        return true;
-      }
-      else {
-        setVerifiedEmail({ email: text });
-        console.log("Ban da nhap sai");
-        setVerifiedEmail({ email: setEmail });
-        console.log("Ban da nhap sai");
-      }
+    if (reg.test(setEmail) === true) {
+      setVerifiedEmail({ email: setEmail });
+      console.log("Ban da nhap dung email");
+      setVerifiedEmail(true);
+      return true;
     }
-    const checkName = (name) => {
-      let reg = /^[a-z0-9_-]{3,15}$/;
-      if (reg.test(name) === true) {
+    else {
+      console.log("Ban da nhap sai email");
 
-        //(1) Tên được phép chứa các ký tự, các số, gạch dưới, gạch nối.
-        //(2) Tên phải có độ dài trong khoảng cho phép từ 3 đến 15 ký tự.
-        setname({ name: text2 });
-        console.log("Ban da nhap dung");
-        setname({ name: name });
-        console.log("Ban da nhap dung");
-        setname(true);
-        return true;
-      }
-      else {
-        setname({ name: text2 });
-        console.log("Ban da nhap sai");
-        setname({ name: name });
-        console.log("Ban da nhap sai");
-      }
-    }
-
-    const checkSignUp = () => {
-      if (verifiedEmail == true && name == true) {
-        ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
-        console.log(verifiedEmail);
-        sendVerifiedEmail();
-        //  navigation.navigate('Resigter');
-      }
-      else {
-        Alert.alert('Error', 'Email bạn chưa nhập hoặc nhập sai! vui lòng kiểm tra lại.');
-      }
-    }
-    const sendVerifiedEmail = async () => {
-      try {
-        //http://localhost:3000
-        console.log("email  ", email);
-        console.log("name  ", name);
-        const result = await AxiosIntance().post("user/api/send-verification-code", { email: email });
-        console.log(result);
-        if (result) {
-          ToastAndroid.show("Đã gửi code", ToastAndroid.SHORT);
-          navigation.navigate('SignCode', { email: email, name: name });
-        } else {
-
-        }
-      } catch (error) {
-
-      }
     }
   }
 
+  const checkAll = () => {
+    if (verifiedEmail == true && name == true) {
+      ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
+      sendVerifiedEmail();
+      console.log(verifiedEmail);
+      //  navigation.navigate('Resigter');
+    }
+    else {
+      Alert.alert('Error', 'Email bạn chưa nhập hoặc nhập sai! vui lòng kiểm tra lại.');
+    }
+  }
+  const sendVerifiedEmail = async () => {
+    try {
+      //http://localhost:3000
+      console.log("email  ", email);
+      console.log("name  ", name);
+      const result = await AxiosInstance().post("user/api/send-verification-code", { email: email });
+      console.log(result);
+      if (result) {
+        ToastAndroid.show("Đã gửi code", ToastAndroid.SHORT);
+        navigation.navigate('SignCode', { email: email, name: name });
+      } else {
+
+      }
+    } catch (error) {
+
+    }
+  }
+
+
   return (
     <KeyboardAwareScrollView>
-
-
       <View style={styles.container}>
         <View style={styles.center}>
           <Text style={styles.textSignIn}>Sign Up</Text>
@@ -115,40 +113,30 @@ const Register = (props) => {
           <Image style={styles.imageLogin} source={require('../../asset/image/LoginAndRegister/signup.png')}></Image>
         </View>
 
-
         <View style={{ marginTop: 7, marginLeft: 5 }}>
           <Text style={styles.textInstruct}>We need to verify you. We will send you a one time verification code.</Text>
         </View>
-       
-        <TextInput placeholder='Name Surname' style={styles.inputEmailAndPass} onChangeText={(name) => checkName(name)} value={name}></TextInput>
 
+        <TextInput placeholder='Name Surname' style={styles.inputEmailAndPass}
+          onChangeText={(name) => checkName(name)} value={name}></TextInput>
         <View style={styles.viewInputPass}>
-          <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(setEmail) => checkEmail(setEmail)} value={email}></TextInput>
+          <TextInput placeholder='Email' style={styles.inputEmailAndPass}
+            onChangeText={(setEmail) => checkEmail(setEmail)}></TextInput>
         </View>
         <View style={{ alignItems: 'center' }}>
-
-          <TouchableOpacity style={styles.viewPressable} onPress={() => { checkSignUp() }}>
+          <TouchableOpacity style={styles.viewPressable} onPress={() => { sendVerifiedEmail() }}>
             <Text style={styles.textPressable}>Sign Up</Text>
           </TouchableOpacity>
-          <Text style={styles.textPressable}>Sign in</Text>
-
+          <View style={[styles.center, { marginTop: 10 }]}>
+            <Text style={styles.textNoneAcc}>Already have an account?</Text>
+            <TouchableOpacity onPress={() => { goLogin() }}>
+              <Text style={[styles.textNoneAcc, { color: COLOR.primary, marginLeft: 5 }]}>Login</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-
-      </View>
-
-      <View style={[styles.center, { marginTop: 10 }]}>
-        <Text style={styles.textNoneAcc}>Already have an account?</Text>
-        <TouchableOpacity onPress={() => { goLogin() }}>
-          <Text style={[styles.textNoneAcc, { color: COLOR.primary, marginLeft: 5 }]}>Login</Text>
-        </TouchableOpacity>
       </View>
 
     </KeyboardAwareScrollView>
-
-
-
-
-
   )
 }
 

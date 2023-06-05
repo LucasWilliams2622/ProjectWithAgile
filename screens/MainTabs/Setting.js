@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, Image, Switch, TouchableOpacity, ScrollView, Alert, ToastAndroid } from 'react-native'
-import React, { useState,useEffect } from 'react'
+import { StyleSheet, Text, View, Image, Switch, TouchableOpacity, ScrollView, Alert, ToastAndroid, StatusBar } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import ToggleSwitch from 'toggle-switch-react-native'
 import { useSelector, useDispatch } from "react-redux"
@@ -35,8 +35,8 @@ const Setting = (props) => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <View>
-          <Image style={styles.imageSetting} source={require('../../asset/icon/icon_setting.png')}></Image>
+        <View style={styles.boxTitle} >
+          <Text style={styles.title}>Cài đặt</Text>
         </View>
 
         <View style={styles.view1}>
@@ -66,12 +66,12 @@ const Setting = (props) => {
               style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }], marginRight: 10, }}
               thumbColor={isEnabled ? '#FFFFFF' : '#FFFFFF'}
               ios_backgroundColor="#3e3e3e"
-              onValueChange={()=>dispath({type:'CHANGE_DRAK_MODE'})}
+              onValueChange={() => dispath({ type: 'CHANGE_DRAK_MODE' })}
               value={isEnabled}
               trackColor={{ false: '#767577', true: '#81b0ff' }}
             />
           </View>
-          
+
           <View style={styles.line}></View>
           <TouchableOpacity style={styles.allignview1} onPress={showNotification}>
             <Text style={styles.text4}>Đơn vị tiền tệ</Text>
@@ -105,9 +105,8 @@ const Setting = (props) => {
           <Text style={styles.text4}>Chia sẽ ứng dụng</Text>
         </View>
       </View>
-
+      <StatusBar style="auto" barStyle="dark-content" backgroundColor={COLOR.background2} />
     </ScrollView>
-
   )
 }
 
@@ -248,7 +247,6 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
     alignSelf: 'center',
-    marginRight: 10,
     marginRight: 20,
   },
   allignview1: {
@@ -258,5 +256,15 @@ const styles = StyleSheet.create({
   },
   bottomItem: {
     marginBottom: 70,
+  },
+  title:{
+    fontWeight:'bold',
+    color:COLOR.white,
+    fontSize:20,
+  },
+  boxTitle:{
+    justifyContent:'flex-start',
+    marginLeft:25,
+    width:'100%',
   }
 })

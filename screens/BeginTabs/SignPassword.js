@@ -4,7 +4,7 @@ import {
 } from 'react-native'
 import React, { useState } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
-import AxiosIntance from '../../constants/AxiosIntance';
+import AxiosInstance from '../../constants/AxiosInstance';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const SignPassword = (props) => {
@@ -15,14 +15,14 @@ const SignPassword = (props) => {
     const [verifiedCfPass, setVerifiedCfPass] = useState(false);
     const [getNewPassVisible, setNewPassVisible] = useState(false)
     const [getConfirmPassVisible, setConfirmPassVisible] = useState(false)
-    const [password, setpassword] = useState('');
-    const [confirmPass, setconfirmPass] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPass, setConfirmPass] = useState('');
     const checkNewPass = (password) => {
         let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
         if (passreg.test(password) === true) {
             setVerifiedPassNew({ passreg: password });
             setVerifiedPassNew(true);
-            setpassword(password);
+            setPassword(password);
             console.log("password hợp lệ");
             return true;
         }
@@ -36,7 +36,7 @@ const SignPassword = (props) => {
         if (passreg.test(text1) === true) {
             setVerifiedCfPass({ passreg: text1 });
             setVerifiedCfPass(true);
-            setconfirmPass(text1);
+            setConfirmPass(text1);
             console.log("password hợp lệ");
             return true;
         }
@@ -45,9 +45,17 @@ const SignPassword = (props) => {
             console.log("pass ko hợp lệ");
         }
     }
+    const checkAll = () => {
+        if (verifiedCfPass == true && verifiedPassNew == true && password === confirmPass) {
+            ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
+            //  navigation.navigate('Resigter');
+        }
+        else {
+            Alert.alert('Error', 'Password của bạn đã sai! vui lòng kiểm tra lại.');
+        }
+    }
 
-
-    const chuyen = async () => {
+    const goLogin = async () => {
         // if (verifiedCfPass == true && verifiedPassNew == true && password === confirmPass) {
         //     ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
         //     navigation.navigate('Welcome');
@@ -62,7 +70,7 @@ const SignPassword = (props) => {
                 console.log(password);
                 ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
                 //http://localhost:3000/
-                const response = await AxiosIntance().post("user/api/register", { name: name, email: email, password: password });
+                const response = await AxiosInstance().post("user/api/register", { name: name, email: email, password: password });
                 console.log(response);
                 if (response.result === true) {
                     ToastAndroid.show("Đăng kí tài khoản thành công", ToastAndroid.SHORT);
@@ -97,8 +105,9 @@ const SignPassword = (props) => {
                 </View>
 
                 <View style={styles.viewInputEmailAndPass}>
-                    <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(password) => checkPassNew(password)}></TextInput>
 
+
+                    <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(password) => checkNewPass(password)}></TextInput>
                     <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIconEye}></Image>
                     <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
                 </View>
@@ -110,16 +119,9 @@ const SignPassword = (props) => {
                 </View>
 
                 <View style={{ alignItems: 'center' }}>
-                    <Pressable style={styles.viewPressable} onPress={chuyen}>
+                    <Pressable style={styles.viewPressable} onPress={goLogin}>
                         <Text style={styles.textPressable}>Next</Text>
                     </Pressable>
-                   
-
-                    <View style={{ alignItems: 'center' }}>
-                        <Pressable style={styles.viewPressable} onPress={chuyen}>
-                            <Text style={styles.textPressable}>Next</Text>
-                        </Pressable>
-                    </View>
                 </View>
             </View>
         </KeyboardAwareScrollView>

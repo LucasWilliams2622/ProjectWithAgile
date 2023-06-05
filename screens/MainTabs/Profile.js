@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, KeyboardAvoidingView, ToastAndroid } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, StatusBar, KeyboardAvoidingView, ToastAndroid } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import { TextInput } from 'react-native-paper'
@@ -6,7 +6,7 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import AxiosIntance from '../../constants/AxiosIntance'
+import AxiosInstance from '../../constants/AxiosInstance'
 
 
 const Profile = (props) => {
@@ -15,6 +15,8 @@ const Profile = (props) => {
   const [avatar, setAvatar] = useState(null)
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
+  const [imageURI, setImageURI] = useState("");
+
   const [currentUser, setCurrentUser] = useState({
     "_id": {
       "$oid": "6478632830be4c0f2ab4472a"
@@ -64,7 +66,6 @@ const Profile = (props) => {
       console.log("ban da nhap sai");
     }
   }
-
   const checkAll = () => {
     if (name.trim() === '') {
       Alert.alert('Error', 'vui lòng nhập tên!');
@@ -73,7 +74,9 @@ const Profile = (props) => {
       Alert.alert('Error', 'vui lòng cho vài dòng thông tin!');
     }
   }
+  const onLogOut = async () => {
 
+  }
   const dialogImageChoose = () => {
     return Alert.alert(
       "Thông báo",
@@ -108,7 +111,6 @@ const Profile = (props) => {
     //   name: 'image.jpg',
     // });
   }
-
   const getImageLibrary = async () => {
     const result = await launchImageLibrary();
     console.log(result.assets[0].uri);
@@ -124,7 +126,7 @@ const Profile = (props) => {
     console.log("----------------->", avatar, name, email)
     // console.log(rawNumber)
     try {
-      const response = await AxiosIntance().put('user/api/update',
+      const response = await AxiosInstance().put('user/api/update',
         {
           email: email,
           name: name,
@@ -159,10 +161,9 @@ const Profile = (props) => {
   });
 
   const getCurrentUserInfo = async () => {
-    // const response = await AxiosIntance().get("lay limit", { email: emailUser, password: passwordUser, name: nameUser });
+    // const response = await AxiosInstance().get("lay limit", { email: emailUser, password: passwordUser, name: nameUser });
     // setLimit(....)
   }
-  const [imageURI, setImageURI] = useState("");
   const handleUpdateUser = async (form) => {
     // const uploadAvatarForm = new FormData();
     // uploadAvatarForm.append('file', {
@@ -171,12 +172,12 @@ const Profile = (props) => {
     //   type: 'image/jpg',
     // });
 
-    // const responseAvatar = await AxiosIntance().post("/user/api/upload-avatar", uploadAvatarForm);
+    // const responseAvatar = await AxiosInstance().post("/user/api/upload-avatar", uploadAvatarForm);
     // const sendData = {
     //   ...form,
     //   limit: Number(limit), avatar: responseAvatar?.link
     // }
-    // const responseUpdateUser = await AxiosIntance().post("/user/api/update", {...form, sendData})
+    // const responseUpdateUser = await AxiosInstance().post("/user/api/update", {...form, sendData})
     setCurrentUser({ ...form, name: "Tung nui" })
   }
 
@@ -189,10 +190,15 @@ const Profile = (props) => {
 
       <View style={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => { navigation.goBack() }}>
-            <Image style={[styles.ImageBack, { tintColor: COLOR.white }]} source={require('../../asset/icon/icon_back.png')}></Image>
+          <View style={styles.boxTop}>
+            <TouchableOpacity onPress={() => { navigation.goBack() }}>
+              <Image style={[styles.ImageBack, { tintColor: COLOR.white }]} source={require('../../asset/icon/icon_back.png')}></Image>
+            </TouchableOpacity>
+            <Text style={styles.text}>Người dùng</Text>
+          </View>
+          <TouchableOpacity onPress={() => { onLogOut() }}>
+            <Image style={[styles.ImageBack, { tintColor: COLOR.white, height: 30, width: 30, marginRight: 10, }]} source={require('../../asset/icon/icon_logout.png')}></Image>
           </TouchableOpacity>
-          <Text style={styles.text}>Người dùng</Text>
         </View>
 
         <TouchableOpacity onPress={dialogImageChoose}>
@@ -249,13 +255,15 @@ const Profile = (props) => {
               value={formik.values?.limit}
             />
           </View>
-          <TouchableOpacity style={styles.buttonSave} onPress={updateProfile}>
-            <Text style={styles.text2}>Lưu thay đổi</Text>
-          </TouchableOpacity>
+           {/* <TouchableOpacity style={styles.buttonSave} onPress={formik.handleSubmit}> */}
+            <TouchableOpacity style={styles.buttonSave} onPress={checkAll}>
+              <Text style={styles.text2}>Lưu thay đổi</Text>
+            </TouchableOpacity>
         </View>
       </View >
-    </KeyboardAwareScrollView>
+      <StatusBar style="auto" barStyle="dark-content" backgroundColor={COLOR.background2} />
 
+    </KeyboardAwareScrollView>
   )
 }
 
@@ -277,7 +285,8 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 60,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
 
 
@@ -349,5 +358,10 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     resizeMode: 'stretch',
     alignItems: 'center',
+  },
+  boxTop: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
