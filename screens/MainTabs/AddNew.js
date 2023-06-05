@@ -27,7 +27,6 @@ const AddNew = (props) => {
     if (type == "set") {
       const currentDate = selectedDate;
       setDate(currentDate);
-
       if(Platform.OS === 'android'){
         toggleDatePicker();
         setDateTime(formatDate(currentDate));
