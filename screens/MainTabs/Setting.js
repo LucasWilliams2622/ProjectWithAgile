@@ -1,19 +1,18 @@
 import { StyleSheet, Text, View, Image, Switch, TouchableOpacity, ScrollView, Alert, ToastAndroid, StatusBar } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import ToggleSwitch from 'toggle-switch-react-native'
 import { useSelector, useDispatch } from "react-redux"
+import { AppContext } from '../../utils/AppContext'
 
 const Setting = (props) => {
   const { navigation } = props;
   const [isEnabled, setIsEnabled] = useState(false);
-  const darkMode = useSelector(state => state.appReducer.darkMode);
-  const isLoading = useSelector(state => state.appReducer.isLoading);
-  const dispath = useDispatch();
-  console.log("===>", darkMode);
+  const { idUser, infoUser } = useContext(AppContext);
+console.log("============>",idUser);
+
   useEffect(() => {
-    console.log('isLoading', isLoading);
-  }, [isLoading])
+  }, [])
 
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
@@ -66,7 +65,7 @@ const Setting = (props) => {
               style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }], marginRight: 10, }}
               thumbColor={isEnabled ? '#FFFFFF' : '#FFFFFF'}
               ios_backgroundColor="#3e3e3e"
-              onValueChange={() => dispath({ type: 'CHANGE_DRAK_MODE' })}
+             
               value={isEnabled}
               trackColor={{ false: '#767577', true: '#81b0ff' }}
             />
@@ -257,14 +256,14 @@ const styles = StyleSheet.create({
   bottomItem: {
     marginBottom: 70,
   },
-  title:{
-    fontWeight:'bold',
-    color:COLOR.white,
-    fontSize:20,
+  title: {
+    fontWeight: 'bold',
+    color: COLOR.white,
+    fontSize: 20,
   },
-  boxTitle:{
-    justifyContent:'flex-start',
-    marginLeft:25,
-    width:'100%',
+  boxTitle: {
+    justifyContent: 'flex-start',
+    marginLeft: 25,
+    width: '100%',
   }
 })

@@ -2,14 +2,14 @@ import {
   Pressable, StyleSheet, Text, Alert, TextInput, Dimensions,
   View, Image, ToastAndroid, TouchableOpacity
 } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect ,useContext} from 'react'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { ICON, COLOR } from '../../constants/Themes'
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import AxiosInstance from '../../constants/AxiosInstance';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { AppContext } from '../../utils/AppContext';
 
-const windowWIdth = Dimensions.get('window').width;
 const Login = (props) => {
   const { navigation } = props;
   const [verifiedEmail, setVerifiedEmail] = useState(false);
@@ -17,14 +17,14 @@ const Login = (props) => {
   const [email, setEmail] = useState('');
   const [password, setpassword] = useState('');
   const [getPasswordVisible, setPasswordVisible] = useState(false);
-  const [infoUser, setInfoUser] = useState(null);
+  const {isLogin, setIsLogin, setInfoUser,setIdUser } = useContext(AppContext);
 
   useEffect(() => {
     GoogleSignin.configure({ webClientId: '999490167711-v29oh1m4p7u2vf1libthj7m2klog9ttp.apps.googleusercontent.com' });
   }, [])
 
   //login gg
-  const signInGG = async () => {
+  const signInGoogle = async () => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
@@ -41,9 +41,15 @@ const Login = (props) => {
       try {
         const response = await AxiosInstance().post("user/api/loginGoogle",
           { email: email, name: name, avatar: avatar });
+          console.log("SIGN IN GOOGLE========>",response);
         if (response.result) {
+          console.log(" SIGN IN GOOGLE========>",response.user._id);
+
+          setIdUser(response.user._id)
+          setIsLogin(true)
+          setInfoUser(response)
           console.log("SIGN UP & SIGN IN GOOGLE SUCCESS!");
-          navigation.navigate("BottomTabs")
+          // navigation.navigate("BottomTabs")
         } else {
           console.log("SIGN UP & SIGN IN GOOGLE FAILED!");
         }
@@ -62,14 +68,9 @@ const Login = (props) => {
       }
     }
   };
-  const goHome = () => {
-    navigation.navigate('BottomTabs');
-  }
-  //chuy?n qua màn hình dang ký
   const goRegister = () => {
     navigation.navigate('Register')
   }
-
   const onLogin = async () => {
     try {
       console.log(email, password);
@@ -85,43 +86,6 @@ const Login = (props) => {
       console.log(e);
     }
   }
-
-  const loginGG = async () => {
-    try {
-      const response = await AxiosInstance().post("user/api/loginGG", { email: infoUser.userInfo.user.email });
-      if (response.result) {
-        ToastAndroid.show("Ðăng nhập thành công", ToastAndroid.SHORT);
-        navigation.navigate('BottomTabs');
-      } else {
-        ToastAndroid.show("Đăng nhập thất bại", ToastAndroid.SHORT);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  // //validate email
-  // const handleEmailSubmit = () => {
-  //   if (!email) {
-  //     Alert.alert('Error', 'Please enter an email address');
-  //   } else if (!validateEmail(email)) {
-  //     Alert.alert('Error', 'Please enter a valid email address');
-  //   } else if (!pass) {
-  //     Alert.alert('Error', 'Please enter a password');
-  //   } else if (!validatePass(pass)) {
-  //     Alert.alert('Error', 'Please enter a valid password');
-  //   }
-  // };
-  // const validateEmail = (email) => {
-  //   const emailRegex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-  //   return emailRegex.test(email);
-  // };
-
-  // //validate password
-  // const validatePass = (pass) => {
-  //   const passRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-  //   return passRegex.test(pass);
-  // };
 
   const checkEmail = (email) => {
     let reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -207,7 +171,7 @@ const Login = (props) => {
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.center} onPress={() => { signInGG(); }}>
+        <TouchableOpacity style={styles.center} onPress={() => { signInGoogle(); }}>
           <View style={styles.viewLoginGG}>
             <Image style={styles.imageLoginGG} source={require('../../asset/image/LoginAndRegister/google.png')} />
             <Text style={styles.textGoogle}>Sign in with Google</Text>

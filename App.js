@@ -33,25 +33,8 @@ import Test from './screens/TestTab/TestReduxNo2'
 import messaging from '@react-native-firebase/messaging';
 import { Provider } from 'react-redux';
 import Redux from './redux/store'
-const Stack = createNativeStackNavigator();
-const StackBegin = () => {
-  return (
-    <Stack.Navigator initialRouteName="BottomTabs" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Welcome" component={Welcome} />
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Register" component={Register} />
-      <Stack.Screen name="ChangePassword" component={ChangePassword} />
-      <Stack.Screen name="SignPassword" component={SignPassword} />
-      <Stack.Screen name="SignCode" component={SignCode} />
-      <Stack.Screen name="Loading" component={Loading} />
-      <Stack.Screen name="BottomTabs" component={BottomTabs} />
-      <Stack.Screen name="Test" component={Test} />
+import { AppContextProvider } from './utils/AppContext'
 
-
-
-    </Stack.Navigator>
-  )
-}
 const App = () => {
   const getDeviceToken = async () => {
     let token = await messaging().getToken();
@@ -68,20 +51,12 @@ const App = () => {
     });
     return unsubscribe;
   }, []);
-  const [isLogin, setIsLogin] = useState(false)
   return (
-    <Provider store={Redux.store}>
+    <AppContextProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="BottomTabs" screenOptions={{ headerShown: false }}>
-          {
-            !isLogin ?
-              <Stack.Screen name="StackBegin" component={StackBegin} />
-              :
-              <Stack.Screen name="BottomTabs" component={BottomTabs} setIsLogin={setIsLogin} />
-          }
-        </Stack.Navigator>
+        <BottomTabs />
       </NavigationContainer>
-    </Provider>
+    </AppContextProvider>
 
   )
 }

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity } from 'react-native'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef ,useContext} from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ICON, COLOR } from '../../constants/Themes'
@@ -12,13 +12,28 @@ import Setting from './Setting'
 import Chart from './Chart'
 import History from './History';
 import TopTabThuChi from '../MainTabs/TopTabThuChi'
+import Login from '../BeginTabs/Login'
+import Welcome from '../BeginTabs/Welcome'
+import Register from '../BeginTabs/Register'
+import SignPassword from '../BeginTabs/SignPassword'
+import SignCode from '../BeginTabs/SignCode'
+import { AppContext } from '../../utils/AppContext'
 
-
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+const StackBegin = () => {
+  return (
+    <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Welcome" component={Welcome} />
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen name="SignPassword" component={SignPassword} />
+      <Stack.Screen name="SignCode" component={SignCode} />
+      <Stack.Screen name="BottomTabs" component={BottomTabs} />
 
+    </Stack.Navigator>
+  )
+}
 const StackHome = () => {
   return (
     <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
@@ -97,8 +112,7 @@ const StackSetting = () => {
     </Stack.Navigator>
   )
 }
-
-const BottomTabs = () => {
+const Main = () => {
   return (
     <Tab.Navigator
       initialRouteName="StackHome"
@@ -171,6 +185,18 @@ const BottomTabs = () => {
       <Tab.Screen name="StackSetting" component={StackSetting} />
     </Tab.Navigator>
   )
+}
+const BottomTabs = () => {
+  const { isLogin, infoUser } = useContext(AppContext);
+  // console.log("isLogin Bottom Tabs=================>", isLogin);
+  console.log("infoUser Bottom Tabs=========>", infoUser);
+
+  return (
+    <>
+      {
+        isLogin == false ? <StackBegin /> : <Main />
+      }
+    </>)
 }
 
 export default BottomTabs
