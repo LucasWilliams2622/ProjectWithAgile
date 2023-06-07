@@ -29,11 +29,13 @@ import ItemYear from './component/ItemYear'
 import TopTabThuChi from './screens/MainTabs/TopTabThuChi';
 import TestPicker from './screens/TestTab/TestPicker'
 import Test from './screens/TestTab/TestReduxNo2'
+import TestAnimation from './screens/TestTab/TestAnimation'
 
 import messaging from '@react-native-firebase/messaging';
 import { Provider } from 'react-redux';
 import Redux from './redux/store'
 import { AppContextProvider } from './utils/AppContext'
+
 
 const App = () => {
   const getDeviceToken = async () => {
