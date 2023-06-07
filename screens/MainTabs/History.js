@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View, TextInput, Image, Dimensions, ScrollView, TouchableOpacity, FlatList, ToastAndroid, StatusBar, SafeAreaView, RefreshControl, Alert } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
 import { ICON, COLOR } from '../../constants/Themes'
 import ItemTransaction from '../../component/ItemTransaction';
 import AxiosInstance from '../../constants/AxiosInstance';
+import { AppContext } from '../../utils/AppContext'
 import { Card } from 'react-native-paper';
 import moment from 'moment';
 const windowWIdth = Dimensions.get('window').width;
@@ -15,6 +16,7 @@ const History = (props) => {
   const [isLoading, setisLoading] = useState(false)
   const [stateList, setStateList] = useState(0);
   const [refreshControl, setRefreshControl] = useState();
+  const { idUser, infoUser } = useContext(AppContext);
   const goAddNew = () => {
     navigation.navigate('AddNew');
   }
@@ -50,12 +52,12 @@ const History = (props) => {
   }, []);
 
   const DeleteTransactionAll = async () => {
-    const response = await AxiosInstance().delete("transaction/api/delete-all?idUser=" +params.idUser);
+    const response = await AxiosInstance().delete("transaction/api/delete-all?idUser=" +idUser);
     console.log(">>>>>>>>>>>>>>>>>>>>>", response);
     console.log(response);
     if (response.result) {//lấy thành công
       ToastAndroid.show("Xoá bài viết thành công", ToastAndroid.SHORT);
-      console.log(">>>>>>>>>>>>>>>>>", transaction);
+      // console.log(">>>>>>>>>>>>>>>>>", transaction);
     } else {
       ToastAndroid.show("Xoá bài viết thất bại", ToastAndroid.SHORT)
     }
