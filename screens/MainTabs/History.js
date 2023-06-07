@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View, TextInput, Image, Dimensions, ScrollView, TouchableOpacity, FlatList, ToastAndroid, StatusBar, SafeAreaView, RefreshControl, Alert } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useContext } from 'react'
 
 import { ICON, COLOR } from '../../constants/Themes'
 import ItemTransaction from '../../component/ItemTransaction';
 import AxiosInstance from '../../constants/AxiosInstance';
 import { Card } from 'react-native-paper';
 import moment from 'moment';
+import { AppContext } from '../../utils/AppContext'
+
 const windowWIdth = Dimensions.get('window').width;
 const History = (props) => {
   const { navigation, route } = props;
@@ -15,6 +17,8 @@ const History = (props) => {
   const [isLoading, setisLoading] = useState(false)
   const [stateList, setStateList] = useState(0);
   const [refreshControl, setRefreshControl] = useState();
+  const { idUser, infoUser } = useContext(AppContext);
+console.log("=======>",idUser);
   const goAddNew = () => {
     navigation.navigate('AddNew');
   }
@@ -27,10 +31,10 @@ const History = (props) => {
     const response = await AxiosInstance().get("transaction/api/search-by-recent?date=" + `${year}-0${month}-0${day}`);
     console.log(">>>>>>>>>>>>>>>>>>>>>", response.transaction);
     console.log(">>>>>>>>>>>>>>>>>>>>>", response.transaction[0].idUser);
-    if(response.transactions && response.transactions.length > 0) {
+    if (response.transactions && response.transactions.length > 0) {
       // lấy idUser ra từ response.transaction[0].idUser
-   }
-    if (response.result == true) // lấy dữ liệu thành công
+    }
+    if (response.result) // lấy dữ liệu thành công
     {
       console.log("===>");
       setdata(response.transaction);
@@ -50,7 +54,7 @@ const History = (props) => {
   }, []);
 
   const DeleteTransactionAll = async () => {
-    const response = await AxiosInstance().delete("transaction/api/delete-all?idUser=" +params.idUser);
+    const response = await AxiosInstance().delete("transaction/api/delete-all?idUser=" + params.idUser);
     console.log(">>>>>>>>>>>>>>>>>>>>>", response);
     console.log(response);
     if (response.result) {//lấy thành công
@@ -62,9 +66,7 @@ const History = (props) => {
   }
   const checkDeleteTransaction = async () => {
     Alert.alert(
-      //Title
       'Xóa tất cả',
-      //Body
       'Bạn có muốn xóa tất cả ?',
       [
         {
@@ -78,9 +80,7 @@ const History = (props) => {
           onPress: () => {
             DeleteTransactionAll();
           }
-        }
-      ]
-    )
+        }])
   }
   return (
     <SafeAreaView style={styles.container}>

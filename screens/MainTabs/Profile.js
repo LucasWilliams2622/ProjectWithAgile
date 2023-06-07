@@ -8,6 +8,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import AxiosInstance from '../../constants/AxiosInstance'
 
+import { AppContext } from '../../utils/AppContext'
 
 const Profile = (props) => {
   const { route, navigation } = props;

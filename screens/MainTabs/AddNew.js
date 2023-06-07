@@ -90,7 +90,8 @@ const AddNew = (props) => {
     console.log(response);
     if (response.result === true) {
       ToastAndroid.show("Thêm mới thành công", ToastAndroid.SHORT);
-      navigation.navigate("BottomTabs");
+      // navigation.navigate("BottomTabs");
+      noHandleWarning()
     }
     else {
       ToastAndroid.show("Thêm mới không thành công ", ToastAndroid.SHORT);
@@ -227,7 +228,7 @@ const AddNew = (props) => {
 
       <View style={{ alignItems: 'center' }}>
         <TouchableOpacity style={styles.viewSave}
-          onPress={addNew}
+          onPress={create}
         // onPress={clickEditTransaction}
         >
 
