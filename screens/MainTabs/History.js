@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, Image, Dimensions, ScrollView, TouchableOpacity, FlatList, ToastAndroid, StatusBar, SafeAreaView, RefreshControl } from 'react-native'
+import { StyleSheet, Text, View, TextInput, Image, Dimensions, ScrollView, TouchableOpacity, FlatList, ToastAndroid, StatusBar, SafeAreaView, RefreshControl, Alert } from 'react-native'
 import React, { useState, useEffect } from 'react'
 
 import { ICON, COLOR } from '../../constants/Themes'
@@ -12,7 +12,6 @@ const History = (props) => {
   const { params } = route;
   const [data, setdata] = useState([]);
   const [createAt, setCreateAt] = useState("");
- 
   const [isLoading, setisLoading] = useState(false)
   const [stateList, setStateList] = useState(0);
   const [refreshControl, setRefreshControl] = useState();
@@ -26,7 +25,11 @@ const History = (props) => {
     const day = date.getDate() - 1;
     console.log(`Ngày tháng năm: ${year}-0${month}-0${day}`)
     const response = await AxiosInstance().get("transaction/api/search-by-recent?date=" + `${year}-0${month}-0${day}`);
-    console.log(response.transaction);
+    console.log(">>>>>>>>>>>>>>>>>>>>>", response.transaction);
+    console.log(">>>>>>>>>>>>>>>>>>>>>", response.transaction[0].idUser);
+    if(response.transactions && response.transactions.length > 0) {
+      // lấy idUser ra từ response.transaction[0].idUser
+   }
     if (response.result == true) // lấy dữ liệu thành công
     {
       console.log("===>");
@@ -46,7 +49,39 @@ const History = (props) => {
     }
   }, []);
 
- 
+  const DeleteTransactionAll = async () => {
+    const response = await AxiosInstance().delete("transaction/api/delete-all?idUser=" +params.idUser);
+    console.log(">>>>>>>>>>>>>>>>>>>>>", response);
+    console.log(response);
+    if (response.result) {//lấy thành công
+      ToastAndroid.show("Xoá bài viết thành công", ToastAndroid.SHORT);
+      console.log(">>>>>>>>>>>>>>>>>", transaction);
+    } else {
+      ToastAndroid.show("Xoá bài viết thất bại", ToastAndroid.SHORT)
+    }
+  }
+  const checkDeleteTransaction = async () => {
+    Alert.alert(
+      //Title
+      'Xóa tất cả',
+      //Body
+      'Bạn có muốn xóa tất cả ?',
+      [
+        {
+          text: 'Không',
+          onPress: () => {
+            console.log('Không xóa');
+          }
+        },
+        {
+          text: 'Có',
+          onPress: () => {
+            DeleteTransactionAll();
+          }
+        }
+      ]
+    )
+  }
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.background}></View>
@@ -61,7 +96,7 @@ const History = (props) => {
         isLoading == true ? (
           <View>
             <View style={styles.jusCenter}>
-            <Text style={styles.textToday}>{createAt ? createAt : "00/00/0000"}</Text>
+              <Text style={styles.textToday}>{createAt ? createAt : "00/00/0000"}</Text>
 
               <View style={styles.viewLine}></View>
             </View>
@@ -84,7 +119,7 @@ const History = (props) => {
               <View style={styles.viewListGiveAndPay}>
                 <View>
                   <FlatList
-                    style={{ height:'100%' ,width:'100%'}}
+                    style={{ height: '100%', width: '100%' }}
                     data={data}
                     renderItem={({ item }) => <ItemTransaction dulieu={item} navigation={navigation} />}
                     keyExtractor={item => item._id}
@@ -100,8 +135,15 @@ const History = (props) => {
                       }} colors={['green']} />
                     }
                   />
-                  {/* // data.map((item)=><ItemTransaction dulieu={item} key={item._id} navigation={navigation} />) */}
+                  <View style={styles.viewDeleteAll}>
+                    <TouchableOpacity style={styles.center} onPress={checkDeleteTransaction}>
+                      <Image style={styles.imageDelete} source={require('../../asset/icon/icon_delete.png')}></Image>
+                      <Text style={styles.textDelete}>Xoá tất cả</Text>
+                    </TouchableOpacity>
+                  </View>
+
                 </View>
+
               </View>
             </ScrollView>
           )
@@ -175,7 +217,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
   viewListGiveAndPay: {
-    height:'100%' ,width:'100%',
+    height: '100%', width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10
@@ -184,6 +226,36 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontStyle: 'normal',
     fontWeight: '400',
+  },
+  viewDeleteAll: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  center: {
+    width: windowWIdth - 200,
+    height: 50,
+    borderRadius: 10,
+    borderWidth: 3,
+    borderColor: COLOR.primary,
+    backgroundColor: COLOR.white,
+    marginBottom: 100
+
+  },
+  imageDelete: {
+    width: 25,
+    height: 25,
+    marginTop: 10,
+    marginLeft: 10,
+    tintColor: COLOR.darkRed
+  },
+  textDelete: {
+    bottom: 30,
+    textAlign: "center",
+    left: 10,
+    fontSize: 25,
+    color: COLOR.primary
+
   },
 
 })
