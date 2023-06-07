@@ -2,18 +2,21 @@ import {
   StyleSheet, Text, View, Image, TouchableOpacity,
   Alert, ToastAndroid, StatusBar, Platform, SafeAreaView, Animated
 } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import AxiosInstance from '../../constants/AxiosInstance'
 import { ProgressBar } from 'react-native-paper';
+import { AppContext } from '../../utils/AppContext'
 
 const TestAnimation = (props) => {
   const [totalIncome, setTotalIncome] = useState('');
   const [totalExpense, setTotalExpense] = useState('');
   const [totalMoney, setTotalMoney] = useState('');
+  const { idUser, infoUser } = useContext(AppContext);
+  console.log("============>",idUser);
 
   useEffect(() => {
     const getInforTransactionTotal = async () => {
-      const respone = await AxiosInstance().get("/transaction/api/get-all-transaction-by-idUser?idUser=647f57430747e813bf72a2a2");
+      const respone = await AxiosInstance().get("/transaction/api/get-all-transaction-by-idUser?idUser="+ idUser);
       console.log("All product of a User: ", respone);
       if (respone.result) {
         setTotalIncome(respone.totalIncome);
@@ -67,7 +70,7 @@ const TestAnimation = (props) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.showTotal}>
       <StatusBar hidden />
       <Progress step={1000000} steps={10000000} height={20} />
     </View>
@@ -77,7 +80,7 @@ const TestAnimation = (props) => {
 export default TestAnimation
 
 const styles = StyleSheet.create({
-  container: {
+  showTotal: {
     flex: 1,
     backgroundColor: '#fff',
     justifyContent: 'center',
