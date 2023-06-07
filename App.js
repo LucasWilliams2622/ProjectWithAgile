@@ -29,6 +29,7 @@ import ItemYear from './component/ItemYear'
 import TopTabThuChi from './screens/MainTabs/TopTabThuChi';
 import TestPicker from './screens/TestTab/TestPicker'
 import Test from './screens/TestTab/TestReduxNo2'
+import TestAnimation from './screens/TestTab/TestAnimation'
 
 import messaging from '@react-native-firebase/messaging';
 import { Provider } from 'react-redux';
@@ -36,7 +37,7 @@ import Redux from './redux/store'
 const Stack = createNativeStackNavigator();
 const StackBegin = () => {
   return (
-    <Stack.Navigator initialRouteName="BottomTabs" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="Test" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
@@ -45,7 +46,7 @@ const StackBegin = () => {
       <Stack.Screen name="SignCode" component={SignCode} />
       <Stack.Screen name="Loading" component={Loading} />
       <Stack.Screen name="BottomTabs" component={BottomTabs} />
-      <Stack.Screen name="Test" component={Test} />
+      <Stack.Screen name="Test" component={TestAnimation} />
 
 
 
