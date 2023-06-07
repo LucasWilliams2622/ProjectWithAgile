@@ -1,21 +1,43 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, StatusBar, SafeAreaView, FlatList, RefreshControl } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, StatusBar, SafeAreaView, FlatList, RefreshControl, Animated } from 'react-native'
+import React, { useState, useEffect, useContext } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace'
 import { useSelector, useDispatch } from "react-redux"
 import ItemTransaction from '../../component/ItemTransaction';
 import AxiosInstance from '../../constants/AxiosInstance';
+import { AppContext } from '../../utils/AppContext';
+import { ProgressBar } from 'react-native-paper';
 
 const Home = (props) => {
-  const { navigation } = props;
-
+  const { navigation, route } = props;
+  const { params } = route;
+  const { idUser, infoUser } = useContext(AppContext);
+  console.log("Log idUser In screen Home: ", idUser);
   const [isLoading, setIsLoading] = useState(true)
   const [data, setData] = useState(null)
   const [stateList, setStateList] = useState(0)
   const [isShow, setIsShow] = useState(true);
   const [refreshControl, setRefreshControl] = useState(false)
-  const getTransactionRecent = async () => {
+  const [totalIncome, setTotalIncome] = useState('');
+  const [totalExpensee, setTotalExpense] = useState('');
+  const [totalMoney, setTotalMoney] = useState('');
 
+  useEffect(() => {
+    const getInforTransactionTotal = async () => {
+      const respone = await AxiosInstance().get("/transaction/api/get-all-transaction-by-idUser?idUser="+idUser);
+      console.log("All product of a User: ", respone);
+      if (respone.result) {
+        setTotalExpense(respone.transaction.totalExpense);
+        console.log('transaction totalExpense: ', respone.transaction.totalExpense);
+      }
+    }
+    getInforTransactionTotal();
+    return () => {
+
+    }
+  }, [])
+
+  const getTransactionRecent = async () => {
     const response = await AxiosInstance().get("transaction/api/get-all-transaction");
     console.log(response.transaction);
     if (response.result) {
@@ -26,12 +48,51 @@ const Home = (props) => {
       ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
     }
   }
+
   useEffect(() => {
     getTransactionRecent()
   }, [stateList])
+
   const goAddNew = () => {
     navigation.navigate('AddNew');
   }
+
+  const Progress = ({ step, steps, height }) => {
+
+    const [width, setWith] = React.useState(0);
+    const animationValue = React.useRef(new Animated.Value(-1000)).current;
+    const reactive = React.useRef(new Animated.Value(-1000)).current;
+
+    React.useEffect(() => {
+      Animated.timing(animationValue, {
+        toValue: reactive,
+        duration: 300,
+        useNativeDriver: true
+      }).start();
+    }, []);
+
+    React.useEffect(() => {
+      reactive.setValue(-width + (width * step) / steps);
+    }, [step, width]);
+
+    return (
+      <>
+
+        <Text style={styles.textCount}>{step}/{steps}</Text>
+
+        <View onLayout={e => {
+          const newWith = e.nativeEvent.layout.width;
+          setWith(newWith);
+        }}
+          style={{ height, backgroundColor: 'rgba(0,0,0,0.1)', borderRadius: height, overflow: 'hidden', }}>
+          <Animated.View
+            style={{ height, width: '100%', backgroundColor: 'rgba(0,0,0,0.5)', position: 'absolute', left: 0, top: 0, transform: [{ translateX: animationValue }] }} />
+        </View>
+
+      </>
+    );
+  };
+
   return (
     <SafeAreaView>
       <View style={styles.background}></View>
@@ -83,18 +144,12 @@ const Home = (props) => {
               }
             </View>
           </View>
-          <View style={styles.viewIn4Menu3}>
-            <View style={[styles.flex, { alignItems: 'center' }]}>
-              <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_load.png')}></Image>
-            </View>
-            <View style={[styles.flex, { alignItems: 'center' }]}>
-
-              {
-                isShow ? <Text style={styles.textTotalManager}>********</Text> : <Text style={styles.textTotalManager}>40/100</Text>
-              }
-            </View>
-          </View>
         </View>
+      </View>
+
+      <View style={styles.showTotal}>
+        <StatusBar hidden />
+        <Progress step={1000000} steps={10000000} height={20} />
       </View>
 
       <Text style={styles.textToday}>Hôm nay:</Text>
@@ -261,5 +316,19 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontStyle: 'normal',
     fontWeight: '400',
-  }
+  },
+  textCount: {
+    fontFamily: 'Menlo',
+    fontWeight: '900',
+    marginBottom: 5,
+    fontSize: 12,
+    color: 'black'
+  },
+  showTotal: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    padding: 20, 
+    marginTop: 20
+  },
 })
