@@ -23,10 +23,19 @@ const AddNew = (props) => {
   const [money, setMoney] = useState('');
   const [note, setNote] = useState('');
   const [createAt, setCreateAt] = useState('');
-  let title = params?.name;
+  const [title, setTitle] = useState('');
+  const limit = 1000000;
+  // let title = params?.name;
   let image = params?.image
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
+
+
+  useEffect(() => {
+    setTitle(params?.name);
+
+  }, [params?.name]);
+
 
   const toggleDatePicker = () => {
     setShowPicker(!showPicker);
@@ -36,7 +45,7 @@ const AddNew = (props) => {
     if (type == "set") {
       const currentDate = selectedDate;
       setDate(currentDate);
-      if(Platform.OS === 'android'){
+      if (Platform.OS === 'android') {
         toggleDatePicker();
         setDateTime(formatDate(currentDate));
       }
@@ -57,14 +66,14 @@ const AddNew = (props) => {
     return `${day}/${month}/${year}`;
   };
 
-  const handleCheckInput = () => {
-    const floatValue = parseFloat(value.replace(',', '.'));
-    if (name.trim() === '') {
-      Alert.alert('Vui lòng nhập tiêu đề');
-    } else if (isNaN(floatValue) || floatValue <= 0) {
-      Alert.alert('Vui lòng nhập số tiền hợp lệ');
-    }
-  };
+  // const handleCheckInput = () => {
+  //   const floatValue = parseFloat(value.replace(',', '.'));
+  //   if (name.trim() === '') {
+  //     Alert.alert('Vui lòng nhập tiêu đề');
+  //   } else if (isNaN(floatValue) || floatValue <= 0) {
+  //     Alert.alert('Vui lòng nhập số tiền hợp lệ');
+  //   }
+  // };
 
   // const handleCheckInput = () => {
   //   const floatValue = parseFloat(money.replace(',', '.')); 
@@ -75,6 +84,29 @@ const AddNew = (props) => {
   //     Alert.alert('Vui lòng nhập số tiền hợp lệ');
   //   }
   // };
+  const create = async () => {
+    const response = await AxiosInstance()
+      .post("transaction/api/add-new", { money: money, note: title });
+    console.log(response);
+    if (response.result === true) {
+      ToastAndroid.show("Thêm mới thành công", ToastAndroid.SHORT);
+      navigation.navigate("BottomTabs");
+    }
+    else {
+      ToastAndroid.show("Thêm mới không thành công ", ToastAndroid.SHORT);
+    }
+  }
+
+  const noHandleWarning = () => {
+    setname("");
+    setMoney("");
+    setNote("");
+    setDateTime("");
+    setCategory("");
+    setTitle("");
+  }
+
+
   const addNew = async () => {
     try {
       const floatValue = parseFloat(money.replace(',', '.'));
@@ -82,18 +114,11 @@ const AddNew = (props) => {
         Alert.alert('Vui lòng nhập tiêu đề');
       } else if (isNaN(floatValue) || floatValue <= 0) {
         Alert.alert('Vui lòng nhập số tiền hợp lệ');
-      }
-      else {
-        const response = await AxiosInstance()
-          .post("transaction/api/add-new", { money: money, note: title });
-        console.log(response);
-        if (response.result === true) {
-          ToastAndroid.show("Thêm mới thành công", ToastAndroid.SHORT);
-          navigation.navigate("BottomTabs");
-        }
-        else {
-          ToastAndroid.show("Thêm mới không thành công không thành công", ToastAndroid.SHORT);
-        }
+      } else if (floatValue > limit) {
+        Alert.alert('Số tiền đã vượt quá hạn mức !', 'Bạn muốn tiếp tục chứ?',
+          [{ text: 'No', onPress: () => noHandleWarning() },
+          { text: 'Yes', onPress: () => create() }
+          ])
       }
     } catch (error) {
       console.log("ERROR", error);
@@ -145,9 +170,9 @@ const AddNew = (props) => {
           <View style={styles.bgTop}>
             <Image style={styles.imgColor} source={require('../../asset/icon/icon_edit.png')}></Image>
             <TouchableOpacity >
-              <TextInput value={money}  onChangeText={(text)=>(setMoney(text))} keyboardType="numeric" 
-              returnKeyType="done" placeholderTextColor='white' 
-              underlineColor='transparent' style={styles.textMoney} placeholder='Nhập số tiền'></TextInput>
+              <TextInput value={money} onChangeText={(text) => (setMoney(text))} keyboardType="numeric"
+                returnKeyType="done" placeholderTextColor='white'
+                underlineColor='transparent' style={styles.textMoney} placeholder='Nhập số tiền'></TextInput>
             </TouchableOpacity>
             <Text style={styles.textVND}>VNĐ</Text>
           </View>
@@ -179,16 +204,16 @@ const AddNew = (props) => {
             <TouchableOpacity onPress={() => { navigation.navigate('TopTabThuChi') }}>
               <Image style={styles.imgInput}
                 source={
-                  image == null?(
+                  image == null ? (
                     require('../../asset/icon/icon_type.png')
-                  ):(
-                    { uri:image }
+                  ) : (
+                    { uri: image }
                   )
                 }
               />
             </TouchableOpacity>
-            <TextInput onChangeText={setCategory} value={category} editable={false} 
-            placeholder='Chọn loại' style={styles.txtInput}></TextInput>
+            <TextInput onChangeText={setCategory} value={title} editable={false}
+              placeholder='Chọn loại' style={styles.txtInput}></TextInput>
           </View>
         </View>
 
@@ -202,9 +227,10 @@ const AddNew = (props) => {
 
       <View style={{ alignItems: 'center' }}>
         <TouchableOpacity style={styles.viewSave}
-          onPress={handleCheckInput}
+          onPress={addNew}
         // onPress={clickEditTransaction}
         >
+
           <Text style={styles.textSave}>Lưu Chi tiêu</Text>
         </TouchableOpacity>
       </View>
