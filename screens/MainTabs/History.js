@@ -4,6 +4,7 @@ import React, { useState, useEffect,useContext } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import ItemTransaction from '../../component/ItemTransaction';
 import AxiosInstance from '../../constants/AxiosInstance';
+import { AppContext } from '../../utils/AppContext'
 import { Card } from 'react-native-paper';
 import moment from 'moment';
 import { AppContext } from '../../utils/AppContext'
@@ -18,7 +19,7 @@ const History = (props) => {
   const [stateList, setStateList] = useState(0);
   const [refreshControl, setRefreshControl] = useState();
   const { idUser, infoUser } = useContext(AppContext);
-console.log("=======>",idUser);
+
   const goAddNew = () => {
     navigation.navigate('AddNew');
   }
@@ -54,12 +55,12 @@ console.log("=======>",idUser);
   }, []);
 
   const DeleteTransactionAll = async () => {
-    const response = await AxiosInstance().delete("transaction/api/delete-all?idUser=" + params.idUser);
+    const response = await AxiosInstance().delete("transaction/api/delete-all?idUser=" +idUser);
     console.log(">>>>>>>>>>>>>>>>>>>>>", response);
     console.log(response);
-    if (response.result) {//lấy thành công
+    if (response.result) {
       ToastAndroid.show("Xoá bài viết thành công", ToastAndroid.SHORT);
-      console.log(">>>>>>>>>>>>>>>>>", transaction);
+      // console.log(">>>>>>>>>>>>>>>>>", transaction);
     } else {
       ToastAndroid.show("Xoá bài viết thất bại", ToastAndroid.SHORT)
     }
