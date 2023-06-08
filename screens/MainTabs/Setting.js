@@ -4,16 +4,30 @@ import { ICON, COLOR } from '../../constants/Themes'
 import ToggleSwitch from 'toggle-switch-react-native'
 import { useSelector, useDispatch } from "react-redux"
 import { AppContext } from '../../utils/AppContext'
+import AxiosInstance from '../../constants/AxiosInstance';
 
 const Setting = (props) => {
   const { navigation } = props;
   const [isEnabled, setIsEnabled] = useState(false);
   const { idUser, infoUser } = useContext(AppContext);
-console.log("============>",idUser);
-
+  const [user, setUser] = useState([])
+  console.log("============>", idUser);
+  const getInfoUser = async () => {
+    try {
+      const response = await AxiosInstance().get("user/api/get-by-id?id=" + idUser);
+      console.log("USER ",response);
+      if (response.result) {
+        setUser(response.user)
+      } else {
+        console.log("Failed to get info User");
+      }
+    } catch (error) {
+      console.log("=========>", error);
+    }
+  }
   useEffect(() => {
+    getInfoUser()
   }, [])
-
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const version = '1.0.0.0';
@@ -41,7 +55,7 @@ console.log("============>",idUser);
         <View style={styles.view1}>
           <View>
             <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-              <Image style={styles.imageProfile} source={require('../../asset/image/logo.png')}></Image>
+              <Image style={styles.imageProfile} source={{ uri: user.avatar }}></Image>
             </TouchableOpacity>
           </View>
 
@@ -65,7 +79,7 @@ console.log("============>",idUser);
               style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }], marginRight: 10, }}
               thumbColor={isEnabled ? '#FFFFFF' : '#FFFFFF'}
               ios_backgroundColor="#3e3e3e"
-             
+
               value={isEnabled}
               trackColor={{ false: '#767577', true: '#81b0ff' }}
             />

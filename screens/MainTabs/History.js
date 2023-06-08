@@ -12,9 +12,9 @@ const windowWIdth = Dimensions.get('window').width;
 const History = (props) => {
   const { navigation, route } = props;
   const { params } = route;
-  const [data, setdata] = useState([]);
+  const [data, setData] = useState([]);
   const [createAt, setCreateAt] = useState("");
-  const [isLoading, setisLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [stateList, setStateList] = useState(0);
   const [refreshControl, setRefreshControl] = useState();
   const { idUser, infoUser } = useContext(AppContext);
@@ -28,19 +28,18 @@ const History = (props) => {
     const month = date.getMonth() + 1;
     const day = date.getDate() - 1;
     console.log(`Ngày tháng năm: ${year}-0${month}-0${day}`)
-    const response = await AxiosInstance().get("transaction/api/search-by-recent?date=" + `${year}-0${month}-0${day}`);
-    console.log(">>>>>>>>>>>>>>>>>>>>>", response.transaction);
+    const response = await AxiosInstance().get("transaction/api/search-by-recent?date=" + `${year}-0${month}-0${day}&idUser=`+idUser);
+    // console.log(">>>>>>>>>>>>>>>>>>>>>", response.transaction.category.image);
     console.log(">>>>>>>>>>>>>>>>>>>>>", response.transaction[0].idUser);
     if (response.transactions && response.transactions.length > 0) {
       // lấy idUser ra từ response.transaction[0].idUser
     }
     if (response.result) // lấy dữ liệu thành công
     {
-      console.log("===>");
-      setdata(response.transaction);
+      setData(response.transaction);
       setCreateAt(response.transaction.createAt)
       console.log(response.transaction.createAt);
-      setisLoading(false)
+      setIsLoading(false)
     } else {
       ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
     }
@@ -113,7 +112,6 @@ const History = (props) => {
           </View>
         ) :
           (
-
             <ScrollView style={{ marginTop: 20 }}>
               <View style={styles.viewLine}></View>
               <View style={styles.viewListGiveAndPay}>
@@ -121,7 +119,7 @@ const History = (props) => {
                   <FlatList
                     style={{ height: '100%', width: '100%' }}
                     data={data}
-                    renderItem={({ item }) => <ItemTransaction dulieu={item} navigation={navigation} />}
+                    renderItem={({ item }) => <ItemTransaction data={item} navigation={navigation} />}
                     keyExtractor={item => item._id}
                     showsVerticalScrollIndicator={false}
                     refreshControl={

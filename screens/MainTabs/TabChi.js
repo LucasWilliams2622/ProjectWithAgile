@@ -6,15 +6,18 @@ import AxiosInstance from '../../constants/AxiosInstance';
 const TopTabThuChi = (props) => {
     const {navigation} = props;
     const [data, setData] = useState([]);
-    
+    const putDataAddNew = (item) => {
+        console.log("item._id",item._id);
+        navigation.navigate('AddNew', { _idCategory: item._id, name: item.name, image: item.image })
+
+    }
     useEffect(() => {
         const getAllIncome = async () => {
           const response = await AxiosInstance().get("category/api/search-by-type?type=true");
-          console.log("aaaaaaaaaaaaaaa", response);
+        //   console.log("aaaaaaaaaaaaaaa", response);
           if (response.result) // lấy dữ liệu thành công
           {
             setData(response.category);
-            console.log(">>>>>>>>>>", data);
           } else {
             ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
           }
@@ -24,21 +27,15 @@ const TopTabThuChi = (props) => {
 
     return (
         <View style={{flex : 1}}>
-
-
             <FlatList
-
                 data={data}
                 numColumns={2}
                 columnWrapperStyle={{ justifyContent: 'space-between' }}
                 renderItem={({ item, index }) => <View style={{
-
                     width: Dimensions.get('window').width / 2.2,
-
-
                 }} >
                     <TouchableOpacity style={styles.itemContainer} 
-                    onPress={()=>navigation.navigate('AddNew',{ name:item.name, image: item.image}) }>
+                    onPress={()=>{putDataAddNew(item)} }>
                         <Image style={styles.image} source={{uri:item.image}} />
                         <Text style={styles.txt}>{item.name}</Text>
                     </TouchableOpacity>

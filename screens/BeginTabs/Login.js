@@ -141,12 +141,12 @@ const Login = (props) => {
             <Text style={styles.textInstruct}>password to access your account</Text>
           </View>
 
-          <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(email) => checkEmail(email)}  ></TextInput>
+          <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(email) => [checkEmail(email) ,setEmail(email)]} value={email} ></TextInput>
 
           <View style={styles.viewInputPass}>
             <TextInput placeholder='Password' style={styles.inputEmailAndPass}
               secureTextEntry={getPasswordVisible ? false : true}
-              onChangeText={(setPasswordVisible) => checkPass(setPasswordVisible)} value={verifiedPass} ></TextInput>
+              onChangeText={(setPasswordVisible) => checkPass(setPasswordVisible)} value={password} ></TextInput>
             <TouchableOpacity style={styles.visible}
               onPress={() => {
                 setPasswordVisible(!getPasswordVisible)
@@ -166,7 +166,7 @@ const Login = (props) => {
         </View>
 
         <View style={{ alignItems: 'center' }}>
-          <TouchableOpacity style={styles.viewPressable} onPress={() => { onLogin(); }} >
+          <TouchableOpacity style={styles.viewPressable} onPress={() => { onLogin() }} >
             <Text style={styles.textPressable}>Sign in</Text>
           </TouchableOpacity>
         </View>

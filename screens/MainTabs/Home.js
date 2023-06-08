@@ -12,7 +12,6 @@ const Home = (props) => {
   const { navigation, route } = props;
   const { params } = route;
   const { idUser, infoUser } = useContext(AppContext);
-  console.log("Log idUser In screen Home: ", idUser);
   const [isLoading, setIsLoading] = useState(true)
   const [data, setData] = useState(null)
   const [stateList, setStateList] = useState(0)
@@ -22,41 +21,31 @@ const Home = (props) => {
   const [totalExpensee, setTotalExpense] = useState('');
   const [totalMoney, setTotalMoney] = useState('');
 
-  useEffect(() => {
-    const getInforTransactionTotal = async () => {
-      const respone = await AxiosInstance().get("/transaction/api/get-all-transaction-by-idUser?idUser="+idUser);
-      console.log("All product of a User: ", respone);
-      if (respone.result) {
-        setTotalExpense(respone.transaction.totalExpense);
-        console.log('transaction totalExpense: ', respone.transaction.totalExpense);
+
+  const getAllTransaction = async () => {
+    try {
+      const response = await AxiosInstance().get("/transaction/api/get-all-transaction-by-idUser?idUser=" + idUser);
+      console.log("All product of a User: ", response);
+      if (response.result) {
+        console.log('transaction totalExpense: ', response.transaction.totalExpense);
+        setData(response.transaction);
+        setIsLoading(false)
+        setTotalExpense(response.transaction.totalExpense);
       }
+    } catch (error) {
+      console.log(error);
     }
-    getInforTransactionTotal();
+  }
+  useEffect(() => {
+console.log("INFOR ",infoUser);
+    getAllTransaction();
     return () => {
 
     }
-  }, [])
-
-  const getTransactionRecent = async () => {
-    const response = await AxiosInstance().get("transaction/api/get-all-transaction");
-    console.log(response.transaction);
-    if (response.result) {
-      console.log("===>");
-      setData(response.transaction);
-      setIsLoading(false)
-    } else {
-      ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
-    }
-  }
-
-  useEffect(() => {
-    getTransactionRecent()
   }, [stateList])
-
   const goAddNew = () => {
     navigation.navigate('AddNew');
   }
-
   const Progress = ({ step, steps, height }) => {
 
     const [width, setWith] = React.useState(0);
@@ -96,12 +85,10 @@ const Home = (props) => {
   return (
     <SafeAreaView>
       <View style={styles.background}></View>
-      <TouchableOpacity onPress={() =>
-        dispath({ type: 'CHANGE_APP_MODE', payload: { darkMode: !darkMode }, }
-        )}>
+      <TouchableOpacity>
         <View style={styles.viewAvatarAndText}>
           <Image source={require('../../asset/image/logo.png')} style={styles.imageProfile}></Image>
-          <Text style={styles.textHello}>Xin chào Bạn </Text>
+          <Text style={styles.textHello}>Xin chào {infoUser.name}</Text>
         </View>
       </TouchableOpacity>
 
@@ -120,7 +107,6 @@ const Home = (props) => {
                   <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_visible.png')}></Image>
               }
             </TouchableOpacity>
-
           </View>
 
           <View style={styles.viewIn4Menu2}>
@@ -155,24 +141,28 @@ const Home = (props) => {
       <Text style={styles.textToday}>Hôm nay:</Text>
       {!isLoading ?
         (<View>
-          <FlatList
-            style={{ height: '100%', width: '100%' }}
-            data={data}
-            renderItem={({ item }) => <ItemTransaction dulieu={item} navigation={navigation} />}
-            keyExtractor={item => item._id}
-            showsVerticalScrollIndicator={false}
-            refreshControl={
-              <RefreshControl refreshing={refreshControl} onRefresh={() => {
-                setRefreshControl(true)
-                console.log("Refresh")
-                setStateList(stateList + 1)
-                console.log(stateList)
+          <ScrollView>
 
-                setRefreshControl(false)
-              }} colors={['green']} />
-            }
-          />
-          {/* // data.map((item)=><ItemTransaction dulieu={item} key={item._id} navigation={navigation} />) */}
+            <FlatList
+              style={{ height: 500, width: '100%', marginBottom: 800 }}
+              data={data}
+              renderItem={({ item }) => <ItemTransaction data={item} navigation={navigation} />}
+              keyExtractor={item => item._id}
+              showsVerticalScrollIndicator={false}
+              refreshControl={
+                <RefreshControl refreshing={refreshControl} onRefresh={() => {
+                  setRefreshControl(true)
+                  console.log("Refresh")
+                  setStateList(stateList + 1)
+                  console.log(stateList)
+
+                  setRefreshControl(false)
+                }} colors={['green']} />
+              }
+            />
+            {/* // data.map((item)=><ItemTransaction data={item} key={item._id} navigation={navigation} />) */}
+          </ScrollView>
+
         </View>)
         :
         (<ScrollView>
@@ -328,7 +318,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     justifyContent: 'center',
-    padding: 20, 
+    padding: 20,
     marginTop: 20
   },
 })

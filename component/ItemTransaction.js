@@ -5,15 +5,15 @@ import AxiosInstance from '../constants/AxiosInstance';
 const windowWIdth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const ItemTransaction = (props) => {
-  const { dulieu, navigation } = props;
+  const { data, navigation } = props;
   
   const EditTransaction = async () => {
     console.log('click item');
-    navigation.navigate("AddNew", { id: dulieu._id });
+    navigation.navigate("AddNew", { id: data._id });
   }
 
   const DeleteTransaction = async () => {
-    const response = await AxiosInstance().delete("transaction/api/delete-by-id?id=" + dulieu._id);
+    const response = await AxiosInstance().delete("transaction/api/delete-by-id?id=" + data._id);
     console.log(response);
     if (response.result == true) {//lấy thành công
       ToastAndroid.show("Xoá bài viết thành công", ToastAndroid.SHORT);
@@ -54,9 +54,9 @@ const ItemTransaction = (props) => {
           source={require('../asset/icon/item/drink.png')}
            />
           <View style={styles.boxText} >
-            <Text style={styles.title}>{dulieu.note}</Text>
-            <Text style={styles.money}>{dulieu.money}</Text>
-            <Text style={styles.note}>{dulieu.note}</Text>
+            <Text style={styles.title}>{data.category.name}</Text>
+            <Text style={styles.money}>{data.money}</Text>
+            <Text style={styles.note}>{data.note}</Text>
           </View>
           <View style={styles.boxDetail}>
             <View style={styles.boxIcon}>
@@ -68,7 +68,7 @@ const ItemTransaction = (props) => {
               </TouchableOpacity>
 
             </View>
-            <Text style={styles.date}>{dulieu.createAt}</Text>
+            <Text style={styles.date}>{data.createAt}</Text>
           </View>
         </View>
       </View>

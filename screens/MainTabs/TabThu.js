@@ -7,13 +7,18 @@ import AxiosInstance from '../../constants/AxiosInstance';
 const TabThu = (props) => {
     const { navigation } = props;
     const [data, setData] = useState([]);
+    const putDataAddNew = (item) => {
+        console.log("item._id",item._id);
+        navigation.navigate('AddNew', { _idCategory: item._id, name: item.name, image: item.image })
 
+    }
     useEffect(() => {
         const getAllExpense = async () => {
             const response = await AxiosInstance().get("category/api/search-by-type?type=false");
             console.log(response);
             if (response.result) // lấy dữ liệu thành công
             {
+                // console.log("============> IDĐ", response.category);
                 setData(response.category);
             } else {
                 ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
@@ -33,14 +38,14 @@ const TabThu = (props) => {
 
                 }} >
                     <TouchableOpacity style={styles.itemContainer}
-                        onPress={() => navigation.navigate('AddNew', { name: item.name, image: item.image })}>
-                        <Image style={styles.image} source={{uri:item.image}} />
+                        onPress={() => { putDataAddNew(item) }}>
+                        <Image style={styles.image} source={{ uri: item.image }} />
                         <Text style={styles.txt}>{item.name}</Text>
                     </TouchableOpacity>
                 </View>
                 }
             />
-         
+
         </View>
     );
 }

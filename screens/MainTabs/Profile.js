@@ -7,7 +7,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import AxiosInstance from '../../constants/AxiosInstance'
-
 import { AppContext } from '../../utils/AppContext'
 
 const Profile = (props) => {
@@ -18,7 +17,7 @@ const Profile = (props) => {
   const [description, setDescription] = useState('')
   const [imageURI, setImageURI] = useState("");
   const { idUser, infoUser } = useContext(AppContext);
-
+console.log(idUser);
   const [currentUser, setCurrentUser] = useState({
     "_id": {
       "$oid": "6478632830be4c0f2ab4472a"
