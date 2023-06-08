@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, StatusBar, KeyboardAvoidingView, ToastAndroid } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useContext } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import { TextInput } from 'react-native-paper'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
@@ -12,11 +12,12 @@ import { AppContext } from '../../utils/AppContext'
 
 const Profile = (props) => {
   const { route, navigation } = props;
-  const [email, setemail] = useState('quochuy3232@gmail.com')
+  const [email, setemail] = useState('')
   const [avatar, setAvatar] = useState(null)
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [imageURI, setImageURI] = useState("");
+  const { idUser, infoUser } = useContext(AppContext);
 
   const [currentUser, setCurrentUser] = useState({
     "_id": {
@@ -82,26 +83,23 @@ const Profile = (props) => {
     return Alert.alert(
       "Thông báo",
       "Chọn phương thức lấy ảnh",
-      [
-        {
-          text: "Chụp ảnh ",
-          onPress: () => {
-            capture()
-          },
+      [{
+        text: "Chụp ảnh ",
+        onPress: () => {
+          capture()
         },
-
-        {
-          text: "Tải ảnh lên",
-          onPress: () => {
-            getImageLibrary()
-          },
+      },
+      {
+        text: "Tải ảnh lên",
+        onPress: () => {
+          getImageLibrary()
         },
-        {
-          text: "Hủy",
-        },
-      ]
-    );
-  };
+      },
+      {
+        text: "Hủy",
+      },
+      ])
+  }
   const capture = async () => {
     const result = await launchCamera();
     console.log(result.assets[0].uri);
@@ -256,10 +254,10 @@ const Profile = (props) => {
               value={formik.values?.limit}
             />
           </View>
-           {/* <TouchableOpacity style={styles.buttonSave} onPress={formik.handleSubmit}> */}
-            <TouchableOpacity style={styles.buttonSave} onPress={checkAll}>
-              <Text style={styles.text2}>Lưu thay đổi</Text>
-            </TouchableOpacity>
+          {/* <TouchableOpacity style={styles.buttonSave} onPress={formik.handleSubmit}> */}
+          <TouchableOpacity style={styles.buttonSave} onPress={checkAll}>
+            <Text style={styles.text2}>Lưu thay đổi</Text>
+          </TouchableOpacity>
         </View>
       </View >
       <StatusBar style="auto" barStyle="dark-content" backgroundColor={COLOR.background2} />

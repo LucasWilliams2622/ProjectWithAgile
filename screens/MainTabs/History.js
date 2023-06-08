@@ -7,7 +7,6 @@ import AxiosInstance from '../../constants/AxiosInstance';
 import { AppContext } from '../../utils/AppContext'
 import { Card } from 'react-native-paper';
 import moment from 'moment';
-import { AppContext } from '../../utils/AppContext'
 
 const windowWIdth = Dimensions.get('window').width;
 const History = (props) => {

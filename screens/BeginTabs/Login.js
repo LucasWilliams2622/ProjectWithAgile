@@ -211,7 +211,6 @@ const styles = StyleSheet.create({
   imageLogin: {
     width: 347.28,
     height: 331.24,
-    marginTop: -5
   },
   textInstruct: {
     fontFamily: 'Klarna Text',
