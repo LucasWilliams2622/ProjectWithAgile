@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, StatusBar, KeyboardAvoidingView, ToastAndroid } from 'react-native'
-import React, { useEffect, useState,useContext } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import { TextInput } from 'react-native-paper'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
@@ -15,43 +15,11 @@ const Profile = (props) => {
   const [avatar, setAvatar] = useState(null)
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
-  const [imageURI, setImageURI] = useState("");
   const { idUser, infoUser } = useContext(AppContext);
-console.log(idUser);
-  const [currentUser, setCurrentUser] = useState({
-    "_id": {
-      "$oid": "6478632830be4c0f2ab4472a"
-    },
-    "name": "phitung",
-    "email": "tungh3210@gmail.com",
-    "password": "$2a$10$tQMCJ8lkCr4cb.tE57MC8.mqGpdJVuwDZzyNh8L/L/btw16uCAS7m",
-    "description": "hihihihi",
-    "avatar": "",
-    "role": {
-      "$numberInt": "1"
-    },
-    "isLogin": false,
-    "isActive": true,
-    "isVerified": false,
-    "verificationCode": "0",
-    "createAt": {
-      "$date": {
-        "$numberLong": "1685611304744"
-      }
-    },
-    "updateAt": {
-      "$date": {
-        "$numberLong": "1685611304744"
-      }
-    },
-    "isAble": true,
-    "__v": {
-      "$numberInt": "0"
-    }
-  });
-
   const [limit, setLimit] = useState(10000);
+  const [dataUser, setDataUser] = useState([])
 
+  console.log(idUser);
   const checkName = (name) => {
     let reg = /^[a-z0-9_-]{3,15}$/;
     if (reg.test(name) === true) {
@@ -68,15 +36,19 @@ console.log(idUser);
     }
   }
   const checkAll = () => {
-    if (name.trim() === '') {
+    if ((name.trim() === '') && (description.trim() === '') && (limit.trim() === '')) {
       Alert.alert('Error', 'vui lòng nhập tên!');
+    } else {
+      updateProfile()
     }
-    else if (description.trim() === '') {
-      Alert.alert('Error', 'vui lòng cho vài dòng thông tin!');
-    }
+
   }
   const onLogOut = async () => {
-
+    // console.log("info", infoUser);
+    console.log("info", dataUser.avatar);
+    console.log("info", dataUser.name);
+    console.log("info", dataUser.description);
+    console.log("info", dataUser.limit);
   }
   const dialogImageChoose = () => {
     return Alert.alert(
@@ -99,25 +71,44 @@ console.log(idUser);
       },
       ])
   }
+
   const capture = async () => {
     const result = await launchCamera();
     console.log(result.assets[0].uri);
-    // const formdata = new FormData();
-    // formdata.append('image', {
-    //   uri: result.assets[0].uri,
-    //   type: 'icon/icon_jpeg',
-    //   name: 'image.jpg',
-    // });
+    const formData = new FormData();
+    formData.append('image', {
+      uri: result.assets[0].uri,
+      type: 'icon/icon_jpeg',
+      name: 'image.jpg',
+    });
+    const response = await AxiosInstance("multipart/form-data").post('user/api/upload-avatar', formData);
+    console.log(response.link);
+    if (response.result) {
+      setAvatar(response.link);
+      ToastAndroid.show("Upload Image Success", ToastAndroid.SHORT);
+    }
+    else {
+      ToastAndroid.show("Upload Image Failed", ToastAndroid.SHORT);
+    }
   }
   const getImageLibrary = async () => {
     const result = await launchImageLibrary();
     console.log(result.assets[0].uri);
-    // const formdata = new FormData();
-    // formdata.append('image', {
-    //   uri: result.assets[0].uri,
-    //   type: 'icon/icon_jpeg',
-    //   name: 'image.jpg',
-    // });
+    const formData = new FormData();
+    formData.append('image', {
+      uri: result.assets[0].uri,
+      type: 'icon/icon_jpeg',
+      name: 'image.jpg',
+    });
+    const response = await AxiosInstance("multipart/form-data").post('user/api/upload-avatar', formData);
+    console.log(response.link);
+    if (response.result) {
+      setAvatar(response.link);
+      ToastAndroid.show("Upload Image Success", ToastAndroid.SHORT);
+    }
+    else {
+      ToastAndroid.show("Upload Image Failed", ToastAndroid.SHORT);
+    }
   }
   const updateProfile = async () => {
     //let rawNumber = phoneNumber.substring(3)
@@ -143,44 +134,22 @@ console.log(idUser);
     }
 
   }
-
-  const formik = useFormik({
-    initialValues: { ...currentUser, limit: limit.toString() },
-    enableReinitialize: true,
-    validationSchema: Yup.object({
-      name: Yup.string()
-        .min(5, 'Họ Và Tên tối thiểu 5 ký tự trở lên.')
-        // .matches(, 'Họ Và Tên không đúng định dạng.')
-        .required('Họ Và Tên không được để trống!'),
-    }),
-    onSubmit: (form) => {
-      handleUpdateUser(form)
-    },
-  });
-
-  const getCurrentUserInfo = async () => {
-    // const response = await AxiosInstance().get("lay limit", { email: emailUser, password: passwordUser, name: nameUser });
-    // setLimit(....)
+  const getInfoUser = async () => {
+    try {
+      const response = await AxiosInstance().get("user/api/get-by-id?id=" + idUser);
+      if (response.result) {
+        setDataUser(response.user);
+      } else {
+        console.log("Failed to get info User");
+      }
+    } catch (error) {
+      console.log("=========>", error);
+    }
   }
-  const handleUpdateUser = async (form) => {
-    // const uploadAvatarForm = new FormData();
-    // uploadAvatarForm.append('file', {
-    //   uri: imageURI,
-    //   name: "image",
-    //   type: 'image/jpg',
-    // });
 
-    // const responseAvatar = await AxiosInstance().post("/user/api/upload-avatar", uploadAvatarForm);
-    // const sendData = {
-    //   ...form,
-    //   limit: Number(limit), avatar: responseAvatar?.link
-    // }
-    // const responseUpdateUser = await AxiosInstance().post("/user/api/update", {...form, sendData})
-    setCurrentUser({ ...form, name: "Tung nui" })
-  }
 
   useEffect(() => {
-    getCurrentUserInfo()
+    getInfoUser()
   }, [])
 
   return (
@@ -201,16 +170,15 @@ console.log(idUser);
 
         <TouchableOpacity onPress={dialogImageChoose}>
           {
-            !avatar
-              ?
-              (<Image style={styles.imageProfile} source={require('../../asset/icon/icon_profile.png')} />)
+            !dataUser.avatar ?
+              (<Image style={styles.imageProfile} source={avatar} />)
               :
-              (<Image style={styles.imageProfile} source={{ uri: avatar }} />)
+              (<Image style={styles.imageProfile} source={{ uri: dataUser.avatar }} />)
           }
         </TouchableOpacity>
 
         <View style={styles.content}>
-          <Text style={styles.text1}>Name</Text>
+          <Text style={styles.text1}>Họ tên</Text>
           <View style={styles.SectionStyle}>
             <Image
               source={require('../../asset/icon/icon_edit_profile.png')}
@@ -218,14 +186,14 @@ console.log(idUser);
 
             <TextInput
               style={styles.textInput}
-              placeholder="Name"
-              onChangeText={setName} value={name}
+              placeholder="Nguyễn Văn A"
+              onChangeText={setName} value={dataUser.name}
             //editable={false}
             //defaultValue={currentUser.email}
             />
           </View>
-          {formik.errors.name && <Text style={{ color: COLOR.red }}>{formik.errors.name}</Text>}
-          <Text style={styles.text1}>Description</Text>
+          {/* {formik.errors.name && <Text style={{ color: COLOR.red }}>{formik.errors.name}</Text>} */}
+          <Text style={styles.text1}>Mô tả</Text>
           <View style={styles.SectionStyle}>
             <Image
               source={require('../../asset/icon/icon_edit.png')}
@@ -233,14 +201,14 @@ console.log(idUser);
 
             <TextInput
               style={styles.textInput}
-              placeholder="Xin chào bạn cho vài lời"
+              placeholder="Hãy giới thiệu về bạn ..."
               // onChangeText={formik.handleChange('description')}
               // value={formik.values?.description}
               onChangeText={setDescription}
               value={description}
             />
           </View>
-          <Text style={styles.text1}>Limit</Text>
+          <Text style={styles.text1}>Hạn mực chi</Text>
           <View style={styles.SectionStyle}>
             <Image
               source={require('../../asset/icon/icon_edit.png')}
@@ -249,8 +217,8 @@ console.log(idUser);
             <TextInput
               style={styles.textInput}
               placeholder="Hạn mức chi"
-              onChangeText={formik.handleChange('limit')}
-              value={formik.values?.limit}
+              onChangeText={setLimit}
+              value={dataUser.limit == "" ? limit : dataUser.limit}
             />
           </View>
           {/* <TouchableOpacity style={styles.buttonSave} onPress={formik.handleSubmit}> */}
