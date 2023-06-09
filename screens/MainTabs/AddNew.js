@@ -86,7 +86,7 @@ const AddNew = (props) => {
       }
       else {
         const response = await AxiosInstance()
-          .post("transaction/api/add-new", { money: money, note: title });
+          .post("transaction/api/add-new", { money: money, note: title ,category:params?.id});
         console.log(response);
         if (response.result === true) {
           ToastAndroid.show("Thêm mới thành công", ToastAndroid.SHORT);
@@ -188,7 +188,7 @@ const AddNew = (props) => {
                 }
               />
             </TouchableOpacity>
-            <TextInput onChangeText={setCategory} value={category} editable={false} 
+            <TextInput onChangeText={setCategory} value={title} editable={false} 
             placeholder='Chọn loại' style={styles.txtInput}></TextInput>
           </View>
         </View>
@@ -203,8 +203,8 @@ const AddNew = (props) => {
 
       <View style={{ alignItems: 'center' }}>
         <TouchableOpacity style={styles.viewSave}
-          onPress={handleCheckInput}
-        // onPress={clickEditTransaction}
+          // onPress={handleCheckInput}
+        onPress={addNew}
         >
           <Text style={styles.textSave}>Lưu Chi tiêu</Text>
         </TouchableOpacity>

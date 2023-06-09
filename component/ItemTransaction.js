@@ -1,12 +1,22 @@
 import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, ToastAndroid, Alert } from 'react-native'
-import React from 'react'
+import React,{useEffect, useState} from 'react'
 import { COLOR } from '../constants/Themes'
 import AxiosInstance from '../constants/AxiosInstance';
+import moment from 'moment';
 const windowWIdth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const ItemTransaction = (props) => {
   const { dulieu, navigation } = props;
-  
+  const [createAt, setCreateAt] = useState('');
+  const [image2, setImage] = useState('')
+  const [data, setData] = useState([])
+  const forMatDate = ()=>{
+    const date = new Date(dulieu.createAt);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+   setCreateAt(`0${day}-0${month}-${year}`);
+  }
   const EditTransaction = async () => {
     console.log('click item');
     navigation.navigate("AddNew", { id: dulieu._id });
@@ -44,7 +54,12 @@ const ItemTransaction = (props) => {
       ]
     )
   }
+  useEffect(() => {
+    forMatDate();
+    return () => {
 
+    }
+  }, []);
   return (
     <TouchableOpacity style={styles.container}>
       <View style={styles.boxItem}>
@@ -52,11 +67,13 @@ const ItemTransaction = (props) => {
           <Image style={styles.image} resizeMode='cover'
           //  source={{uri:transaction.category.image}} 
           source={require('../asset/icon/item/drink.png')}
+
            />
           <View style={styles.boxText} >
             <Text style={styles.title}>{dulieu.note}</Text>
             <Text style={styles.money}>{dulieu.money}</Text>
             <Text style={styles.note}>{dulieu.note}</Text>
+            <Text>{dulieu.category}</Text>
           </View>
           <View style={styles.boxDetail}>
             <View style={styles.boxIcon}>
@@ -68,7 +85,7 @@ const ItemTransaction = (props) => {
               </TouchableOpacity>
 
             </View>
-            <Text style={styles.date}>{dulieu.createAt}</Text>
+            <Text style={styles.date}>{createAt}</Text>
           </View>
         </View>
       </View>

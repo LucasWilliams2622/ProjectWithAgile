@@ -23,13 +23,14 @@ const History = (props) => {
     const date = new Date();
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
-    const day = date.getDate() - 1;
+    const day = date.getDate()-1;
     console.log(`Ngày tháng năm: ${year}-0${month}-0${day}`)
     const response = await AxiosInstance().get("transaction/api/search-by-recent?date=" + `${year}-0${month}-0${day}`);
     console.log(response.transaction);
-    if (response.result == true) // lấy dữ liệu thành công
+    if (response.result) // lấy dữ liệu thành công
     {
       console.log("===>");
+      console.log('transaction moneyyyyyyy2', response.transaction);
       setdata(response.transaction);
       setCreateAt(response.transaction.createAt)
       console.log(response.transaction.createAt);

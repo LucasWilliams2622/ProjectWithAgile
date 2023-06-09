@@ -38,7 +38,7 @@ const TopTabThuChi = (props) => {
 
                 }} >
                     <TouchableOpacity style={styles.itemContainer} 
-                    onPress={()=>navigation.navigate('AddNew',{ name:item.name, image: item.image}) }>
+                    onPress={()=>navigation.navigate('AddNew',{ name:item.name, image: item.image ,id:item._id}) }>
                         <Image style={styles.image} source={{uri:item.image}} />
                         <Text style={styles.txt}>{item.name}</Text>
                     </TouchableOpacity>
