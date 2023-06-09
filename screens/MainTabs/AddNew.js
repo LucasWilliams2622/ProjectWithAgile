@@ -119,11 +119,24 @@ const AddNew = (props) => {
         Alert.alert('Vui lòng nhập tiêu đề');
       } else if (isNaN(floatValue) || floatValue <= 0) {
         Alert.alert('Vui lòng nhập số tiền hợp lệ');
-      } else if (floatValue > limit) {
+      }
+      else if (floatValue > limit) {
         Alert.alert('Số tiền đã vượt quá hạn mức !', 'Bạn muốn tiếp tục chứ?',
           [{ text: 'No', onPress: () => clearForm() },
           { text: 'Yes', onPress: () => onSaveTransaction() }
           ])
+      }
+      else {
+        const response = await AxiosInstance()
+          .post("transaction/api/add-new", { money: money, note: title });
+        console.log(response);
+        if (response.result === true) {
+          ToastAndroid.show("Thêm mới thành công", ToastAndroid.SHORT);
+          navigation.navigate("BottomTabs");
+        }
+        else {
+          ToastAndroid.show("Thêm mới không thành công không thành công", ToastAndroid.SHORT);
+        }
       }
     } catch (error) {
       console.log("ERROR", error);
@@ -216,8 +229,8 @@ const AddNew = (props) => {
                 }
               />
             </TouchableOpacity>
-            <TextInput onChangeText={setCategory} value={title} editable={false}
-              placeholder='Chọn loại' style={styles.txtInput}></TextInput>
+            <TextInput onChangeText={setCategory} value={category} editable={false} 
+            placeholder='Chọn loại' style={styles.txtInput}></TextInput>
           </View>
         </View>
 

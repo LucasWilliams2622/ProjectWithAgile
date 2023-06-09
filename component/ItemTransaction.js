@@ -1,11 +1,23 @@
 import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, ToastAndroid, Alert } from 'react-native'
-import React from 'react'
+import React,{useEffect, useState} from 'react'
 import { COLOR } from '../constants/Themes'
 import AxiosInstance from '../constants/AxiosInstance';
+import moment from 'moment';
 const windowWIdth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const ItemTransaction = (props) => {
+  
   const { data, navigation } = props;
+  const [createAt, setCreateAt] = useState('');
+  const [image2, setImage] = useState('')
+  // const [data, setData] = useState([])
+  const forMatDate = ()=>{
+    const date = new Date(dulieu.createAt);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+   setCreateAt(`0${day}-0${month}-${year}`);
+  }
   
   const EditTransaction = async () => {
     console.log('click item');
@@ -44,7 +56,12 @@ const ItemTransaction = (props) => {
       ]
     )
   }
+  useEffect(() => {
+    forMatDate();
+    return () => {
 
+    }
+  }, []);
   return (
     <TouchableOpacity style={styles.container}>
       <View style={styles.boxItem}>
@@ -52,9 +69,10 @@ const ItemTransaction = (props) => {
           <Image style={styles.image} resizeMode='cover'
           //  source={{uri:transaction.category.image}} 
           source={require('../asset/icon/item/drink.png')}
+
            />
           <View style={styles.boxText} >
-            <Text style={styles.title}>{data.category.name}</Text>
+          <Text style={styles.title}>{data.category.name}</Text>
             <Text style={styles.money}>{data.money}</Text>
             <Text style={styles.note}>{data.note}</Text>
           </View>
@@ -68,7 +86,7 @@ const ItemTransaction = (props) => {
               </TouchableOpacity>
 
             </View>
-            <Text style={styles.date}>{data.createAt}</Text>
+            <Text style={styles.date}>{dulieu.createAt}</Text>
           </View>
         </View>
       </View>

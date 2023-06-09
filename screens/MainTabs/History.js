@@ -26,17 +26,14 @@ const History = (props) => {
     const date = new Date();
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
-    const day = date.getDate() - 1;
+    const day = date.getDate()-1;
     console.log(`Ngày tháng năm: ${year}-0${month}-0${day}`)
-    const response = await AxiosInstance().get("transaction/api/search-by-recent?date=" + `${year}-0${month}-0${day}&idUser=`+idUser);
-    // console.log(">>>>>>>>>>>>>>>>>>>>>", response.transaction.category.image);
-    console.log(">>>>>>>>>>>>>>>>>>>>>", response.transaction[0].idUser);
-    if (response.transactions && response.transactions.length > 0) {
-      // lấy idUser ra từ response.transaction[0].idUser
-    }
+    const response = await AxiosInstance().get("transaction/api/search-by-recent?date=" + `${year}-0${month}-0${day}`);
+    console.log(response.transaction);
     if (response.result) // lấy dữ liệu thành công
     {
-      setData(response.transaction);
+      console.log("===>");
+      setdata(response.transaction);
       setCreateAt(response.transaction.createAt)
       console.log(response.transaction.createAt);
       setIsLoading(false)
