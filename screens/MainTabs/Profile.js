@@ -16,11 +16,10 @@ const Profile = (props) => {
   const [avatar, setAvatar] = useState(null)
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
-  const { idUser, infoUser ,setIsLogin} = useContext(AppContext);
+  const { idUser, infoUser, setIsLogin } = useContext(AppContext);
   const [limit, setLimit] = useState(10000);
   const [dataUser, setDataUser] = useState([])
 
-  console.log(idUser);
   const checkName = (name) => {
     let reg = /^[a-z0-9_-]{3,15}$/;
     if (reg.test(name) === true) {
@@ -37,19 +36,12 @@ const Profile = (props) => {
     }
   }
   const checkAll = () => {
-    if ((name.trim() === '') && (description.trim() === '') && (limit.trim() === '')) {
-      Alert.alert('Error', 'vui lòng nhập tên!');
+    if ((name === '') && (description === '') && (limit === '')) {
+      ToastAndroid.show("Vui lòng điền đủ thông tin ! ", ToastAndroid.SHORT);
     } else {
       updateProfile()
     }
 
-  }
-  const onLogOut = async () => {
-    // console.log("info", infoUser);
-    console.log("info", dataUser.avatar);
-    console.log("info", dataUser.name);
-    console.log("info", dataUser.description);
-    console.log("info", dataUser.limit);
   }
   const dialogImageChoose = () => {
     return Alert.alert(
@@ -72,7 +64,6 @@ const Profile = (props) => {
       },
       ])
   }
-
   const capture = async () => {
     const result = await launchCamera();
     console.log(result.assets[0].uri);
@@ -112,16 +103,10 @@ const Profile = (props) => {
     }
   }
   const updateProfile = async () => {
-    //let rawNumber = phoneNumber.substring(3)
-    console.log("----------------->", avatar, name, email)
-    // console.log(rawNumber)
+    console.log("----------------->", avatar, name, email, description, limit)
     try {
-      const response = await AxiosInstance().put('user/api/update',
-        {
-          email: email,
-          name: name,
-          avatar: avatar, description: description
-        })
+      const response = await AxiosInstance().put('user/api/update?idUser='+idUser,
+        { email: email, name: name, avatar: avatar, description: description, limit: limit })
       console.log(response)
       if (response.result) {
         ToastAndroid.show("Update Success", ToastAndroid.SHORT, ToastAndroid.CENTER);
@@ -133,7 +118,6 @@ const Profile = (props) => {
       console.log(error);
 
     }
-
   }
   const getInfoUser = async () => {
     try {
@@ -150,14 +134,13 @@ const Profile = (props) => {
 
   const signOut = async () => {
     try {
-        await GoogleSignin.signOut();
-        setIsLogin(false)
-        console.log("Logout");
-        //setState({ user: null }); // Remember to remove the user from your app's state as well
+      await GoogleSignin.signOut();
+      setIsLogin(false)
+      console.log("Logout");
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
-};
+  };
   useEffect(() => {
     getInfoUser()
   }, [])
@@ -180,8 +163,8 @@ const Profile = (props) => {
 
         <TouchableOpacity onPress={dialogImageChoose}>
           {
-            !dataUser.avatar ?
-              (<Image style={styles.imageProfile} source={avatar} />)
+            avatar ?
+              (<Image style={styles.imageProfile} source={{ uri: avatar }} />)
               :
               (<Image style={styles.imageProfile} source={{ uri: dataUser.avatar }} />)
           }
@@ -214,7 +197,7 @@ const Profile = (props) => {
               placeholder="Hãy giới thiệu về bạn ..."
               // onChangeText={formik.handleChange('description')}
               // value={formik.values?.description}
-              onChangeText={setDescription}
+              onChangeText={(text)=>setDescription(text)}
               value={description}
             />
           </View>
@@ -228,7 +211,8 @@ const Profile = (props) => {
               style={styles.textInput}
               placeholder="1 000 000"
               onChangeText={setLimit}
-              value={dataUser.limit == "" ? limit : dataUser.limit}
+              keyboardType='numeric'
+              value={limit}
             />
           </View>
           {/* <TouchableOpacity style={styles.buttonSave} onPress={formik.handleSubmit}> */}

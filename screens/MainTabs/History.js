@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TextInput, Image, Dimensions, ScrollView, TouchableOpacity, FlatList, ToastAndroid, StatusBar, SafeAreaView, RefreshControl, Alert } from 'react-native'
-import React, { useState, useEffect,useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
 import { ICON, COLOR } from '../../constants/Themes'
 import ItemTransaction from '../../component/ItemTransaction';
@@ -18,27 +18,62 @@ const History = (props) => {
   const [stateList, setStateList] = useState(0);
   const [refreshControl, setRefreshControl] = useState();
   const { idUser, infoUser } = useContext(AppContext);
+  let timeOut = null;
 
   const goAddNew = () => {
     navigation.navigate('AddNew');
   }
+  const countdownSearch = (searchText) => {
+
+    if (timeOut) {
+      clearTimeout(timeOut);
+    }
+    timeOut = setTimeout(() => {
+      console.log("======>", searchText);
+      // if(searchText.length===0){
+      // console.log("AAAAAAAAAA");
+      // }
+      handleSearch(searchText);
+    }, 1000);
+  }
+  const handleSearch = async  (searchText) => {
+    try {
+      console.log("======<", searchText);
+      const response = await AxiosInstance().get("transaction/api/search-by-money?money=" + searchText + "&idUser=" + idUser);
+      console.log(response.transaction);
+      if (response.result) // lấy dữ liệu thành công
+      {
+        setData(response.transaction)
+        setIsLoading(false);
+
+      } else {
+        ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
   const getTransactionRecent = async () => {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate()-1;
-    console.log(`Ngày tháng năm: ${year}-0${month}-0${day}`)
-    const response = await AxiosInstance().get("transaction/api/search-by-recent?date=" + `${year}-0${month}-0${day}`);
-    console.log(response.transaction);
-    if (response.result) // lấy dữ liệu thành công
-    {
-      console.log("===>");
-      setData(response.transaction);
-      setCreateAt(response.transaction.createAt)
-      console.log(response.transaction.createAt);
-      setIsLoading(false)
-    } else {
-      ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
+    try {
+      const date = new Date();
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate() - 1;
+      console.log(`Ngày tháng năm: ${year}-0${month}-0${day}`)
+      const response = await AxiosInstance().get("transaction/api/search-by-recent?date=" + `${year}-0${month}-0${day}`);
+      console.log(response.transaction);
+      if (response.result) // lấy dữ liệu thành công
+      {
+        console.log("===>");
+        setData(response.transaction);
+        setCreateAt(response.transaction.createAt)
+        console.log(response.transaction.createAt);
+        setIsLoading(false)
+      } else {
+        ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
   useEffect(() => {
@@ -50,7 +85,7 @@ const History = (props) => {
   }, []);
 
   const DeleteTransactionAll = async () => {
-    const response = await AxiosInstance().delete("transaction/api/delete-all?idUser=" +idUser);
+    const response = await AxiosInstance().delete("transaction/api/delete-all?idUser=" + idUser);
     console.log(">>>>>>>>>>>>>>>>>>>>>", response);
     console.log(response);
     if (response.result) {
@@ -83,7 +118,7 @@ const History = (props) => {
       <View style={styles.background}></View>
       <Text style={styles.text}>Lịch sử chi tiêu</Text>
       <View style={styles.viewSearch}>
-        <TextInput placeholder='Tìm kiếm ' style={styles.input} ></TextInput>
+        <TextInput placeholder='Tìm kiếm ' style={styles.input} onChangeText={(text)=>countdownSearch(text)}></TextInput>
         <TouchableOpacity>
           <Image style={styles.imageSearch} source={require('../../asset/icon/icon_search.png')}></Image>
         </TouchableOpacity>

@@ -28,9 +28,9 @@ const ItemTransaction = (props) => {
     const response = await AxiosInstance().delete("transaction/api/delete-by-id?id=" + data._id);
     console.log(response);
     if (response.result == true) {//lấy thành công
-      ToastAndroid.show("Xoá bài viết thành công", ToastAndroid.SHORT);
+      ToastAndroid.show("Xoá thành công", ToastAndroid.SHORT);
     } else {
-      ToastAndroid.show("Xoá bài viết thất bại", ToastAndroid.SHORT)
+      ToastAndroid.show("Xoá thất bại", ToastAndroid.SHORT)
     }
   }
 

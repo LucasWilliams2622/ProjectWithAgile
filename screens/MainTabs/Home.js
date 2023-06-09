@@ -11,7 +11,7 @@ import { ProgressBar } from 'react-native-paper';
 const Home = (props) => {
   const { navigation, route } = props;
   const { params } = route;
-  const { idUser, infoUser } = useContext(AppContext);
+  const { idUser, infoUser ,currentDay} = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(true)
   const [data, setData] = useState(null)
   const [stateList, setStateList] = useState(0)
@@ -24,7 +24,7 @@ const Home = (props) => {
 
   const getAllTransaction = async () => {
     try {
-      const response = await AxiosInstance().get("/transaction/api/get-all-transaction-by-idUser?idUser=" + idUser);
+      const response = await AxiosInstance().get("/transaction/api/search-by-current-date?idUser=" + idUser +'&date='+currentDay);
       console.log("All product of a User: ", response);
       if (response.result) {
         console.log('transaction totalExpense: ', response.transaction.totalExpense);
