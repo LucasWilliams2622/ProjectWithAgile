@@ -12,7 +12,7 @@ const ItemTransaction = (props) => {
   const [image2, setImage] = useState('')
   // const [data, setData] = useState([])
   const forMatDate = ()=>{
-    const date = new Date(dulieu.createAt);
+    const date = new Date(data.createAt);
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate();
@@ -86,7 +86,7 @@ const ItemTransaction = (props) => {
               </TouchableOpacity>
 
             </View>
-            <Text style={styles.date}>{dulieu.createAt}</Text>
+            <Text style={styles.date}>{createAt}</Text>
           </View>
         </View>
       </View>

@@ -11,7 +11,7 @@ import moment from 'moment';
 const windowWIdth = Dimensions.get('window').width;
 const History = (props) => {
   const { navigation, route } = props;
-  const { params } = route;
+  // const { params } = route;
   const [data, setData] = useState([]);
   const [createAt, setCreateAt] = useState("");
   const [isLoading, setIsLoading] = useState(false)
@@ -33,7 +33,7 @@ const History = (props) => {
     if (response.result) // lấy dữ liệu thành công
     {
       console.log("===>");
-      setdata(response.transaction);
+      setData(response.transaction);
       setCreateAt(response.transaction.createAt)
       console.log(response.transaction.createAt);
       setIsLoading(false)
