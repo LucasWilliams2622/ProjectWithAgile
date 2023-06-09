@@ -86,7 +86,7 @@ const ItemTransaction = (props) => {
               </TouchableOpacity>
 
             </View>
-            <Text style={styles.date}>{data.createAt}</Text>
+            <Text style={styles.date}>{createAt}</Text>
           </View>
         </View>
       </View>
