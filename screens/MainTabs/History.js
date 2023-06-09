@@ -33,7 +33,7 @@ const History = (props) => {
     if (response.result) // lấy dữ liệu thành công
     {
       console.log("===>");
-      setdata(response.transaction);
+      setData(response.transaction);
       setCreateAt(response.transaction.createAt)
       console.log(response.transaction.createAt);
       setIsLoading(false)

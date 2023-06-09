@@ -8,6 +8,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import AxiosInstance from '../../constants/AxiosInstance'
 import { AppContext } from '../../utils/AppContext'
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 const Profile = (props) => {
   const { route, navigation } = props;
@@ -15,7 +16,7 @@ const Profile = (props) => {
   const [avatar, setAvatar] = useState(null)
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
-  const { idUser, infoUser } = useContext(AppContext);
+  const { idUser, infoUser ,setIsLogin} = useContext(AppContext);
   const [limit, setLimit] = useState(10000);
   const [dataUser, setDataUser] = useState([])
 
@@ -147,7 +148,16 @@ const Profile = (props) => {
     }
   }
 
-
+  const signOut = async () => {
+    try {
+        await GoogleSignin.signOut();
+        setIsLogin(false)
+        console.log("Logout");
+        //setState({ user: null }); // Remember to remove the user from your app's state as well
+    } catch (error) {
+        console.error(error);
+    }
+};
   useEffect(() => {
     getInfoUser()
   }, [])
@@ -163,7 +173,7 @@ const Profile = (props) => {
             </TouchableOpacity>
             <Text style={styles.text}>Người dùng</Text>
           </View>
-          <TouchableOpacity onPress={() => { onLogOut() }}>
+          <TouchableOpacity onPress={() => { signOut() }}>
             <Image style={[styles.ImageBack, { tintColor: COLOR.white, height: 30, width: 30, marginRight: 10, }]} source={require('../../asset/icon/icon_logout.png')}></Image>
           </TouchableOpacity>
         </View>
@@ -208,7 +218,7 @@ const Profile = (props) => {
               value={description}
             />
           </View>
-          <Text style={styles.text1}>Hạn mực chi</Text>
+          <Text style={styles.text1}>Hạn mức chi</Text>
           <View style={styles.SectionStyle}>
             <Image
               source={require('../../asset/icon/icon_edit.png')}
@@ -216,7 +226,7 @@ const Profile = (props) => {
 
             <TextInput
               style={styles.textInput}
-              placeholder="Hạn mức chi"
+              placeholder="1 000 000"
               onChangeText={setLimit}
               value={dataUser.limit == "" ? limit : dataUser.limit}
             />
