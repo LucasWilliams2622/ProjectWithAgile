@@ -50,7 +50,7 @@ const Home = (props) => {
   }
 
   useEffect(() => {
-    getTransactionRecent()
+    // getTransactionRecent()
   }, [stateList])
 
   const goAddNew = () => {

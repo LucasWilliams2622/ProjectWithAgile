@@ -149,7 +149,7 @@ const AddNew = (props) => {
         console.log('moneyyyyyyy', money);
         console.log('transaction moneyyyyyyy', respone.transaction.money);
         setCreateAt(respone.transaction.createAt);
-        setCategory(respone.transaction.category);
+        setCategory(respone.transaction.category.name);
         setNote(respone.transaction.note);
         ToastAndroid.show("Lây dư liệu thành công !", ToastAndroid.SHORT);
       }
