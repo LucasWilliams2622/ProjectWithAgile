@@ -9,24 +9,22 @@ const ItemInfoUser = (props) => {
 
     const handleSetActive = () => {
         if (isActive) {
-            console.log("======>", isActive);
+            // console.log("======>", isActive);
             setIsActive(!isActive)
             onDisable(!isActive)
         } else {
-            console.log(isActive);
+            // console.log(isActive);
             setIsActive(!isActive)
             onDisable(!isActive)
         }
     };
 
-
     const onDisable = async (isActive) => {
         try {
-
             // console.log(users.email);
-            console.log("AFTER", isActive);
+            // console.log("AFTER", isActive);
             const response = await AxiosInstance().put("user/api/disable", { isActive: isActive, email: users.email });
-            console.log(response);
+            // console.log(response);
             if (response.result == true) {//lấy thành công
                 ToastAndroid.show("Đã cập nhật thành công", ToastAndroid.SHORT);
             } else {
@@ -37,7 +35,6 @@ const ItemInfoUser = (props) => {
         }
     }
     useEffect(() => {
-
 
     }, [])
     return (
