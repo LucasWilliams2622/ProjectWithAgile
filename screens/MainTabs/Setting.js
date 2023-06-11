@@ -289,6 +289,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: COLOR.white,
     fontSize: 20,
+    marginTop:10
   },
   boxTitle: {
     justifyContent: 'flex-start',

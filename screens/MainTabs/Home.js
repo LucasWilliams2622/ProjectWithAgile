@@ -21,7 +21,7 @@ const Home = (props) => {
   const [totalExpensee, setTotalExpense] = useState('');
   const [totalMoney, setTotalMoney] = useState('');
 
-
+  console.log("==============>", infoUser);
   const getTotalMoney = async () => {
     try {
       const response = await AxiosInstance().get("/transaction/api/get-total-money?idUser=" + idUser);
@@ -33,11 +33,8 @@ const Home = (props) => {
         setTotalExpense(response.transaction.totalExpense);
         setTotalIncome(response.transaction.totalIncome);
         setTotalMoney(response.transaction.totalMoney);
-
-
       } else {
         console.log('FAILED TO GET TOTAL',);
-
       }
     } catch (error) {
       console.log(error);
@@ -49,7 +46,7 @@ const Home = (props) => {
       if (response.result) {
         setData(response.transaction);
         setIsLoading(false)
-      }else {
+      } else {
         console.log('FAILED TO GET ALL',);
 
       }
@@ -66,23 +63,8 @@ const Home = (props) => {
     return () => {
 
     }
-  }, [])
-
-  const getTransactionRecent = async () => {
-    const response = await AxiosInstance().get("transaction/api/get-all-transaction");
-    console.log(response.transaction);
-    if (response.result) {
-      console.log("===>");
-      setData(response.transaction);
-      setIsLoading(false)
-    } else {
-      ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
-    }
-  }
-
-  useEffect(() => {
-    getTransactionRecent()
   }, [stateList])
+
   const goAddNew = () => {
     navigation.navigate('AddNew');
   }
@@ -127,8 +109,11 @@ const Home = (props) => {
       <View style={styles.background}></View>
       <TouchableOpacity>
         <View style={styles.viewAvatarAndText}>
-          <Image source={require('../../asset/image/logo.png')} style={styles.imageProfile}></Image>
-          <Text style={styles.textHello}>Xin chào {infoUser.name}</Text>
+          <Image source={
+            // require('../../asset/image/logo.png')
+            {uri:infoUser.user.avatar}
+        } style={styles.imageProfile}></Image>
+          <Text style={styles.textHello}>Xin chào {infoUser.user.name}</Text>
         </View>
       </TouchableOpacity>
 
@@ -137,7 +122,7 @@ const Home = (props) => {
           <View style={styles.viewIn4Menu1}>
             <View style={[styles.flex, { alignItems: 'center' }]}>
               <Image style={styles.image} source={require('../../asset/icon/icon_calender.png')}></Image>
-              <Text style={styles.textDate}>23-05-2023</Text>
+              <Text style={styles.textDate}>{currentDay}</Text>
             </View>
             <TouchableOpacity onPress={() => setIsShow(!isShow)}>
               {
@@ -152,7 +137,7 @@ const Home = (props) => {
           <View style={styles.viewIn4Menu2}>
             <Text style={styles.textPrice}>Tổng: </Text>
             {
-              isShow ? <Text style={styles.textPrice}>********</Text> : <Text style={styles.textPrice}>0 VND</Text>
+              isShow ? <Text style={styles.textPrice}>********</Text> : <Text style={styles.textPrice}>{totalMoney} VND</Text>
             }
           </View>
 
@@ -160,13 +145,13 @@ const Home = (props) => {
             <View style={[styles.flex, { alignItems: 'center' }]}>
               <Text style={styles.textGiveAndPay}>Thu Nhập:</Text>
               {
-                isShow ? <Text style={styles.textGiveAndPay}>********</Text> : <Text style={styles.textGiveAndPay}>1.000.000 VND</Text>
+                isShow ? <Text style={styles.textGiveAndPay}>********</Text> : <Text style={styles.textGiveAndPay}>{totalIncome} VND</Text>
               }
             </View>
             <View style={[styles.flex, { alignItems: 'center' }]}>
               <Text style={styles.textGiveAndPay}>Chi Tiêu:</Text>
               {
-                isShow ? <Text style={styles.textGiveAndPay}>********</Text> : <Text style={styles.textGiveAndPay}>1.000.000 VND</Text>
+                isShow ? <Text style={styles.textGiveAndPay}>********</Text> : <Text style={styles.textGiveAndPay}>{totalExpensee}VND</Text>
               }
             </View>
           </View>

@@ -45,7 +45,7 @@ import { AppContextProvider } from './utils/AppContext'
 const App = () => {
   const getDeviceToken = async () => {
     let token = await messaging().getToken();
-    // console.log("TOKEN NOTIFICATION",token);
+    console.log("TOKEN NOTIFICATION",token);
   };
   useEffect(() => {
     getDeviceToken();
