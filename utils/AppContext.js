@@ -17,7 +17,7 @@ export const AppContextProvider = (props) => {
     day = day < 10 ? `0${day}` : `${day}`;
 
     let currentDay = `${year}-${month}-${day}`
-    console.log("currentDay", currentDay);
+    // console.log("currentDay", currentDay);
     const contextValue = useMemo(() => {
         return { isLogin, setIsLogin, infoUser, setInfoUser, idUser, setIdUser, currentDay };
     }, [isLogin, setIsLogin, infoUser, setInfoUser, idUser, setIdUser, currentDay]);

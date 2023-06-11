@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity } from 'react-native'
-import React, { useEffect, useRef ,useContext} from 'react'
+import React, { useEffect, useRef, useContext } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ICON, COLOR } from '../../constants/Themes'
@@ -111,7 +111,7 @@ const StackSetting = () => {
       <Stack.Screen name="ListUser" component={ListUser} />
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="TopTabThuChi" component={TopTabThuChi} />
-      
+
     </Stack.Navigator>
   )
 }
@@ -159,7 +159,7 @@ const Main = () => {
                     height: focused ? 37 : 27,
 
                     resizeMode: 'stretch',
-                    tintColor: focused ? COLOR.background2: COLOR.background2,
+                    tintColor: focused ? COLOR.background2 : COLOR.background2,
                   }} />
               </Animatable.View>
               <Text style={{
@@ -177,7 +177,8 @@ const Main = () => {
             height: 70,
             position: 'absolute',
             backgroundColor: COLOR.background,
-
+            borderTopRightRadius: 30,
+            borderTopLeftRadius: 30,
           },
         })}
     >

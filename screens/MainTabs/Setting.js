@@ -14,7 +14,7 @@ const Setting = (props) => {
   const getInfoUser = async () => {
     try {
       const response = await AxiosInstance().get("user/api/get-by-id?id=" + idUser);
-      console.log("USER ", response);
+      // console.log("USER ", response);
       if (response.result) {
         setUser(response.user)
       } else {

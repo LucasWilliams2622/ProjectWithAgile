@@ -24,7 +24,6 @@ const History = (props) => {
     navigation.navigate('AddNew');
   }
   const countdownSearch = (searchText) => {
-
     if (timeOut) {
       clearTimeout(timeOut);
     }
@@ -39,6 +38,9 @@ const History = (props) => {
   const handleSearch = async  (searchText) => {
     try {
       console.log("======<", searchText);
+      if(searchText==""){
+        getTransactionRecent()
+      }
       const response = await AxiosInstance().get("transaction/api/search-by-money?money=" + searchText + "&idUser=" + idUser);
       console.log(response.transaction);
       if (response.result) // lấy dữ liệu thành công
@@ -55,11 +57,6 @@ const History = (props) => {
   }
   const getTransactionRecent = async () => {
     try {
-      const date = new Date();
-      const year = date.getFullYear();
-      const month = date.getMonth() + 1;
-      const day = date.getDate() ;
-      console.log(`Ngày tháng năm: ${year}-0${month}-0${day}`)
       const response = await AxiosInstance().get("transaction/api/search-by-recent?date=" + currentDay);
       console.log(response.transaction);
       if (response.result) // lấy dữ liệu thành công
@@ -118,7 +115,8 @@ const History = (props) => {
       <View style={styles.background}></View>
       <Text style={styles.text}>Lịch sử chi tiêu</Text>
       <View style={styles.viewSearch}>
-        <TextInput placeholder='Tìm kiếm ' style={styles.input} onChangeText={(text)=>countdownSearch(text)}></TextInput>
+        <TextInput placeholder='Tìm kiếm ' style={styles.input}
+         onChangeText={(text)=>countdownSearch(text)}></TextInput>
         <TouchableOpacity>
           <Image style={styles.imageSearch} source={require('../../asset/icon/icon_search.png')}></Image>
         </TouchableOpacity>
