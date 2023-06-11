@@ -120,8 +120,10 @@ const Register = (props) => {
         <TextInput placeholder='Name Surname' style={styles.inputEmailAndPass}
           onChangeText={(name) => checkName(name)} value={name}></TextInput>
         <View style={styles.viewInputPass}>
-          <TextInput placeholder='Email' style={styles.inputEmailAndPass}
-            onChangeText={(setEmail) => checkEmail(setEmail)}></TextInput>
+          <TextInput placeholder='Email' style={styles.inputEmailAndPass} value={email}
+            //onChangeText={(setEmail) => checkEmail(setEmail)} 
+            onChangeText={setEmail}
+            ></TextInput>
         </View>
         <View style={{ alignItems: 'center' }}>
           <TouchableOpacity style={styles.viewPressable} onPress={() => { sendVerifiedEmail() }}>

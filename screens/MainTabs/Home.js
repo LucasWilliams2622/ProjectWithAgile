@@ -11,8 +11,7 @@ import { ProgressBar } from 'react-native-paper';
 const Home = (props) => {
   const { navigation, route } = props;
   const { params } = route;
-  const { idUser, infoUser } = useContext(AppContext);
-  console.log("Log idUser In screen Home: ", idUser);
+  const { idUser, infoUser ,currentDay} = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(true)
   const [data, setData] = useState(null)
   const [stateList, setStateList] = useState(0)
@@ -50,13 +49,11 @@ const Home = (props) => {
   }
 
   useEffect(() => {
-    // getTransactionRecent()
+    getTransactionRecent()
   }, [stateList])
-
   const goAddNew = () => {
     navigation.navigate('AddNew');
   }
-
   const Progress = ({ step, steps, height }) => {
 
     const [width, setWith] = React.useState(0);
@@ -96,12 +93,10 @@ const Home = (props) => {
   return (
     <SafeAreaView>
       <View style={styles.background}></View>
-      <TouchableOpacity onPress={() =>
-        dispath({ type: 'CHANGE_APP_MODE', payload: { darkMode: !darkMode }, }
-        )}>
+      <TouchableOpacity>
         <View style={styles.viewAvatarAndText}>
           <Image source={require('../../asset/image/logo.png')} style={styles.imageProfile}></Image>
-          <Text style={styles.textHello}>Xin chào Bạn </Text>
+          <Text style={styles.textHello}>Xin chào {infoUser.name}</Text>
         </View>
       </TouchableOpacity>
 
@@ -120,7 +115,6 @@ const Home = (props) => {
                   <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_visible.png')}></Image>
               }
             </TouchableOpacity>
-
           </View>
 
           <View style={styles.viewIn4Menu2}>
@@ -155,24 +149,28 @@ const Home = (props) => {
       <Text style={styles.textToday}>Hôm nay:</Text>
       {!isLoading ?
         (<View>
-          <FlatList
-            style={{ height: '100%', width: '100%' }}
-            data={data}
-            renderItem={({ item }) => <ItemTransaction dulieu={item} navigation={navigation} />}
-            keyExtractor={item => item._id}
-            showsVerticalScrollIndicator={false}
-            refreshControl={
-              <RefreshControl refreshing={refreshControl} onRefresh={() => {
-                setRefreshControl(true)
-                console.log("Refresh")
-                setStateList(stateList + 1)
-                console.log(stateList)
+          <ScrollView>
 
-                setRefreshControl(false)
-              }} colors={['green']} />
-            }
-          />
-          {/* // data.map((item)=><ItemTransaction dulieu={item} key={item._id} navigation={navigation} />) */}
+            <FlatList
+              style={{ height: 500, width: '100%', marginBottom: 800 }}
+              data={data}
+              renderItem={({ item }) => <ItemTransaction data={item} navigation={navigation} />}
+              keyExtractor={item => item._id}
+              showsVerticalScrollIndicator={false}
+              refreshControl={
+                <RefreshControl refreshing={refreshControl} onRefresh={() => {
+                  setRefreshControl(true)
+                  console.log("Refresh")
+                  setStateList(stateList + 1)
+                  console.log(stateList)
+
+                  setRefreshControl(false)
+                }} colors={['green']} />
+              }
+            />
+            {/* // data.map((item)=><ItemTransaction data={item} key={item._id} navigation={navigation} />) */}
+          </ScrollView>
+
         </View>)
         :
         (<ScrollView>
@@ -328,7 +326,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     justifyContent: 'center',
-    padding: 20, 
+    padding: 20,
     marginTop: 20
   },
 })

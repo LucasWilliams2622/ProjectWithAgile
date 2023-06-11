@@ -11,7 +11,7 @@ export const COLOR = {
     title: '#4daad2',
     black: '#000',
     white: '#ffffff',
-    green: '#60c5a8',
+    green: '#49b915',
     green2: '#039a83',
     light: '#EEEEEE',
     dark: '#333',
@@ -29,6 +29,7 @@ export const COLOR = {
     lightGray: '#F3F3F3',
     darkGray: '#999999',
     brown:'#6D3805',
+
 
     darkOverlayColor: 'rgba(0, 0, 0, 0.4)',
     darkOverlayColor2: 'rgba(0, 0, 0, 0.8)',

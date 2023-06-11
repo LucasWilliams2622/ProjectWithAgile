@@ -1,4 +1,4 @@
-import { Alert, SafeAreaView, StyleSheet, Text, View, } from 'react-native'
+import { Alert, SafeAreaView, Settings, StyleSheet, Text, View, } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -13,7 +13,10 @@ import TabThu from './screens/MainTabs/TabThu';
 import TabChi from './screens/MainTabs/TabChi';
 import Intro from './screens/BeginTabs/Intro'
 
+
 import AddNew from './screens/MainTabs/AddNew'
+import ListUser from './screens/MainTabs/ListUser'
+
 import BottomTabs from './screens/MainTabs/BottomTabs'
 import Chart from './screens/MainTabs/Chart'
 import History from './screens/MainTabs/History'
@@ -25,6 +28,8 @@ import ItemTransaction from './component/ItemTransaction'
 import Loading from './component/Loading'
 
 import ItemCollect from './component/ItemCollect'
+import ItemInfoUser from './component/ItemInfoUser'
+
 import ItemYear from './component/ItemYear'
 import TopTabThuChi from './screens/MainTabs/TopTabThuChi';
 import TestPicker from './screens/TestTab/TestPicker'
@@ -59,7 +64,7 @@ const App = () => {
         <BottomTabs />
       </NavigationContainer>
     </AppContextProvider>
-
+   
   )
 }
 

@@ -3,7 +3,7 @@ import {
   StyleSheet, Text, View, Image, TouchableOpacity,
   Alert, ToastAndroid, StatusBar, Platform, SafeAreaView
 } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { TextInput } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ICON, COLOR } from '../../constants/Themes'
@@ -11,6 +11,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import RNDateTimePicker from '@react-native-community/datetimepicker'
 
 import AxiosInstance from '../../constants/AxiosInstance'
+import { AppContext } from '../../utils/AppContext';
 
 
 const AddNew = (props) => {
@@ -25,6 +26,8 @@ const AddNew = (props) => {
   const [createAt, setCreateAt] = useState('');
   const [title, setTitle] = useState('');
   const limit = 1000000;
+  const { idUser, infoUser } = useContext(AppContext);
+
   // let title = params?.name;
   let image = params?.image
   const [date, setDate] = useState(new Date());
@@ -32,8 +35,11 @@ const AddNew = (props) => {
 
 
   useEffect(() => {
-    setTitle(params?.name);
+    console.log("", params?._idCategory);
+    console.log("", params?.name);
 
+    setTitle(params?.name);
+    setCategory(params?._idCategory)
   }, [params?.name]);
 
 
@@ -63,7 +69,8 @@ const AddNew = (props) => {
     //Bé hơn 10 thì thêm số 0
     month = month < 10 ? `0${month}` : `${month}`;
     day = day < 10 ? `0${day}` : `${day}`;
-    return `${day}/${month}/${year}`;
+    console.log("DATAAAAAAAAAAAAAAAA", `${day}/${month}/${year}`);
+    return `${year}-${month}-${day}`;
   };
 
   // const handleCheckInput = () => {
@@ -75,30 +82,27 @@ const AddNew = (props) => {
   //   }
   // };
 
-  // const handleCheckInput = () => {
-  //   const floatValue = parseFloat(money.replace(',', '.')); 
-  //   if (name.trim() === '') {
-  //     Alert.alert('Vui lòng nhập tiêu đề');
-  //     console.log(title);
-  //   } else if(isNaN(floatValue) || floatValue <= 0) {
-  //     Alert.alert('Vui lòng nhập số tiền hợp lệ');
-  //   }
-  // };
-  const create = async () => {
-    const response = await AxiosInstance()
-      .post("transaction/api/add-new", { money: money, note: title });
-    console.log(response);
-    if (response.result === true) {
-      ToastAndroid.show("Thêm mới thành công", ToastAndroid.SHORT);
-      // navigation.navigate("BottomTabs");
-      noHandleWarning()
-    }
-    else {
-      ToastAndroid.show("Thêm mới không thành công ", ToastAndroid.SHORT);
+
+  const onSaveTransaction = async () => {
+    try {
+      console.log("============>", money, idUser, dateTime, category, note,);
+      const response = await AxiosInstance().post("transaction/api/add-new",
+        { money: money, category: category, idUser: idUser, createAt: dateTime, note: note });
+      console.log(response);
+      if (response.result) {
+        ToastAndroid.show("Thêm mới thành công", ToastAndroid.SHORT);
+        clearForm()
+      }
+      else {
+        ToastAndroid.show("Thêm mới không thành công ", ToastAndroid.SHORT);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
-  const noHandleWarning = () => {
+
+  const clearForm = () => {
     setname("");
     setMoney("");
     setNote("");
@@ -115,11 +119,24 @@ const AddNew = (props) => {
         Alert.alert('Vui lòng nhập tiêu đề');
       } else if (isNaN(floatValue) || floatValue <= 0) {
         Alert.alert('Vui lòng nhập số tiền hợp lệ');
-      } else if (floatValue > limit) {
+      }
+      else if (floatValue > limit) {
         Alert.alert('Số tiền đã vượt quá hạn mức !', 'Bạn muốn tiếp tục chứ?',
-          [{ text: 'No', onPress: () => noHandleWarning() },
-          { text: 'Yes', onPress: () => create() }
+          [{ text: 'No', onPress: () => clearForm() },
+          { text: 'Yes', onPress: () => onSaveTransaction() }
           ])
+      }
+      else {
+        const response = await AxiosInstance()
+          .post("transaction/api/add-new", { money: money, note: title });
+        console.log(response);
+        if (response.result === true) {
+          ToastAndroid.show("Thêm mới thành công", ToastAndroid.SHORT);
+          navigation.navigate("BottomTabs");
+        }
+        else {
+          ToastAndroid.show("Thêm mới không thành công không thành công", ToastAndroid.SHORT);
+        }
       }
     } catch (error) {
       console.log("ERROR", error);
@@ -164,7 +181,6 @@ const AddNew = (props) => {
       <View style={styles.bgTop}>
         <Text style={styles.textTitle}>Thêm chi tiêu cho hôm nay</Text>
       </View>
-
 
       <View style={styles.shadowView}>
         <View style={styles.bgMain}>
@@ -213,8 +229,8 @@ const AddNew = (props) => {
                 }
               />
             </TouchableOpacity>
-            <TextInput onChangeText={setCategory} value={title} editable={false}
-              placeholder='Chọn loại' style={styles.txtInput}></TextInput>
+            <TextInput onChangeText={setCategory} value={title} editable={false} 
+            placeholder='Chọn loại' style={styles.txtInput}></TextInput>
           </View>
         </View>
 
@@ -228,7 +244,7 @@ const AddNew = (props) => {
 
       <View style={{ alignItems: 'center' }}>
         <TouchableOpacity style={styles.viewSave}
-          onPress={create}
+          onPress={onSaveTransaction}
         // onPress={clickEditTransaction}
         >
 

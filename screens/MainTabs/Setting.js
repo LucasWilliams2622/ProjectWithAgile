@@ -4,16 +4,29 @@ import { ICON, COLOR } from '../../constants/Themes'
 import ToggleSwitch from 'toggle-switch-react-native'
 import { useSelector, useDispatch } from "react-redux"
 import { AppContext } from '../../utils/AppContext'
+import AxiosInstance from '../../constants/AxiosInstance';
 
 const Setting = (props) => {
   const { navigation } = props;
   const [isEnabled, setIsEnabled] = useState(false);
   const { idUser, infoUser } = useContext(AppContext);
-console.log("============>",idUser);
-
+  const [user, setUser] = useState([])
+  const getInfoUser = async () => {
+    try {
+      const response = await AxiosInstance().get("user/api/get-by-id?id=" + idUser);
+      console.log("USER ", response);
+      if (response.result) {
+        setUser(response.user)
+      } else {
+        console.log("Failed to get info User");
+      }
+    } catch (error) {
+      console.log("=========>", error);
+    }
+  }
   useEffect(() => {
+    getInfoUser()
   }, [])
-
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const version = '1.0.0.0';
@@ -31,6 +44,9 @@ console.log("============>",idUser);
       ToastAndroid.CENTER,
     );
   }
+  const goListUsers = () => {
+    navigation.navigate('ListUser')
+  }
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -41,7 +57,7 @@ console.log("============>",idUser);
         <View style={styles.view1}>
           <View>
             <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-              <Image style={styles.imageProfile} source={require('../../asset/image/logo.png')}></Image>
+              <Image style={styles.imageProfile} source={{ uri: user.avatar }}></Image>
             </TouchableOpacity>
           </View>
 
@@ -65,7 +81,7 @@ console.log("============>",idUser);
               style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }], marginRight: 10, }}
               thumbColor={isEnabled ? '#FFFFFF' : '#FFFFFF'}
               ios_backgroundColor="#3e3e3e"
-             
+
               value={isEnabled}
               trackColor={{ false: '#767577', true: '#81b0ff' }}
             />
@@ -102,6 +118,19 @@ console.log("============>",idUser);
           <Text style={styles.text4}>Phản hồi</Text>
           <View style={styles.line}></View>
           <Text style={styles.text4}>Chia sẽ ứng dụng</Text>
+          {
+            user.role >= 100 ?
+              (
+                <>
+                  <View style={styles.line}></View>
+                  <TouchableOpacity onPress={goListUsers}>
+                    <Text style={styles.text4}>Quản lý người dùng</Text>
+                  </TouchableOpacity>
+                </>
+              ) :
+              (<View />)
+          }
+
         </View>
       </View>
       <StatusBar style="auto" barStyle="dark-content" backgroundColor={COLOR.background2} />

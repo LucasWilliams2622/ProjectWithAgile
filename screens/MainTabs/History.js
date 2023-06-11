@@ -1,48 +1,79 @@
 import { StyleSheet, Text, View, TextInput, Image, Dimensions, ScrollView, TouchableOpacity, FlatList, ToastAndroid, StatusBar, SafeAreaView, RefreshControl, Alert } from 'react-native'
-import React, { useState, useEffect,useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
 import { ICON, COLOR } from '../../constants/Themes'
 import ItemTransaction from '../../component/ItemTransaction';
 import AxiosInstance from '../../constants/AxiosInstance';
+import { AppContext } from '../../utils/AppContext'
 import { Card } from 'react-native-paper';
 import moment from 'moment';
-import { AppContext } from '../../utils/AppContext'
 
 const windowWIdth = Dimensions.get('window').width;
 const History = (props) => {
   const { navigation, route } = props;
-  const { params } = route;
-  const [data, setdata] = useState([]);
+  // const { params } = route;
+  const [data, setData] = useState([]);
   const [createAt, setCreateAt] = useState("");
-  const [isLoading, setisLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [stateList, setStateList] = useState(0);
   const [refreshControl, setRefreshControl] = useState();
-  const { idUser, infoUser } = useContext(AppContext);
-console.log("=======>",idUser);
+  const { idUser, infoUser ,currentDay} = useContext(AppContext);
+  let timeOut = null;
+
   const goAddNew = () => {
     navigation.navigate('AddNew');
   }
-  const getTransactionRecent = async () => {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate() - 1;
-    console.log(`Ngày tháng năm: ${year}-0${month}-0${day}`)
-    const response = await AxiosInstance().get("transaction/api/search-by-recent?date=" + `${year}-0${month}-0${day}`);
-    console.log(">>>>>>>>>>>>>>>>>>>>>", response.transaction);
-    console.log(">>>>>>>>>>>>>>>>>>>>>", response.transaction[0].idUser);
-    if (response.transactions && response.transactions.length > 0) {
-      // lấy idUser ra từ response.transaction[0].idUser
+  const countdownSearch = (searchText) => {
+
+    if (timeOut) {
+      clearTimeout(timeOut);
     }
-    if (response.result) // lấy dữ liệu thành công
-    {
-      console.log("===>");
-      setdata(response.transaction);
-      setCreateAt(response.transaction.createAt)
-      console.log(response.transaction.createAt);
-      setisLoading(false)
-    } else {
-      ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
+    timeOut = setTimeout(() => {
+      console.log("======>", searchText);
+      // if(searchText.length===0){
+      // console.log("AAAAAAAAAA");
+      // }
+      handleSearch(searchText);
+    }, 1000);
+  }
+  const handleSearch = async  (searchText) => {
+    try {
+      console.log("======<", searchText);
+      const response = await AxiosInstance().get("transaction/api/search-by-money?money=" + searchText + "&idUser=" + idUser);
+      console.log(response.transaction);
+      if (response.result) // lấy dữ liệu thành công
+      {
+        setData(response.transaction)
+        setIsLoading(false);
+
+      } else {
+        ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  const getTransactionRecent = async () => {
+    try {
+      const date = new Date();
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate() ;
+      console.log(`Ngày tháng năm: ${year}-0${month}-0${day}`)
+      const response = await AxiosInstance().get("transaction/api/search-by-recent?date=" + currentDay);
+      console.log(response.transaction);
+      if (response.result) // lấy dữ liệu thành công
+      {
+        console.log("===>");
+        setData(response.transaction);
+        setCreateAt(response.transaction.createAt)
+        console.log(response.transaction.createAt);
+        setIsLoading(false)
+      } else {
+        ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
   useEffect(() => {
@@ -54,12 +85,12 @@ console.log("=======>",idUser);
   }, []);
 
   const DeleteTransactionAll = async () => {
-    const response = await AxiosInstance().delete("transaction/api/delete-all?idUser=" + params.idUser);
+    const response = await AxiosInstance().delete("transaction/api/delete-all?idUser=" + idUser);
     console.log(">>>>>>>>>>>>>>>>>>>>>", response);
     console.log(response);
-    if (response.result) {//lấy thành công
+    if (response.result) {
       ToastAndroid.show("Xoá bài viết thành công", ToastAndroid.SHORT);
-      console.log(">>>>>>>>>>>>>>>>>", transaction);
+      // console.log(">>>>>>>>>>>>>>>>>", transaction);
     } else {
       ToastAndroid.show("Xoá bài viết thất bại", ToastAndroid.SHORT)
     }
@@ -87,7 +118,7 @@ console.log("=======>",idUser);
       <View style={styles.background}></View>
       <Text style={styles.text}>Lịch sử chi tiêu</Text>
       <View style={styles.viewSearch}>
-        <TextInput placeholder='Tìm kiếm ' style={styles.input} ></TextInput>
+        <TextInput placeholder='Tìm kiếm ' style={styles.input} onChangeText={(text)=>countdownSearch(text)}></TextInput>
         <TouchableOpacity>
           <Image style={styles.imageSearch} source={require('../../asset/icon/icon_search.png')}></Image>
         </TouchableOpacity>
@@ -113,7 +144,6 @@ console.log("=======>",idUser);
           </View>
         ) :
           (
-
             <ScrollView style={{ marginTop: 20 }}>
               <View style={styles.viewLine}></View>
               <View style={styles.viewListGiveAndPay}>
@@ -121,7 +151,7 @@ console.log("=======>",idUser);
                   <FlatList
                     style={{ height: '100%', width: '100%' }}
                     data={data}
-                    renderItem={({ item }) => <ItemTransaction dulieu={item} navigation={navigation} />}
+                    renderItem={({ item }) => <ItemTransaction data={item} navigation={navigation} />}
                     keyExtractor={item => item._id}
                     showsVerticalScrollIndicator={false}
                     refreshControl={
