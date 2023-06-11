@@ -1,7 +1,9 @@
 import { Pressable, StyleSheet, Text, TextInput, View, Image, ToastAndroid, TouchableOpacity, Alert } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import AxiosInstance from '../../constants/AxiosInstance';
+import { AppContext } from '../../utils/AppContext';
 
 const ChangePassword = () => {
   const [verifiedPass, setVerifiedPass] = useState(false);
@@ -10,15 +12,37 @@ const ChangePassword = () => {
   const [getOldPassVisible, setOldPassVisible] = useState(false)
   const [getNewPassVisible, setNewPassVisible] = useState(false)
   const [getConfirmPassVisible, setConfirmPassVisible] = useState(false)
+  const [email, setEmail] = useState('');
+  const [oldPassword, setOldPassword] = useState('')
   const [password, setpassword] = useState('');
   const [confirmPass, setconfirmPass] = useState('')
+  //
 
+  const { idUser, infoUser, setIsLogin } = useContext(AppContext);
+  const getInfoUser = async () => {
+    try {
+      const response = await AxiosInstance().get("user/api/get-by-id?id=" + idUser);
+      console.log(response.user);
+      if (response.result) {
+        setEmail(response.user.email);
+        console.log(email);
+      } else {
+        console.log("Failed to get info User");
+      }
+    } catch (error) {
+      console.log("=========>", error);
+    }
+  }
+  useEffect(() => {
+    getInfoUser()
+  }, [])
   const checkPass = (setOldPassVisible) => {
     let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     if (passreg.test(setOldPassVisible) === true) {
       setVerifiedPass({ passreg: setOldPassVisible });
-      console.log("password không hợp lệ");
+      console.log("password hợp lệ");
       setVerifiedPass(true);
+      setOldPassword(setOldPassVisible);
       return true;
     }
     else {
@@ -63,6 +87,24 @@ const ChangePassword = () => {
       Alert.alert('Error', 'Password của bạn đã sai! vui lòng kiểm tra lại.');
     }
   }
+  const changePassword = async () => {
+    try {
+      console.log(email);
+      console.log(oldPassword);
+      console.log(confirmPass);
+      const response = await AxiosInstance().put("user/api/change-password", { email: email, oldPassword: oldPassword, newPassword: confirmPass });
+      console.log(response);
+      if (response.result === true) {
+        ToastAndroid.show("Đổi mật khẩu thành công", ToastAndroid.SHORT);
+      }
+      else {
+        ToastAndroid.show("Đổi mật khẩu thất bại", ToastAndroid.SHORT);
+      }
+    } catch (error) {
+
+    }
+  }
+
   return (
     <KeyboardAwareScrollView>
 
@@ -77,7 +119,9 @@ const ChangePassword = () => {
         <View style={styles.viewInputOldPass}>
           <TextInput style={styles.inputPassword} placeholder='Old Password'
             secureTextEntry={getOldPassVisible ? false : true}
-            onChangeText={(setOldPassVisible) => checkPass(setOldPassVisible)} value={verifiedPass} />
+            //onChangeText={(setOldPassVisible) => checkPass(setOldPassVisible)} value={verifiedPass} 
+            onChangeText={setOldPassword} value={oldPassword}
+          />
           <TouchableOpacity style={styles.visible}
             onPress={() => {
               setOldPassVisible(!getOldPassVisible)
@@ -113,7 +157,9 @@ const ChangePassword = () => {
         <View style={styles.viewInputNewPass}>
           <TextInput style={styles.inputPassword} placeholder='Confirm Password'
             secureTextEntry={getConfirmPassVisible ? false : true}
-            onChangeText={(setConfirmPassVisible) => checkCfPass(setConfirmPassVisible)} value={verifiedCfPass} />
+            //onChangeText={(setConfirmPassVisible) => checkCfPass(setConfirmPassVisible)} value={verifiedCfPass}
+            onChangeText={setconfirmPass} value={confirmPass}
+          />
           <TouchableOpacity style={styles.visible}
             onPress={() => {
               setConfirmPassVisible(!getConfirmPassVisible)
@@ -131,13 +177,13 @@ const ChangePassword = () => {
 
 
         <View style={{ alignItems: 'center' }}>
-          <Pressable style={styles.viewPressable} onPress={checkAll}>
+          <Pressable style={styles.viewPressable} onPress={changePassword}>
             <Text style={styles.textPressable}>Next</Text>
           </Pressable>
         </View>
 
         <View style={{ alignItems: 'center' }}>
-          <Pressable style={styles.viewPressable} onPress={chuyen}>
+          <Pressable style={styles.viewPressable} >
             <Text style={styles.textPressable}>Back To Sign In</Text>
           </Pressable>
         </View>
