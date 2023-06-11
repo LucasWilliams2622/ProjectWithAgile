@@ -69,7 +69,7 @@ const AddNew = (props) => {
     //Bé hơn 10 thì thêm số 0
     month = month < 10 ? `0${month}` : `${month}`;
     day = day < 10 ? `0${day}` : `${day}`;
-    console.log("DATAAAAAAAAAAAAAAAA", `${day}/${month}/${year}`);
+    // console.log("DATAAAAAAAAAAAAAAAA", `${day}/${month}/${year}`);
     return `${year}-${month}-${day}`;
   };
 

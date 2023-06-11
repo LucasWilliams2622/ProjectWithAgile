@@ -11,7 +11,7 @@ import { ProgressBar } from 'react-native-paper';
 const Home = (props) => {
   const { navigation, route } = props;
   const { params } = route;
-  const { idUser, infoUser ,currentDay} = useContext(AppContext);
+  const { idUser, infoUser, currentDay } = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(true)
   const [data, setData] = useState(null)
   const [stateList, setStateList] = useState(0)
@@ -22,23 +22,38 @@ const Home = (props) => {
   const [totalMoney, setTotalMoney] = useState('');
 
 
-  const getAllTransaction = async () => {
+  const getTotalMoney = async () => {
     try {
-      const response = await AxiosInstance().get("/transaction/api/search-by-current-date?idUser=" + idUser +'&date='+currentDay);
-      console.log("All product of a User: ", response);
+      const response = await AxiosInstance().get("/transaction/api/get-total-money?idUser=" + idUser);
+      console.log("Total Money: ", response);
       if (response.result) {
         console.log('transaction totalExpense: ', response.transaction.totalExpense);
-        setData(response.transaction);
+       
         setIsLoading(false)
         setTotalExpense(response.transaction.totalExpense);
+        setTotalIncome(response.transaction.totalIncome);
+        setTotalMoney(response.transaction.totalMoney);
+
+
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const getAllTransaction = async () => {
+    try {
+      const response = await AxiosInstance().get("/transaction/api/search-by-current-date?idUser=" + idUser + '&date=' + currentDay);
+      if (response.result) {
+        setData(response.transaction);
+        setIsLoading(false)
       }
     } catch (error) {
       console.log(error);
     }
   }
   useEffect(() => {
-console.log("INFOR ",infoUser);
     getAllTransaction();
+    getTotalMoney()
     return () => {
 
     }
@@ -154,7 +169,7 @@ console.log("INFOR ",infoUser);
                   setRefreshControl(true)
                   console.log("Refresh")
                   setStateList(stateList + 1)
-                  console.log(stateList)
+                  // console.log(stateList)
 
                   setRefreshControl(false)
                 }} colors={['green']} />

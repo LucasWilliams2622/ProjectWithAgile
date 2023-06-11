@@ -193,7 +193,7 @@ const Main = () => {
 const BottomTabs = () => {
   const { isLogin, infoUser } = useContext(AppContext);
   // console.log("isLogin Bottom Tabs=================>", isLogin);
-  console.log("infoUser Bottom Tabs=========>", infoUser);
+  // console.log("infoUser Bottom Tabs=========>", infoUser);
 
   return (
     <>
