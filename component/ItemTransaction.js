@@ -1,24 +1,26 @@
 import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, ToastAndroid, Alert } from 'react-native'
-import React,{useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { COLOR } from '../constants/Themes'
 import AxiosInstance from '../constants/AxiosInstance';
 import moment from 'moment';
 const windowWIdth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const ItemTransaction = (props) => {
-  
+
   const { data, navigation } = props;
   const [createAt, setCreateAt] = useState('');
   const [image2, setImage] = useState('')
   // const [data, setData] = useState([])
-  const forMatDate = ()=>{
-    const date = new Date(data.createAt);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-   setCreateAt(`0${day}-0${month}-${year}`);
+  const forMatDate = () => {
+    let date = new Date(data.createAt);
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    month = month < 10 ? `0${month}` : `${month}`;
+    day = day < 10 ? `0${day}` : `${day}`;
+    setCreateAt(`${year}-${month}-${day}`);
   }
-  
+
   const EditTransaction = async () => {
     console.log('click item');
     navigation.navigate("AddNew", { id: data._id });
@@ -67,12 +69,14 @@ const ItemTransaction = (props) => {
       <View style={styles.boxItem}>
         <View style={styles.boxContent}>
           <Image style={styles.image} resizeMode='cover'
-          //  source={{uri:transaction.category.image}} 
-          source={require('../asset/icon/item/drink.png')}
-
-           />
+            //  source={{uri:transaction.category.image}} 
+            source={
+              { uri: data.category.image } 
+              // require('../asset/icon/item/drink.png')
+            }
+          />
           <View style={styles.boxText} >
-          <Text style={styles.title}>{data.category.name}</Text>
+            <Text style={styles.title}>{data.category.name}</Text>
             <Text style={styles.money}>{data.money}</Text>
             <Text style={styles.note}>{data.note}</Text>
           </View>
@@ -100,10 +104,10 @@ export default ItemTransaction
 const styles = StyleSheet.create({
   container: {
     marginTop: 5, flexDirection: 'column',
-   left:-8,
+    left: -8,
     // borderWidth:2,
     // borderColor:'red',
-   marginBottom:10,
+    marginBottom: 10,
   },
   boxItem: {
     flexDirection: 'row',
@@ -113,8 +117,8 @@ const styles = StyleSheet.create({
   image: {
     borderRadius: 1000,
     borderColor: COLOR.black,
-    height: 60,
-    width: 60,
+    height: 65,
+    width: 65,
     left: -36,
   },
   boxContent: {
@@ -126,14 +130,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 5,
     width: windowWIdth - 50,
-    
+
 
   },
   boxText: {
     flexDirection: 'column',
     marginRight: 30,
     left: -30,
-    width:100,
+    width: 100,
     // borderWidth:2,
     // borderColor:'red',
   },
@@ -155,10 +159,11 @@ const styles = StyleSheet.create({
     margin: 3,
   },
   title: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: '400',
     color: COLOR.black,
-    left: -5,
+    left: -10,
+    width:200,
   },
   money: {
     fontWeight: '450',
@@ -166,13 +171,15 @@ const styles = StyleSheet.create({
     color: COLOR.black,
     fontStyle: 'italic',
     marginVertical: 7,
+    left: -5,
+    width:200,
   },
   note: {
     fontWeight: '400',
     fontSize: 13,
     color: COLOR.black,
-    left: -5,
-
+    left: -10,
+    width:200,
   },
   date: {
     fontWeight: '500',

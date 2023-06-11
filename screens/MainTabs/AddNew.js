@@ -229,7 +229,7 @@ const AddNew = (props) => {
                 }
               />
             </TouchableOpacity>
-            <TextInput onChangeText={setCategory} value={category} editable={false} 
+            <TextInput onChangeText={setCategory} value={title} editable={false} 
             placeholder='Chọn loại' style={styles.txtInput}></TextInput>
           </View>
         </View>
