@@ -28,12 +28,15 @@ const Home = (props) => {
       console.log("Total Money: ", response);
       if (response.result) {
         console.log('transaction totalExpense: ', response.transaction.totalExpense);
-       
+
         setIsLoading(false)
         setTotalExpense(response.transaction.totalExpense);
         setTotalIncome(response.transaction.totalIncome);
         setTotalMoney(response.transaction.totalMoney);
 
+
+      } else {
+        console.log('FAILED TO GET TOTAL',);
 
       }
     } catch (error) {
@@ -46,17 +49,39 @@ const Home = (props) => {
       if (response.result) {
         setData(response.transaction);
         setIsLoading(false)
+      }else {
+        console.log('FAILED TO GET ALL',);
+
       }
     } catch (error) {
       console.log(error);
     }
+
   }
   useEffect(() => {
+    console.log("INFOR ", infoUser);
     getAllTransaction();
     getTotalMoney()
+
     return () => {
 
     }
+  }, [])
+
+  const getTransactionRecent = async () => {
+    const response = await AxiosInstance().get("transaction/api/get-all-transaction");
+    console.log(response.transaction);
+    if (response.result) {
+      console.log("===>");
+      setData(response.transaction);
+      setIsLoading(false)
+    } else {
+      ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
+    }
+  }
+
+  useEffect(() => {
+    getTransactionRecent()
   }, [stateList])
   const goAddNew = () => {
     navigation.navigate('AddNew');

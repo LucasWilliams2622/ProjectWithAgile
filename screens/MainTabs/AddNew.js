@@ -18,7 +18,6 @@ const AddNew = (props) => {
   const { navigation, route } = props;
   const { params } = route;
   const [category, setCategory] = useState('');
-  const [dateTime, setDateTime] = useState('');
   const [value, setValue] = useState('');
   const [name, setname] = useState('');
   const [money, setMoney] = useState('');
@@ -27,6 +26,7 @@ const AddNew = (props) => {
   const [title, setTitle] = useState('');
   const limit = 1000000;
   const { idUser, infoUser } = useContext(AppContext);
+  const [idEditTransaction, setIdEditTransaction] = useState('');
 
   // let title = params?.name;
   let image = params?.image
@@ -53,7 +53,7 @@ const AddNew = (props) => {
       setDate(currentDate);
       if (Platform.OS === 'android') {
         toggleDatePicker();
-        setDateTime(formatDate(currentDate));
+        setCreateAt(formatDate(currentDate));
       }
     } else {
       toggleDatePicker();
@@ -85,9 +85,9 @@ const AddNew = (props) => {
 
   const onSaveTransaction = async () => {
     try {
-      console.log("============>", money, idUser, dateTime, category, note,);
+      console.log("============>", money, idUser, createAt, category, note,);
       const response = await AxiosInstance().post("transaction/api/add-new",
-        { money: money, category: category, idUser: idUser, createAt: dateTime, note: note });
+        { money: money, category: category, idUser: idUser, createAt: createAt, note: note });
       console.log(response);
       if (response.result) {
         ToastAndroid.show("Thêm mới thành công", ToastAndroid.SHORT);
@@ -106,7 +106,7 @@ const AddNew = (props) => {
     setname("");
     setMoney("");
     setNote("");
-    setDateTime("");
+    setCreateAt("");
     setCategory("");
     setTitle("");
   }
@@ -142,12 +142,17 @@ const AddNew = (props) => {
       console.log("ERROR", error);
     }
   }
+
   const clickEditTransaction = async () => {
     try {
-      const response = await AxiosInstance().put("/transaction/api/edit-by-id", { money: money, note: note, category: category, createAt: createAt });
-      console.log('value edit: ', response);
+      console.log("id transaction: ", idEditTransaction);
+      console.log("Value transaction: ", money, note, category, createAt);
+      const response = await AxiosInstance().put("/transaction/api/edit-by-id?id=" + idEditTransaction, { money: money, note: note, category: category.name, createAt: createAt });
+      console.log('value edit1: ', response);
       if (response.result === true) {
+        console.log('value edit2: ', response);
         ToastAndroid.show("Cập nhật thành công", ToastAndroid.SHORT);
+        navigation.navigate("History");
       }
       else {
         ToastAndroid.show("Cập nhật không thành công không thành công", ToastAndroid.SHORT);
@@ -160,13 +165,12 @@ const AddNew = (props) => {
   useEffect(() => {
     const getInforTransaction = async () => {
       const respone = await AxiosInstance().get("/transaction/api/get-by-id?id=" + params.id);
-      console.log("aaaaaaaa", respone);
+      setIdEditTransaction(params.id);
+      console.log("getInforTransaction: ", respone);
       if (respone.result) {
         setMoney(respone.transaction.money);
-        console.log('moneyyyyyyy', money);
-        console.log('transaction moneyyyyyyy', respone.transaction.money);
         setCreateAt(respone.transaction.createAt);
-        setCategory(respone.transaction.category);
+        setCategory(respone.transaction.category.name);
         setNote(respone.transaction.note);
         ToastAndroid.show("Lây dư liệu thành công !", ToastAndroid.SHORT);
       }
@@ -212,7 +216,7 @@ const AddNew = (props) => {
               <Image style={styles.imgInput} source={require('../../asset/icon/icon_calender.png')} />
             </TouchableOpacity>
             <TextInput style={styles.txtInput} editable={false}
-              onChangeText={setCreateAt} value={dateTime}></TextInput>
+              onChangeText={setCreateAt} value={createAt}></TextInput>
           </View>
         </View>
 
@@ -229,8 +233,8 @@ const AddNew = (props) => {
                 }
               />
             </TouchableOpacity>
-            <TextInput onChangeText={setCategory} value={title} editable={false} 
-            placeholder='Chọn loại' style={styles.txtInput}></TextInput>
+            <TextInput onChangeText={setCategory} value={title} editable={false}
+              placeholder='Chọn loại' style={styles.txtInput}></TextInput>
           </View>
         </View>
 
@@ -244,8 +248,10 @@ const AddNew = (props) => {
 
       <View style={{ alignItems: 'center' }}>
         <TouchableOpacity style={styles.viewSave}
-          onPress={onSaveTransaction}
-        // onPress={clickEditTransaction}
+          //onPress={onSaveTransaction}
+          onPress={() =>{
+            clickEditTransaction();
+          }}
         >
 
           <Text style={styles.textSave}>Lưu Chi tiêu</Text>
