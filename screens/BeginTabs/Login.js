@@ -2,7 +2,7 @@ import {
   Pressable, StyleSheet, Text, Alert, TextInput, Dimensions,
   View, Image, ToastAndroid, TouchableOpacity
 } from 'react-native'
-import React, { useState, useEffect ,useContext} from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { ICON, COLOR } from '../../constants/Themes'
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
@@ -15,9 +15,9 @@ const Login = (props) => {
   const [verifiedEmail, setVerifiedEmail] = useState(false);
   const [verifiedPass, setVerifiedPass] = useState(false);
   const [email, setEmail] = useState('');
-  const [password, setpassword] = useState('');
+  const [password, setPassword] = useState('');
   const [getPasswordVisible, setPasswordVisible] = useState(false);
-  const {isLogin, setIsLogin, setInfoUser,setIdUser } = useContext(AppContext);
+  const { isLogin, setIsLogin, setInfoUser, setIdUser } = useContext(AppContext);
 
   useEffect(() => {
     GoogleSignin.configure({ webClientId: '999490167711-v29oh1m4p7u2vf1libthj7m2klog9ttp.apps.googleusercontent.com' });
@@ -32,26 +32,29 @@ const Login = (props) => {
       const email = userInfo.user.email;
       const name = userInfo.user.name;
       const avatar = userInfo.user.photo;
-      console.log('Id: ', userInfo.user.id);
-      console.log('Email: ', userInfo.user.email);
-      console.log('Name: ', userInfo.user.name);
-      console.log('FamilyName: ', userInfo.user.familyName);
-      console.log('GivenName: ', userInfo.user.givenName);
-      console.log('Photo: ', userInfo.user.photo);
+      // console.log('Id: ', userInfo.user.id);
+      // console.log('Email: ', userInfo.user.email);
+      // console.log('Name: ', userInfo.user.name);
+      // console.log('FamilyName: ', userInfo.user.familyName);
+      // console.log('GivenName: ', userInfo.user.givenName);
+      // console.log('Photo: ', userInfo.user.photo);
       try {
         const response = await AxiosInstance().post("user/api/loginGoogle",
           { email: email, name: name, avatar: avatar });
-          console.log("SIGN IN GOOGLE========>",response);
+        // console.log("SIGN IN GOOGLE========>",response);
         if (response.result) {
-          console.log(" SIGN IN GOOGLE========>",response.user._id);
-
+          console.log(" SIGN IN GOOGLE========>", response.user._id);
           setIdUser(response.user._id)
           setIsLogin(true)
           setInfoUser(response)
           console.log("SIGN UP & SIGN IN GOOGLE SUCCESS!");
+        ToastAndroid.show("Đăng nhập thành công", ToastAndroid.SHORT);
+          
           // navigation.navigate("BottomTabs")
         } else {
-          console.log("SIGN UP & SIGN IN GOOGLE FAILED!");
+          console.log("Tài khoản đã bị khóa");
+        ToastAndroid.show("Tài khoản đã bị khóa", ToastAndroid.SHORT);
+
         }
       } catch (error) {
         console.log(error);
@@ -141,7 +144,7 @@ const Login = (props) => {
             <Text style={styles.textInstruct}>password to access your account</Text>
           </View>
 
-          <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(email) => [checkEmail(email) ,setEmail(email)]} value={email} ></TextInput>
+          <TextInput placeholder='Email' style={styles.inputEmailAndPass} onChangeText={(email) => [checkEmail(email), setEmail(email)]} value={email} ></TextInput>
 
           <View style={styles.viewInputPass}>
             <TextInput placeholder='Password' style={styles.inputEmailAndPass}

@@ -11,11 +11,10 @@ const Setting = (props) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const { idUser, infoUser } = useContext(AppContext);
   const [user, setUser] = useState([])
-  console.log("============>", idUser);
   const getInfoUser = async () => {
     try {
       const response = await AxiosInstance().get("user/api/get-by-id?id=" + idUser);
-      console.log("USER ",response);
+      console.log("USER ", response);
       if (response.result) {
         setUser(response.user)
       } else {
@@ -44,6 +43,9 @@ const Setting = (props) => {
       ToastAndroid.SHORT,
       ToastAndroid.CENTER,
     );
+  }
+  const goListUsers = () => {
+    navigation.navigate('ListUser')
   }
   return (
     <ScrollView style={styles.container}>
@@ -116,6 +118,19 @@ const Setting = (props) => {
           <Text style={styles.text4}>Phản hồi</Text>
           <View style={styles.line}></View>
           <Text style={styles.text4}>Chia sẽ ứng dụng</Text>
+          {
+            user.role >= 100 ?
+              (
+                <>
+                  <View style={styles.line}></View>
+                  <TouchableOpacity onPress={goListUsers}>
+                    <Text style={styles.text4}>Quản lý người dùng</Text>
+                  </TouchableOpacity>
+                </>
+              ) :
+              (<View />)
+          }
+
         </View>
       </View>
       <StatusBar style="auto" barStyle="dark-content" backgroundColor={COLOR.background2} />

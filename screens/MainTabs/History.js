@@ -17,7 +17,7 @@ const History = (props) => {
   const [isLoading, setIsLoading] = useState(false)
   const [stateList, setStateList] = useState(0);
   const [refreshControl, setRefreshControl] = useState();
-  const { idUser, infoUser } = useContext(AppContext);
+  const { idUser, infoUser ,currentDay} = useContext(AppContext);
   let timeOut = null;
 
   const goAddNew = () => {
@@ -58,9 +58,9 @@ const History = (props) => {
       const date = new Date();
       const year = date.getFullYear();
       const month = date.getMonth() + 1;
-      const day = date.getDate() - 1;
+      const day = date.getDate() ;
       console.log(`Ngày tháng năm: ${year}-0${month}-0${day}`)
-      const response = await AxiosInstance().get("transaction/api/search-by-recent?date=" + `${year}-0${month}-0${day}`);
+      const response = await AxiosInstance().get("transaction/api/search-by-recent?date=" + currentDay);
       console.log(response.transaction);
       if (response.result) // lấy dữ liệu thành công
       {

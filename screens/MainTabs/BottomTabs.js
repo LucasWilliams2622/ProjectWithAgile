@@ -10,6 +10,8 @@ import AddNew from './AddNew'
 import Profile from './Profile'
 import Setting from './Setting'
 import Chart from './Chart'
+import ListUser from './ListUser'
+
 import History from './History';
 import TopTabThuChi from '../MainTabs/TopTabThuChi'
 import Login from '../BeginTabs/Login'
@@ -106,9 +108,10 @@ const StackSetting = () => {
       <Stack.Screen name="AddNew" component={AddNew} />
 
       <Stack.Screen name="History" component={History} />
+      <Stack.Screen name="ListUser" component={ListUser} />
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="TopTabThuChi" component={TopTabThuChi} />
-
+      
     </Stack.Navigator>
   )
 }
