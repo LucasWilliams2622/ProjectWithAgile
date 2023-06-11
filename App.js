@@ -45,7 +45,7 @@ import { AppContextProvider } from './utils/AppContext'
 const App = () => {
   const getDeviceToken = async () => {
     let token = await messaging().getToken();
-    console.log("TOKEN NOTIFICATION", token);
+    // console.log("TOKEN NOTIFICATION",token);
   };
   useEffect(() => {
     getDeviceToken();
@@ -59,6 +59,9 @@ const App = () => {
     });
     return unsubscribe;
   }, []);
+  messaging().setBackgroundMessageHandler(async remoteMessage => {
+    console.log('Message handled in the background!', remoteMessage);
+  });
   return (
     <AppContextProvider>
       <NavigationContainer>
