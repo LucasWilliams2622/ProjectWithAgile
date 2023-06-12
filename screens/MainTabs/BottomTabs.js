@@ -20,6 +20,9 @@ import Register from '../BeginTabs/Register'
 import SignPassword from '../BeginTabs/SignPassword'
 import SignCode from '../BeginTabs/SignCode'
 import { AppContext } from '../../utils/AppContext'
+import ChangeForgotPass from '../BeginTabs/ChangeForgotPass';
+import ForgotPassword from '../BeginTabs/ForgotPassword';
+import ForgotPasswordCode from '../BeginTabs/ForgotPasswordCode';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -31,7 +34,11 @@ const StackBegin = () => {
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="SignPassword" component={SignPassword} />
       <Stack.Screen name="SignCode" component={SignCode} />
+      <Stack.Screen name="ChangeForgotPass" component={ChangeForgotPass} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+      <Stack.Screen name="ForgotPasswordCode" component={ForgotPasswordCode} />
       <Stack.Screen name="BottomTabs" component={BottomTabs} />
+
 
     </Stack.Navigator>
   )
@@ -57,7 +64,6 @@ const StackHistory = () => {
       <Stack.Screen name="Setting" component={Setting} />
       <Stack.Screen name="Chart" component={Chart} />
       <Stack.Screen name="AddNew" component={AddNew} />
-
       <Stack.Screen name="History" component={History} />
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="TopTabThuChi" component={TopTabThuChi} />
