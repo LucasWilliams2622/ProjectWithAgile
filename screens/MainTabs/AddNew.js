@@ -145,14 +145,15 @@ const AddNew = (props) => {
 
   const clickEditTransaction = async () => {
     try {
+      console.log("id User edit transaction: ",idUser);
       console.log("id transaction: ", idEditTransaction);
       console.log("Value transaction: ", money, note, category, createAt);
-      const response = await AxiosInstance().put("/transaction/api/edit-by-id?id=" + idEditTransaction, { money: money, note: note, category: category.name, createAt: createAt });
+      const response = await AxiosInstance().put("/transaction/api/edit-by-id?id=" + idEditTransaction + "&idUser=" + idUser, { money: money, note: note, category: category, createAt: createAt });
       console.log('value edit1: ', response);
       if (response.result === true) {
         console.log('value edit2: ', response);
         ToastAndroid.show("Cập nhật thành công", ToastAndroid.SHORT);
-        navigation.navigate("History");
+        //navigation.navigate("History");
       }
       else {
         ToastAndroid.show("Cập nhật không thành công không thành công", ToastAndroid.SHORT);
@@ -248,7 +249,7 @@ const AddNew = (props) => {
 
       <View style={{ alignItems: 'center' }}>
         <TouchableOpacity style={styles.viewSave}
-          onPress={!params ? clickEditTransaction : onSaveTransaction}
+        onPress={!params ? clickEditTransaction : onSaveTransaction}
         // onPress={() =>{
         //   clickEditTransaction();
         // }}
