@@ -1,6 +1,6 @@
-import React, { useState,useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import {
-  AppRegistry, StyleSheet, Text,TouchableOpacity,
+  AppRegistry, StyleSheet, Text, TouchableOpacity,
   View, processColor, Image, Dimensions,
 } from 'react-native';
 import { PieChart } from 'react-native-charts-wrapper';
@@ -28,6 +28,7 @@ class ItemMonth extends React.Component {
         orientation: "VERTICAL",
         wordWrapEnabled: true
       },
+      
       data: {
         dataSets: [{
           values: [{ value: 20, label: 'Thu nhập' },
@@ -68,11 +69,11 @@ class ItemMonth extends React.Component {
 
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
-    
+
   }
   async componentDidMount() {
     const { idUser } = this.context;
-    console.log("aaaaaaaaaa",idUser);
+    console.log("aaaaaaaaaa", idUser);
     try {
       const response = await AxiosInstance.get(`https://localhost:3000/transaction/api/get-total-money??idUser=${idUser}`);
       console.log(response);
@@ -103,7 +104,6 @@ class ItemMonth extends React.Component {
       console.log(error);
     }
   }
-
   handleButtonClick() {
     this.setState({ show: this.state.show = true });
   }
@@ -113,7 +113,7 @@ class ItemMonth extends React.Component {
   }
 
   render() {
-  
+
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.boxMonth} onPress={this.handleButtonClick}>

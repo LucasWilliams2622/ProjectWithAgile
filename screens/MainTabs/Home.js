@@ -22,16 +22,16 @@ const Home = (props) => {
   const [totalMoney, setTotalMoney] = useState('');
   const [limit, setLimit] = useState('');
 
-  console.log("==============>", infoUser);
+  // console.log("==============>", infoUser);
   const getTotalMoney = async () => {
     try {
       const response = await AxiosInstance().get("/transaction/api/get-total-money?idUser=" + idUser);
-      console.log("Total Money: ", response);
+      // console.log("Total Money: ", response);
       if (response.result) {
-        console.log('transaction totalExpense: ', response.transaction.totalExpense);
-        console.log('transaction Limit: ', response.transaction.limit);
+        // console.log('transaction totalExpense: ', response.transaction.totalExpense);
+        // console.log('transaction Limit: ', response.transaction.limit);
 
-        setIsLoading(false)
+       
         setLimit(response.transaction.limit);
         setTotalExpense(response.transaction.totalExpense);
         setTotalIncome(response.transaction.totalIncome);
@@ -45,18 +45,22 @@ const Home = (props) => {
   }
   const getAllTransaction = async () => {
     try {
+      console.log("===================================>", isLoading);
+
       const response = await AxiosInstance().get("/transaction/api/search-by-current-date?idUser=" + idUser + '&date=' + currentDay);
       if (response.result) {
-        setData(response.transaction);
-        setIsLoading(false)
-      } else {
-        console.log('FAILED TO GET ALL',);
+        console.log("===================================response", response);
+        console.log("===================================response", isLoading);
 
+        setIsLoading(false)
+        setData(response.transaction);
+
+      } else {
+        setIsLoading(true)
       }
     } catch (error) {
       console.log(error);
     }
-
   }
   useEffect(() => {
     console.log("INFOR ", infoUser);
@@ -71,41 +75,41 @@ const Home = (props) => {
   const goAddNew = () => {
     navigation.navigate('AddNew');
   }
-  const Progress = ({ step, steps, height }) => {
+  // const Progress = ({ step, steps, height }) => {
 
-    const [width, setWith] = React.useState(0);
-    const animationValue = React.useRef(new Animated.Value(-1000)).current;
-    const reactive = React.useRef(new Animated.Value(-1000)).current;
+  //   const [width, setWith] = React.useState(0);
+  //   const animationValue = React.useRef(new Animated.Value(-1000)).current;
+  //   const reactive = React.useRef(new Animated.Value(-1000)).current;
 
-    React.useEffect(() => {
-      Animated.timing(animationValue, {
-        toValue: reactive,
-        duration: 300,
-        useNativeDriver: true
-      }).start();
-    }, []);
+  //   React.useEffect(() => {
+  //     Animated.timing(animationValue, {
+  //       toValue: reactive,
+  //       duration: 300,
+  //       useNativeDriver: true
+  //     }).start();
+  //   }, []);
 
-    React.useEffect(() => {
-      reactive.setValue(-width + (width * step) / steps);
-    }, [step, width]);
+  //   React.useEffect(() => {
+  //     reactive.setValue(-width + (width * step) / steps);
+  //   }, [step, width]);
 
-    return (
-      <>
+  //   return (
+  //     <>
 
-        <Text style={styles.textCount}>{step}/{steps}</Text>
+  //       <Text style={styles.textCount}>{step}/{steps}</Text>
 
-        <View onLayout={e => {
-          const newWith = e.nativeEvent.layout.width;
-          setWith(newWith);
-        }}
-          style={{ height, backgroundColor: 'rgba(0,0,0,0.1)', borderRadius: height, overflow: 'hidden', }}>
-          <Animated.View
-            style={{ height, width: '100%', backgroundColor: 'rgba(0,0,0,0.5)', position: 'absolute', left: 0, top: 0, transform: [{ translateX: animationValue }] }} />
-        </View>
+  //       <View onLayout={e => {
+  //         const newWith = e.nativeEvent.layout.width;
+  //         setWith(newWith);
+  //       }}
+  //         style={{ height, backgroundColor: 'rgba(0,0,0,0.1)', borderRadius: height, overflow: 'hidden', }}>
+  //         <Animated.View
+  //           style={{ height, width: '100%', backgroundColor: 'rgba(0,0,0,0.5)', position: 'absolute', left: 0, top: 0, transform: [{ translateX: animationValue }] }} />
+  //       </View>
 
-      </>
-    );
-  };
+  //     </>
+  //   );
+  // };
 
   return (
     <SafeAreaView>
@@ -114,9 +118,9 @@ const Home = (props) => {
         <View style={styles.viewAvatarAndText}>
           <Image source={
             // require('../../asset/image/logo.png')
-            { uri: infoUser.user.avatar }
+            { uri: infoUser.avatar }
           } style={styles.imageProfile}></Image>
-          <Text style={styles.textHello}>Xin chào {infoUser.user.name}</Text>
+          <Text style={styles.textHello}>Xin chào {infoUser.name}</Text>
         </View>
       </TouchableOpacity>
 
@@ -160,13 +164,13 @@ const Home = (props) => {
           </View>
 
           <View style={styles.showTotal}>
-            <StatusBar hidden />
-            <Progress step={totalExpensee} steps={limit} height={15} />
+            {/* <StatusBar hidden /> */}
+            {/* <Progress step={totalExpensee} steps={limit} height={15} /> */}
           </View>
         </View>
       </View>
 
-      <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', marginTop:20}}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
         <Text>{totalExpensee}</Text>
         <Text>/</Text>
         <Text>{limit}</Text>

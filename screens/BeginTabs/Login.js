@@ -43,17 +43,17 @@ const Login = (props) => {
           { email: email, name: name, avatar: avatar });
         // console.log("SIGN IN GOOGLE========>",response);
         if (response.result) {
-          console.log(" SIGN IN GOOGLE========>", response.user._id);
+          console.log(" SIGN IN GOOGLE========>", response);
           setIdUser(response.user._id)
           setIsLogin(true)
-          setInfoUser(response)
-          console.log("SIGN UP & SIGN IN GOOGLE SUCCESS!");
-        ToastAndroid.show("Đăng nhập thành công", ToastAndroid.SHORT);
-          
+          setInfoUser(response.user)
+          // console.log("SIGN UP & SIGN IN GOOGLE SUCCESS!");
+          ToastAndroid.show("Đăng nhập thành công", ToastAndroid.SHORT);
+
           // navigation.navigate("BottomTabs")
         } else {
           console.log("Tài khoản đã bị khóa");
-        ToastAndroid.show("Tài khoản đã bị khóa", ToastAndroid.SHORT);
+          ToastAndroid.show("Tài khoản đã bị khóa", ToastAndroid.SHORT);
 
         }
       } catch (error) {

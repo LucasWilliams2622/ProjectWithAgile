@@ -184,6 +184,6 @@ const styles = StyleSheet.create({
   date: {
     fontWeight: '500',
     color: COLOR.black,
-    fontSize: 10,
+    fontSize: 13,
   }
 })

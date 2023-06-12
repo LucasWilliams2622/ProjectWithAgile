@@ -1,4 +1,4 @@
-import { FlatList, SafeAreaView, Dimensions, StyleSheet, Text, TouchableOpacity, View, Image, RefreshControl } from 'react-native'
+import { FlatList, SafeAreaView, Dimensions, StyleSheet, Text, TouchableOpacity, View, Image, RefreshControl, ScrollView } from 'react-native'
 import React, { useEffect, useContext, useState } from 'react'
 import { ICON, COLOR } from '../../constants/Themes'
 import { AppContext } from '../../utils/AppContext';
@@ -80,8 +80,10 @@ const ListUser = (props) => {
                 </View>
             </View>
             <View style={styles.boxContent}>
+                <ScrollView>
+
                 <FlatList
-                    style={{ height: 1000, width: '100%', marginBottom: 800 }}
+                    style={{ height: 1000, width: '100%'}}
                     data={users}
                     renderItem={({ item }) => <ItemInfoUser users={item} navigation={navigation} />}
                     keyExtractor={item => item._id}
@@ -97,6 +99,8 @@ const ListUser = (props) => {
                         }} colors={['green']} />
                     }
                 />
+                </ScrollView>
+
             </View>
         </SafeAreaView>
 

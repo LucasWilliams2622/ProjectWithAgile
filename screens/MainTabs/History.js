@@ -17,7 +17,7 @@ const History = (props) => {
   const [isLoading, setIsLoading] = useState(false)
   const [stateList, setStateList] = useState(0);
   const [refreshControl, setRefreshControl] = useState();
-  const { idUser, infoUser ,currentDay} = useContext(AppContext);
+  const { idUser, infoUser, currentDay } = useContext(AppContext);
   let timeOut = null;
 
   const goAddNew = () => {
@@ -35,10 +35,10 @@ const History = (props) => {
       handleSearch(searchText);
     }, 1000);
   }
-  const handleSearch = async  (searchText) => {
+  const handleSearch = async (searchText) => {
     try {
       console.log("======<", searchText);
-      if(searchText==""){
+      if (searchText == "") {
         getTransactionRecent()
       }
       const response = await AxiosInstance().get("transaction/api/search-by-money?money=" + searchText + "&idUser=" + idUser);
@@ -57,8 +57,8 @@ const History = (props) => {
   }
   const getTransactionRecent = async () => {
     try {
-      const response = await AxiosInstance().get("transaction/api/search-by-recent?date=" + currentDay);
-      console.log(response.transaction);
+      const response = await AxiosInstance().get("transaction/api/search-by-recent?date=" + currentDay + "&idUser=" + idUser);
+      console.log("HISTORY", response.transaction);
       if (response.result) // lấy dữ liệu thành công
       {
         console.log("===>");
@@ -67,7 +67,7 @@ const History = (props) => {
         console.log(response.transaction.createAt);
         setIsLoading(false)
       } else {
-        ToastAndroid.show("Lấy dữ liệu thất bại", ToastAndroid.SHORT)
+        setIsLoading(true)
       }
     } catch (error) {
       console.error(error);
@@ -116,18 +116,17 @@ const History = (props) => {
       <Text style={styles.text}>Lịch sử chi tiêu</Text>
       <View style={styles.viewSearch}>
         <TextInput placeholder='Tìm kiếm ' style={styles.input}
-         onChangeText={(text)=>countdownSearch(text)}></TextInput>
+          onChangeText={(text) => countdownSearch(text)}></TextInput>
         <TouchableOpacity>
           <Image style={styles.imageSearch} source={require('../../asset/icon/icon_search.png')}></Image>
         </TouchableOpacity>
       </View>
       {
-        isLoading == true ? (
-          <View>
+        isLoading ?
+          (<View>
             <View style={styles.jusCenter}>
-              <Text style={styles.textToday}>{createAt ? createAt : "00/00/0000"}</Text>
 
-              <View style={styles.viewLine}></View>
+              <View style={[styles.viewLine,{marginTop:50,}]}></View>
             </View>
             <ScrollView>
               <View style={styles.viewListGiveAndPay}>
@@ -139,43 +138,38 @@ const History = (props) => {
                 </TouchableOpacity>
               </View>
             </ScrollView>
-          </View>
-        ) :
-          (
-            <ScrollView style={{ marginTop: 20 }}>
-              <View style={styles.viewLine}></View>
-              <View style={styles.viewListGiveAndPay}>
-                <View>
-                  <FlatList
-                    style={{ height: '100%', width: '100%' }}
-                    data={data}
-                    renderItem={({ item }) => <ItemTransaction data={item} navigation={navigation} />}
-                    keyExtractor={item => item._id}
-                    showsVerticalScrollIndicator={false}
-                    refreshControl={
-                      <RefreshControl refreshing={refreshControl} onRefresh={() => {
-                        setRefreshControl(true)
-                        console.log("Refresh")
-                        setStateList(stateList + 1)
-                        console.log(stateList)
+          </View>)
+          :
+          (<ScrollView style={{ marginTop: 20 }}>
+            <View style={styles.viewLine}></View>
+            <View style={styles.viewListGiveAndPay}>
+              <View>
+                <FlatList
+                  style={{ height: '100%', width: '100%' }}
+                  data={data}
+                  renderItem={({ item }) => <ItemTransaction data={item} navigation={navigation} />}
+                  keyExtractor={item => item._id}
+                  showsVerticalScrollIndicator={false}
+                  refreshControl={
+                    <RefreshControl refreshing={refreshControl} onRefresh={() => {
+                      setRefreshControl(true)
+                      console.log("Refresh")
+                      setStateList(stateList + 1)
+                      console.log(stateList)
 
-                        setRefreshControl(false)
-                      }} colors={['green']} />
-                    }
-                  />
-                  <View style={styles.viewDeleteAll}>
-                    <TouchableOpacity style={styles.center} onPress={checkDeleteTransaction}>
-                      <Image style={styles.imageDelete} source={require('../../asset/icon/icon_delete.png')}></Image>
-                      <Text style={styles.textDelete}>Xoá tất cả</Text>
-                    </TouchableOpacity>
-                  </View>
-
+                      setRefreshControl(false)
+                    }} colors={['green']} />
+                  }
+                />
+                <View style={styles.viewDeleteAll}>
+                  <TouchableOpacity style={styles.center} onPress={checkDeleteTransaction}>
+                    <Image style={styles.imageDelete} source={require('../../asset/icon/icon_delete.png')}></Image>
+                    <Text style={styles.textDelete}>Xoá tất cả</Text>
+                  </TouchableOpacity>
                 </View>
-
               </View>
-            </ScrollView>
-          )
-      }
+            </View>
+          </ScrollView>)}
       <StatusBar style="auto" barStyle="dark-content" backgroundColor={COLOR.background2} />
     </SafeAreaView>
   )
@@ -258,7 +252,8 @@ const styles = StyleSheet.create({
   viewDeleteAll: {
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginTop:100,
   },
   center: {
     width: windowWIdth - 200,

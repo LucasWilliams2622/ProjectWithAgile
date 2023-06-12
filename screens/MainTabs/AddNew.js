@@ -248,10 +248,10 @@ const AddNew = (props) => {
 
       <View style={{ alignItems: 'center' }}>
         <TouchableOpacity style={styles.viewSave}
-          //onPress={onSaveTransaction}
-          onPress={() =>{
-            clickEditTransaction();
-          }}
+          onPress={!params ? clickEditTransaction : onSaveTransaction}
+        // onPress={() =>{
+        //   clickEditTransaction();
+        // }}
         >
 
           <Text style={styles.textSave}>Lưu Chi tiêu</Text>
