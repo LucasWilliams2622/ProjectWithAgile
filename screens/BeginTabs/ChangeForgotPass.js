@@ -7,8 +7,8 @@ import AxiosInstance from '../../constants/AxiosInstance';
 
 const ChangeForgotPass = (props) => {
   const { route, navigation } = props;
-  //const email = route.params.email;
-  const email = 'quochuy3232@gmail.com'
+  const email = route.params.email;
+  //const email = 'quochuy3232@gmail.com'
   const [getNewPassVisible, setNewPassVisible] = useState(false)
   const [getConfirmPassVisible, setConfirmPassVisible] = useState(false)
   const [newPassword, setNewPassword] = useState('');
