@@ -20,6 +20,7 @@ const Home = (props) => {
   const [totalIncome, setTotalIncome] = useState('');
   const [totalExpensee, setTotalExpense] = useState('');
   const [totalMoney, setTotalMoney] = useState('');
+  const [limit, setLimit] = useState('');
 
   console.log("==============>", infoUser);
   const getTotalMoney = async () => {
@@ -28,8 +29,10 @@ const Home = (props) => {
       console.log("Total Money: ", response);
       if (response.result) {
         console.log('transaction totalExpense: ', response.transaction.totalExpense);
+        console.log('transaction Limit: ', response.transaction.limit);
 
         setIsLoading(false)
+        setLimit(response.transaction.limit);
         setTotalExpense(response.transaction.totalExpense);
         setTotalIncome(response.transaction.totalIncome);
         setTotalMoney(response.transaction.totalMoney);
@@ -111,8 +114,8 @@ const Home = (props) => {
         <View style={styles.viewAvatarAndText}>
           <Image source={
             // require('../../asset/image/logo.png')
-            {uri:infoUser.user.avatar}
-        } style={styles.imageProfile}></Image>
+            { uri: infoUser.user.avatar }
+          } style={styles.imageProfile}></Image>
           <Text style={styles.textHello}>Xin chào {infoUser.user.name}</Text>
         </View>
       </TouchableOpacity>
@@ -155,12 +158,18 @@ const Home = (props) => {
               }
             </View>
           </View>
+
+          <View style={styles.showTotal}>
+            <StatusBar hidden />
+            <Progress step={totalExpensee} steps={limit} height={15} />
+          </View>
         </View>
       </View>
 
-      <View style={styles.showTotal}>
-        <StatusBar hidden />
-        <Progress step={1000000} steps={10000000} height={20} />
+      <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', marginTop:20}}>
+        <Text>{totalExpensee}</Text>
+        <Text>/</Text>
+        <Text>{limit}</Text>
       </View>
 
       <Text style={styles.textToday}>Hôm nay:</Text>
@@ -317,7 +326,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     fontWeight: '400',
     color: COLOR.black,
-    marginTop: 20,
+    marginTop: 5,
     marginLeft: 20,
     marginBottom: 5
   },
@@ -337,11 +346,10 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     marginBottom: 5,
     fontSize: 12,
-    color: 'black'
+    color: COLOR.black
   },
   showTotal: {
     flex: 1,
-    backgroundColor: '#fff',
     justifyContent: 'center',
     padding: 20,
     marginTop: 20
