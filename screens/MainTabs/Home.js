@@ -75,41 +75,42 @@ const Home = (props) => {
   const goAddNew = () => {
     navigation.navigate('AddNew');
   }
-  // const Progress = ({ step, steps, height }) => {
+  const Progress = ({ step, steps, height }) => {
+    console.log('dang chay show nhaaaaaaaaaa');
 
-  //   const [width, setWith] = React.useState(0);
-  //   const animationValue = React.useRef(new Animated.Value(-1000)).current;
-  //   const reactive = React.useRef(new Animated.Value(-1000)).current;
+    const [width, setWith] = React.useState(0);
+    const animationValue = React.useRef(new Animated.Value(-1000)).current;
+    const reactive = React.useRef(new Animated.Value(-1000)).current;
 
-  //   React.useEffect(() => {
-  //     Animated.timing(animationValue, {
-  //       toValue: reactive,
-  //       duration: 300,
-  //       useNativeDriver: true
-  //     }).start();
-  //   }, []);
+    React.useEffect(() => {
+      Animated.timing(animationValue, {
+        toValue: reactive,
+        duration: 300,
+        useNativeDriver: true
+      }).start();
+    }, []);
 
-  //   React.useEffect(() => {
-  //     reactive.setValue(-width + (width * step) / steps);
-  //   }, [step, width]);
+    React.useEffect(() => {
+      reactive.setValue(-width + (width * step) / steps);
+    }, [step, width]);
 
-  //   return (
-  //     <>
+    return (
+      <>
 
-  //       <Text style={styles.textCount}>{step}/{steps}</Text>
+        <Text style={styles.textCount}>{step}/{steps}</Text>
 
-  //       <View onLayout={e => {
-  //         const newWith = e.nativeEvent.layout.width;
-  //         setWith(newWith);
-  //       }}
-  //         style={{ height, backgroundColor: 'rgba(0,0,0,0.1)', borderRadius: height, overflow: 'hidden', }}>
-  //         <Animated.View
-  //           style={{ height, width: '100%', backgroundColor: 'rgba(0,0,0,0.5)', position: 'absolute', left: 0, top: 0, transform: [{ translateX: animationValue }] }} />
-  //       </View>
+        <View onLayout={e => {
+          const newWith = e.nativeEvent.layout.width;
+          setWith(newWith);
+        }}
+          style={{ height, backgroundColor: 'rgba(0,0,0,0.1)', borderRadius: height, overflow: 'hidden', }}>
+          <Animated.View
+            style={{ height, width: '100%', backgroundColor: 'rgba(0,0,0,0.5)', position: 'absolute', left: 0, top: 0, transform: [{ translateX: animationValue }] }} />
+        </View>
 
-  //     </>
-  //   );
-  // };
+       </>
+    );
+  };
 
   return (
     <SafeAreaView>
@@ -165,8 +166,9 @@ const Home = (props) => {
 
           <View style={styles.showTotal}>
             {/* <StatusBar hidden /> */}
-            {/* <Progress step={totalExpensee} steps={limit} height={15} /> */}
+            <Progress step={totalExpensee} steps={limit} height={15} />
           </View>
+
         </View>
       </View>
 
