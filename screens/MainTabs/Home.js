@@ -71,8 +71,9 @@ const Home = (props) => {
   const goAddNew = () => {
     navigation.navigate('AddNew');
   }
-  const Progress = ({ step, steps, height }) => {
 
+  const Progress = ({ step, steps, height }) => {
+    console.log('dang chay show nhaaaaaaaaaa');
     const [width, setWith] = React.useState(0);
     const animationValue = React.useRef(new Animated.Value(-1000)).current;
     const reactive = React.useRef(new Animated.Value(-1000)).current;
@@ -92,15 +93,13 @@ const Home = (props) => {
     return (
       <>
 
-        <Text style={styles.textCount}>{step}/{steps}</Text>
-
         <View onLayout={e => {
           const newWith = e.nativeEvent.layout.width;
           setWith(newWith);
         }}
           style={{ height, backgroundColor: 'rgba(0,0,0,0.1)', borderRadius: height, overflow: 'hidden', }}>
           <Animated.View
-            style={{ height, width: '100%', backgroundColor: 'rgba(0,0,0,0.5)', position: 'absolute', left: 0, top: 0, transform: [{ translateX: animationValue }] }} />
+            style={{ height, width: '100%', backgroundColor: '#2ea3d6', position: 'absolute', left: 0, top: 0, transform: [{ translateX: animationValue }] }} />
         </View>
 
       </>
@@ -160,13 +159,13 @@ const Home = (props) => {
           </View>
 
           <View style={styles.showTotal}>
-            <StatusBar hidden />
             <Progress step={totalExpensee} steps={limit} height={15} />
           </View>
+
         </View>
       </View>
 
-      <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', marginTop:20}}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
         <Text>{totalExpensee}</Text>
         <Text>/</Text>
         <Text>{limit}</Text>
