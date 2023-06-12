@@ -31,7 +31,6 @@ const Home = (props) => {
         // console.log('transaction totalExpense: ', response.transaction.totalExpense);
         // console.log('transaction Limit: ', response.transaction.limit);
 
-       
         setLimit(response.transaction.limit);
         setTotalExpense(response.transaction.totalExpense);
         setTotalIncome(response.transaction.totalIncome);
@@ -46,7 +45,6 @@ const Home = (props) => {
   const getAllTransaction = async () => {
     try {
       console.log("===================================>", isLoading);
-
       const response = await AxiosInstance().get("/transaction/api/search-by-current-date?idUser=" + idUser + '&date=' + currentDay);
       if (response.result) {
         console.log("===================================response", response);
@@ -54,7 +52,6 @@ const Home = (props) => {
 
         setIsLoading(false)
         setData(response.transaction);
-
       } else {
         setIsLoading(true)
       }
@@ -70,47 +67,47 @@ const Home = (props) => {
     return () => {
 
     }
-  }, [stateList])
+  }, [stateList, data])
 
   const goAddNew = () => {
     navigation.navigate('AddNew');
   }
-  const Progress = ({ step, steps, height }) => {
-    console.log('dang chay show nhaaaaaaaaaa');
+  // const Progress = ({ step, steps, height }) => {
+  //   console.log('dang chay show nhaaaaaaaaaa');
 
-    const [width, setWith] = React.useState(0);
-    const animationValue = React.useRef(new Animated.Value(-1000)).current;
-    const reactive = React.useRef(new Animated.Value(-1000)).current;
+  //   const [width, setWith] = React.useState(0);
+  //   const animationValue = React.useRef(new Animated.Value(-1000)).current;
+  //   const reactive = React.useRef(new Animated.Value(-1000)).current;
 
-    React.useEffect(() => {
-      Animated.timing(animationValue, {
-        toValue: reactive,
-        duration: 300,
-        useNativeDriver: true
-      }).start();
-    }, []);
+  //   React.useEffect(() => {
+  //     Animated.timing(animationValue, {
+  //       toValue: reactive,
+  //       duration: 300,
+  //       useNativeDriver: true
+  //     }).start();
+  //   }, []);
 
-    React.useEffect(() => {
-      reactive.setValue(-width + (width * step) / steps);
-    }, [step, width]);
+  //   React.useEffect(() => {
+  //     reactive.setValue(-width + (width * step) / steps);
+  //   }, [step, width]);
 
-    return (
-      <>
+  //   return (
+  //     <>
 
-        <Text style={styles.textCount}>{step}/{steps}</Text>
+  //       <Text style={styles.textCount}>{step}/{steps}</Text>
 
-        <View onLayout={e => {
-          const newWith = e.nativeEvent.layout.width;
-          setWith(newWith);
-        }}
-          style={{ height, backgroundColor: 'rgba(0,0,0,0.1)', borderRadius: height, overflow: 'hidden', }}>
-          <Animated.View
-            style={{ height, width: '100%', backgroundColor: 'rgba(0,0,0,0.5)', position: 'absolute', left: 0, top: 0, transform: [{ translateX: animationValue }] }} />
-        </View>
+  //       <View onLayout={e => {
+  //         const newWith = e.nativeEvent.layout.width;
+  //         setWith(newWith);
+  //       }}
+  //         style={{ height, backgroundColor: 'rgba(0,0,0,0.1)', borderRadius: height, overflow: 'hidden', }}>
+  //         <Animated.View
+  //           style={{ height, width: '100%', backgroundColor: 'rgba(0,0,0,0.5)', position: 'absolute', left: 0, top: 0, transform: [{ translateX: animationValue }] }} />
+  //       </View>
 
-       </>
-    );
-  };
+  //     </>
+  //   );
+  // };
 
   return (
     <SafeAreaView>
@@ -133,40 +130,32 @@ const Home = (props) => {
               <Text style={styles.textDate}>{currentDay}</Text>
             </View>
             <TouchableOpacity onPress={() => setIsShow(!isShow)}>
-              {
-                isShow ?
-                  <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_invisible.png')}></Image>
-                  :
-                  <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_visible.png')}></Image>
-              }
+              {isShow ?
+                <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_invisible.png')}></Image>
+                :
+                <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_visible.png')}></Image>}
             </TouchableOpacity>
           </View>
 
           <View style={styles.viewIn4Menu2}>
             <Text style={styles.textPrice}>Tổng: </Text>
-            {
-              isShow ? <Text style={styles.textPrice}>********</Text> : <Text style={styles.textPrice}>{totalMoney} VND</Text>
-            }
+            {isShow ? <Text style={styles.textPrice}>********</Text> : <Text style={styles.textPrice}>{totalMoney} VND</Text>}
           </View>
 
           <View style={styles.viewIn4Menu3}>
             <View style={[styles.flex, { alignItems: 'center' }]}>
               <Text style={styles.textGiveAndPay}>Thu Nhập:</Text>
-              {
-                isShow ? <Text style={styles.textGiveAndPay}>********</Text> : <Text style={styles.textGiveAndPay}>{totalIncome} VND</Text>
-              }
+              {isShow ? <Text style={styles.textGiveAndPay}>********</Text> : <Text style={styles.textGiveAndPay}>{totalIncome} VND</Text>}
             </View>
             <View style={[styles.flex, { alignItems: 'center' }]}>
               <Text style={styles.textGiveAndPay}>Chi Tiêu:</Text>
-              {
-                isShow ? <Text style={styles.textGiveAndPay}>********</Text> : <Text style={styles.textGiveAndPay}>{totalExpensee}VND</Text>
-              }
+              {isShow ? <Text style={styles.textGiveAndPay}>********</Text> : <Text style={styles.textGiveAndPay}>{totalExpensee}VND</Text>}
             </View>
           </View>
 
           <View style={styles.showTotal}>
             {/* <StatusBar hidden /> */}
-            <Progress step={totalExpensee} steps={limit} height={15} />
+            {/* <Progress step={totalExpensee} steps={limit} height={15} /> */}
           </View>
 
         </View>
@@ -180,29 +169,25 @@ const Home = (props) => {
 
       <Text style={styles.textToday}>Hôm nay:</Text>
       {!isLoading ?
-        (<View>
-          <ScrollView>
+        (<View style={{ height: 500, width: '100%', marginBottom: 1000 }}>
+          <FlatList
 
-            <FlatList
-              style={{ height: 500, width: '100%', marginBottom: 800 }}
-              data={data}
-              renderItem={({ item }) => <ItemTransaction data={item} navigation={navigation} />}
-              keyExtractor={item => item._id}
-              showsVerticalScrollIndicator={false}
-              refreshControl={
-                <RefreshControl refreshing={refreshControl} onRefresh={() => {
-                  setRefreshControl(true)
-                  console.log("Refresh")
-                  setStateList(stateList + 1)
-                  // console.log(stateList)
+            data={data}
+            renderItem={({ item }) => <ItemTransaction data={item} navigation={navigation} />}
+            keyExtractor={item => item._id}
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl refreshing={refreshControl} onRefresh={() => {
+                setRefreshControl(true)
+                console.log("Refresh")
+                setStateList(stateList + 1)
+                // console.log(stateList)
 
-                  setRefreshControl(false)
-                }} colors={['green']} />
-              }
-            />
-            {/* // data.map((item)=><ItemTransaction data={item} key={item._id} navigation={navigation} />) */}
-          </ScrollView>
-
+                setRefreshControl(false)
+              }} colors={['green']} />
+            }
+          />
+          {/* // data.map((item)=><ItemTransaction data={item} key={item._id} navigation={navigation} />) */}
         </View>)
         :
         (<ScrollView>

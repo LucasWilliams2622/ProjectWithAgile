@@ -79,7 +79,7 @@ const History = (props) => {
     return () => {
 
     }
-  }, []);
+  }, [data]);
 
   const DeleteTransactionAll = async () => {
     const response = await AxiosInstance().delete("transaction/api/delete-all?idUser=" + idUser);
