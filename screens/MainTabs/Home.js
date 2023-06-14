@@ -20,16 +20,18 @@ const Home = (props) => {
   const [totalIncome, setTotalIncome] = useState('');
   const [totalExpensee, setTotalExpense] = useState('');
   const [totalMoney, setTotalMoney] = useState('');
+  const [limit, setLimit] = useState('');
 
-  console.log("==============>", infoUser);
+  // console.log("==============>", infoUser);
   const getTotalMoney = async () => {
     try {
       const response = await AxiosInstance().get("/transaction/api/get-total-money?idUser=" + idUser);
-      console.log("Total Money: ", response);
+      // console.log("Total Money: ", response);
       if (response.result) {
-        console.log('transaction totalExpense: ', response.transaction.totalExpense);
+        // console.log('transaction totalExpense: ', response.transaction.totalExpense);
+        // console.log('transaction Limit: ', response.transaction.limit);
 
-        setIsLoading(false)
+        setLimit(response.transaction.limit);
         setTotalExpense(response.transaction.totalExpense);
         setTotalIncome(response.transaction.totalIncome);
         setTotalMoney(response.transaction.totalMoney);
@@ -42,18 +44,20 @@ const Home = (props) => {
   }
   const getAllTransaction = async () => {
     try {
+      console.log("===================================>", isLoading);
       const response = await AxiosInstance().get("/transaction/api/search-by-current-date?idUser=" + idUser + '&date=' + currentDay);
       if (response.result) {
-        setData(response.transaction);
-        setIsLoading(false)
-      } else {
-        console.log('FAILED TO GET ALL',);
+        console.log("===================================response", response);
+        console.log("===================================response", isLoading);
 
+        setIsLoading(false)
+        setData(response.transaction);
+      } else {
+        setIsLoading(true)
       }
     } catch (error) {
       console.log(error);
     }
-
   }
   useEffect(() => {
     console.log("INFOR ", infoUser);
@@ -63,46 +67,47 @@ const Home = (props) => {
     return () => {
 
     }
-  }, [stateList])
+  }, [stateList, data])
 
   const goAddNew = () => {
     navigation.navigate('AddNew');
   }
-  const Progress = ({ step, steps, height }) => {
+  // const Progress = ({ step, steps, height }) => {
+  //   console.log('dang chay show nhaaaaaaaaaa');
 
-    const [width, setWith] = React.useState(0);
-    const animationValue = React.useRef(new Animated.Value(-1000)).current;
-    const reactive = React.useRef(new Animated.Value(-1000)).current;
+  //   const [width, setWith] = React.useState(0);
+  //   const animationValue = React.useRef(new Animated.Value(-1000)).current;
+  //   const reactive = React.useRef(new Animated.Value(-1000)).current;
 
-    React.useEffect(() => {
-      Animated.timing(animationValue, {
-        toValue: reactive,
-        duration: 300,
-        useNativeDriver: true
-      }).start();
-    }, []);
+  //   React.useEffect(() => {
+  //     Animated.timing(animationValue, {
+  //       toValue: reactive,
+  //       duration: 300,
+  //       useNativeDriver: true
+  //     }).start();
+  //   }, []);
 
-    React.useEffect(() => {
-      reactive.setValue(-width + (width * step) / steps);
-    }, [step, width]);
+  //   React.useEffect(() => {
+  //     reactive.setValue(-width + (width * step) / steps);
+  //   }, [step, width]);
 
-    return (
-      <>
+  //   return (
+  //     <>
 
-        <Text style={styles.textCount}>{step}/{steps}</Text>
+  //       <Text style={styles.textCount}>{step}/{steps}</Text>
 
-        <View onLayout={e => {
-          const newWith = e.nativeEvent.layout.width;
-          setWith(newWith);
-        }}
-          style={{ height, backgroundColor: 'rgba(0,0,0,0.1)', borderRadius: height, overflow: 'hidden', }}>
-          <Animated.View
-            style={{ height, width: '100%', backgroundColor: 'rgba(0,0,0,0.5)', position: 'absolute', left: 0, top: 0, transform: [{ translateX: animationValue }] }} />
-        </View>
+  //       <View onLayout={e => {
+  //         const newWith = e.nativeEvent.layout.width;
+  //         setWith(newWith);
+  //       }}
+  //         style={{ height, backgroundColor: 'rgba(0,0,0,0.1)', borderRadius: height, overflow: 'hidden', }}>
+  //         <Animated.View
+  //           style={{ height, width: '100%', backgroundColor: 'rgba(0,0,0,0.5)', position: 'absolute', left: 0, top: 0, transform: [{ translateX: animationValue }] }} />
+  //       </View>
 
-      </>
-    );
-  };
+  //     </>
+  //   );
+  // };
 
   return (
     <SafeAreaView>
@@ -111,9 +116,9 @@ const Home = (props) => {
         <View style={styles.viewAvatarAndText}>
           <Image source={
             // require('../../asset/image/logo.png')
-            {uri:infoUser.user.avatar}
-        } style={styles.imageProfile}></Image>
-          <Text style={styles.textHello}>Xin chào {infoUser.user.name}</Text>
+            { uri: infoUser.avatar }
+          } style={styles.imageProfile}></Image>
+          <Text style={styles.textHello}>Xin chào {infoUser.name}</Text>
         </View>
       </TouchableOpacity>
 
@@ -125,69 +130,64 @@ const Home = (props) => {
               <Text style={styles.textDate}>{currentDay}</Text>
             </View>
             <TouchableOpacity onPress={() => setIsShow(!isShow)}>
-              {
-                isShow ?
-                  <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_invisible.png')}></Image>
-                  :
-                  <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_visible.png')}></Image>
-              }
+              {isShow ?
+                <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_invisible.png')}></Image>
+                :
+                <Image style={styles.imageInvisible} source={require('../../asset/icon/icon_visible.png')}></Image>}
             </TouchableOpacity>
           </View>
 
           <View style={styles.viewIn4Menu2}>
             <Text style={styles.textPrice}>Tổng: </Text>
-            {
-              isShow ? <Text style={styles.textPrice}>********</Text> : <Text style={styles.textPrice}>{totalMoney} VND</Text>
-            }
+            {isShow ? <Text style={styles.textPrice}>********</Text> : <Text style={styles.textPrice}>{totalMoney} VND</Text>}
           </View>
 
           <View style={styles.viewIn4Menu3}>
             <View style={[styles.flex, { alignItems: 'center' }]}>
               <Text style={styles.textGiveAndPay}>Thu Nhập:</Text>
-              {
-                isShow ? <Text style={styles.textGiveAndPay}>********</Text> : <Text style={styles.textGiveAndPay}>{totalIncome} VND</Text>
-              }
+              {isShow ? <Text style={styles.textGiveAndPay}>********</Text> : <Text style={styles.textGiveAndPay}>{totalIncome} VND</Text>}
             </View>
             <View style={[styles.flex, { alignItems: 'center' }]}>
               <Text style={styles.textGiveAndPay}>Chi Tiêu:</Text>
-              {
-                isShow ? <Text style={styles.textGiveAndPay}>********</Text> : <Text style={styles.textGiveAndPay}>{totalExpensee}VND</Text>
-              }
+              {isShow ? <Text style={styles.textGiveAndPay}>********</Text> : <Text style={styles.textGiveAndPay}>{totalExpensee}VND</Text>}
             </View>
           </View>
+
+          <View style={styles.showTotal}>
+            {/* <StatusBar hidden /> */}
+            {/* <Progress step={totalExpensee} steps={limit} height={15} /> */}
+          </View>
+
         </View>
       </View>
 
-      <View style={styles.showTotal}>
-        <StatusBar hidden />
-        <Progress step={1000000} steps={10000000} height={20} />
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
+        <Text>{totalExpensee}</Text>
+        <Text>/</Text>
+        <Text>{limit}</Text>
       </View>
 
       <Text style={styles.textToday}>Hôm nay:</Text>
       {!isLoading ?
-        (<View>
-          <ScrollView>
+        (<View style={{ height: 500, width: '100%', marginBottom: 1000 }}>
+          <FlatList
 
-            <FlatList
-              style={{ height: 500, width: '100%', marginBottom: 800 }}
-              data={data}
-              renderItem={({ item }) => <ItemTransaction data={item} navigation={navigation} />}
-              keyExtractor={item => item._id}
-              showsVerticalScrollIndicator={false}
-              refreshControl={
-                <RefreshControl refreshing={refreshControl} onRefresh={() => {
-                  setRefreshControl(true)
-                  console.log("Refresh")
-                  setStateList(stateList + 1)
-                  // console.log(stateList)
+            data={data}
+            renderItem={({ item }) => <ItemTransaction data={item} navigation={navigation} />}
+            keyExtractor={item => item._id}
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl refreshing={refreshControl} onRefresh={() => {
+                setRefreshControl(true)
+                console.log("Refresh")
+                setStateList(stateList + 1)
+                // console.log(stateList)
 
-                  setRefreshControl(false)
-                }} colors={['green']} />
-              }
-            />
-            {/* // data.map((item)=><ItemTransaction data={item} key={item._id} navigation={navigation} />) */}
-          </ScrollView>
-
+                setRefreshControl(false)
+              }} colors={['green']} />
+            }
+          />
+          {/* // data.map((item)=><ItemTransaction data={item} key={item._id} navigation={navigation} />) */}
         </View>)
         :
         (<ScrollView>
@@ -317,7 +317,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     fontWeight: '400',
     color: COLOR.black,
-    marginTop: 20,
+    marginTop: 5,
     marginLeft: 20,
     marginBottom: 5
   },
@@ -337,11 +337,10 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     marginBottom: 5,
     fontSize: 12,
-    color: 'black'
+    color: COLOR.black
   },
   showTotal: {
     flex: 1,
-    backgroundColor: '#fff',
     justifyContent: 'center',
     padding: 20,
     marginTop: 20

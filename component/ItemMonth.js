@@ -1,24 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  processColor,
-  Image,
-  Dimensions,
+  AppRegistry, StyleSheet, Text, TouchableOpacity,
+  View, processColor, Image, Dimensions,
 } from 'react-native';
-
 import { PieChart } from 'react-native-charts-wrapper';
 import { Modal } from 'react-native-paper';
 import { Calendar } from 'react-native-calendars';
 import MonthPicker from 'react-native-month-year-picker';
 import moment from 'moment';
 import { COLOR } from '../constants/Themes';
+import AxiosInstance from '../constants/AxiosInstance';
+import { AppContext } from '../utils/AppContext';
 const windowWidth = Dimensions.get('window').width;
 
 class ItemMonth extends React.Component {
+  static contextType = AppContext;
   constructor() {
     super();
     this.state = {
@@ -32,6 +28,7 @@ class ItemMonth extends React.Component {
         orientation: "VERTICAL",
         wordWrapEnabled: true
       },
+      
       data: {
         dataSets: [{
           values: [{ value: 20, label: 'Thu nhập' },
@@ -45,7 +42,7 @@ class ItemMonth extends React.Component {
               , processColor('#A0D8B3'), processColor('#9376E0'), processColor('#C4B0FF')],
             valueTextSize: 16,
             valueTextColor: processColor('green'),
-            
+
             sliceSpace: 5,
             selectionShift: 13,
             // xValuePosition: "OUTSIDE_SLICE",
@@ -58,31 +55,55 @@ class ItemMonth extends React.Component {
       },
       highlights: [{ x: 2 }],
       description: {
-        textAlign:'center',
+        textAlign: 'center',
         text: 'Chi tiêu tháng 6',
         textSize: 20,
         textColor: processColor('black'),
-        
+
       },
 
       show: false,
       date: new Date(),
+      totalExpense: 0,
+      totalIncome: 0,
 
     };
     this.handleButtonClick = this.handleButtonClick.bind(this);
-  }
 
-  handleSelect(event) {
-    let entry = event.nativeEvent
-    if (entry == null) {
-      this.setState({ ...this.state, selectedEntry: null })
-    } else {
-      this.setState({ ...this.state, selectedEntry: JSON.stringify(entry) })
+  }
+  async componentDidMount() {
+    const { idUser } = this.context;
+    console.log("aaaaaaaaaa", idUser);
+    try {
+      const response = await AxiosInstance.get(`https://localhost:3000/transaction/api/get-total-money??idUser=${idUser}`);
+      console.log(response);
+      this.setState({
+        data: {
+          dataSets: [{
+            values: [
+              { value: response.transaction.totalIncome, label: 'Thu nhập' },
+              { value: response.transaction.totalExpense, label: 'Chi tiêu' },
+            ],
+            config: {
+              colors: [processColor('#C0FF8C'), processColor('#FFF78C')],
+              valueTextSize: 16,
+              valueTextColor: processColor('green'),
+              sliceSpace: 5,
+              selectionShift: 13,
+              valueFormatter: "#.#'%'",
+              valueLineColor: processColor('green'),
+              valueLinePart1Length: 0.5
+            }
+          }],
+        },
+        totalExpense: response.transaction.totalExpense,
+        totalIncome: response.transaction.totalIncome,
+        totalMoney: response.transaction.totalMoney
+      });
+    } catch (error) {
+      console.log(error);
     }
-
-    console.log(event.nativeEvent)
   }
-
   handleButtonClick() {
     this.setState({ show: this.state.show = true });
   }
@@ -140,7 +161,7 @@ class ItemMonth extends React.Component {
             transparentCircleRadius={35}
             transparentCircleColor={processColor('white')}
             maxAngle={360}
-            onSelect={this.handleSelect.bind(this)}
+            // onSelect={this.handleSelect.bind(this)}
             onChange={(event) => console.log(event.nativeEvent)}
           />
         </View>

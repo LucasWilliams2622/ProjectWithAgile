@@ -118,7 +118,7 @@ const StackSetting = () => {
 const Main = () => {
   return (
     <Tab.Navigator
-      initialRouteName="StackChart"
+      initialRouteName="StackHome"
       screenOptions={
         ({ route }) => ({
           tabBarIcon: ({ focused, label, size }) => {
