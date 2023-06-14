@@ -16,9 +16,10 @@ const SignCode = (props) => {
     const [otpCode, setOtpCode] = useState('');
     const verifiedEmail = async () => {
         try {
+            console.log(name);
             console.log(email);
             console.log(otpCode);
-            const response = await AxiosInstance().post("user/api/verify-email", { email: email, verifyCode: otpCode });
+            const response = await AxiosInstance().post("user/api/verify-email-new", { email: email, verifyCode: otpCode });
             console.log(response);
             if (response.result === true) {
                 ToastAndroid.show("Xác thực thành công", ToastAndroid.SHORT);
