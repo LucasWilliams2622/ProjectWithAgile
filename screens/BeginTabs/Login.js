@@ -164,7 +164,7 @@ const Login = (props) => {
           </View>
 
           <View style={{ marginLeft: 220, marginTop: 5 }}>
-            <Text style={styles.textForgote}>Forgote Password</Text>
+            <Text style={styles.textForgote}>Forgot Password</Text>
           </View>
         </View>
 
