@@ -6,6 +6,7 @@ export const AppContextProvider = (props) => {
     const [isLogin, setIsLogin] = useState(false)
     const [infoUser, setInfoUser] = useState({})
     const [idUser, setIdUser] = useState("")
+    const [appState, setAppState] = useState(0)
 
     let date = new Date();
     let year = date.getFullYear();
@@ -19,8 +20,10 @@ export const AppContextProvider = (props) => {
     let currentDay = `${year}-${month}-${day}`
     // console.log("currentDay", currentDay);
     const contextValue = useMemo(() => {
-        return { isLogin, setIsLogin, infoUser, setInfoUser, idUser, setIdUser, currentDay };
-    }, [isLogin, setIsLogin, infoUser, setInfoUser, idUser, setIdUser, currentDay]);
+        return { isLogin, setIsLogin, infoUser, setInfoUser, idUser, setIdUser,
+             currentDay, appState, setAppState };
+    }, [isLogin, setIsLogin, infoUser, setInfoUser, idUser, setIdUser, 
+        currentDay, appState, setAppState]);
 
     return (
         <AppContext.Provider

@@ -11,7 +11,7 @@ import { ProgressBar } from 'react-native-paper';
 const Home = (props) => {
   const { navigation, route } = props;
   const { params } = route;
-  const { idUser, infoUser, currentDay } = useContext(AppContext);
+  const { idUser, infoUser, currentDay, appState, setAppState } = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(true)
   const [data, setData] = useState(null)
   const [stateList, setStateList] = useState(0)
@@ -26,10 +26,10 @@ const Home = (props) => {
   const getTotalMoney = async () => {
     try {
       const response = await AxiosInstance().get("/transaction/api/get-total-money?idUser=" + idUser);
-      console.log("Total Money: ", response);
+      // console.log("Total Money: ", response);
       if (response.result) {
-        console.log('transaction totalExpense: ', response.transaction.totalExpense);
-        console.log('transaction Limit: ', response.transaction.limit);
+        // console.log('transaction totalExpense: ', response.transaction.totalExpense);
+        // console.log('transaction Limit: ', response.transaction.limit);
 
         setLimit(response.transaction.limit);
         setTotalExpense(response.transaction.totalExpense);
@@ -44,11 +44,11 @@ const Home = (props) => {
   }
   const getAllTransaction = async () => {
     try {
-      console.log("===================================>", isLoading);
+      // console.log("===================================>", isLoading);
       const response = await AxiosInstance().get("/transaction/api/search-by-current-date?idUser=" + idUser + '&date=' + currentDay);
       if (response.result) {
-        console.log("===================================response", response);
-        console.log("===================================response", isLoading);
+        // console.log("===================================response", response);
+        // console.log("===================================response", isLoading);
 
         setIsLoading(false)
         setData(response.transaction);
@@ -67,7 +67,7 @@ const Home = (props) => {
     return () => {
 
     }
-  }, [stateList])
+  }, [stateList, appState])
 
   const goAddNew = () => {
     navigation.navigate('AddNew');
@@ -170,23 +170,25 @@ const Home = (props) => {
       <Text style={styles.textToday}>Hôm nay:</Text>
       {!isLoading ?
         (<View style={{ height: 500, width: '100%', marginBottom: 1000 }}>
-          <FlatList
+          <ScrollView>
 
-            data={data}
-            renderItem={({ item }) => <ItemTransaction data={item} navigation={navigation} />}
-            keyExtractor={item => item._id}
-            showsVerticalScrollIndicator={false}
-            refreshControl={
-              <RefreshControl refreshing={refreshControl} onRefresh={() => {
-                setRefreshControl(true)
-                console.log("Refresh")
-                setStateList(stateList + 1)
-                // console.log(stateList)
+            <FlatList
+              data={data}
+              renderItem={({ item }) => <ItemTransaction data={item} navigation={navigation} />}
+              keyExtractor={item => item._id}
+              showsVerticalScrollIndicator={false}
+              refreshControl={
+                <RefreshControl refreshing={refreshControl} onRefresh={() => {
+                  setRefreshControl(true)
+                  console.log("Refresh")
+                  setStateList(stateList + 1)
+                  // console.log(stateList)
 
-                setRefreshControl(false)
-              }} colors={['green']} />
-            }
-          />
+                  setRefreshControl(false)
+                }} colors={['green']} />
+              }
+            />
+          </ScrollView>
           {/* // data.map((item)=><ItemTransaction data={item} key={item._id} navigation={navigation} />) */}
         </View>)
         :

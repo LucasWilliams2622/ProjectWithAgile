@@ -25,7 +25,7 @@ const AddNew = (props) => {
   const [createAt, setCreateAt] = useState(new Date().toLocaleDateString("fr-CA"));
   const [title, setTitle] = useState('');
   const limit = 1000000;
-  const { idUser, infoUser } = useContext(AppContext);
+  const { idUser, infoUser, appState, setAppState } = useContext(AppContext);
   const [idEditTransaction, setIdEditTransaction] = useState('');
 
   // let title = params?.name;
@@ -91,6 +91,7 @@ const AddNew = (props) => {
       if (response.result) {
         ToastAndroid.show("Thêm mới thành công", ToastAndroid.SHORT);
         clearForm()
+        setAppState(appState+1)
       }
       else {
         ToastAndroid.show("Thêm mới không thành công ", ToastAndroid.SHORT);
@@ -105,7 +106,7 @@ const AddNew = (props) => {
     setname("");
     setMoney("");
     setNote("");
-    setCreateAt("");
+    // setCreateAt("");
     setCategory("");
     setTitle("");
   }
@@ -144,7 +145,7 @@ const AddNew = (props) => {
 
   const clickEditTransaction = async () => {
     try {
-      console.log("id User edit transaction: ",idUser);
+      console.log("id User edit transaction: ", idUser);
       console.log("id transaction: ", idEditTransaction);
       console.log("Value transaction: ", money, note, category, createAt);
       const response = await AxiosInstance().put("/transaction/api/edit-by-id?id=" + idEditTransaction + "&idUser=" + idUser, { money: money, note: note, category: category, createAt: createAt });
@@ -248,7 +249,7 @@ const AddNew = (props) => {
 
       <View style={{ alignItems: 'center' }}>
         <TouchableOpacity style={styles.viewSave}
-        onPress={!params ? clickEditTransaction : onSaveTransaction}
+          onPress={!params ? clickEditTransaction : onSaveTransaction}
         // onPress={() =>{
         //   clickEditTransaction();
         // }}
