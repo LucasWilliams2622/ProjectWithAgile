@@ -98,13 +98,13 @@ const Setting = (props) => {
       <View >
         <Text style={styles.text2}>Thông tin ứng dụng</Text>
         <View style={styles.view3}>
-          <Text style={styles.text4}>Điều khoản</Text>
+          <Text style={styles.text4} onPress={showNotification}>Điều khoản</Text>
           <View style={styles.line}></View>
           <TouchableOpacity onPress={showVersion}>
             <Text style={styles.text4}>Phiên bản</Text>
           </TouchableOpacity>
           <View style={styles.line}></View>
-          <Text style={styles.text4}>Chính sách bảo mật</Text>
+          <Text style={styles.text4} onPress={showNotification}>Chính sách bảo mật</Text>
           <View style={styles.line}></View>
           <Text style={styles.text4}>Người phát triển: Nhóm 4</Text>
         </View>
@@ -113,11 +113,11 @@ const Setting = (props) => {
       <View style={styles.bottomItem} >
         <Text style={styles.text2}>Hỗ trợ chúng tôi</Text>
         <View style={styles.view4}>
-          <Text style={styles.text4}>Đánh giá</Text>
+          <Text style={styles.text4} onPress={showNotification}>Đánh giá</Text>
           <View style={styles.line}></View>
-          <Text style={styles.text4}>Phản hồi</Text>
+          <Text style={styles.text4} onPress={showNotification}>Phản hồi</Text>
           <View style={styles.line}></View>
-          <Text style={styles.text4}>Chia sẽ ứng dụng</Text>
+          <Text style={styles.text4} onPress={showNotification}>Chia sẽ ứng dụng</Text>
           {
             user.role >= 100 ?
               (
