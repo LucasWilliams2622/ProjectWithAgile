@@ -26,10 +26,10 @@ const Home = (props) => {
   const getTotalMoney = async () => {
     try {
       const response = await AxiosInstance().get("/transaction/api/get-total-money?idUser=" + idUser);
-      // console.log("Total Money: ", response);
+      console.log("Total Money: ", response);
       if (response.result) {
-        // console.log('transaction totalExpense: ', response.transaction.totalExpense);
-        // console.log('transaction Limit: ', response.transaction.limit);
+        console.log('transaction totalExpense: ', response.transaction.totalExpense);
+        console.log('transaction Limit: ', response.transaction.limit);
 
         setLimit(response.transaction.limit);
         setTotalExpense(response.transaction.totalExpense);
