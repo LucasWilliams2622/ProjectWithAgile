@@ -1,8 +1,10 @@
 import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, ToastAndroid, Alert } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { COLOR } from '../constants/Themes'
 import AxiosInstance from '../constants/AxiosInstance';
 import moment from 'moment';
+import { AppContext } from '../utils/AppContext';
+
 const windowWIdth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const ItemTransaction = (props) => {
@@ -10,7 +12,8 @@ const ItemTransaction = (props) => {
   const { data, navigation } = props;
   const [createAt, setCreateAt] = useState('');
   const [image2, setImage] = useState('')
-  // const [data, setData] = useState([])
+  const { idUser, infoUser, currentDay, appState, setAppState } = useContext(AppContext);
+
   const forMatDate = () => {
     let date = new Date(data.createAt);
     let year = date.getFullYear();
@@ -30,6 +33,7 @@ const ItemTransaction = (props) => {
     const response = await AxiosInstance().delete("transaction/api/delete-by-id?id=" + data._id);
     console.log(response);
     if (response.result == true) {//lấy thành công
+      setAppState(100)
       ToastAndroid.show("Xoá thành công", ToastAndroid.SHORT);
     } else {
       ToastAndroid.show("Xoá thất bại", ToastAndroid.SHORT)
@@ -71,7 +75,7 @@ const ItemTransaction = (props) => {
           <Image style={styles.image} resizeMode='cover'
             //  source={{uri:transaction.category.image}} 
             source={
-              { uri: data.category.image } 
+              { uri: data.category.image }
               // require('../asset/icon/item/drink.png')
             }
           />
@@ -163,7 +167,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: COLOR.black,
     left: -10,
-    width:200,
+    width: 200,
   },
   money: {
     fontWeight: '450',
@@ -172,14 +176,14 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     marginVertical: 7,
     left: -5,
-    width:200,
+    width: 200,
   },
   note: {
     fontWeight: '400',
     fontSize: 13,
     color: COLOR.black,
     left: -10,
-    width:200,
+    width: 200,
   },
   date: {
     fontWeight: '500',

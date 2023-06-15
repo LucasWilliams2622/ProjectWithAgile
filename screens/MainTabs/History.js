@@ -17,7 +17,7 @@ const History = (props) => {
   const [isLoading, setIsLoading] = useState(false)
   const [stateList, setStateList] = useState(0);
   const [refreshControl, setRefreshControl] = useState();
-  const { idUser, infoUser, currentDay } = useContext(AppContext);
+  const { idUser, infoUser, currentDay, appState, setAppState } = useContext(AppContext);
   let timeOut = null;
 
   const goAddNew = () => {
@@ -42,7 +42,7 @@ const History = (props) => {
         getTransactionRecent()
       }
       const response = await AxiosInstance().get("transaction/api/search-by-money?money=" + searchText + "&idUser=" + idUser);
-      console.log(response.transaction);
+      // console.log(response.transaction);
       if (response.result) // lấy dữ liệu thành công
       {
         setData(response.transaction)
@@ -58,13 +58,14 @@ const History = (props) => {
   const getTransactionRecent = async () => {
     try {
       const response = await AxiosInstance().get("transaction/api/search-by-recent?date=" + currentDay + "&idUser=" + idUser);
-      console.log("HISTORY", response.transaction);
+      // console.log("HISTORY", response.transaction);
       if (response.result) // lấy dữ liệu thành công
       {
-        console.log("===>");
+        // console.log("===>");
         setData(response.transaction);
+        setAppState(appState++)
         setCreateAt(response.transaction.createAt)
-        console.log(response.transaction.createAt);
+        // console.log(response.transaction.createAt);
         setIsLoading(false)
       } else {
         setIsLoading(true)
@@ -79,15 +80,16 @@ const History = (props) => {
     return () => {
 
     }
-  }, []);
+  }, [appState]);
 
   const DeleteTransactionAll = async () => {
     const response = await AxiosInstance().delete("transaction/api/delete-all?idUser=" + idUser);
-    console.log(">>>>>>>>>>>>>>>>>>>>>", response);
-    console.log(response);
+    // console.log(">>>>>>>>>>>>>>>>>>>>>", response);
+    // console.log(response);
     if (response.result) {
+      setAppState(appState+1)
       ToastAndroid.show("Xoá bài viết thành công", ToastAndroid.SHORT);
-      // console.log(">>>>>>>>>>>>>>>>>", transaction);
+      // console.log(">>>>>>>>>>>>>>>>", transaction);
     } else {
       ToastAndroid.show("Xoá bài viết thất bại", ToastAndroid.SHORT)
     }
@@ -126,7 +128,7 @@ const History = (props) => {
           (<View>
             <View style={styles.jusCenter}>
 
-              <View style={[styles.viewLine,{marginTop:50,}]}></View>
+              <View style={[styles.viewLine, { marginTop: 50, }]}></View>
             </View>
             <ScrollView>
               <View style={styles.viewListGiveAndPay}>
@@ -253,7 +255,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    marginTop:100,
+    marginTop: 100,
   },
   center: {
     width: windowWIdth - 200,

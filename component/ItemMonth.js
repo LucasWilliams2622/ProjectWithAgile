@@ -23,7 +23,7 @@ const ItemMonth = (props) => {
   const [totalExpense, setTotalExpense] = useState('');
   const [totalMoney, setTotalMoney] = useState('');
   const [limit, setLimit] = useState('');
-  const { idUser, infoUser, currentDay } = useContext(AppContext);
+  const { idUser, infoUser,appState, currentDay } = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(true);
 
   const data = [
@@ -83,7 +83,7 @@ const ItemMonth = (props) => {
     return () => {
 
     }
-  }, [])
+  }, [appState])
 
   return (
     <View>

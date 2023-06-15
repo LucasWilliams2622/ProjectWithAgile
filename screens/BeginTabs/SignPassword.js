@@ -107,13 +107,24 @@ const SignPassword = (props) => {
                 <View style={styles.viewInputEmailAndPass}>
 
 
-                    <TextInput placeholder='Password' style={styles.inputEmailAndPass} onChangeText={(password) => checkNewPass(password)}></TextInput>
+                    <TextInput placeholder='Password' style={styles.inputEmailAndPass} 
+                    //onChangeText={(password) => checkNewPass(password)}
+                    onChangeText={setPassword} value={password}
+                    >
+
+                    </TextInput>
+                    
                     <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIconEye}></Image>
                     <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
                 </View>
 
                 <View style={styles.viewInputEmailAndPass}>
-                    <TextInput placeholder='Confirm Password' style={styles.inputEmailAndPass} onChangeText={(text1) => checkConFirmPass(text1)}></TextInput>
+                    <TextInput placeholder='Confirm Password' style={styles.inputEmailAndPass} 
+                    //onChangeText={(text1) => checkConFirmPass(text1)}
+                    onChangeText={setConfirmPass} value={confirmPass}
+                    >
+
+                    </TextInput>
                     <Image source={require('../../asset/icon/icon_eye.png')} style={styles.imageIconEye}></Image>
                     <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
                 </View>

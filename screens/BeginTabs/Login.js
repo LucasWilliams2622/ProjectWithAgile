@@ -74,6 +74,9 @@ const Login = (props) => {
   const goRegister = () => {
     navigation.navigate('Register')
   }
+  const goForgotPass = () => {
+    navigation.navigate('ForgotPassword')
+  }
   const onLogin = async () => {
     try {
       console.log(email, password);
@@ -163,9 +166,9 @@ const Login = (props) => {
             </TouchableOpacity>
           </View>
 
-          <View style={{ marginLeft: 220, marginTop: 5 }}>
+          <TouchableOpacity style={{ marginLeft: 220, marginTop: 5 }} onPress={goForgotPass}>
             <Text style={styles.textForgote}>Forgote Password</Text>
-          </View>
+          </TouchableOpacity>
         </View>
 
         <View style={{ alignItems: 'center' }}>
