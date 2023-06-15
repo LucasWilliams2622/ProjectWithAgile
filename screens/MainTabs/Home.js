@@ -35,6 +35,7 @@ const Home = (props) => {
         setTotalExpense(response.transaction.totalExpense);
         setTotalIncome(response.transaction.totalIncome);
         setTotalMoney(response.transaction.totalMoney);
+        setIsLoading(false);
       } else {
         console.log('FAILED TO GET TOTAL',);
       }
@@ -153,10 +154,12 @@ const Home = (props) => {
             </View>
           </View>
 
-          <View style={styles.showTotal}>
-            {/* <StatusBar hidden /> */}
-            {/* <Progress step={totalExpensee} steps={limit} height={15} /> */}
-          </View>
+          {isLoading ? (<View />) : (
+            <View style={styles.showTotal}>
+              {/* <StatusBar hidden /> */}
+              <Progress step={totalExpensee} steps={limit} height={15} />
+            </View>
+          )}
 
         </View>
       </View>
