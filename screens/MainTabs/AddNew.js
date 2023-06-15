@@ -22,7 +22,7 @@ const AddNew = (props) => {
   const [name, setname] = useState('');
   const [money, setMoney] = useState('');
   const [note, setNote] = useState('');
-  const [createAt, setCreateAt] = useState('');
+  const [createAt, setCreateAt] = useState(new Date().toLocaleDateString("fr-CA"));
   const [title, setTitle] = useState('');
   const limit = 1000000;
   const { idUser, infoUser } = useContext(AppContext);
@@ -69,7 +69,6 @@ const AddNew = (props) => {
     //Bé hơn 10 thì thêm số 0
     month = month < 10 ? `0${month}` : `${month}`;
     day = day < 10 ? `0${day}` : `${day}`;
-    // console.log("DATAAAAAAAAAAAAAAAA", `${day}/${month}/${year}`);
     return `${year}-${month}-${day}`;
   };
 
