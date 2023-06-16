@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext ,useCallback} from 'react'
 import MonthPicker from 'react-native-month-year-picker';
 import { ICON, COLOR } from '../constants/Themes';
 import AxiosInstance from '../constants/AxiosInstance';
@@ -17,6 +17,7 @@ import { set } from 'mongoose';
 const ItemMonth = (props) => {
 
   const { navigate } = props;
+  const [show, setShow] = useState(false);
   const screenWidth = Dimensions.get("window").width;
   const [date, setDate] = useState('');
   const [totalIncome, setTotalIncome] = useState('');
@@ -25,6 +26,7 @@ const ItemMonth = (props) => {
   const [limit, setLimit] = useState('');
   const { idUser, infoUser,appState, currentDay } = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(true);
+  const showPicker = useCallback((value) => setShow(value), []);
 
   const data = [
     {
@@ -84,7 +86,23 @@ const ItemMonth = (props) => {
 
     }
   }, [appState])
+  const onValueChange = useCallback(
+    (event, newDate) => {
+      const selectedDate = newDate || date;
 
+      showPicker(false);
+      //setDate(selectedDate);
+      const formattedDate = moment(selectedDate).format('YYYY-MM');
+      setDate(formattedDate);
+      setSelectedMonthYear(formattedDate);
+      const formattedYear = moment(selectedDate).format('YYYY');
+      setYear(formattedYear)
+      console.log(formattedDate);
+      console.log(formattedYear);
+      console.log(currentDate);
+    },
+    [date, showPicker],
+  );
   return (
     <View>
       <TouchableOpacity style={styles.boxMonth}>
@@ -93,10 +111,11 @@ const ItemMonth = (props) => {
 
         {/* <MonthPicker
           modal
-          // open={this.state.show}
+          open={show}
+          onChange={onValueChange}
           value={date}
+          minimumDate={new Date()}
           maximumDate={new Date(2030, 12)}
-          // minimumDate={new Date()}
           locale="vn"
           onConfirm={() => {
             
@@ -104,7 +123,8 @@ const ItemMonth = (props) => {
           onCancel={() => {
             false
           }}
-        /> */}
+        />
+  */}
       </TouchableOpacity>
       {isLoading ? (<View />) : (
         <View >
