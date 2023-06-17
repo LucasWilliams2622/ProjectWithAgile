@@ -47,26 +47,43 @@ const ItemYear = () => {
       console.log(error);
     }
   }
-  function getTotalMoney(transactions) {
-    let totalMoney = 0;
-    for (let i = 0; i < transactions.length; i++) {
-      totalMoney += transactions[i].money;
-    }
-    return totalMoney;
+
+    function getTotalMoney(transactions2) {
+    let totalIncome = 0;
+    let totalExpense = 0;
+    for (let i = 0; i < transactions2.length; i++) {
+      const categoryTypes = transactions2.map(transaction => transaction.category.type);
+      for (let i = 0; i < categoryTypes.length; i++) {
+        if (categoryTypes[i]) {
+          totalExpense += transactions2[i].money;
+          }else
+          {
+            totalIncome+=transactions2[i].money;
+            
+      }
+      console.log(totalExpense,"aaa");
+      }
+      
+   
+
   }
+  return {totalIncome,totalExpense};
+}
+
   useEffect(() => {
     getTotalMoneyByYear();
     return () => {
 
     }
   }, [])
-  function getTotalMoney(transactions) {
-    let totalMoney = 0;
-    for (let i = 0; i < transactions.length; i++) {
-      totalMoney += transactions[i].money;
-    }
-    return totalMoney;
-  }
+  // function getTotalMoney(transactions) {
+  //   let totalMoney = 0;
+  //   for (let i = 0; i < transactions.length; i++) {
+  //     totalMoney += transactions[i].money;
+  //   }
+  //   return totalMoney;
+  // }
+
   let totalMoneyJan = getTotalMoney(transactionsJan);
   let totalMoneyFer = getTotalMoney(transactionsFer);
   let totalMoneyMar = getTotalMoney(transactionsMar);
@@ -80,6 +97,7 @@ const ItemYear = () => {
   let totalMoneyNov = getTotalMoney(transactionsNov);
   let totalMoneyDec = getTotalMoney(transactionsDec);
 
+
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.boxMonth}>
@@ -92,25 +110,25 @@ const ItemYear = () => {
       </View>
       <ScrollView>
         <View style={styles.container}>
-          <Text>Thống Kê Thu</Text>
+         <Text>Thống Kê Chi</Text>
           <LineChart
             data={{
               labels: ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12"],
               datasets: [
                 {
                   data: [
-                    totalMoneyJan,
-                    totalMoneyFer,
-                    totalMoneyMar,
-                    totalMoneyApr,
-                    totalMoneyMay,
-                    totalMoneyJun,
-                    totalMoneyJul,
-                    totalMoneyAug,
-                    totalMoneySep,
-                    totalMoneyOct,
-                    totalMoneyNov,
-                    totalMoneyDec,
+                    totalMoneyJan.totalExpense,
+                    totalMoneyFer.totalExpense,
+                    totalMoneyMar.totalExpense,
+                    totalMoneyApr.totalExpense,
+                    totalMoneyMay.totalExpense,
+                    totalMoneyJun.totalExpense,
+                    totalMoneyJul.totalExpense,
+                    totalMoneyAug.totalExpense,
+                    totalMoneySep.totalExpense,
+                    totalMoneyOct.totalExpense,
+                    totalMoneyNov.totalExpense,
+                    totalMoneyDec.totalExpense,
                   ]
                 }
               ]
@@ -124,7 +142,7 @@ const ItemYear = () => {
               backgroundColor: "#e26a00",
               backgroundGradientFrom: "red",
               backgroundGradientTo: "black",
-              decimalPlaces: 2, // optional, defaults to 2dp
+              decimalPlaces: 0.5, // optional, defaults to 2dp
               color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
               labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
               style: {
@@ -144,19 +162,25 @@ const ItemYear = () => {
           />
         </View>
         <View style={styles.container}>
-          <Text>Thống Kê Chi</Text>
+          <Text>Thống Kê Thu</Text>
           <LineChart
             data={{
-              labels: ["January", "February", "March", "April", "May", "June"],
+              labels: ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12"],
               datasets: [
                 {
                   data: [
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100
+                    totalMoneyJan.totalIncome,
+                    totalMoneyFer.totalIncome,
+                    totalMoneyMar.totalIncome,
+                    totalMoneyApr.totalIncome,
+                    totalMoneyMay.totalIncome,
+                    totalMoneyJun.totalIncome,
+                    totalMoneyJul.totalIncome,
+                    totalMoneyAug.totalIncome,
+                    totalMoneySep.totalIncome,
+                    totalMoneyOct.totalIncome,
+                    totalMoneyNov.totalIncome,
+                    totalMoneyDec.totalIncome,
                   ]
                 }
               ]
@@ -170,7 +194,7 @@ const ItemYear = () => {
               backgroundColor: "#e26a00",
               backgroundGradientFrom: "blue",
               backgroundGradientTo: "black",
-              decimalPlaces: 2, // optional, defaults to 2dp
+              decimalPlaces: 0.5, // optional, defaults to 2dp
               color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
               labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
               style: {
