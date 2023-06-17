@@ -27,7 +27,7 @@ const ItemYear = () => {
     try {
       const response = await AxiosInstance().get("/transaction/api/search-by-year?idUser=" + idUser + "&year=" + currentYear);
       if (response.result) {
-        // console.log(response.transaction[1].transactionsFer,"aaaaaaaaaa111");
+        // console.log(response.transaction[6].transactionsFer,"aaaaaaaaaa111");
         settransactionsJan(response.transaction[0].transactionsJan);
         settransactionsFer(response.transaction[1].transactionsFer);
         settransactionsMar(response.transaction[2].transactionsMar);
@@ -47,12 +47,14 @@ const ItemYear = () => {
       console.log(error);
     }
   }
-  function getTotalMoney(transactions) {
-    let totalMoney = 0;
+  function getTotalIncome(transactions) {
+    let totalIncome = 0;
     for (let i = 0; i < transactions.length; i++) {
-      totalMoney += transactions[i].money;
+      if (category = true) {
+        totalIncome += transactions[i].money;
+      }
     }
-    return totalMoney;
+    return totalIncome;
   }
   useEffect(() => {
     getTotalMoneyByYear();
@@ -60,25 +62,40 @@ const ItemYear = () => {
 
     }
   }, [])
-  function getTotalMoney(transactions) {
-    let totalMoney = 0;
+  function getTotalExpense(transactions) {
+    let totalExpense = 0;
     for (let i = 0; i < transactions.length; i++) {
-      totalMoney += transactions[i].money;
+      if (category = true) {
+        totalExpense += transactions[i].money;
+      }
     }
-    return totalMoney;
+    return totalExpense;
   }
-  let totalMoneyJan = getTotalMoney(transactionsJan);
-  let totalMoneyFer = getTotalMoney(transactionsFer);
-  let totalMoneyMar = getTotalMoney(transactionsMar);
-  let totalMoneyApr = getTotalMoney(transactionsApr);
-  let totalMoneyMay = getTotalMoney(transactionsMay);
-  let totalMoneyJun = getTotalMoney(transactionsJun);
-  let totalMoneyJul = getTotalMoney(transactionsJul);
-  let totalMoneyAug = getTotalMoney(transactionsAug);
-  let totalMoneySep = getTotalMoney(transactionsSep);
-  let totalMoneyOct = getTotalMoney(transactionsOct);
-  let totalMoneyNov = getTotalMoney(transactionsNov);
-  let totalMoneyDec = getTotalMoney(transactionsDec);
+  let totalIncomeJan = getTotalIncome(transactionsJan);
+  let totalIncomeFer = getTotalIncome(transactionsFer);
+  let totalIncomeMar = getTotalIncome(transactionsMar);
+  let totalIncomeApr = getTotalIncome(transactionsApr);
+  let totalIncomeMay = getTotalIncome(transactionsMay);
+  let totalIncomeJun = getTotalIncome(transactionsJun);
+  let totalIncomeJul = getTotalIncome(transactionsJul);
+  let totalIncomeAug = getTotalIncome(transactionsAug);
+  let totalIncomeSep = getTotalIncome(transactionsSep);
+  let totalIncomeOct = getTotalIncome(transactionsOct);
+  let totalIncomeNov = getTotalIncome(transactionsNov);
+  let totalIncomeDec = getTotalIncome(transactionsDec);
+
+  let totalExpenseJan = getTotalExpense(transactionsJan);
+  let totalExpenseFer = getTotalExpense(transactionsFer);
+  let totalExpenseMar = getTotalExpense(transactionsMar);
+  let totalExpenseApr = getTotalExpense(transactionsApr);
+  let totalExpenseMay = getTotalExpense(transactionsMay);
+  let totalExpenseJun = getTotalExpense(transactionsJun);
+  let totalExpenseJul = getTotalExpense(transactionsJul);
+  let totalExpenseAug = getTotalExpense(transactionsAug);
+  let totalExpenseSep = getTotalExpense(transactionsSep);
+  let totalExpenseOct = getTotalExpense(transactionsOct);
+  let totalExpenseNov = getTotalExpense(transactionsNov);
+  let totalExpenseDec = getTotalExpense(transactionsDec);
 
   return (
     <View style={styles.container}>
@@ -99,18 +116,18 @@ const ItemYear = () => {
               datasets: [
                 {
                   data: [
-                    totalMoneyJan,
-                    totalMoneyFer,
-                    totalMoneyMar,
-                    totalMoneyApr,
-                    totalMoneyMay,
-                    totalMoneyJun,
-                    totalMoneyJul,
-                    totalMoneyAug,
-                    totalMoneySep,
-                    totalMoneyOct,
-                    totalMoneyNov,
-                    totalMoneyDec,
+                    totalIncomeJan,
+                    totalIncomeFer,
+                    totalIncomeMar,
+                    totalIncomeApr,
+                    totalIncomeMay,
+                    totalIncomeJun,
+                    totalIncomeJul,
+                    totalIncomeAug,
+                    totalIncomeSep,
+                    totalIncomeOct,
+                    totalIncomeNov,
+                    totalIncomeDec,
                   ]
                 }
               ]
@@ -147,16 +164,22 @@ const ItemYear = () => {
           <Text>Thống Kê Chi</Text>
           <LineChart
             data={{
-              labels: ["January", "February", "March", "April", "May", "June"],
+              labels: ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12"],
               datasets: [
                 {
                   data: [
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100
+                    totalExpenseJan,
+                    totalExpenseFer,
+                    totalExpenseMar,
+                    totalExpenseApr,
+                    totalExpenseMay,
+                    totalExpenseJun,
+                    totalExpenseJul,
+                    totalExpenseAug,
+                    totalExpenseSep,
+                    totalExpenseOct,
+                    totalExpenseNov,
+                    totalExpenseDec,
                   ]
                 }
               ]
