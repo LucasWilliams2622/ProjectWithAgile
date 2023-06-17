@@ -11,7 +11,7 @@ import { ProgressBar } from 'react-native-paper';
 const Home = (props) => {
   const { navigation, route } = props;
   const { params } = route;
-  const { idUser, infoUser, currentDay } = useContext(AppContext);
+  const { idUser, infoUser, currentDay, appState, setAppState } = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(true)
   const [data, setData] = useState(null)
   const [stateList, setStateList] = useState(0)
@@ -35,6 +35,7 @@ const Home = (props) => {
         setTotalExpense(response.transaction.totalExpense);
         setTotalIncome(response.transaction.totalIncome);
         setTotalMoney(response.transaction.totalMoney);
+        setIsLoading(false);
       } else {
         console.log('FAILED TO GET TOTAL',);
       }
@@ -44,11 +45,11 @@ const Home = (props) => {
   }
   const getAllTransaction = async () => {
     try {
-      console.log("===================================>", isLoading);
+      // console.log("===================================>", isLoading);
       const response = await AxiosInstance().get("/transaction/api/search-by-current-date?idUser=" + idUser + '&date=' + currentDay);
       if (response.result) {
-        console.log("===================================response", response);
-        console.log("===================================response", isLoading);
+        // console.log("===================================response", response);
+        // console.log("===================================response", isLoading);
 
         setIsLoading(false)
         setData(response.transaction);
@@ -67,47 +68,47 @@ const Home = (props) => {
     return () => {
 
     }
-  }, [stateList, data])
+  }, [stateList, appState])
 
   const goAddNew = () => {
     navigation.navigate('AddNew');
   }
-  // const Progress = ({ step, steps, height }) => {
-  //   console.log('dang chay show nhaaaaaaaaaa');
+  const Progress = ({ step, steps, height }) => {
+    console.log('dang chay show nhaaaaaaaaaa');
 
-  //   const [width, setWith] = React.useState(0);
-  //   const animationValue = React.useRef(new Animated.Value(-1000)).current;
-  //   const reactive = React.useRef(new Animated.Value(-1000)).current;
+    const [width, setWith] = React.useState(0);
+    const animationValue = React.useRef(new Animated.Value(-1000)).current;
+    const reactive = React.useRef(new Animated.Value(-1000)).current;
 
-  //   React.useEffect(() => {
-  //     Animated.timing(animationValue, {
-  //       toValue: reactive,
-  //       duration: 300,
-  //       useNativeDriver: true
-  //     }).start();
-  //   }, []);
+    React.useEffect(() => {
+      Animated.timing(animationValue, {
+        toValue: reactive,
+        duration: 300,
+        useNativeDriver: true
+      }).start();
+    }, []);
 
-  //   React.useEffect(() => {
-  //     reactive.setValue(-width + (width * step) / steps);
-  //   }, [step, width]);
+    React.useEffect(() => {
+      reactive.setValue(-width + (width * step) / steps);
+    }, [step, width]);
 
-  //   return (
-  //     <>
+    return (
+      <>
 
-  //       <Text style={styles.textCount}>{step}/{steps}</Text>
+        <Text style={styles.textCount}>{step}/{steps}</Text>
 
-  //       <View onLayout={e => {
-  //         const newWith = e.nativeEvent.layout.width;
-  //         setWith(newWith);
-  //       }}
-  //         style={{ height, backgroundColor: 'rgba(0,0,0,0.1)', borderRadius: height, overflow: 'hidden', }}>
-  //         <Animated.View
-  //           style={{ height, width: '100%', backgroundColor: 'rgba(0,0,0,0.5)', position: 'absolute', left: 0, top: 0, transform: [{ translateX: animationValue }] }} />
-  //       </View>
+        <View onLayout={e => {
+          const newWith = e.nativeEvent.layout.width;
+          setWith(newWith);
+        }}
+          style={{ height, backgroundColor: 'rgba(0,0,0,0.1)', borderRadius: height, overflow: 'hidden', }}>
+          <Animated.View
+            style={{ height, width: '100%', backgroundColor: COLOR.background2, position: 'absolute', left: 0, top: 0, transform: [{ translateX: animationValue }] }} />
+        </View>
 
-  //     </>
-  //   );
-  // };
+      </>
+    );
+  };
 
   return (
     <SafeAreaView>
@@ -153,10 +154,12 @@ const Home = (props) => {
             </View>
           </View>
 
-          <View style={styles.showTotal}>
-            {/* <StatusBar hidden /> */}
-            {/* <Progress step={totalExpensee} steps={limit} height={15} /> */}
-          </View>
+          {isLoading ? (<View />) : (
+            <View style={styles.showTotal}>
+              {/* <StatusBar hidden /> */}
+              <Progress step={totalExpensee} steps={limit} height={15} />
+            </View>
+          )}
 
         </View>
       </View>
@@ -170,23 +173,25 @@ const Home = (props) => {
       <Text style={styles.textToday}>Hôm nay:</Text>
       {!isLoading ?
         (<View style={{ height: 500, width: '100%', marginBottom: 1000 }}>
-          <FlatList
+          <ScrollView>
 
-            data={data}
-            renderItem={({ item }) => <ItemTransaction data={item} navigation={navigation} />}
-            keyExtractor={item => item._id}
-            showsVerticalScrollIndicator={false}
-            refreshControl={
-              <RefreshControl refreshing={refreshControl} onRefresh={() => {
-                setRefreshControl(true)
-                console.log("Refresh")
-                setStateList(stateList + 1)
-                // console.log(stateList)
+            <FlatList
+              data={data}
+              renderItem={({ item }) => <ItemTransaction data={item} navigation={navigation} />}
+              keyExtractor={item => item._id}
+              showsVerticalScrollIndicator={false}
+              refreshControl={
+                <RefreshControl refreshing={refreshControl} onRefresh={() => {
+                  setRefreshControl(true)
+                  console.log("Refresh")
+                  setStateList(stateList + 1)
+                  // console.log(stateList)
 
-                setRefreshControl(false)
-              }} colors={['green']} />
-            }
-          />
+                  setRefreshControl(false)
+                }} colors={['green']} />
+              }
+            />
+          </ScrollView>
           {/* // data.map((item)=><ItemTransaction data={item} key={item._id} navigation={navigation} />) */}
         </View>)
         :

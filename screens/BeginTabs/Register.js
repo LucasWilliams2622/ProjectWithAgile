@@ -88,13 +88,12 @@ const Register = (props) => {
       //http://localhost:3000
       console.log("email  ", email);
       console.log("name  ", name);
-      const result = await AxiosInstance().post("user/api/send-verification-code", { email: email });
+      const result = await AxiosInstance().post("user/api/send-verification-code-new", { email: email });
       console.log(result);
       if (result) {
         ToastAndroid.show("Đã gửi code", ToastAndroid.SHORT);
         navigation.navigate('SignCode', { email: email, name: name });
       } else {
-
       }
     } catch (error) {
 
@@ -118,12 +117,14 @@ const Register = (props) => {
         </View>
 
         <TextInput placeholder='Name Surname' style={styles.inputEmailAndPass}
-          onChangeText={(name) => checkName(name)} value={name}></TextInput>
+          //onChangeText={(name) => checkName(name)} 
+          onChangeText={setname}
+          value={name}></TextInput>
         <View style={styles.viewInputPass}>
           <TextInput placeholder='Email' style={styles.inputEmailAndPass} value={email}
             //onChangeText={(setEmail) => checkEmail(setEmail)} 
             onChangeText={setEmail}
-            ></TextInput>
+          ></TextInput>
         </View>
         <View style={{ alignItems: 'center' }}>
           <TouchableOpacity style={styles.viewPressable} onPress={() => { sendVerifiedEmail() }}>

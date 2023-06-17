@@ -1,178 +1,131 @@
-import React, { useState, useContext } from 'react';
-import {
-  AppRegistry, StyleSheet, Text, TouchableOpacity,
-  View, processColor, Image, Dimensions,
-} from 'react-native';
-import { PieChart } from 'react-native-charts-wrapper';
-import { Modal } from 'react-native-paper';
-import { Calendar } from 'react-native-calendars';
+import { Dimensions, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
+import React, { useState, useEffect, useContext } from 'react'
 import MonthPicker from 'react-native-month-year-picker';
-import moment from 'moment';
-import { COLOR } from '../constants/Themes';
+import { ICON, COLOR } from '../constants/Themes';
 import AxiosInstance from '../constants/AxiosInstance';
 import { AppContext } from '../utils/AppContext';
-const windowWidth = Dimensions.get('window').width;
+import {
+  LineChart,
+  BarChart,
+  PieChart,
+  ProgressChart,
+  ContributionGraph,
+  StackedBarChart
+} from "react-native-chart-kit";
+import { set } from 'mongoose';
 
-class ItemMonth extends React.Component {
-  static contextType = AppContext;
-  constructor() {
-    super();
-    this.state = {
-      legend: {
-        enabled: true,
-        textSize: 16,
-        form: 'CIRCLE',
+const ItemMonth = (props) => {
 
-        horizontalAlignment: "RIGHT",
-        verticalAlignment: "CENTER",
-        orientation: "VERTICAL",
-        wordWrapEnabled: true
-      },
-      
-      data: {
-        dataSets: [{
-          values: [{ value: 20, label: 'Thu nhập' },
-          { value: 10, label: 'Chi tiêu ' },
-          ],
-          // label: 'Chú thích',
-          config: {
-            colors: [processColor('#C0FF8C'), processColor('#FFF78C'), processColor('#FFD08C'),
-            processColor('#8CEAFF'), processColor('#FF8C9D'), processColor('#00C4FF')
-              , processColor('#EEE3CB'), processColor('#F1D4E5'), processColor('#D0F5BE')
-              , processColor('#A0D8B3'), processColor('#9376E0'), processColor('#C4B0FF')],
-            valueTextSize: 16,
-            valueTextColor: processColor('green'),
+  const { navigate } = props;
+  const screenWidth = Dimensions.get("window").width;
+  const [date, setDate] = useState('');
+  const [totalIncome, setTotalIncome] = useState('');
+  const [totalExpense, setTotalExpense] = useState('');
+  const [totalMoney, setTotalMoney] = useState('');
+  const [limit, setLimit] = useState('');
+  const { idUser, infoUser,appState, currentDay } = useContext(AppContext);
+  const [isLoading, setIsLoading] = useState(true);
 
-            sliceSpace: 5,
-            selectionShift: 13,
-            // xValuePosition: "OUTSIDE_SLICE",
-            // yValuePosition: "OUTSIDE_SLICE",
-            valueFormatter: "#.#'%'",
-            valueLineColor: processColor('green'),
-            valueLinePart1Length: 0.5
-          }
-        }],
-      },
-      highlights: [{ x: 2 }],
-      description: {
-        textAlign: 'center',
-        text: 'Chi tiêu tháng 6',
-        textSize: 20,
-        textColor: processColor('black'),
+  const data = [
+    {
+      name: "%  Income",
+      population: Math.ceil(totalIncome),
+      color: "#A7ECEE",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 15
+    },
+    {
+      name: "%  Expense",
+      population: Math.floor(totalExpense),
+      color: "#F99B7D",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 15
+    }
+  ];
 
-      },
+  const chartConfig = {
+    backgroundGradientFrom: "#1E2923",
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: "#08130D",
+    backgroundGradientToOpacity: 0.5,
+    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    style: {
+      fontSize: 20,
+      fontWeight: '900'
+    },
+    strokeWidth: 2, // optional, default 3
+    barPercentage: 0.5,
+    useShadowColorFromDataset: false // optional
+  };
 
-      show: false,
-      date: new Date(),
-      totalExpense: 0,
-      totalIncome: 0,
-
-    };
-    this.handleButtonClick = this.handleButtonClick.bind(this);
-
-  }
-  async componentDidMount() {
-    const { idUser } = this.context;
-    console.log("aaaaaaaaaa", idUser);
+  const getTotalMoney = async () => {
     try {
-      const response = await AxiosInstance.get(`https://localhost:3000/transaction/api/get-total-money??idUser=${idUser}`);
-      console.log(response);
-      this.setState({
-        data: {
-          dataSets: [{
-            values: [
-              { value: response.transaction.totalIncome, label: 'Thu nhập' },
-              { value: response.transaction.totalExpense, label: 'Chi tiêu' },
-            ],
-            config: {
-              colors: [processColor('#C0FF8C'), processColor('#FFF78C')],
-              valueTextSize: 16,
-              valueTextColor: processColor('green'),
-              sliceSpace: 5,
-              selectionShift: 13,
-              valueFormatter: "#.#'%'",
-              valueLineColor: processColor('green'),
-              valueLinePart1Length: 0.5
-            }
-          }],
-        },
-        totalExpense: response.transaction.totalExpense,
-        totalIncome: response.transaction.totalIncome,
-        totalMoney: response.transaction.totalMoney
-      });
+      const response = await AxiosInstance().get("/transaction/api/get-total-money?idUser=" + idUser);
+      console.log("Total Money, item money: ", response);
+      if (response.result) {
+        console.log('cai nay chay r nha');
+        // Math.floor(setTotalExpense((response.transaction.totalExpense/(response.transaction.totalExpense + response.transaction.totalIncome))*100));
+        // Math.ceil(setTotalIncome((response.transaction.totalIncome/(response.transaction.totalExpense + response.transaction.totalIncome))*100));
+        setTotalExpense((response.transaction.totalExpense / (response.transaction.totalExpense + response.transaction.totalIncome)) * 100);
+        setTotalIncome((response.transaction.totalIncome / (response.transaction.totalExpense + response.transaction.totalIncome)) * 100);
+        //setTotalMoney(response.transaction.totalMoney);
+        setIsLoading(false);
+      } else {
+        console.log('FAILED TO GET TOTAL',);
+      }
     } catch (error) {
       console.log(error);
     }
   }
-  handleButtonClick() {
-    this.setState({ show: this.state.show = true });
-  }
 
-  handleButtonClick2() {
-    this.setState({ show: this.state.show = false });
-  }
+  useEffect(() => {
+    getTotalMoney()
+    return () => {
 
-  render() {
+    }
+  }, [appState])
 
-    return (
-      <View style={styles.container}>
-        <TouchableOpacity style={styles.boxMonth} onPress={this.handleButtonClick}>
-          <Image style={styles.icon} source={require('../asset/icon/icon_calender.png')} />
-          <Text style={styles.textMonthYear}>Tháng 6, năm 2023</Text>
+  return (
+    <View>
+      <TouchableOpacity style={styles.boxMonth}>
+        <Image style={styles.icon} source={require('../asset/icon/icon_calender.png')} />
+        <Text style={styles.textMonthYear}>Tháng 6, năm 2023</Text>
 
-          <MonthPicker
-            modal
-            // open={this.state.show}
-            value={this.state.date}
-            maximumDate={new Date(2030, 12)}
-            // minimumDate={new Date()}
-            locale="vn"
-            onConfirm={() => {
-              this.handleButtonClick2
-            }}
-            onCancel={() => {
-              false
-            }}
-          />
-        </TouchableOpacity>
-        <View style={styles.boxChart}>
+        {/* <MonthPicker
+          modal
+          // open={this.state.show}
+          value={date}
+          maximumDate={new Date(2030, 12)}
+          // minimumDate={new Date()}
+          locale="vn"
+          onConfirm={() => {
+            
+          }}
+          onCancel={() => {
+            false
+          }}
+        /> */}
+      </TouchableOpacity>
+      {isLoading ? (<View />) : (
+        <View >
           <PieChart
-            style={styles.chart}
-            logEnabled={true}
-            chartBackgroundColor={processColor('white')}
-            chartDescription={this.state.description}
-            data={this.state.data}
-            legend={this.state.legend}
-            highlights={this.state.highlights}
-
-            // extraOffsets={{ left: 5, top: 5, right: 5, bottom: 5 }}
-            entryLabelColor={processColor('green')}
-            entryLabelTextSize={20}
-            entryLabelFontFamily={'HelveticaNeue-Medium'}
-            drawEntryLabels={true}
-
-            rotationEnabled={true}
-            rotationAngle={45}
-            usePercentValues={true}
-            styledCenterText={{ text: 'Money Talk', color: processColor('black'), fontFamily: 'HelveticaNeue-Medium', size: 16 }}
-            centerTextRadiusPercent={100}
-            holeRadius={30}
-            holeColor={processColor('white')}
-            transparentCircleRadius={35}
-            transparentCircleColor={processColor('white')}
-            maxAngle={360}
-            // onSelect={this.handleSelect.bind(this)}
-            onChange={(event) => console.log(event.nativeEvent)}
+            data={data}
+            width={screenWidth}
+            height={220}
+            chartConfig={chartConfig}
+            accessor={"population"}
+            backgroundColor={"transparent"}
+            paddingLeft={"15"}
+            center={[5, 0]}
+            absolute
           />
-        </View>
-        {/* <View style={{marginBottom:100}}>
-          <Text>selected:</Text>
-          <Text> {this.state.selectedEntry}</Text>
-        </View> */}
-      </View>
-    );
-  }
+        </View>)}
+
+    </View>
+  )
 }
+
+export default ItemMonth
 
 const styles = StyleSheet.create({
   container: {
@@ -192,7 +145,7 @@ const styles = StyleSheet.create({
   },
   boxMonth: {
     height: 40,
-    width: windowWidth,
+    width: "100%",
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     backgroundColor: COLOR.white,
@@ -214,7 +167,4 @@ const styles = StyleSheet.create({
     color: COLOR.black,
 
   }
-});
-
-export default ItemMonth;
-
+})

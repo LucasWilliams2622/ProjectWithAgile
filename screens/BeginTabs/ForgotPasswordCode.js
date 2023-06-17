@@ -8,22 +8,22 @@ import OTPInputView from '@twotalltotems/react-native-otp-input'
 import AxiosInstance from '../../constants/AxiosInstance'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
-const SignCode = (props) => {
+const ForgotPasswordCode = (props) => {
     const { route, navigation } = props;
     const email = route.params.email;
-    const name = route.params.name;
     const [errorCode, setErrorCode] = useState('');
     const [otpCode, setOtpCode] = useState('');
+
+    //check lai gui code cua Van Son con` loi!
     const verifiedEmail = async () => {
         try {
-            console.log(name);
             console.log(email);
             console.log(otpCode);
-            const response = await AxiosInstance().post("user/api/verify-email-new", { email: email, verifyCode: otpCode });
+            const response = await AxiosInstance().post("user/api/verify-email", { email: email, verifyCode: otpCode });
             console.log(response);
             if (response.result === true) {
                 ToastAndroid.show("Xác thực thành công", ToastAndroid.SHORT);
-                navigation.navigate('SignPassword', { email: email, name: name });
+                navigation.navigate('ChangeForgotPass', { email: email });
             }
             else {
                 ToastAndroid.show("Xác thực thất bại ! False Code", ToastAndroid.SHORT);
@@ -39,7 +39,7 @@ const SignCode = (props) => {
             <View style={styles.container}>
 
                 <View style={styles.center}>
-                    <Text style={styles.textSignIn}>Sign Up</Text>
+                    <Text style={styles.textSignIn}>Forgot Password</Text>
                 </View>
 
                 <View style={styles.center}>
@@ -91,7 +91,7 @@ const SignCode = (props) => {
 
                 <View style={styles.center}>
                     <TouchableOpacity style={styles.viewPressable} onPress={verifiedEmail}>
-                        <Text style={styles.textPressable}>Sign up</Text>
+                        <Text style={styles.textPressable}>Verified Code</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -99,7 +99,7 @@ const SignCode = (props) => {
     )
 }
 
-export default SignCode
+export default ForgotPasswordCode
 
 const styles = StyleSheet.create({
     container: {

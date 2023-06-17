@@ -43,6 +43,7 @@ import { AppContextProvider } from './utils/AppContext'
 
 
 const App = () => {
+
   const getDeviceToken = async () => {
     let token = await messaging().getToken();
     console.log("TOKEN NOTIFICATION",token);
@@ -54,11 +55,13 @@ const App = () => {
       Alert.alert(
         'Chào mừng bạn đến với Money Talk!',
         "Ứng dụng tuyệt vời cho quản lý tài chính!!"
-        // JSON.stringify(remoteMessage),
+        // ,JSON.stringify(remoteMessage)
       );
     });
     return unsubscribe;
   }, []);
+  
+  //Kill app vẫn chạy được
   messaging().setBackgroundMessageHandler(async remoteMessage => {
     console.log('Message handled in the background!', remoteMessage);
   });
