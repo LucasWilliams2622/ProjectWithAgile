@@ -113,7 +113,7 @@ const Home = (props) => {
   return (
     <SafeAreaView>
       <View style={styles.background}></View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
         <View style={styles.viewAvatarAndText}>
           <Image source={
             // require('../../asset/image/logo.png')
