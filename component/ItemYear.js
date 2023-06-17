@@ -86,13 +86,10 @@ const ItemYear = () => {
         <Image style={styles.icon} source={require('../asset/icon/icon_calender.png')} />
         <Text style={styles.textMonthYear}>2023</Text>
       </TouchableOpacity>
-      <View style={{ height: 40 }}>
-        <Text> selected entry</Text>
-        <Text style={styles.infoMonth}></Text>
-      </View>
+
       <ScrollView>
         <View style={styles.container}>
-          <Text>Thống Kê Thu</Text>
+          <Text style={styles.title}>Thống Kê Thu</Text>
           <LineChart
             data={{
               labels: ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12"],
@@ -121,9 +118,9 @@ const ItemYear = () => {
             yAxisSuffix="k"
             yAxisInterval={1} // optional, defaults to 1
             chartConfig={{
-              backgroundColor: "#e26a00",
-              backgroundGradientFrom: "red",
-              backgroundGradientTo: "black",
+              backgroundColor: COLOR.primary,
+              backgroundGradientFrom: COLOR.darkGray,
+              backgroundGradientTo: '#19A7CE',
               decimalPlaces: 2, // optional, defaults to 2dp
               color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
               labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
@@ -133,7 +130,7 @@ const ItemYear = () => {
               propsForDots: {
                 r: "6",
                 strokeWidth: "2",
-                stroke: "#ffa726"
+                stroke: COLOR.green2,
               }
             }}
             bezier
@@ -144,19 +141,25 @@ const ItemYear = () => {
           />
         </View>
         <View style={styles.container}>
-          <Text>Thống Kê Chi</Text>
+          <Text style={styles.title}>Thống Kê Chi</Text>
           <LineChart
             data={{
-              labels: ["January", "February", "March", "April", "May", "June"],
+              labels: ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12"],
               datasets: [
                 {
                   data: [
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100
+                    totalMoneyJan,
+                    totalMoneyFer,
+                    totalMoneyMar,
+                    totalMoneyApr,
+                    totalMoneyMay,
+                    totalMoneyJun,
+                    totalMoneyJul,
+                    totalMoneyAug,
+                    totalMoneySep,
+                    totalMoneyOct,
+                    totalMoneyNov,
+                    totalMoneyDec,
                   ]
                 }
               ]
@@ -167,9 +170,9 @@ const ItemYear = () => {
             yAxisSuffix="k"
             yAxisInterval={1} // optional, defaults to 1
             chartConfig={{
-              backgroundColor: "#e26a00",
-              backgroundGradientFrom: "blue",
-              backgroundGradientTo: "black",
+              backgroundColor: COLOR.primary,
+              backgroundGradientFrom: COLOR.primary,
+              backgroundGradientTo: '#AFD3E2',
               decimalPlaces: 2, // optional, defaults to 2dp
               color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
               labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
@@ -179,7 +182,7 @@ const ItemYear = () => {
               propsForDots: {
                 r: "6",
                 strokeWidth: "2",
-                stroke: "#ffa726"
+                stroke: COLOR.green2,
               }
             }}
             bezier
@@ -201,7 +204,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5FCFF',
-    marginBottom: 40,
+    marginBottom: 10,
   },
   chart: {
     flex: 1
@@ -233,6 +236,11 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
     color: COLOR.black,
 
+  },
+  title:{
+    fontWeight:'bold',
+    alignSelf:'center',
+    fontSize:18,
   }
 
 })

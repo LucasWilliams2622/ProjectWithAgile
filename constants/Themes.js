@@ -29,7 +29,7 @@ export const COLOR = {
     lightGray: '#F3F3F3',
     darkGray: '#999999',
     brown:'#6D3805',
-
+    orange:'#F99B7D',
 
     darkOverlayColor: 'rgba(0, 0, 0, 0.4)',
     darkOverlayColor2: 'rgba(0, 0, 0, 0.8)',

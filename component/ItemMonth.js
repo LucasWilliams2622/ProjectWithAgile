@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
-import React, { useState, useEffect, useContext ,useCallback} from 'react'
+import React, { useState, useEffect, useContext, useCallback } from 'react'
 import MonthPicker from 'react-native-month-year-picker';
 import { ICON, COLOR } from '../constants/Themes';
 import AxiosInstance from '../constants/AxiosInstance';
@@ -22,23 +22,25 @@ const ItemMonth = (props) => {
   const [date, setDate] = useState('');
   const [totalIncome, setTotalIncome] = useState('');
   const [totalExpense, setTotalExpense] = useState('');
+  const [percentIncome, setPercentIncome] = useState('');
+  const [percentExpense, setPercentExpense] = useState('')
   const [totalMoney, setTotalMoney] = useState('');
   const [limit, setLimit] = useState('');
-  const { idUser, infoUser,appState, currentDay } = useContext(AppContext);
+  const { idUser, infoUser, appState, currentDay } = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(true);
   const showPicker = useCallback((value) => setShow(value), []);
 
   const data = [
     {
       name: "%  Income",
-      population: Math.ceil(totalIncome),
+      population: Math.ceil(percentIncome),
       color: "#A7ECEE",
       legendFontColor: "#7F7F7F",
       legendFontSize: 15
     },
     {
       name: "%  Expense",
-      population: Math.floor(totalExpense),
+      population: Math.floor(percentExpense),
       color: "#F99B7D",
       legendFontColor: "#7F7F7F",
       legendFontSize: 15
@@ -65,12 +67,14 @@ const ItemMonth = (props) => {
       const response = await AxiosInstance().get("/transaction/api/get-total-money?idUser=" + idUser);
       console.log("Total Money, item money: ", response);
       if (response.result) {
-        console.log('cai nay chay r nha');
         // Math.floor(setTotalExpense((response.transaction.totalExpense/(response.transaction.totalExpense + response.transaction.totalIncome))*100));
         // Math.ceil(setTotalIncome((response.transaction.totalIncome/(response.transaction.totalExpense + response.transaction.totalIncome))*100));
-        setTotalExpense((response.transaction.totalExpense / (response.transaction.totalExpense + response.transaction.totalIncome)) * 100);
-        setTotalIncome((response.transaction.totalIncome / (response.transaction.totalExpense + response.transaction.totalIncome)) * 100);
-        //setTotalMoney(response.transaction.totalMoney);
+        setTotalExpense(response.transaction.totalExpense)
+        setTotalIncome(response.transaction.totalIncome)
+        setTotalMoney(response.transaction.totalMoney);
+
+        setPercentExpense((response.transaction.totalExpense / (response.transaction.totalExpense + response.transaction.totalIncome)) * 100);
+        setPercentIncome((response.transaction.totalIncome / (response.transaction.totalExpense + response.transaction.totalIncome)) * 100);
         setIsLoading(false);
       } else {
         console.log('FAILED TO GET TOTAL',);
@@ -126,21 +130,41 @@ const ItemMonth = (props) => {
         />
   */}
       </TouchableOpacity>
-      {isLoading ? (<View />) : (
-        <View >
-          <PieChart
-            data={data}
-            width={screenWidth}
-            height={220}
-            chartConfig={chartConfig}
-            accessor={"population"}
-            backgroundColor={"transparent"}
-            paddingLeft={"15"}
-            center={[5, 0]}
-            absolute
-          />
-        </View>)}
+      {isLoading ?
+        (<View />) :
+        (
+          <View>
+            <View >
+              <PieChart
+                data={data}
+                width={screenWidth}
+                height={220}
+                chartConfig={chartConfig}
+                accessor={"population"}
+                backgroundColor={"transparent"}
+                paddingLeft={"15"}
+                center={[5, 0]}
+                absolute
+              />
+            </View>
 
+            <View style={styles.boxTotal}>
+              <Text style={[styles.titleTotal, { alignSelf: 'center' }]}>Tổng kết tháng 6 { } </Text>
+              <View style={styles.boxText}>
+                <Text style={styles.textTotal}>Tổng tiền đã chi: </Text>
+                <Text style={styles.textTotal}>{totalExpense} VNĐ</Text>
+              </View>
+              <View style={styles.boxText}>
+                <Text style={styles.textTotal}>Tổng tiền đã thu: </Text>
+                <Text style={styles.textTotal}>{totalIncome} VNĐ</Text>
+              </View>
+              <View style={styles.boxText}>
+                <Text style={styles.textTotal}>Tổng số tiền còn lại: </Text>
+                <Text style={styles.textTotal}>{totalMoney} VNĐ</Text>
+              </View>
+            </View>
+          </View >
+        )}
     </View>
   )
 }
@@ -169,7 +193,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     backgroundColor: COLOR.white,
-    // borderColor: 'red', borderWidth: 2,
     marginTop: 10,
     marginHorizontal: 10,
     flexDirection: 'row',
@@ -186,5 +209,26 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
     color: COLOR.black,
 
+  },
+  boxTotal: {
+    borderColor: COLOR.black, borderWidth: 2,
+    marginHorizontal: 10,
+    borderRadius: 20,
+    marginTop: 20,
+
+  },
+  boxText: {
+    flexDirection: 'row',
+    padding: 10,
+  },
+  textTotal: {
+    fontWeight: '500',
+    fontSize: 20,
+  },
+  titleTotal: {
+    fontWeight: 'bold',
+    fontSize: 24,
+    color: COLOR.primary,
+    marginTop: 10,
   }
 })

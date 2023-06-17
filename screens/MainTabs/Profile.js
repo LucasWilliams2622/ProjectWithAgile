@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     height: 50,
-    marginTop: 50,
+    marginTop: 20,
     borderRadius: 30,
     justifyContent: 'center'
 

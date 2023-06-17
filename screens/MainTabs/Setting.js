@@ -47,6 +47,10 @@ const Setting = (props) => {
   const goListUsers = () => {
     navigation.navigate('ListUser')
   }
+  const goChangePassword = () => {
+    navigation.navigate('ChangePassword')
+  }
+  
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -91,6 +95,9 @@ const Setting = (props) => {
           <TouchableOpacity style={styles.allignview1} onPress={showNotification}>
             <Text style={styles.text4}>Đơn vị tiền tệ</Text>
             <Image source={require('../../asset/icon/icon_sort.png')} style={styles.ImageStyle} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.allignview1} onPress={goChangePassword}>
+            <Text style={styles.text4}>Đổi mật khẩu</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -205,7 +212,7 @@ const styles = StyleSheet.create({
   view2: {
     backgroundColor: COLOR.white,
     width: '95%',
-    height: 120,
+    height: 170,
     right: 10,
     left: 10,
     borderRadius: 20,

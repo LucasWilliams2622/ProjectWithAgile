@@ -32,10 +32,22 @@ const AddNew = (props) => {
   let image = params?.image
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
-
-
+  
+  const getInforTransaction = async () => {
+    const respone = await AxiosInstance().get("/transaction/api/get-by-id?id=" + params.id);
+    setIdEditTransaction(params.id);
+    console.log("getInforTransaction: ", respone);
+    if (respone.result) {
+      setMoney(respone.transaction.money);
+      setCreateAt(respone.transaction.createAt);
+      setCategory(respone.transaction.category.name);
+      setNote(respone.transaction.note);
+      ToastAndroid.show("Lây dư liệu thành công !", ToastAndroid.SHORT);
+    }
+  }
   useEffect(() => {
-    console.log("", params?._idCategory);
+    getInforTransaction();
+    console.log("HAAAAAAAAAAAAAAAAAA", params?._idCategory);
     console.log("", params?.name);
 
     setTitle(params?.name);
@@ -91,7 +103,7 @@ const AddNew = (props) => {
       if (response.result) {
         ToastAndroid.show("Thêm mới thành công", ToastAndroid.SHORT);
         clearForm()
-        setAppState(appState+1)
+        setAppState(appState + 1)
       }
       else {
         ToastAndroid.show("Thêm mới không thành công ", ToastAndroid.SHORT);
@@ -163,24 +175,7 @@ const AddNew = (props) => {
     }
   }
 
-  useEffect(() => {
-    const getInforTransaction = async () => {
-      const respone = await AxiosInstance().get("/transaction/api/get-by-id?id=" + params.id);
-      setIdEditTransaction(params.id);
-      console.log("getInforTransaction: ", respone);
-      if (respone.result) {
-        setMoney(respone.transaction.money);
-        setCreateAt(respone.transaction.createAt);
-        setCategory(respone.transaction.category.name);
-        setNote(respone.transaction.note);
-        ToastAndroid.show("Lây dư liệu thành công !", ToastAndroid.SHORT);
-      }
-    }
-    getInforTransaction();
-    return () => {
 
-    }
-  }, [])
   return (
     <SafeAreaView style={styles.container} >
       <View style={styles.bgTop}>

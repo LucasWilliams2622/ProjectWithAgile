@@ -5,7 +5,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import AxiosInstance from '../../constants/AxiosInstance';
 import { AppContext } from '../../utils/AppContext';
 
-const ChangePassword = () => {
+const ChangePassword = (props) => {
+  const { navigation } = props;
   const [verifiedPass, setVerifiedPass] = useState(false);
   const [verifiedPassNew, setVerifiedPassNew] = useState(false);
   const [verifiedCfPass, setVerifiedCfPass] = useState(false);
@@ -16,7 +17,6 @@ const ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState('')
   const [password, setpassword] = useState('');
   const [confirmPass, setconfirmPass] = useState('')
-  //
 
   const { idUser, infoUser, setIsLogin } = useContext(AppContext);
   const getInfoUser = async () => {
@@ -96,6 +96,7 @@ const ChangePassword = () => {
       console.log(response);
       if (response.result === true) {
         ToastAndroid.show("Đổi mật khẩu thành công", ToastAndroid.SHORT);
+        setIsLogin(false)
       }
       else {
         ToastAndroid.show("Đổi mật khẩu thất bại", ToastAndroid.SHORT);
@@ -107,17 +108,16 @@ const ChangePassword = () => {
 
   return (
     <KeyboardAwareScrollView>
-
       <View style={styles.container}>
-        <View>
+        <TouchableOpacity onPress={() => { navigation.goBack() }}>
           <Image source={require('../../asset/icon/icon_back.png')} style={styles.imageBack}></Image>
-        </View>
+        </TouchableOpacity>
         <View style={styles.center}>
-          <Text style={styles.textSignIn}>Change Password</Text>
+          <Text style={styles.textSignIn}>Đổi mật khẩu</Text>
         </View>
 
         <View style={styles.viewInputOldPass}>
-          <TextInput style={styles.inputPassword} placeholder='Old Password'
+          <TextInput style={styles.inputPassword} placeholder='Mât khẩu cũ'
             secureTextEntry={getOldPassVisible ? false : true}
             //onChangeText={(setOldPassVisible) => checkPass(setOldPassVisible)} value={verifiedPass} 
             onChangeText={setOldPassword} value={oldPassword}
@@ -137,7 +137,7 @@ const ChangePassword = () => {
         </View>
 
         <View style={styles.viewInputNewPass}>
-          <TextInput style={styles.inputPassword} placeholder='New Password'
+          <TextInput style={styles.inputPassword} placeholder='Mật khẩu mới'
             secureTextEntry={getNewPassVisible ? false : true}
             onChangeText={(setNewPassVisible) => checkNewPass(setNewPassVisible)} value={verifiedPassNew} />
           <TouchableOpacity style={styles.visible}
@@ -155,7 +155,7 @@ const ChangePassword = () => {
         </View>
 
         <View style={styles.viewInputNewPass}>
-          <TextInput style={styles.inputPassword} placeholder='Confirm Password'
+          <TextInput style={styles.inputPassword} placeholder='Mật khẩu mới'
             secureTextEntry={getConfirmPassVisible ? false : true}
             //onChangeText={(setConfirmPassVisible) => checkCfPass(setConfirmPassVisible)} value={verifiedCfPass}
             onChangeText={setconfirmPass} value={confirmPass}
@@ -174,17 +174,9 @@ const ChangePassword = () => {
           <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
         </View>
 
-
-
         <View style={{ alignItems: 'center' }}>
           <Pressable style={styles.viewPressable} onPress={changePassword}>
-            <Text style={styles.textPressable}>Next</Text>
-          </Pressable>
-        </View>
-
-        <View style={{ alignItems: 'center' }}>
-          <Pressable style={styles.viewPressable} >
-            <Text style={styles.textPressable}>Back To Sign In</Text>
+            <Text style={styles.textPressable}>Thay đổi</Text>
           </Pressable>
         </View>
       </View>

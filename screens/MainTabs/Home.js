@@ -35,7 +35,7 @@ const Home = (props) => {
         setTotalExpense(response.transaction.totalExpense);
         setTotalIncome(response.transaction.totalIncome);
         setTotalMoney(response.transaction.totalMoney);
-        setIsLoading(false);
+        // setIsLoading(false);
       } else {
         console.log('FAILED TO GET TOTAL',);
       }
@@ -50,9 +50,8 @@ const Home = (props) => {
       if (response.result) {
         // console.log("===================================response", response);
         // console.log("===================================response", isLoading);
-
-        setIsLoading(false)
         setData(response.transaction);
+        setIsLoading(false)
       } else {
         setIsLoading(true)
       }
@@ -171,10 +170,21 @@ const Home = (props) => {
       </View>
 
       <Text style={styles.textToday}>Hôm nay:</Text>
-      {!isLoading ?
+      {isLoading ?
+        (<ScrollView>
+          <View style={styles.viewListGiveAndPay}>
+            <TouchableOpacity onPress={() => { goAddNew() }}>
+              <Image style={{ height: 250, width: 250 }} source={require('../../asset/gif/statistic.gif')}></Image>
+              <View style={{ marginTop: 30 }} >
+                <Text style={styles.textGif}>Hãy thêm chi tiêu hôm nay. Chạm vào đây dể thêm.</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>)
+        :
+
         (<View style={{ height: 500, width: '100%', marginBottom: 1000 }}>
           <ScrollView>
-
             <FlatList
               data={data}
               renderItem={({ item }) => <ItemTransaction data={item} navigation={navigation} />}
@@ -194,20 +204,7 @@ const Home = (props) => {
           </ScrollView>
           {/* // data.map((item)=><ItemTransaction data={item} key={item._id} navigation={navigation} />) */}
         </View>)
-        :
-        (<ScrollView>
-          <View style={styles.viewListGiveAndPay}>
-            <TouchableOpacity onPress={() => { goAddNew() }}>
-              <Image style={{ height: 250, width: 250 }} source={require('../../asset/gif/statistic.gif')}></Image>
-              <View style={{ marginTop: 30 }} >
-                <Text style={styles.textGif}>Hãy thêm chi tiêu hôm nay. Chạm vào đây dể thêm.</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>)
-
       }
-
       <StatusBar style="auto" barStyle="dark-content" backgroundColor={COLOR.background2} />
     </SafeAreaView>
   )

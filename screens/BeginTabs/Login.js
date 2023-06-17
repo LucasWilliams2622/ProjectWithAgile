@@ -83,8 +83,11 @@ const Login = (props) => {
       const response = await AxiosInstance().post("user/api/login", { email: email, password: password });
 
       if (response.result) {
+        setIdUser(response.user._id)
+        setIsLogin(true)
+        setInfoUser(response.user)
         ToastAndroid.show("Ðăng nhập thành công", ToastAndroid.SHORT);
-        navigation.navigate('BottomTabs');
+        
       } else {
         ToastAndroid.show("Đăng nhập thất bại", ToastAndroid.SHORT);
       }
@@ -152,7 +155,7 @@ const Login = (props) => {
           <View style={styles.viewInputPass}>
             <TextInput placeholder='Password' style={styles.inputEmailAndPass}
               secureTextEntry={getPasswordVisible ? false : true}
-              onChangeText={(setPasswordVisible) => checkPass(setPasswordVisible)} value={password} ></TextInput>
+              onChangeText={(setPasswordVisible) => setPassword(setPasswordVisible)} value={password} ></TextInput>
             <TouchableOpacity style={styles.visible}
               onPress={() => {
                 setPasswordVisible(!getPasswordVisible)

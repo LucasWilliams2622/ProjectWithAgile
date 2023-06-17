@@ -90,17 +90,9 @@ const ChangeForgotPass = (props) => {
           <Image source={require('../../asset/icon/icon_padlock.png')} style={styles.imageIconPadlock}></Image>
         </View>
 
-
-
         <View style={{ alignItems: 'center' }}>
           <Pressable style={styles.viewPressable} onPress={changePassword}>
             <Text style={styles.textPressable}>Change Password</Text>
-          </Pressable>
-        </View>
-
-        <View style={{ alignItems: 'center' }}>
-          <Pressable style={styles.viewPressable} onPress={goBackSignIn}>
-            <Text style={styles.textPressable}>Back To Sign In</Text>
           </Pressable>
         </View>
       </View>

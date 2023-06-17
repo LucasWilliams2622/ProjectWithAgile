@@ -21,6 +21,8 @@ import SignPassword from '../BeginTabs/SignPassword'
 import SignCode from '../BeginTabs/SignCode'
 import { AppContext } from '../../utils/AppContext'
 import ChangeForgotPass from '../BeginTabs/ChangeForgotPass';
+import ChangePassword from '../BeginTabs/ChangePassword';
+
 import ForgotPassword from '../BeginTabs/ForgotPassword';
 import ForgotPasswordCode from '../BeginTabs/ForgotPasswordCode';
 
@@ -116,6 +118,8 @@ const StackSetting = () => {
       <Stack.Screen name="History" component={History} />
       <Stack.Screen name="ListUser" component={ListUser} />
       <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="ChangePassword" component={ChangePassword} />
+
       <Stack.Screen name="TopTabThuChi" component={TopTabThuChi} />
 
     </Stack.Navigator>
