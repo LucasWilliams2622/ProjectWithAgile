@@ -112,7 +112,7 @@ const Home = (props) => {
   return (
     <SafeAreaView>
       <View style={styles.background}></View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
         <View style={styles.viewAvatarAndText}>
           <Image source={
             // require('../../asset/image/logo.png')
@@ -156,7 +156,7 @@ const Home = (props) => {
           {isLoading ? (<View />) : (
             <View style={styles.showTotal}>
               {/* <StatusBar hidden /> */}
-              {/* <Progress step={totalExpensee} steps={limit} height={15} /> */}
+              <Progress step={totalExpensee} steps={limit} height={15} />
             </View>
           )}
 
