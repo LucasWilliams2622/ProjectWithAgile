@@ -27,19 +27,19 @@ const ItemYear = () => {
     try {
       const response = await AxiosInstance().get("/transaction/api/search-by-year?idUser=" + idUser + "&year=" + currentYear);
       if (response.result) {
-        // console.log(response.transaction[1].transactionsFer,"aaaaaaaaaa111");
-        settransactionsJan(response.transaction[0].transactionsJan);
-        settransactionsFer(response.transaction[1].transactionsFer);
-        settransactionsMar(response.transaction[2].transactionsMar);
-        settransactionsApr(response.transaction[3].transactionsApr);
-        settransactionsMay(response.transaction[4].transactionsMay);
-        settransactionsJun(response.transaction[5].transactionsJun);
-        settransactionsJul(response.transaction[6].transactionsJul);
-        settransactionsAug(response.transaction[7].transactionsAug);
-        settransactionsSep(response.transaction[8].transactionsSep);
-        settransactionsOct(response.transaction[9].transactionsOct);
-        settransactionsNov(response.transaction[10].transactionsNov);
-        settransactionsDec(response.transaction[11].transactionsDec);
+        console.log(response,"aaaaaaaaaa111");
+        settransactionsJan(response.transaction.Jan);
+        settransactionsFer(response.transaction.Fer);
+        settransactionsMar(response.transaction.Mar);
+        settransactionsApr(response.transaction.Apr);
+        settransactionsMay(response.transaction.May);
+        settransactionsJun(response.transaction.Jun);
+        settransactionsJul(response.transaction.Jul);
+        // settransactionsAug(response.transaction[7].transactionsAug);
+        // settransactionsSep(response.transaction[8].transactionsSep);
+        // settransactionsOct(response.transaction[9].transactionsOct);
+        // settransactionsNov(response.transaction[10].transactionsNov);
+        // settransactionsDec(response.transaction[11].transactionsDec);
       } else {
         console.log('FAILED TO GET TOTAL',);
       }
@@ -166,8 +166,8 @@ const ItemYear = () => {
             }}
             width={Dimensions.get("window").width} // from react-native
             height={220}
-            yAxisLabel="$"
-            yAxisSuffix="k"
+            yAxisLabel="vnd"
+            yAxisSuffix=""
             yAxisInterval={1} // optional, defaults to 1
             chartConfig={{
               backgroundColor: COLOR.primary,
