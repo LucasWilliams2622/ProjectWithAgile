@@ -32,7 +32,7 @@ const AddNew = (props) => {
   let image = params?.image
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
-  
+
   const getInforTransaction = async () => {
     const respone = await AxiosInstance().get("/transaction/api/get-by-id?id=" + params.id);
     setIdEditTransaction(params.id);
@@ -244,13 +244,9 @@ const AddNew = (props) => {
 
       <View style={{ alignItems: 'center' }}>
         <TouchableOpacity style={styles.viewSave}
-          onPress={!params ? clickEditTransaction : onSaveTransaction}
-        // onPress={() =>{
-        //   clickEditTransaction();
-        // }}
+          onPress={!params ? onSaveTransaction : clickEditTransaction}
         >
-
-          <Text style={styles.textSave}>Lưu Chi tiêu</Text>
+          <Text style={styles.textSave}>Lưu Chi Tiêu</Text>
         </TouchableOpacity>
       </View>
       <StatusBar style="auto" />

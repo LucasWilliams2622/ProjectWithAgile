@@ -27,6 +27,7 @@ const ItemTransaction = (props) => {
   const EditTransaction = async () => {
     console.log('click item');
     navigation.navigate("AddNew", { id: data._id });
+    
   }
 
   const DeleteTransaction = async () => {
