@@ -17,7 +17,7 @@ const Profile = (props) => {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const { idUser, infoUser, setIsLogin } = useContext(AppContext);
-  const [limit, setLimit] = useState(10000);
+  const [limit, setLimit] = useState('');
   const [dataUser, setDataUser] = useState([])
 
   const checkName = (name) => {
@@ -103,11 +103,12 @@ const Profile = (props) => {
     }
   }
   const updateProfile = async () => {
-    console.log("----------------->", avatar, name, email, description, limit)
+    console.log("----------------->", avatar, name, description, limit);
+    console.log("----------------->", idUser);
     try {
-      const response = await AxiosInstance().put('user/api/update?idUser='+idUser,
-        { email: email, name: name, avatar: avatar, description: description, limit: limit })
-      console.log(response)
+      const response = await AxiosInstance().put('user/api/update?idUser='+ idUser,
+        { avatar: avatar, name: name, description: description, limit: limit });
+      console.log(response);
       if (response.result) {
         ToastAndroid.show("Update Success", ToastAndroid.SHORT, ToastAndroid.CENTER);
       } else {
@@ -179,9 +180,10 @@ const Profile = (props) => {
 
             <TextInput
               style={styles.textInput}
-              placeholder="Nguyễn Văn A"
-              onChangeText={setName} value={dataUser.name}
-            //editable={false}
+              placeholder="Hãy nhập tên của bạn"
+              onChangeText={(text)=>setName(text)}
+              // value={dataUser.name}
+            // editable={true}
             //defaultValue={currentUser.email}
             />
           </View>
@@ -216,7 +218,7 @@ const Profile = (props) => {
             />
           </View>
           {/* <TouchableOpacity style={styles.buttonSave} onPress={formik.handleSubmit}> */}
-          <TouchableOpacity style={styles.buttonSave} onPress={checkAll}>
+          <TouchableOpacity style={styles.buttonSave} onPress={updateProfile}>
             <Text style={styles.text2}>Lưu thay đổi</Text>
           </TouchableOpacity>
         </View>
@@ -300,7 +302,7 @@ const styles = StyleSheet.create({
     borderTopStartRadius: 20,
     borderTopEndRadius: 20,
     borderRadius: 20,
-    marginBottom: 20,
+    marginBottom: 0,
     backgroundColor: COLOR.gray
   },
   ImageStyle: {
