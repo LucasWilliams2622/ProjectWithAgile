@@ -13,11 +13,29 @@ const History = (props) => {
   const { navigation, route } = props;
   // const { params } = route;
   const [data, setData] = useState([]);
+  const [data2, setData2] = useState([]);
+  const [data3, setData3] = useState([]);
+
   const [createAt, setCreateAt] = useState("");
+  const [createAt2, setCreateAt2] = useState("");
+  const [createAt3, setCreateAt3] = useState("");
+
   const [isLoading, setIsLoading] = useState(false)
   const [stateList, setStateList] = useState(0);
   const [refreshControl, setRefreshControl] = useState();
+  const [length, setlength] = useState('')
+  const [length2, setlength2] = useState('')
+  const [length3, setlength3] = useState('')
+
   const { idUser, infoUser, currentDay, appState, setAppState } = useContext(AppContext);
+
+  var day = new Date().getDate() - 1;
+  var month = new Date().getMonth() + 1;
+  var year = new Date().getFullYear();
+  month = month < 10 ? `0${month}` : `${month}`;
+  day = day < 10 ? `0${day}` : `${day}`;
+  let currentDay2 = `${year}-${month}-${day}`
+  let currentDay3 = `${year}-${month}-${day - 1}`
   let timeOut = null;
 
   const goAddNew = () => {
@@ -57,14 +75,29 @@ const History = (props) => {
   }
   const getTransactionRecent = async () => {
     try {
-      const response = await AxiosInstance().get("transaction/api/search-by-recent?date=" + currentDay + "&idUser=" + idUser);
-      // console.log("HISTORY", response.transaction);
+      const response = await AxiosInstance().get("/transaction/api/search-by-current-date?idUser=" + idUser + '&date=' + currentDay);
+      const response2 = await AxiosInstance().get("/transaction/api/search-by-current-date?idUser=" + idUser + '&date=' + currentDay2);
+      const response3 = await AxiosInstance().get("/transaction/api/search-by-current-date?idUser=" + idUser + '&date=' + currentDay3);
+
+      console.log("length:  ", response.transaction.length);
+      console.log("length2:  ", response2.transaction.length);
+      console.log("length3:  ", response3.transaction.length);
+
+      setlength(response.transaction.length);
+      setlength2(response2.transaction.length);
+      setlength3(response3.transaction.length);
       if (response.result) // lấy dữ liệu thành công
       {
         // console.log("===>");
         setData(response.transaction);
+        setData2(response2.transaction)
+        setData3(response3.transaction)
+
         setAppState(appState++)
         setCreateAt(response.transaction.createAt)
+        setCreateAt2(response2.transaction.createAt)
+        setCreateAt3(response3.transaction.createAt)
+
         // console.log(response.transaction.createAt);
         setIsLoading(false)
       } else {
@@ -75,7 +108,9 @@ const History = (props) => {
     }
   }
   useEffect(() => {
-
+    console.log(currentDay);
+    console.log(currentDay2);
+    console.log(currentDay3);
     getTransactionRecent();
     return () => {
 
@@ -87,7 +122,7 @@ const History = (props) => {
     // console.log(">>>>>>>>>>>>>>>>>>>>>", response);
     // console.log(response);
     if (response.result) {
-      setAppState(appState+1)
+      setAppState(appState + 1)
       ToastAndroid.show("Xoá bài viết thành công", ToastAndroid.SHORT);
       // console.log(">>>>>>>>>>>>>>>>", transaction);
     } else {
@@ -125,6 +160,7 @@ const History = (props) => {
       </View>
       {
         isLoading ?
+
           (<View>
             <View style={styles.jusCenter}>
 
@@ -142,27 +178,67 @@ const History = (props) => {
             </ScrollView>
           </View>)
           :
-          (<ScrollView style={{ marginTop: 20 }}>
+          (<ScrollView style={{ marginTop: 30 }}>
+            <View><Text style={styles.viewText}>{currentDay}</Text></View>
             <View style={styles.viewLine}></View>
-            <View style={styles.viewListGiveAndPay}>
-              <View>
-                <FlatList
-                  style={{ height: '100%', width: '100%' }}
-                  data={data}
-                  renderItem={({ item }) => <ItemTransaction data={item} navigation={navigation} />}
-                  keyExtractor={item => item._id}
-                  showsVerticalScrollIndicator={false}
-                  refreshControl={
-                    <RefreshControl refreshing={refreshControl} onRefresh={() => {
-                      setRefreshControl(true)
-                      console.log("Refresh")
-                      setStateList(stateList + 1)
-                      console.log(stateList)
+            <FlatList
+              style={{ height: 120 * length, width: '100%', marginTop: 20 }}
+              data={data}
+              renderItem={({ item }) => <ItemTransaction data={item} navigation={navigation} />}
+              keyExtractor={item => item._id}
+              showsVerticalScrollIndicator={false}
+              refreshControl={
+                <RefreshControl refreshing={refreshControl} onRefresh={() => {
+                  setRefreshControl(true)
+                  console.log("Refresh")
+                  setStateList(stateList + 1)
+                  console.log(stateList)
 
-                      setRefreshControl(false)
-                    }} colors={['green']} />
-                  }
-                />
+                  setRefreshControl(false)
+                }} colors={['green']} />
+              }
+            />
+            <View><Text style={styles.viewText}>{currentDay2}</Text></View>
+            <View style={styles.viewLine}></View>
+            <FlatList
+              style={{ height: 120 * length2, width: '100%' }}
+              data={data2}
+              renderItem={({ item }) => <ItemTransaction data={item} navigation={navigation} />}
+              keyExtractor={item => item._id}
+              showsVerticalScrollIndicator={false}
+              refreshControl={
+                <RefreshControl refreshing={refreshControl} onRefresh={() => {
+                  setRefreshControl(true)
+                  console.log("Refresh")
+                  setStateList(stateList + 1)
+                  console.log(stateList)
+                  setRefreshControl(false)
+                }} colors={['green']} />
+              }
+            />
+            <View><Text style={styles.viewText}>{currentDay3}</Text></View>
+            <View style={styles.viewLine}></View>
+            <FlatList
+              style={{ height: 300 * length3, width: '100%' }}
+              data={data3}
+              renderItem={({ item }) => <ItemTransaction data={item} navigation={navigation} />}
+              keyExtractor={item => item._id}
+              showsVerticalScrollIndicator={false}
+              refreshControl={
+                <RefreshControl refreshing={refreshControl} onRefresh={() => {
+                  setRefreshControl(true)
+                  console.log("Refresh")
+                  setStateList(stateList + 1)
+                  console.log(stateList)
+
+                  setRefreshControl(false)
+                }} colors={['green']} />
+              }
+            />
+
+            {/* <View style={styles.viewListGiveAndPay}>
+              <View>
+                
                 <View style={styles.viewDeleteAll}>
                   <TouchableOpacity style={styles.center} onPress={checkDeleteTransaction}>
                     <Image style={styles.imageDelete} source={require('../../asset/icon/icon_delete.png')}></Image>
@@ -170,7 +246,7 @@ const History = (props) => {
                   </TouchableOpacity>
                 </View>
               </View>
-            </View>
+            </View> */}
           </ScrollView>)}
       <StatusBar style="auto" barStyle="dark-content" backgroundColor={COLOR.background2} />
     </SafeAreaView>
@@ -211,6 +287,22 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.white,
     paddingLeft: 20
   },
+  viewLine: {
+    borderBottomWidth: 1,
+    width: 350,
+    marginRight: 20,
+    marginLeft: 20,
+    marginTop: 6,
+    marginBottom: 10
+
+  },
+  viewText: {
+    marginRight: 20,
+    marginLeft: 20,
+    marginTop: 6,
+    marginBottom: 10
+  }
+  ,
   viewSearch: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -233,13 +325,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     fontStyle: 'italic'
   },
-  viewLine: {
-    borderBottomWidth: 1,
-    width: 350,
-    marginRight: 20,
-    marginLeft: 20,
-    marginTop: 6,
-  },
+
   viewListGiveAndPay: {
     height: '100%', width: '100%',
     alignItems: 'center',
