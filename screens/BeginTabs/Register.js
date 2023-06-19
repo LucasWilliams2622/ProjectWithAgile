@@ -9,26 +9,26 @@ const Register = (props) => {
   const { navigation } = props;
   const [toggLeCheckBox, settoggLeCheckBox] = useState(false);
   const [verifiedEmail, setVerifiedEmail] = useState(false);
-  const [name, setname] = useState('');
+  const [verifiedName, setVerifiedName] = useState(false);
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [passwordUser, setpasswordUser] = useState("");
   const goLogin = () => {
     navigation.navigate('Login')
   }
 
-  const checkName = (name) => {
+  const checkName = (setName) => {
     let reg = /^[a-z0-9_-]{3,15}$/;
     if (reg.test(name) === true) {
 
       //(1) Tên được phép chứa các ký tự, các số, gạch dưới, gạch nối.
       //(2) Tên phải có độ dài trong khoảng cho phép từ 3 đến 15 ký tự.
-      setname({ name: name });
+      setVerifiedName({ name: setName });
       console.log("Ban da nhap dung");
-      setname(true);
+      setVerifiedName(true);
       return true;
     }
     else {
-      setname({ name: name });
       console.log("Ban da nhap sai");
     }
   }
@@ -73,14 +73,14 @@ const Register = (props) => {
   }
 
   const checkAll = () => {
-    if (verifiedEmail == true && name == true) {
+    if (verifiedEmail == true && verifiedName == true) {
       ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
       sendVerifiedEmail();
       console.log(verifiedEmail);
       //  navigation.navigate('Resigter');
     }
     else {
-      Alert.alert('Error', 'Email bạn chưa nhập hoặc nhập sai! vui lòng kiểm tra lại.');
+      Alert.alert('Error', 'Bạn chưa nhập thông tin! Vui lòng kiểm tra lại.');
     }
   }
   const sendVerifiedEmail = async () => {
@@ -118,16 +118,15 @@ const Register = (props) => {
 
         <TextInput placeholder='Name Surname' style={styles.inputEmailAndPass}
           //onChangeText={(name) => checkName(name)} 
-          onChangeText={setname}
-          value={name}></TextInput>
+          onChangeText={(name) => [checkName(name), setName(name)]} value={name}></TextInput>
         <View style={styles.viewInputPass}>
-          <TextInput placeholder='Email' style={styles.inputEmailAndPass} value={email}
+          <TextInput placeholder='Email' style={styles.inputEmailAndPass} 
             //onChangeText={(setEmail) => checkEmail(setEmail)} 
-            onChangeText={setEmail}
+            onChangeText={(email) => [checkEmail(email), setEmail(email)]} value={email}
           ></TextInput>
         </View>
         <View style={{ alignItems: 'center' }}>
-          <TouchableOpacity style={styles.viewPressable} onPress={() => { sendVerifiedEmail() }}>
+          <TouchableOpacity style={styles.viewPressable} onPress={() => { checkAll() }}>
             <Text style={styles.textPressable}>Sign Up</Text>
           </TouchableOpacity>
           <View style={[styles.center, { marginTop: 10 }]}>
