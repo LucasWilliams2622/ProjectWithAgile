@@ -51,7 +51,7 @@ const History = (props) => {
       // console.log("AAAAAAAAAA");
       // }
       handleSearch(searchText);
-    }, 1000);
+    }, 500);
   }
   const handleSearch = async (searchText) => {
     try {
@@ -152,7 +152,7 @@ const History = (props) => {
       <View style={styles.background}></View>
       <Text style={styles.text}>Lịch sử chi tiêu</Text>
       <View style={styles.viewSearch}>
-        <TextInput placeholder='Tìm kiếm ' style={styles.input}
+        <TextInput placeholder='Tìm kiếm ' style={styles.input} keyboardType='numeric'
           onChangeText={(text) => countdownSearch(text)}></TextInput>
         <TouchableOpacity>
           <Image style={styles.imageSearch} source={require('../../asset/icon/icon_search.png')}></Image>

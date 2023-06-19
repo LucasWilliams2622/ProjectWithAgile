@@ -183,7 +183,7 @@ const Home = (props) => {
         </ScrollView>)
         :
 
-        (<View style={{ height: 500, width: '100%', marginBottom: 1000 }}>
+        (<View style={{ height:420, width: '100%', marginBottom: 1000 }}>
           <ScrollView>
             <FlatList
               data={data}

@@ -147,7 +147,7 @@ const AddNew = (props) => {
           navigation.navigate("BottomTabs");
         }
         else {
-          ToastAndroid.show("Thêm mới không thành công không thành công", ToastAndroid.SHORT);
+          ToastAndroid.show("Vui lòng nhập đủ thông tin", ToastAndroid.SHORT);
         }
       }
     } catch (error) {
@@ -244,7 +244,8 @@ const AddNew = (props) => {
 
       <View style={{ alignItems: 'center' }}>
         <TouchableOpacity style={styles.viewSave}
-          onPress={!params ? onSaveTransaction : clickEditTransaction}
+          // onPress={!params ? onSaveTransaction : clickEditTransaction}
+          onPress={onSaveTransaction}
         >
           <Text style={styles.textSave}>Lưu Chi Tiêu</Text>
         </TouchableOpacity>
