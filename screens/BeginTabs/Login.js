@@ -109,16 +109,16 @@ const Login = (props) => {
       console.log("ban da nhap sai");
     }
   }
-  const checkPass = (pass) => {
+  const checkPass = (password) => {
     let passreg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    if (passreg.test(pass) === true) {
-      setVerifiedPass({ passreg: pass });
+    if (passreg.test(password) === true) {
+      setVerifiedPass({ passreg: password });
       console.log("password hợp lệ");
       setVerifiedPass(true);
       return true;
     }
     else {
-      setVerifiedPass({ passreg: pass });
+      setVerifiedPass({ passreg: password });
       console.log("password ko hợp lệ");
     }
   }
@@ -126,6 +126,7 @@ const Login = (props) => {
   const checkAll = () => {
     if (verifiedEmail == true && verifiedPass == true) {
       ToastAndroid.show("Nhập đúng", ToastAndroid.SHORT);
+      onLogin();
       navigation.navigate('Home');
     }
     else {
@@ -155,7 +156,7 @@ const Login = (props) => {
           <View style={styles.viewInputPass}>
             <TextInput placeholder='Password' style={styles.inputEmailAndPass}
               secureTextEntry={getPasswordVisible ? false : true}
-              onChangeText={(setPasswordVisible) => setPassword(setPasswordVisible)} value={password} ></TextInput>
+              onChangeText={(password) => [checkPass(password), setPassword(password)]} value={password} ></TextInput>
             <TouchableOpacity style={styles.visible}
               onPress={() => {
                 setPasswordVisible(!getPasswordVisible)
@@ -175,7 +176,7 @@ const Login = (props) => {
         </View>
 
         <View style={{ alignItems: 'center' }}>
-          <TouchableOpacity style={styles.viewPressable} onPress={() => { onLogin() }} >
+          <TouchableOpacity style={styles.viewPressable} onPress={() => { checkAll() }} >
             <Text style={styles.textPressable}>Sign in</Text>
           </TouchableOpacity>
         </View>
