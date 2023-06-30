@@ -9,7 +9,7 @@ import { AppContext } from '../utils/AppContext';
 import { useContext, useEffect } from 'react';
 import AxiosInstance from '../constants/AxiosInstance';
 const ItemYear = () => {
-  const { idUser, infoUser, currentDay } = useContext(AppContext);
+  const { idUser, infoUser, currentDay,appState } = useContext(AppContext);
   const [transactionsJan, settransactionsJan] = useState([]);
   const [transactionsFer, settransactionsFer] = useState([]);
   const [transactionsMar, settransactionsMar] = useState([]);
@@ -81,7 +81,7 @@ const ItemYear = () => {
     return () => {
 
     }
-  }, [])
+  }, [appState])
   // function getTotalMoney(transactions) {
   //   let totalMoney = 0;
   //   for (let i = 0; i < transactions.length; i++) {
@@ -164,7 +164,7 @@ const ItemYear = () => {
           />
         </View>
         <View style={styles.container}>
-        <Text style={styles.title}>Thống Kê Chi</Text>
+        <Text style={styles.title}>Thống Kê Thu</Text>
           <LineChart
             data={{
               labels: ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12"],

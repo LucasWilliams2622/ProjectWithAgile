@@ -156,7 +156,7 @@ const Home = (props) => {
           {isLoading ? (<View />) : (
             <View style={styles.showTotal}>
               {/* <StatusBar hidden /> */}
-              <Progress step={totalExpensee} steps={limit} height={15} />
+              {/* <Progress step={totalExpensee} steps={limit} height={15} /> */}
             </View>
           )}
 
